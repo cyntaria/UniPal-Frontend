@@ -20,6 +20,7 @@ linter:
     prefer_single_quotes: true
     directives_ordering: false
     prefer_double_quotes: false
+    always_use_package_imports: false
     # use_key_in_widget_constructors: false
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
