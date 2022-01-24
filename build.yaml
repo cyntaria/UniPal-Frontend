@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          field_rename: snake
+      freezed:freezed:
+        generate_for:
+          include:
+            - lib/**.codegen.dart

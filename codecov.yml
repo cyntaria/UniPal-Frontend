@@ -1,0 +1,13 @@
+ignore:
+  - '**/*.gr.dart'
+  - '**/*.g.dart'
+  - '**/*.freezed.dart'
+  - "**/*.mocks.dart"
+  - '**/*_constants.dart'
+  - '**/*_assets.dart'
+  - '**/*_fonts.dart'
+  - '**/*_theme.dart'
+  - '**/routes.dart'
+  - '/android/'
+  - '/ios/'
+  - '/build/'
