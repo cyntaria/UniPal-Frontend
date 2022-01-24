@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 //Routes
 import 'routes.dart';
 
-typedef RouteBuilder = Widget Function(BuildContext);
+// Type Defs
+import '../../helpers/typedefs.dart';
 
 /// A utility class provides basic methods for navigation.
 /// This class has no constructor and all variables are `static`.
