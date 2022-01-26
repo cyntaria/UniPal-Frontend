@@ -25,7 +25,7 @@ class ApiEndpoint {
 
   /// Returns the path for an authentication [endpoint].
   static String auth(AuthEndpoint endpoint) {
-    var path = '/auth';
+    final path = '/auth';
     switch (endpoint) {
       case AuthEndpoint.REGISTER: return '$path/register';
       case AuthEndpoint.LOGIN: return '$path/login';
@@ -41,7 +41,7 @@ class ApiEndpoint {
   ///
   /// Specify student [erp] to get the path for a specific student.
   static String students(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
-    var path = '/students';
+    final path = '/students';
     switch(endpoint){
       case StudentEndpoint.BASE: return path;
       case StudentEndpoint.BY_ERP: {
@@ -67,6 +67,111 @@ class ApiEndpoint {
       }
     }
   }
+
+  /// Returns the path for hobbies [endpoint].
+  static String hobbies(HobbyEndpoint endpoint) {
+    final path = '/hobbies';
+    switch (endpoint) {
+      case HobbyEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for interests [endpoint].
+  static String interests(InterestEndpoint endpoint) {
+    final path = '/interests';
+    switch (endpoint) {
+      case InterestEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for campuses [endpoint].
+  static String campuses(CampusEndpoint endpoint) {
+    final path = '/campuses';
+    switch (endpoint) {
+      case CampusEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for campus spots [endpoint].
+  static String campusSpots(CampusSpotEndpoint endpoint) {
+    final path = '/campus-spots';
+    switch (endpoint) {
+      case CampusSpotEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for programs [endpoint].
+  static String programs(ProgramEndpoint endpoint) {
+    final path = '/programs';
+    switch (endpoint) {
+      case ProgramEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for student statuses [endpoint].
+  static String studentStatuses(StudentStatusEndpoint endpoint) {
+    final path = '/student-statuses';
+    switch (endpoint) {
+      case StudentStatusEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for activity statuses [endpoint].
+  static String activityStatuses(ActivityStatusEndpoint endpoint) {
+    final path = '/activity-statuses';
+    switch (endpoint) {
+      case ActivityStatusEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for activity types [endpoint].
+  static String activityTypes(ActivityTypeEndpoint endpoint) {
+    final path = '/activity-types';
+    switch (endpoint) {
+      case ActivityTypeEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for reaction types [endpoint].
+  static String reactionTypes(ReactionTypeEndpoint endpoint) {
+    final path = '/reaction-types';
+    switch (endpoint) {
+      case ReactionTypeEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for classrooms [endpoint].
+  static String classrooms(ClassroomEndpoint endpoint) {
+    final path = '/classrooms';
+    switch (endpoint) {
+      case ClassroomEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for timeslots [endpoint].
+  static String timeslots(TimeslotEndpoint endpoint) {
+    final path = '/timeslots';
+    switch (endpoint) {
+      case TimeslotEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for subjects [endpoint].
+  static String subjects(SubjectEndpoint endpoint) {
+    final path = '/subjects';
+    switch (endpoint) {
+      case SubjectEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for terms [endpoint].
+  static String terms(TermEndpoint endpoint) {
+    final path = '/terms';
+    switch (endpoint) {
+      case TermEndpoint.BASE: return path;
+    }
+  }
+}
 
 /// A collection of endpoints used for authentication purposes.
 enum AuthEndpoint {
@@ -143,7 +248,7 @@ enum ProgramEndpoint {
   BASE,
 }
 
-/// A collection of endpoints used for student statuses.
+/// A collection of endpoints used for student Types.
 enum StudentStatusEndpoint {
   /// An endpoint for student statuses' collection requests.
   BASE,
