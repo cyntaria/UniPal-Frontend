@@ -40,7 +40,7 @@ class ApiEndpoint {
   /// Returns the path for a student [endpoint].
   ///
   /// Specify student [erp] to get the path for a specific student.
-  static String users(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
+  static String students(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
     var path = '/students';
     switch(endpoint){
       case StudentEndpoint.BASE: return path;
@@ -67,113 +67,6 @@ class ApiEndpoint {
       }
     }
   }
-
-  /// Returns the path for a movie [endpoint].
-  ///
-  /// Specify movie [id] for any endpoints involving a specific movie.
-  static String movies(MovieEndpoint endpoint, {int? id}) {
-    var path = '/movies';
-    switch (endpoint) {
-      case MovieEndpoint.BASE: return path;
-      case MovieEndpoint.BY_ID: {
-        assert(id != null, 'movieId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-      case MovieEndpoint.ROLES: {
-        assert(id != null, 'movieId is required for ROLES endpoint');
-        return '$path/id/$id/roles';
-      }
-    }
-  }
-
-  /// Returns the path for a role [endpoint].
-  ///
-  /// Specify role [id] for any endpoints involving a specific role.
-  static String roles(RoleEndpoint endpoint, {int? id}) {
-    var path = '/roles';
-    switch (endpoint) {
-      case RoleEndpoint.BASE: return path;
-      case RoleEndpoint.BY_ID: {
-        assert(id != null, 'roleId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-      case RoleEndpoint.MOVIES: {
-        assert(id != null, 'roleId is required for MOVIES endpoint');
-        return '$path/id/$id/movies';
-      }
-    }
-  }
-
-  /// Returns the path for a show [endpoint].
-  ///
-  /// Specify show [id] for any endpoints involving an individual show.
-  static String shows(ShowEndpoint endpoint, {int? id}) {
-    var path = '/shows';
-    switch(endpoint){
-      case ShowEndpoint.BASE: return path;
-      case ShowEndpoint.FILTERS: return '$path/filters';
-      case ShowEndpoint.BY_ID: {
-        assert(id != null, 'showId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-    }
-  }
-
-  /// Returns the path for a theater [endpoint].
-  ///
-  /// Specify theater [id] for any endpoints involving an individual theater.
-  static String theaters(TheaterEndpoint endpoint, {int? id}) {
-    var path = '/theaters';
-    switch(endpoint){
-      case TheaterEndpoint.BASE: return path;
-      case TheaterEndpoint.BY_ID: {
-        assert(id != null, 'theaterId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-    }
-  }
-
-  /// Returns the path for a booking [endpoint].
-  ///
-  /// Specify booking [id] for any endpoints involving an individual booking.
-  static String bookings(BookingEndpoint endpoint, {int? id}) {
-    var path = '/bookings';
-    switch(endpoint){
-      case BookingEndpoint.BASE: return path;
-      case BookingEndpoint.FILTERS: return '$path/filters';
-      case BookingEndpoint.USERS: {
-        assert(id != null, 'bookingId is required for USERS endpoint');
-        return '$path/users/$id';
-      }
-      case BookingEndpoint.SHOWS: {
-        assert(id != null, 'bookingId is required for SHOWS endpoint');
-        return '$path/shows/$id';
-      }
-      case BookingEndpoint.BY_ID: {
-        assert(id != null, 'bookingId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-    }
-  }
-
-  /// Returns the path for a payment [endpoint].
-  ///
-  /// Specify payment [id] for any endpoints involving an individual payment.
-  static String payments(PaymentEndpoint endpoint, {int? id}) {
-    var path = '/payments';
-    switch(endpoint){
-      case PaymentEndpoint.BASE: return path;
-      case PaymentEndpoint.USERS: {
-        assert(id != null, 'paymentId is required for USERS endpoint');
-        return '$path/users/$id';
-      }
-      case PaymentEndpoint.BY_ID: {
-        assert(id != null, 'paymentId is required for BY_ID endpoint');
-        return '$path/id/$id';
-      }
-    }
-  }
-}
 
 /// A collection of endpoints used for authentication purposes.
 enum AuthEndpoint {
@@ -220,77 +113,81 @@ enum StudentEndpoint {
   ATTENDED_ACTIVITIES,
 }
 
-/// A collection of endpoints used for movies.
-enum MovieEndpoint {
-  /// An endpoint for movies' collection requests.
+/// A collection of endpoints used for hobbies.
+enum HobbyEndpoint {
+  /// An endpoint for hobbies' collection requests.
   BASE,
-
-  /// An endpoint for individual movie requests.
-  BY_ID,
-
-  /// An endpoint for individual movie's roles.
-  ROLES
 }
 
-/// A collection of endpoints used for roles.
-enum RoleEndpoint {
-  /// An endpoint for roles' collection requests.
+/// A collection of endpoints used for interests.
+enum InterestEndpoint {
+  /// An endpoint for interests' collection requests.
   BASE,
-
-  /// An endpoint for individual role requests.
-  BY_ID,
-
-  /// An endpoint for individual role's movies.
-  MOVIES
 }
 
-/// A collection of endpoints used for shows.
-enum ShowEndpoint {
-  /// An endpoint for shows' collection requests.
+/// A collection of endpoints used for campuses.
+enum CampusEndpoint {
+  /// An endpoint for campuses' collection requests.
   BASE,
-
-  /// An endpoint for individual show requests.
-  BY_ID,
-
-  /// An endpoint for custom show requests with query parameters.
-  FILTERS
 }
 
-/// A collection of endpoints used for theaters.
-enum TheaterEndpoint {
-  /// An endpoint for theaters' collection requests.
+/// A collection of endpoints used for campus spots.
+enum CampusSpotEndpoint {
+  /// An endpoint for campus spots' collection requests.
   BASE,
-
-  /// An endpoint for individual theater requests.
-  BY_ID
 }
 
-/// A collection of endpoints used for bookings.
-enum BookingEndpoint {
-  /// An endpoint for bookings' collection requests.
+/// A collection of endpoints used for programs.
+enum ProgramEndpoint {
+  /// An endpoint for programs' collection requests.
   BASE,
-
-  /// An endpoint for individual booking requests.
-  BY_ID,
-
-  /// An endpoint for individual user bookings' requests.
-  USERS,
-
-  /// An endpoint for individual show bookings' requests.
-  SHOWS,
-
-  /// An endpoint for custom booking requests with query parameters.
-  FILTERS
 }
 
-/// A collection of endpoints used for payments.
-enum PaymentEndpoint {
-  /// An endpoint for roles collection requests.
+/// A collection of endpoints used for student statuses.
+enum StudentStatusEndpoint {
+  /// An endpoint for student statuses' collection requests.
   BASE,
-
-  /// An endpoint for individual role requests.
-  BY_ID,
-
-  /// An endpoint for an individual user's payments' requests.
-  USERS
 }
+
+/// A collection of endpoints used for activity statuses.
+enum ActivityStatusEndpoint {
+  /// An endpoint for activity statuses' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for activity types.
+enum ActivityTypeEndpoint {
+  /// An endpoint for activity types' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for reaction types.
+enum ReactionTypeEndpoint {
+  /// An endpoint for reaction types' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for classrooms.
+enum ClassroomEndpoint {
+  /// An endpoint for classrooms' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for timeslots.
+enum TimeslotEndpoint {
+  /// An endpoint for timeslots' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for subjects.
+enum SubjectEndpoint {
+  /// An endpoint for subjects' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for terms.
+enum TermEndpoint {
+  /// An endpoint for terms' collection requests.
+  BASE,
+}
+
