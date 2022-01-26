@@ -63,9 +63,9 @@ class DioService {
         options: options,
         cancelToken: cancelToken ?? _cancelToken,
       );
-      return response.data as JSON;
+      return response.data!;
     } on Exception catch (ex) {
-      throw NetworkException.getDioException(ex);
+      throw NetworkException.fromDioException(ex);
     }
   }
 
@@ -94,9 +94,9 @@ class DioService {
         options: options,
         cancelToken: cancelToken ?? _cancelToken,
       );
-      return response.data as JSON;
+      return response.data!;
     } on Exception catch (ex) {
-      throw NetworkException.getDioException(ex);
+      throw NetworkException.fromDioException(ex);
     }
   }
 
@@ -125,9 +125,9 @@ class DioService {
         options: options,
         cancelToken: cancelToken ?? _cancelToken,
       );
-      return response.data as JSON;
+      return response.data!;
     } on Exception catch (ex) {
-      throw NetworkException.getDioException(ex);
+      throw NetworkException.fromDioException(ex);
     }
   }
 
@@ -156,9 +156,9 @@ class DioService {
         options: options,
         cancelToken: cancelToken ?? _cancelToken,
       );
-      return response.data as JSON;
+      return response.data!;
     } on Exception catch (ex) {
-      throw NetworkException.getDioException(ex);
+      throw NetworkException.fromDioException(ex);
     }
   }
 }

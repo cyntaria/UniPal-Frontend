@@ -54,7 +54,7 @@ class ApiService implements ApiInterface{
     final body = data['body'] as List<Object?>;
 
     //Returning the deserialized objects
-    return body.map((dataMap) => converter(dataMap as JSON)).toList();
+    return body.map((dataMap) => converter(dataMap! as JSON)).toList();
   }
 
   /// An implementation of the base method for requesting a document of data

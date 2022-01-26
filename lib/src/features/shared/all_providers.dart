@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Service imports
-import '../services/networking/api_endpoint.dart';
-import '../services/networking/api_service.dart';
-import '../services/networking/dio_service.dart';
+import '../../core/networking/api_endpoint.dart';
+import '../../core/networking/api_service.dart';
+import '../../core/networking/dio_service.dart';
 
 //Interceptor imports
-import '../services/networking/interceptors/api_interceptor.dart';
-import '../services/networking/interceptors/logging_interceptor.dart';
-import '../services/networking/interceptors/refresh_token_interceptor.dart';
+import '../../core/networking/interceptors/api_interceptor.dart';
+import '../../core/networking/interceptors/logging_interceptor.dart';
+import '../../core/networking/interceptors/refresh_token_interceptor.dart';
 
 final _dioProvider = Provider<Dio>((ref) {
   final baseOptions = BaseOptions(

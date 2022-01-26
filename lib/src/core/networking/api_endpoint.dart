@@ -25,7 +25,7 @@ class ApiEndpoint {
 
   /// Returns the path for an authentication [endpoint].
   static String auth(AuthEndpoint endpoint) {
-    final path = '/auth';
+    const path = '/auth';
     switch (endpoint) {
       case AuthEndpoint.REGISTER: return '$path/register';
       case AuthEndpoint.LOGIN: return '$path/login';
@@ -41,7 +41,7 @@ class ApiEndpoint {
   ///
   /// Specify student [erp] to get the path for a specific student.
   static String students(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
-    final path = '/students';
+    const path = '/students';
     switch(endpoint){
       case StudentEndpoint.BASE: return path;
       case StudentEndpoint.BY_ERP: {
@@ -70,7 +70,7 @@ class ApiEndpoint {
 
   /// Returns the path for hobbies [endpoint].
   static String hobbies(HobbyEndpoint endpoint) {
-    final path = '/hobbies';
+    const path = '/hobbies';
     switch (endpoint) {
       case HobbyEndpoint.BASE: return path;
     }
@@ -78,7 +78,7 @@ class ApiEndpoint {
 
   /// Returns the path for interests [endpoint].
   static String interests(InterestEndpoint endpoint) {
-    final path = '/interests';
+    const path = '/interests';
     switch (endpoint) {
       case InterestEndpoint.BASE: return path;
     }
@@ -86,7 +86,7 @@ class ApiEndpoint {
 
   /// Returns the path for campuses [endpoint].
   static String campuses(CampusEndpoint endpoint) {
-    final path = '/campuses';
+    const path = '/campuses';
     switch (endpoint) {
       case CampusEndpoint.BASE: return path;
     }
@@ -94,7 +94,7 @@ class ApiEndpoint {
 
   /// Returns the path for campus spots [endpoint].
   static String campusSpots(CampusSpotEndpoint endpoint) {
-    final path = '/campus-spots';
+    const path = '/campus-spots';
     switch (endpoint) {
       case CampusSpotEndpoint.BASE: return path;
     }
@@ -102,7 +102,7 @@ class ApiEndpoint {
 
   /// Returns the path for programs [endpoint].
   static String programs(ProgramEndpoint endpoint) {
-    final path = '/programs';
+    const path = '/programs';
     switch (endpoint) {
       case ProgramEndpoint.BASE: return path;
     }
@@ -110,7 +110,7 @@ class ApiEndpoint {
 
   /// Returns the path for student statuses [endpoint].
   static String studentStatuses(StudentStatusEndpoint endpoint) {
-    final path = '/student-statuses';
+    const path = '/student-statuses';
     switch (endpoint) {
       case StudentStatusEndpoint.BASE: return path;
     }
@@ -118,7 +118,7 @@ class ApiEndpoint {
 
   /// Returns the path for activity statuses [endpoint].
   static String activityStatuses(ActivityStatusEndpoint endpoint) {
-    final path = '/activity-statuses';
+    const path = '/activity-statuses';
     switch (endpoint) {
       case ActivityStatusEndpoint.BASE: return path;
     }
@@ -126,7 +126,7 @@ class ApiEndpoint {
 
   /// Returns the path for activity types [endpoint].
   static String activityTypes(ActivityTypeEndpoint endpoint) {
-    final path = '/activity-types';
+    const path = '/activity-types';
     switch (endpoint) {
       case ActivityTypeEndpoint.BASE: return path;
     }
@@ -134,7 +134,7 @@ class ApiEndpoint {
 
   /// Returns the path for reaction types [endpoint].
   static String reactionTypes(ReactionTypeEndpoint endpoint) {
-    final path = '/reaction-types';
+    const path = '/reaction-types';
     switch (endpoint) {
       case ReactionTypeEndpoint.BASE: return path;
     }
@@ -142,7 +142,7 @@ class ApiEndpoint {
 
   /// Returns the path for classrooms [endpoint].
   static String classrooms(ClassroomEndpoint endpoint) {
-    final path = '/classrooms';
+    const path = '/classrooms';
     switch (endpoint) {
       case ClassroomEndpoint.BASE: return path;
     }
@@ -150,7 +150,7 @@ class ApiEndpoint {
 
   /// Returns the path for timeslots [endpoint].
   static String timeslots(TimeslotEndpoint endpoint) {
-    final path = '/timeslots';
+    const path = '/timeslots';
     switch (endpoint) {
       case TimeslotEndpoint.BASE: return path;
     }
@@ -158,7 +158,7 @@ class ApiEndpoint {
 
   /// Returns the path for subjects [endpoint].
   static String subjects(SubjectEndpoint endpoint) {
-    final path = '/subjects';
+    const path = '/subjects';
     switch (endpoint) {
       case SubjectEndpoint.BASE: return path;
     }
@@ -166,7 +166,7 @@ class ApiEndpoint {
 
   /// Returns the path for terms [endpoint].
   static String terms(TermEndpoint endpoint) {
-    final path = '/terms';
+    const path = '/terms';
     switch (endpoint) {
       case TermEndpoint.BASE: return path;
     }
@@ -295,4 +295,3 @@ enum TermEndpoint {
   /// An endpoint for terms' collection requests.
   BASE,
 }
-

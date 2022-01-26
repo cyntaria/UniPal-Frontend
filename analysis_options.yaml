@@ -21,6 +21,10 @@ linter:
     directives_ordering: false
     prefer_double_quotes: false
     always_use_package_imports: false
+    sort_constructors_first: false
+    library_private_types_in_public_api: false
+    avoid_dynamic_calls: false
+    comment_references: false
     # use_key_in_widget_constructors: false
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
