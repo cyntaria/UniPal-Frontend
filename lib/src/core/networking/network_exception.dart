@@ -45,10 +45,10 @@ class NetworkException {
   final _ExceptionType exceptionType;
 
   const NetworkException({
-    String? name,
+    required this.name,
     required this.message,
     required this.exceptionType
-  }) : name = name ?? exceptionType.name;
+  });
 
   static NetworkException getDioException(Exception error) {
     try {
@@ -56,21 +56,25 @@ class NetworkException {
         switch (error.type) {
           case DioErrorType.cancel:
             return const NetworkException(
+              name: _ExceptionType.CancelException.name,
               exceptionType: _ExceptionType.CancelException,
               message: 'Request cancelled prematurely',
             );
           case DioErrorType.connectTimeout:
             return const NetworkException(
+              name: _ExceptionType.ConnectTimeoutException.name,
               exceptionType: _ExceptionType.ConnectTimeoutException, 
               message: 'Connection not established',
             );
           case DioErrorType.sendTimeout:
             return const NetworkException(
+              name: _ExceptionType.SendTimeoutException.name,
               exceptionType: _ExceptionType.SendTimeoutException, 
               message: 'Failed to send',
             );
           case DioErrorType.receiveTimeout:
             return const NetworkException(
+              name: _ExceptionType.ReceiveTimeoutException.name,
               exceptionType: _ExceptionType.ReceiveTimeoutException, 
               message: 'Failed to receive',
             );
@@ -78,36 +82,42 @@ class NetworkException {
           case DioErrorType.other:
             if(error.message.contains(_ExceptionType.SocketException.name)) {
               return const NetworkException(
+                name: _ExceptionType.FetchDataException.name,
                 exceptionType: _ExceptionType.FetchDataException, 
                 message: 'No internet connectivity',
               );
             }
-            final name = error.response?.data['headers']['error'] as String;
+            final name = error.response?.data['headers']['code'] as String;
             final message = error.response?.data['headers']['message'] as String;
             if (name == _ExceptionType.TokenExpiredException.name) {
-                return NetworkException(
+                return const NetworkException(
+                  name: _ExceptionType.TokenExpiredException.name,
                   exceptionType: _ExceptionType.TokenExpiredException,
                   message: message,
                 );
             }
-            return NetworkException(
+            return const NetworkException(
+              name: _ExceptionType.ApiException.name,
                 exceptionType: _ExceptionType.ApiException,
                 message: message,
             );
         }
       } else {
         return const NetworkException(
+          name: _ExceptionType.UnrecognizedException.name,
           exceptionType: _ExceptionType.UnrecognizedException, 
           message: 'Error unrecognized',
         );
       }
     } on FormatException catch (e) {
-      return NetworkException(
+      return const NetworkException(
+        name: _ExceptionType.FormatException.name,
         exceptionType: _ExceptionType.FormatException, 
         message: e.message,
       );
     } on Exception catch (_) {
       return const NetworkException(
+        name: _ExceptionType.UnrecognizedException.name,
         exceptionType: _ExceptionType.UnrecognizedException, 
         message: 'Error unrecognized',
       );
