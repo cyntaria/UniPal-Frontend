@@ -40,6 +40,8 @@ class ApiEndpoint {
   /// Returns the path for a student [endpoint].
   ///
   /// Specify student [erp] to get the path for a specific student.
+  /// 
+  /// Specify secondary [extendedResourceId] to get the path for a specific secondary resource.
   static String students(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
     const path = '/students';
     switch(endpoint){
@@ -64,6 +66,86 @@ class ApiEndpoint {
         assert(erp != null, 'studentErp is required for SAVED_ACTIVITIES_BY_ID endpoint');
         assert(extendedResourceId != null, 'extendedResourceId is required for SAVED_ACTIVITIES_BY_ID endpoint');
         return '$path/$erp/saved-activities/$extendedResourceId';
+      }
+    }
+  }
+
+
+  /// Returns the path for an activity [endpoint].
+  ///
+  /// Specify activity [id] to get the path for a specific activity.
+  /// 
+  /// Specify secondary [extendedResourceId] to get the path for a specific secondary resource.
+  static String activities(ActivityEndpoint endpoint, {int? id, int? extendedResourceId}) {
+    const path = '/activities';
+    switch(endpoint){
+      case ActivityEndpoint.BASE: return path;
+      case ActivityEndpoint.BY_ID: {
+        assert(id != null, 'activityId is required for BY_ID endpoint');
+        return '$path/$id';
+      }
+      case ActivityEndpoint.ATTENDEES_BASE: {
+        assert(id != null, 'activityId is required for ATTENDEES_BASE endpoint');
+        return '$path/$id/attendees';
+      }
+      case ActivityEndpoint.ATTENDEES_BY_ERP: {
+        assert(id != null, 'activityId is required for ATTENDEES_BY_ERP endpoint');
+        assert(extendedResourceId != null, 'extendedResourceId is required for ATTENDEES_BY_ERP endpoint');
+        return '$path/$id/attendees/$extendedResourceId';
+      }
+    }
+  }
+
+  /// Returns the path for a post [endpoint].
+  ///
+  /// Specify post [id] to get the path for a specific post.
+  /// 
+  /// Specify secondary [extendedResourceId] to get the path for a specific secondary resource.
+  static String posts(PostEndpoint endpoint, {int? id, int? extendedResourceId}) {
+    const path = '/posts';
+    switch(endpoint){
+      case PostEndpoint.BASE: return path;
+      case PostEndpoint.BY_ID: {
+        assert(id != null, 'postId is required for BY_ID endpoint');
+        return '$path/$id';
+      }
+      case PostEndpoint.REACTIONS_BASE: {
+        assert(id != null, 'postId is required for REACTIONS_BASE endpoint');
+        return '$path/$id/reactions';
+      }
+      case PostEndpoint.REACTIONS_BY_ERP: {
+        assert(id != null, 'postId is required for REACTIONS_BY_ERP endpoint');
+        assert(extendedResourceId != null, 'extendedResourceId is required for REACTIONS_BY_ERP endpoint');
+        return '$path/$id/reactions/$extendedResourceId';
+      }
+    }
+  }
+
+  /// Returns the path for a student connection [endpoint].
+  ///
+  /// Specify student connection [id] to get the path for a specific student connection.
+  static String studentConnections(StudentConnectionEndpoint endpoint, {int? id}) {
+    const path = '/student-connections';
+    switch(endpoint){
+      case StudentConnectionEndpoint.BASE: return path;
+      case StudentConnectionEndpoint.REQUESTS: return '$path/requests';
+      case StudentConnectionEndpoint.BY_ID: {
+        assert(id != null, 'studentConnectionId is required for BY_ID endpoint');
+        return '$path/$id';
+      }
+    }
+  }
+
+  /// Returns the path for a hangout request [endpoint].
+  ///
+  /// Specify hangout request [id] to get the path for a specific hangout request.
+  static String hangoutRequests(HangoutRequestEndpoint endpoint, {int? id}) {
+    const path = '/hangout-requests';
+    switch(endpoint){
+      case HangoutRequestEndpoint.BASE: return path;
+      case HangoutRequestEndpoint.BY_ID: {
+        assert(id != null, 'hangoutRequestId is required for BY_ID endpoint');
+        return '$path/$id';
       }
     }
   }
@@ -171,6 +253,62 @@ class ApiEndpoint {
       case TermEndpoint.BASE: return path;
     }
   }
+
+  /// Returns the path for teachers [endpoint].
+  static String teachers(TeacherEndpoint endpoint) {
+    const path = '/teachers';
+    switch (endpoint) {
+      case TeacherEndpoint.BASE: return path;
+    }
+  }
+
+  /// Returns the path for a teacher review [endpoint].
+  ///
+  /// Specify teacher review [id] to get the path for a specific teacher review.
+  static String teacherReviews(TeacherReviewEndpoint endpoint, {int? id}) {
+    const path = '/teacher-reviews';
+    switch(endpoint){
+      case TeacherReviewEndpoint.BASE: return path;
+      case TeacherReviewEndpoint.BY_ID: {
+        assert(id != null, 'teacherReviewId is required for BY_ID endpoint');
+        return '$path/$id';
+      }
+    }
+  }
+
+  /// Returns the path for a class [endpoint].
+  ///
+  /// Specify term [termId] and class [classErp] to get the path for a specific class.
+  static String classes(ClassEndpoint endpoint, {int? termId, int? classErp}) {
+    const path = '/classes';
+    switch(endpoint){
+      case ClassEndpoint.BASE: return path;
+      case ClassEndpoint.BY_TERM_AND_ERP: {
+        assert(termId != null, 'termId is required for BY_TERM_AND_ERP endpoint');
+        assert(classErp != null, 'classErp is required for BY_TERM_AND_ERP endpoint');
+        return '$path/$termId/$classErp';
+      }
+    }
+  }
+
+  /// Returns the path for a timetable [endpoint].
+  ///
+  /// Specify timetable [id] to get the path for a specific timetable.
+  static String timetables(TimetableEndpoint endpoint, {int? id}) {
+    const path = '/timetables';
+    switch(endpoint){
+      case TimetableEndpoint.BASE: return path;
+      case TimetableEndpoint.GENERATE: return '$path/generate';
+      case TimetableEndpoint.BY_ID: {
+        assert(id != null, 'timetableId is required for BY_ID endpoint');
+        return '$path/$id';
+      }
+      case TimetableEndpoint.CLASSES_BASE: {
+        assert(id != null, 'timetableId is required for CLASSES_BASE endpoint');
+        return '$path/$id/classes';
+      }
+    }
+  }
 }
 
 /// A collection of endpoints used for authentication purposes.
@@ -216,6 +354,57 @@ enum StudentEndpoint {
 
   /// An endpoint for a student's attended activities
   ATTENDED_ACTIVITIES,
+}
+
+/// A collection of endpoints used for activities.
+enum ActivityEndpoint {
+  /// An endpoint for activities' collection requests.
+  BASE,
+
+  /// An endpoint for individual activity's requests.
+  BY_ID,
+
+  /// An endpoint for an activity's attendees
+  ATTENDEES_BASE,
+
+  /// An endpoint for an activity's specific attendee
+  ATTENDEES_BY_ERP,
+}
+
+/// A collection of endpoints used for posts.
+enum PostEndpoint {
+  /// An endpoint for posts' collection requests.
+  BASE,
+
+  /// An endpoint for individual post's requests.
+  BY_ID,
+
+  /// An endpoint for a post's reactions
+  REACTIONS_BASE,
+
+  /// An endpoint for a post's specific reaction
+  REACTIONS_BY_ERP,
+}
+
+/// A collection of endpoints used for student connections.
+enum StudentConnectionEndpoint {
+  /// An endpoint for a student's connections' collection requests.
+  BASE,
+
+  /// An endpoint for a student's pending connection requests.
+  REQUESTS,
+
+  /// An endpoint for a student's individual connection's requests.
+  BY_ID,
+}
+
+/// A collection of endpoints used for hangout requests.
+enum HangoutRequestEndpoint {
+  /// An endpoint for hangout requests' collection requests.
+  BASE,
+
+  /// An endpoint for individual hangout request's requests.
+  BY_ID,
 }
 
 /// A collection of endpoints used for hobbies.
@@ -294,4 +483,43 @@ enum SubjectEndpoint {
 enum TermEndpoint {
   /// An endpoint for terms' collection requests.
   BASE,
+}
+
+/// A collection of endpoints used for teachers.
+enum TeacherEndpoint {
+  /// An endpoint for teachers' collection requests.
+  BASE,
+}
+
+/// A collection of endpoints used for teacher reviews.
+enum TeacherReviewEndpoint {
+  /// An endpoint for teacher reviews' collection requests.
+  BASE,
+
+  /// An endpoint for individual teacher review's requests.
+  BY_ID,
+}
+
+/// A collection of endpoints used for classes.
+enum ClassEndpoint {
+  /// An endpoint for classes' collection requests.
+  BASE,
+
+  /// An endpoint for individual class's requests.
+  BY_TERM_AND_ERP,
+}
+
+/// A collection of endpoints used for timetables.
+enum TimetableEndpoint {
+  /// An endpoint for timetables' collection requests.
+  BASE,
+
+  /// An endpoint for timetable generation requests.
+  GENERATE,
+
+  /// An endpoint for individual timetable's requests.
+  BY_ID,
+
+  /// An endpoint for a timetable's classes
+  CLASSES_BASE,
 }
