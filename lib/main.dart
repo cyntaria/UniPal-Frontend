@@ -21,8 +21,5 @@ void setDebugPrint(String? message, {int? wrapWidth}) {
   var msg = '${date.year}/${date.month}/${date.day}';
   msg += ' ${date.hour}:${date.minute}:${date.second}';
   msg += ' $message';
-  debugPrintSynchronously(
-    msg,
-    wrapWidth: wrapWidth,
-  );
+  debugPrintSynchronously(msg, wrapWidth: wrapWidth);
 }
