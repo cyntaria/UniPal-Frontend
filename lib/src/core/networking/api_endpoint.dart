@@ -3,6 +3,9 @@
 
 import 'package:flutter/material.dart';
 
+// Config
+import '../../config/config.dart';
+
 /// A utility class for getting paths for API endpoints.
 /// This class has no constructor and all methods are `static`.
 @immutable
@@ -18,10 +21,7 @@ class ApiEndpoint {
   /// ```
   /// flutter run --dart-define=BASE_URL=www.some_url.com
   /// ```
-  static const baseUrl = String.fromEnvironment(
-    'BASE_URL',
-    defaultValue: 'localhost:3000/api/v1',
-  );
+  static const baseUrl = Config.baseUrl;
 
   /// Returns the path for an authentication [endpoint].
   static String auth(AuthEndpoint endpoint) {
