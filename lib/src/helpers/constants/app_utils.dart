@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// A utility class that holds commonly used values and functions 
+/// A utility class that holds commonly used regular expressions 
 /// employed throughout the entire app.
 /// This class has no constructor and all variables are `static`.
 @immutable
-class AppUtils {
-  const AppUtils._();
+class AppRegexes {
+  const AppRegexes._();
 
   /// The regular expression for validating emails in the app.
   static RegExp emailRegex = RegExp(
@@ -35,4 +35,19 @@ class AppUtils {
 
   /// A utility method to convert any instance to null
   static T? toNull<T>(Object? _) => null;
+}
+
+/// A utility class that holds all the timings used throughout 
+/// the entire app by things such as animations, tickers etc.
+/// 
+/// This class has no constructor and all variables are `static`.
+@immutable
+class AppDurations {
+  const AppDurations._();
+
+  static const fastest = Duration(milliseconds: 150);
+  static const fast = Duration(milliseconds: 250);
+  static const medium = Duration(milliseconds: 350);
+  static const slow = Duration(milliseconds: 700);
+  static const slower = Duration(milliseconds: 1000);
 }
