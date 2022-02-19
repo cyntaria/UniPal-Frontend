@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 class IconSizes {
   const IconSizes._();
 
-  static const double scale = 1;
+  static const double sm = 20;
   static const double med = 24;
+  static const double lg = 27;
 }
 
 /// A utility class that holds all the gaps and insets used 
@@ -20,19 +21,39 @@ class IconSizes {
 class Insets {
   const Insets._();
 
-  static double scale = 1;
-  static double offsetScale = 1;
+  /// Regular insets used with [Padding]
+  static const xs = 4;
+  static const sm = 8;
+  static const med = 12;
+  static const lg = 16;
+  static const xl = 32;
 
-  // Regular paddings
-  static double get xs => 4 * scale;
-  static double get sm => 8 * scale;
-  static double get med => 12 * scale;
-  static double get lg => 16 * scale;
-  static double get xl => 32 * scale;
+  /// Regular offsets used with [SizedBox]
+  /// Small horizontal gap.
+  static const gapSmallHt = SizedBox(height: 10);
 
-  // Offset, used for the edge of the window, or to separate large sections in the app
-  static double get offset => 40 * offsetScale;
+  /// Small vertical gap.
+  static const gapSmallVt = SizedBox(width: 10);
+
+  /// Regular horizontal gap.
+  static const gapRegularHt = SizedBox(height: 15);
+  
+  /// Regular vertical gap.
+  static const gapRegularVt = SizedBox(height: 15);
+
+  /// Medium horizontal gap.
+  static const gapMediumHt = SizedBox(height: 20);
+  
+  /// Medium vertical gap.
+  static const gapMediumVt = SizedBox(height: 20);
+  
+  /// Large horizontal gap.
+  static const gapLargeHt = SizedBox(height: 30);
+  
+  /// Large vertical gap.
+  static const gapLargeVt = SizedBox(height: 30);
 }
+
 
 /// A utility class that holds all the border radiuses used throughout 
 /// the entire app by things such as container, card etc.
@@ -42,16 +63,31 @@ class Insets {
 class Corners {
   const Corners._();
 
-  static const double sm = 3;
-  static const BorderRadius smBorder = BorderRadius.all(smRadius);
+  /// Small radius value
+  static const double sm = 5;
+
+  /// Small circular radius of value [sm]
   static const Radius smRadius = Radius.circular(sm);
 
-  static const double med = 5;
-  static const BorderRadius medBorder = BorderRadius.all(medRadius);
-  static const Radius medRadius = Radius.circular(med);
+  /// Small border radius, rounded on all corners by [smRadius]
+  static const BorderRadius smBorder = BorderRadius.all(smRadius);
 
-  static const double lg = 8;
+  /// Medium radius value
+  static const double med = 8;
+  
+  /// Medium circular radius of value [med]
+  static const BorderRadius medBorder = BorderRadius.all(medRadius);
+  
+  /// Medium border radius, rounded on all corners by [medBorder]
+  static const Radius medRadius = Radius.circular(med);
+  
+  /// Large radius value
+  static const double lg = 12;
+  
+  /// Large circular radius of value [lg]
   static const BorderRadius lgBorder = BorderRadius.all(lgRadius);
+  
+  /// Large border radius, rounded on all corners by [lgRadius]
   static const Radius lgRadius = Radius.circular(lg);
 }
 
