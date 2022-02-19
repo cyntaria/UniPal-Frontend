@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 /// employed throughout the entire app.
 /// This class has no constructor and all variables are `static`.
 @immutable
-class AppRegexes {
-  const AppRegexes._();
+class Regexes {
+  const Regexes._();
 
   /// The regular expression for validating emails in the app.
   static RegExp emailRegex = RegExp(
@@ -42,8 +42,8 @@ class AppRegexes {
 /// 
 /// This class has no constructor and all variables are `static`.
 @immutable
-class AppDurations {
-  const AppDurations._();
+class Durations {
+  const Durations._();
 
   static const fastest = Duration(milliseconds: 150);
   static const fast = Duration(milliseconds: 250);
