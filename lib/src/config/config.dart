@@ -20,4 +20,20 @@ class Config {
     'BASE_URL',
     defaultValue: 'localhost:3000/api/v1',
   );
+
+  /// The client key for sentry SDK. The DSN tells the SDK where to
+  /// send the events to.
+  /// 
+  /// It is supplied at the time of building the apk or running the app:
+  /// ```
+  /// flutter build apk --debug --dart-define=SENTRY_DSN=www.some_url.com
+  /// ```
+  /// OR
+  /// ```
+  /// flutter run --dart-define=SENTRY_DSN=www.some_url.com
+  /// ```
+  static const sentryDSN = String.fromEnvironment(
+    'SENTRY_DSN',
+    defaultValue: 'https://some-number.ingest.sentry.io/number',
+  );
 }

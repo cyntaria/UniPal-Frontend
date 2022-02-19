@@ -2,15 +2,29 @@ import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Main App
 import 'app.dart';
+import 'src/config/config.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint = setDebugPrint;
-  runApp(const MyApp());
-  SystemChrome.setPreferredOrientations([
+  await SentryFlutter.init(
+    (options) {
+      options
+        ..dsn = Config.sentryDSN
+        ..tracesSampleRate = kDebugMode ? 1.0 : 0.7;
+    },
+    appRunner: () => runApp(
+      DefaultAssetBundle(
+        bundle: SentryAssetBundle(),
+        child: const MyApp(),
+      ),
+    ),
+  );
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
