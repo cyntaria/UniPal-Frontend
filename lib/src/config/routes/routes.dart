@@ -10,6 +10,9 @@ class Routes {
   /// The name of the route for app startup screen
   static const String AppStartupScreen = '/app-startup-screen';
 
+  /// The name of the route for home dashboard screen
+  static const String HomeScreen = '/home-screen';
+
   /// The name of the route for unrecognized route screen
   static const String RouteNotFoundScreen = '/route-not-found-screen';
 

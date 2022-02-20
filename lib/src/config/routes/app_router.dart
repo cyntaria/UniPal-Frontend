@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 //Screens
 
 //Routes
+import '../../features/auth/login_screen.dart';
+import '../../features/home/app_startup_screen.dart';
+import '../../features/home/home_screen.dart';
 import 'routes.dart';
 
 // Type Defs
@@ -16,9 +19,10 @@ class AppRouter {
   const AppRouter._();
 
   static final Map<String, RouteBuilder> _routesMap = {
-    Routes.AppStartupScreen: (_) => const SizedBox.shrink(),
+    Routes.AppStartupScreen: (_) => const AppStartupScreen(),
+    Routes.HomeScreen: (_) => const HomeScreen(),
     Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
-    Routes.LoginScreen: (_) => const SizedBox.shrink(),
+    Routes.LoginScreen: (_) => const LoginScreen(),
     Routes.RegisterScreen: (_) => const SizedBox.shrink(),
     Routes.ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     Routes.ChangePasswordScreen: (_) => const SizedBox.shrink(),
