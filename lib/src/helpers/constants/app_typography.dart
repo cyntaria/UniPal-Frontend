@@ -22,30 +22,30 @@ class AppTypography {
   static final primary = _FontStyle(
     headingLarge: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.xxl,
+      fontSize: FontSizes.f34,
       fontWeight: FontWeight.bold,
     ),
     headingSmall: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.xl,
+      fontSize: FontSizes.f24,
       fontWeight: FontWeight.bold,
     ),
     titleLarge: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.lg,
+      fontSize: FontSizes.f20,
       fontWeight: FontWeight.w600,
     ),
     titleSmall: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.med18,
+      fontSize: FontSizes.f18,
     ),
     subHeading: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.med16,
+      fontSize: FontSizes.f16,
     ),
     bodyLarge: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.med16,
+      fontSize: FontSizes.f16,
       fontWeight: FontWeight.w600,
     ),
     bodySmall: _outfitFont.copyWith(
@@ -53,15 +53,15 @@ class AppTypography {
     ),
     subtitle: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.sm,
+      fontSize: FontSizes.f13,
     ),
     labelLarge: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.xs,
+      fontSize: FontSizes.f12,
     ),
     labelSmall: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.xxs,
+      fontSize: FontSizes.f11,
     ),
   );
 
@@ -122,29 +122,29 @@ class FontSizes {
   const FontSizes._();
 
   /// Font size 11
-  static const xxs = 11.0;
+  static const f11 = 11.0;
 
   /// Font size 12
-  static const xs = 12.0;
+  static const f12 = 12.0;
 
   /// Font size 13
-  static const sm = 13.0;
+  static const f13 = 13.0;
 
   /// Font size 14
-  static const reg = 14.0;
+  static const f14 = 14.0;
 
   /// Font size 16
-  static const med16 = 16.0;
+  static const f16 = 16.0;
 
   /// Font size 18
-  static const med18 = 18.0;
+  static const f18 = 18.0;
 
   /// Font size 20
-  static const lg = 20.0;
+  static const f20 = 20.0;
 
   /// Font size 24
-  static const xl = 24.0;
+  static const f24 = 24.0;
 
   /// Font size 34
-  static const xxl = 34.0;
+  static const f34 = 34.0;
 }

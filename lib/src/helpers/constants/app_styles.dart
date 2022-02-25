@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class IconSizes {
   const IconSizes._();
 
-  static const double sm = 20;
+  static const double sm = 19;
   static const double med = 24;
   static const double lg = 27;
 }
@@ -21,37 +21,41 @@ class IconSizes {
 class Insets {
   const Insets._();
 
-  /// Regular insets used with [Padding]
-  static const xs = 4;
-  static const sm = 8;
-  static const med = 12;
-  static const lg = 16;
-  static const xl = 32;
+  /// [SizedBox] of height **2**.
+  static const gapH2 = SizedBox(height: 2);
 
-  /// Regular offsets used with [SizedBox]
-  /// Small horizontal gap.
-  static const gapSmallHt = SizedBox(height: 10);
+  /// [SizedBox] of width **2**.
+  static const gapW2 = SizedBox(width: 2);
 
-  /// Small vertical gap.
-  static const gapSmallVt = SizedBox(width: 10);
+  /// [SizedBox] of height **5**.
+  static const gapH5 = SizedBox(height: 5);
 
-  /// Regular horizontal gap.
-  static const gapRegularHt = SizedBox(height: 15);
-  
-  /// Regular vertical gap.
-  static const gapRegularVt = SizedBox(height: 15);
+  /// [SizedBox] of width **5**.
+  static const gapW5 = SizedBox(width: 5);
 
-  /// Medium horizontal gap.
-  static const gapMediumHt = SizedBox(height: 20);
+  /// [SizedBox] of height **10**.
+  static const gapH10 = SizedBox(height: 10);
+
+  /// [SizedBox] of width **10**
+  static const gapW10 = SizedBox(width: 10);
+
+  /// [SizedBox] of height **15**.
+  static const gapH15 = SizedBox(height: 15);
   
-  /// Medium vertical gap.
-  static const gapMediumVt = SizedBox(height: 20);
+  /// [SizedBox] of height **15**.
+  static const gapW15 = SizedBox(height: 15);
+
+  /// [SizedBox] of height **20**.
+  static const gapH20 = SizedBox(height: 20);
   
-  /// Large horizontal gap.
-  static const gapLargeHt = SizedBox(height: 30);
+  /// [SizedBox] of height **20**.
+  static const gapW20 = SizedBox(height: 20);
   
-  /// Large vertical gap.
-  static const gapLargeVt = SizedBox(height: 30);
+  /// [SizedBox] of height **30**.
+  static const gapH30 = SizedBox(height: 30);
+  
+  /// [SizedBox] of height **30**.
+  static const gapW30 = SizedBox(height: 30);
 }
 
 
@@ -63,32 +67,21 @@ class Insets {
 class Corners {
   const Corners._();
 
-  /// Small radius value
-  static const double sm = 5;
+  /// [BorderRadius] rounded on all corners by **7**
+  static const BorderRadius rounded7 = BorderRadius.all(Radius.circular(7));
 
-  /// Small circular radius of value [sm]
-  static const Radius smRadius = Radius.circular(sm);
+  /// [BorderRadius] rounded on all corners by **9**
+  static const BorderRadius rounded9 = BorderRadius.all(Radius.circular(9));
+  
+  /// [BorderRadius] rounded on all corners by **10**
+  static const BorderRadius rounded10 = BorderRadius.all(Radius.circular(10));
 
-  /// Small border radius, rounded on all corners by [smRadius]
-  static const BorderRadius smBorder = BorderRadius.all(smRadius);
+  /// [BorderRadius] rounded on all corners by **15**
+  static const BorderRadius rounded15 = BorderRadius.all(Radius.circular(15));
 
-  /// Medium radius value
-  static const double med = 8;
+  /// [BorderRadius] rounded on all corners by **20**
+  static const BorderRadius rounded20 = BorderRadius.all(Radius.circular(20));
   
-  /// Medium circular radius of value [med]
-  static const BorderRadius medBorder = BorderRadius.all(medRadius);
-  
-  /// Medium border radius, rounded on all corners by [medBorder]
-  static const Radius medRadius = Radius.circular(med);
-  
-  /// Large radius value
-  static const double lg = 12;
-  
-  /// Large circular radius of value [lg]
-  static const BorderRadius lgBorder = BorderRadius.all(lgRadius);
-  
-  /// Large border radius, rounded on all corners by [lgRadius]
-  static const Radius lgRadius = Radius.circular(lg);
 }
 
 /// A utility class that holds all the shadows used throughout 
