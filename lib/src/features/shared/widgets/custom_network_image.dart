@@ -16,6 +16,7 @@ class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     double? width,
     double? radius,
+    Key? key,
     this.margin,
     this.fit,
     this.height,
@@ -24,8 +25,9 @@ class CustomNetworkImage extends StatelessWidget {
     this.placeholder,
     this.errorWidget,
     required this.imageUrl,
-  })   : width = width ?? double.infinity,
-        radius = radius ?? 20;
+  })  : width = width ?? double.infinity,
+        radius = radius ?? 20,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +35,11 @@ class CustomNetworkImage extends StatelessWidget {
       imageUrl: imageUrl,
       height: height,
       width: width,
-      placeholder: (_,__) => Padding(
+      placeholder: (_, __) => Padding(
         padding: margin ?? EdgeInsets.zero,
         child: placeholder ?? const SizedBox.shrink(),
       ),
-      errorWidget: (_,__,Object? ___) => Padding(
+      errorWidget: (_, __, Object? ___) => Padding(
         padding: margin ?? EdgeInsets.zero,
         child: errorWidget ?? const SizedBox.shrink(),
       ),
@@ -45,7 +47,7 @@ class CustomNetworkImage extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: imageProvider,fit: fit),
+            image: DecorationImage(image: imageProvider, fit: fit),
             borderRadius: borderRadius ?? BorderRadius.circular(radius),
           ),
           margin: margin,

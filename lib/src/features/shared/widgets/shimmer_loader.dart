@@ -4,7 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class ShimmerLoader extends HookWidget {
   final Widget child;
 
-  const ShimmerLoader({required this.child});
+  const ShimmerLoader({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,16 +15,21 @@ class ShimmerLoader extends HookWidget {
       duration: const Duration(milliseconds: 700),
       lowerBound: 0.5,
     );
-    useEffect((){
-      _controller.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _controller.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          _controller.forward();
-        }
-      });
-      _controller.forward();
-    }, const []);
+    useEffect(
+      () {
+        _controller
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              _controller.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+              _controller.forward();
+            }
+          })
+          ..forward();
+        return null;
+      },
+      const [],
+    );
     return FadeTransition(
       opacity: _controller,
       child: child,
