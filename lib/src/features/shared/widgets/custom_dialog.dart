@@ -62,11 +62,11 @@ class CustomDialog extends StatelessWidget {
       backgroundColor: AppColors.scaffoldGreyColor,
       title: Text(title),
       content: Text(body),
-      contentTextStyle: AppTypography.primary.bodySmall.copyWith(
+      contentTextStyle: AppTypography.primary.body14.copyWith(
         color: AppColors.textGreyColor,
         fontSize: FontSizes.f16,
       ),
-      titleTextStyle: AppTypography.primary.bodySmall.copyWith(
+      titleTextStyle: AppTypography.primary.body14.copyWith(
         color: AppColors.textWhite80Color,
         fontSize: FontSizes.f18,
       ),

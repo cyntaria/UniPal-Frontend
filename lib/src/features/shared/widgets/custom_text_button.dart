@@ -64,7 +64,7 @@ class CustomTextButton extends StatelessWidget {
     return TextButton(
       style: textButtonTheme.style!.copyWith(
         overlayColor: MaterialStateProperty.all(
-          disabled ? AppColors.scaffoldGreyColor : theme.primaryColor,
+          disabled ? AppColors.darkSkeletonColor : AppColors.primaryColor,
         ),
       ),
       onPressed: disabled ? () {} : onPressed,

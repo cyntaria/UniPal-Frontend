@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:io' show Platform;
 
 /// A utility class that holds all the core [TextStyle] used
 /// throughout the entire app.
@@ -20,46 +21,47 @@ class AppTypography {
 
   /// The main [_FontStyle] used for most of typography in the app.
   static final primary = _FontStyle(
-    headingLarge: _outfitFont.copyWith(
+    fontFamily: _outfitFont.fontFamily,
+    heading34: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f34,
       fontWeight: FontWeight.bold,
     ),
-    headingSmall: _outfitFont.copyWith(
+    heading24: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f24,
       fontWeight: FontWeight.bold,
     ),
-    titleLarge: _outfitFont.copyWith(
+    title20: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f20,
       fontWeight: FontWeight.w600,
     ),
-    titleSmall: _outfitFont.copyWith(
+    title18: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f18,
     ),
-    subHeading: _outfitFont.copyWith(
+    subHeading16: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f16,
     ),
-    bodyLarge: _outfitFont.copyWith(
+    body16: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f16,
       fontWeight: FontWeight.w600,
     ),
-    bodySmall: _outfitFont.copyWith(
+    body14: _outfitFont.copyWith(
       color: Colors.black87,
     ),
-    subtitle: _outfitFont.copyWith(
+    subtitle13: _outfitFont.copyWith(
       color: Colors.black54,
       fontSize: FontSizes.f13,
     ),
-    labelLarge: _outfitFont.copyWith(
+    label12: _outfitFont.copyWith(
       color: Colors.black54,
       fontSize: FontSizes.f12,
     ),
-    labelSmall: _outfitFont.copyWith(
+    label11: _outfitFont.copyWith(
       color: Colors.black54,
       fontSize: FontSizes.f11,
     ),
@@ -70,45 +72,76 @@ class AppTypography {
 }
 
 /// A class containing all the variations of a [TextTheme], that are
-/// commonly used throughout the app.
+/// commonly used throughout the app. It is used to map common typography
+/// [TextStyle] names to more readable and understable names.
+/// 
+/// This allows non-designer programmers to be comfortable with the [TextTheme]
 @immutable
 class _FontStyle {
-  final TextStyle headingLarge;
-  final TextStyle headingSmall;
-  final TextStyle titleLarge;
-  final TextStyle titleSmall;
-  final TextStyle subHeading;
-  final TextStyle bodyLarge;
-  final TextStyle bodySmall;
-  final TextStyle subtitle;
-  final TextStyle labelLarge;
-  final TextStyle labelSmall;
+  final String? fontFamily;
+  final TextStyle heading34;
+  final TextStyle heading24;
+  final TextStyle title20;
+  final TextStyle title18;
+  final TextStyle subHeading16;
+  final TextStyle body16;
+  final TextStyle body14;
+  final TextStyle subtitle13;
+  final TextStyle label12;
+  final TextStyle label11;
 
   const _FontStyle({
-    required this.headingLarge,
-    required this.headingSmall,
-    required this.titleLarge,
-    required this.titleSmall,
-    required this.subHeading,
-    required this.bodyLarge,
-    required this.bodySmall,
-    required this.subtitle,
-    required this.labelLarge,
-    required this.labelSmall,
+    required this.fontFamily,
+    required this.heading34,
+    required this.heading24,
+    required this.title20,
+    required this.title18,
+    required this.subHeading16,
+    required this.body16,
+    required this.body14,
+    required this.subtitle13,
+    required this.label12,
+    required this.label11,
   });
 
   factory _FontStyle.fromTextTheme(TextTheme textTheme) {
     return _FontStyle(
-      headingLarge: textTheme.headlineLarge!,
-      headingSmall: textTheme.headlineSmall!,
-      titleLarge: textTheme.titleLarge!,
-      titleSmall: textTheme.titleSmall!,
-      subHeading: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w400),
-      bodyLarge: textTheme.bodyLarge!,
-      bodySmall: textTheme.bodyMedium!,
-      labelLarge: textTheme.labelLarge!,
-      labelSmall: textTheme.labelSmall!,
-      subtitle: textTheme.bodySmall!,
+      fontFamily: textTheme.bodyLarge!.fontFamily,
+      heading34: textTheme.headlineLarge!,
+      heading24: textTheme.headlineSmall!,
+      title20: textTheme.titleLarge!,
+      title18: textTheme.titleSmall!,
+      subHeading16: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w400),
+      body16: textTheme.bodyLarge!,
+      body14: textTheme.bodyMedium!,
+      subtitle13: textTheme.bodySmall!,
+      label12: textTheme.labelLarge!,
+      label11: textTheme.labelSmall!,
+    );
+  }
+
+  TextTheme get textTheme {
+    late final typography = Typography.material2018(
+      platform: Platform.isIOS ? TargetPlatform.iOS : TargetPlatform.android,
+    );
+    return typography.white.copyWith(
+      displayLarge: heading34,
+      displayMedium: heading34,
+      displaySmall: heading24,
+      headlineLarge: heading34,
+      headlineMedium: heading34,
+      headlineSmall: heading24,
+      titleLarge: title20,
+      titleMedium: title20,
+      titleSmall: title18,
+      bodyLarge: body16,
+      bodyMedium: body16,
+      bodySmall: body14,
+      subtitle1: subtitle13,
+      subtitle2: subtitle13,
+      labelLarge: label12,
+      labelMedium: label12,
+      labelSmall: label11,
     );
   }
 }

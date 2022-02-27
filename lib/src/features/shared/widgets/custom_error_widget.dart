@@ -53,7 +53,7 @@ class CustomErrorWidget extends StatelessWidget {
             children: [
               Text(
                 'Oops',
-                style: textTheme.headingLarge.copyWith(
+                style: textTheme.heading34.copyWith(
                   color: AppColors.primaryColor,
                   fontSize: 45,
                 ),
@@ -62,7 +62,7 @@ class CustomErrorWidget extends StatelessWidget {
               Text(
                 error.message,
                 textAlign: TextAlign.center,
-                style: textTheme.bodyLarge.copyWith(fontSize: 21),
+                style: textTheme.body16.copyWith(fontSize: 21),
               ),
               const Spacer(),
               CustomTextButton.gradient(
@@ -72,7 +72,7 @@ class CustomErrorWidget extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'RETRY',
-                    style: textTheme.labelLarge.copyWith(
+                    style: textTheme.label12.copyWith(
                       color: Colors.white,
                       fontSize: FontSizes.f16,
                       letterSpacing: 1.1,

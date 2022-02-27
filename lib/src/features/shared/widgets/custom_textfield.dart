@@ -43,7 +43,7 @@ class CustomTextField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.errorAlign = Alignment.centerRight,
     this.floatingAlign = Alignment.centerLeft,
-    this.fillColor = AppColors.scaffoldColor,
+    this.fillColor = AppColors.backgroundColor,
     this.hintText,
     this.hintStyle = const TextStyle(
       fontSize: FontSizes.f16,
@@ -146,7 +146,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: Text(
                 widget.floatingText!,
                 style: widget.floatingStyle ??
-                    AppTypography.primary.bodyLarge.copyWith(
+                    AppTypography.primary.body16.copyWith(
                       color: AppColors.textGreyColor,
                       fontSize: FontSizes.f16,
                     ),
@@ -215,7 +215,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               alignment: widget.errorAlign,
               child: Text(
                 errorText!,
-                style: AppTypography.primary.bodyLarge.copyWith(
+                style: AppTypography.primary.body16.copyWith(
                   fontSize: FontSizes.f16,
                   color: AppColors.primaryColor,
                 ),

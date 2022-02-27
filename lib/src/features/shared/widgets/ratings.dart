@@ -29,7 +29,7 @@ class Ratings extends StatelessWidget {
         //Rating number
         Text(
           rating == 0 ? 'N/A' : rating.toString(),
-          style: AppTypography.primary.bodySmall.copyWith(
+          style: AppTypography.primary.body14.copyWith(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),

@@ -7,9 +7,25 @@ import 'package:flutter/material.dart';
 class AppColors {
   const AppColors._();
 
-  /// The main orange-red color used for theming the app.
-  static const Color primaryColor = Color(0xFFf03400);
+  /// The main purplish color used for theming the app.
+  static const Color primaryColor = Color.fromARGB(255, 135, 0, 224);
 
+  /// The secondary yellowish color used for contrasting
+  /// the primary purple in the app.
+  static const Color secondaryColor = Color.fromARGB(255, 255, 199, 44);
+  
+  /// The tertiary blackish color used for contrasting
+  /// the secondary yellow in the app.
+  static const Color tertiaryColor = Color.fromARGB(255, 43, 43, 43);
+  
+  /// The light greyish color used for background surfaces
+  /// of the app like behind scrolling screens or scaffolds etc.
+  static const Color backgroundColor = Color.fromARGB(255, 247, 247, 247);
+
+  /// The light greyish color used for container/card surfaces
+  /// of the app.
+  static const Color surfaceColor = Color.fromARGB(255, 240, 240, 240);
+  
   /// The color value for red color in the app.
   static const Color redColor = Color(0xFFed0000);
 
@@ -68,14 +84,14 @@ class AppColors {
   /// The color value for dark grey buttons in the app.
   static const Color buttonGreyColor = Color(0xFF1c1c1c);
 
-  /// The color value for dark grey scaffold in the app.
-  static const Color scaffoldColor = Color(0xFF141414);
-
   /// The color value for light grey scaffold in the app.
   static const Color scaffoldGreyColor = Color(0xFF2b2b2b);
 
   /// The color value for light grey text in the app.
   static const Color textGreyColor = Color(0xFF949494);
+
+  /// The color value for dark grey text in the app.
+  static const Color textBlackColor = Color.fromARGB(211, 0, 0, 0);
 
   /// The color value for white text in the app.
   static const Color textWhite80Color = Color(0xFFf2f2f2);
