@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart' as AppStyles;
+import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 //Services
@@ -43,7 +43,7 @@ class CustomErrorWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: AppStyles.Corners.rounded15,
+          borderRadius: Corners.rounded15,
         ),
         height: height,
         margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -58,7 +58,7 @@ class CustomErrorWidget extends StatelessWidget {
                   fontSize: 45,
                 ),
               ),
-              AppStyles.Insets.gapH30,
+              Insets.gapH30,
               Text(
                 error.message,
                 textAlign: TextAlign.center,

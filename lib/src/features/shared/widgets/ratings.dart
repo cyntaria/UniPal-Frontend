@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart' as AppStyles;
+import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 class Ratings extends StatelessWidget {
@@ -35,7 +35,7 @@ class Ratings extends StatelessWidget {
           ),
         ),
 
-        AppStyles.Insets.gapW10,
+        Insets.gapW10,
 
         //Rating stars
         for (int i = 0; i < stars; i++)
@@ -45,7 +45,7 @@ class Ratings extends StatelessWidget {
                 : const EdgeInsets.symmetric(horizontal: 1),
             child: const Icon(
               Icons.star,
-              size: AppStyles.IconSizes.sm,
+              size: IconSizes.sm,
               color: AppColors.starsColor,
             ),
           ),
@@ -58,7 +58,7 @@ class Ratings extends StatelessWidget {
                 : const EdgeInsets.symmetric(horizontal: 1),
             child: Icon(
               Icons.star,
-              size: AppStyles.IconSizes.sm,
+              size: IconSizes.sm,
               color: Colors.grey[300],
             ),
           ),

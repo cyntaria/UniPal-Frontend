@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_typography.dart';
-import '../../../helpers/constants/app_styles.dart' as AppStyles;
+import '../../../helpers/constants/app_styles.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -109,7 +109,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder _focusedBorder() {
     return const OutlineInputBorder(
-      borderRadius: AppStyles.Corners.rounded7,
+      borderRadius: Corners.rounded7,
       borderSide: BorderSide(
         color: AppColors.primaryColor,
         width: 2,
@@ -119,14 +119,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder _normalBorder() {
     return const OutlineInputBorder(
-      borderRadius: AppStyles.Corners.rounded7,
+      borderRadius: Corners.rounded7,
       borderSide: BorderSide.none,
     );
   }
 
   OutlineInputBorder _errorBorder() {
     return const OutlineInputBorder(
-      borderRadius: AppStyles.Corners.rounded7,
+      borderRadius: Corners.rounded7,
       borderSide: BorderSide(
         color: AppColors.redColor,
       ),
@@ -153,7 +153,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
             ),
           ),
-          AppStyles.Insets.gapH2,
+          Insets.gapH2,
         ],
 
         //TextField
@@ -208,7 +208,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
         //Error text
         if (hasError) ...[
-          AppStyles.Insets.gapH2,
+          Insets.gapH2,
           SizedBox(
             width: widget.width,
             child: Align(

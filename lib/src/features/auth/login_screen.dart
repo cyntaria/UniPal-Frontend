@@ -5,7 +5,7 @@ import '../../helpers/constants/app_styles.dart';
 import '../shared/widgets/scrollable_column.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({ Key? key }) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

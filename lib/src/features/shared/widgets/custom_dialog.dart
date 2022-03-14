@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart' as AppStyles;
+import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 //Routing
@@ -53,7 +53,7 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-        borderRadius: AppStyles.Corners.rounded10,
+        borderRadius: Corners.rounded10,
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 19),
       titlePadding: const EdgeInsets.fromLTRB(19, 14, 19, 0),

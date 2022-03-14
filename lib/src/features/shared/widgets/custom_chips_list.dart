@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart' as AppStyles;
+import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 class CustomChipsList extends StatelessWidget {
@@ -61,7 +61,7 @@ class CustomChipsList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: AppStyles.Corners.rounded20,
+        borderRadius: Corners.rounded20,
         border: Border.all(color: borderColor, width: borderWidth),
       ),
       child: Center(
