@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A utility class that holds constants for colors used values 
+/// A utility class that holds constants for colors used values
 /// throughout the entire app.
 /// This class has no constructor and all variables are `static`.
 @immutable
@@ -10,14 +10,17 @@ class AppColors {
   /// The main purplish color used for theming the app.
   static const Color primaryColor = Color.fromARGB(255, 135, 0, 224);
 
+  /// The color value for orange color in the app.
+  static const Color lightPrimaryColor = Color.fromARGB(250, 186, 67, 255);
+
   /// The secondary yellowish color used for contrasting
   /// the primary purple in the app.
   static const Color secondaryColor = Color.fromARGB(255, 255, 199, 44);
-  
+
   /// The tertiary blackish color used for contrasting
   /// the secondary yellow in the app.
   static const Color tertiaryColor = Color.fromARGB(255, 43, 43, 43);
-  
+
   /// The light greyish color used for background surfaces
   /// of the app like behind scrolling screens or scaffolds etc.
   static const Color backgroundColor = Color.fromARGB(255, 247, 247, 247);
@@ -25,12 +28,9 @@ class AppColors {
   /// The light greyish color used for container/card surfaces
   /// of the app.
   static const Color surfaceColor = Color.fromARGB(255, 240, 240, 240);
-  
+
   /// The color value for red color in the app.
   static const Color redColor = Color(0xFFed0000);
-
-  /// The color value for orange color in the app.
-  static const Color orangeColor = Color(0xFFf04f00);
 
   /// The color value for rating stars in the app.
   static const Color starsColor = Color(0xFFf78040);
@@ -47,8 +47,8 @@ class AppColors {
   );
 
   /// The orange [LinearGradient] for buttons in the app.
-  static const Gradient buttonGradientOrange = LinearGradient(
-    colors: [orangeColor, redColor],
+  static const Gradient buttonGradientPurple = LinearGradient(
+    colors: [lightPrimaryColor, primaryColor],
   );
 
   /// The orange [LinearGradient] for disabled buttons in the app.
