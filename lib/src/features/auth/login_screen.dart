@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
@@ -16,11 +17,14 @@ import '../shared/widgets/custom_text_button.dart';
 import '../shared/widgets/custom_textfield.dart';
 import '../shared/widgets/scrollable_column.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends HookWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final formKey = useMemoized(GlobalKey<FormState>.new);
+    final emailController = useTextEditingController(text: '');
+    final passwordController = useTextEditingController(text: '');
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -33,8 +37,8 @@ class LoginScreen extends StatelessWidget {
             Insets.gapH30,
 
             // ERP-Email Input
-            const CustomTextField(
-              // controller: emailController,
+            CustomTextField(
+              controller: emailController,
               floatingText: 'ERP/Email',
               hintText: 'Type your ERP or email address',
               keyboardType: TextInputType.emailAddress,
@@ -45,8 +49,8 @@ class LoginScreen extends StatelessWidget {
             Insets.gapH10,
 
             // Password Input
-            const CustomTextField(
-              // controller: passwordController,
+            CustomTextField(
+              controller: passwordController,
               floatingText: 'Password',
               hintText: 'Type your password',
               keyboardType: TextInputType.visiblePassword,
@@ -79,13 +83,13 @@ class LoginScreen extends StatelessWidget {
             CustomTextButton.gradient(
               width: double.infinity,
               onPressed: () async {
-                // if (formKey.currentState!.validate()) {
-                //   formKey.currentState!.save();
-                //   ref.read(authProvider.notifier).login(
-                //         email: emailController.text,
-                //         password: passwordController.text,
-                //       );
-                // }
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  // ref.read(authProvider.notifier).login(
+                  //       email: emailController.text,
+                  //       password: passwordController.text,
+                  //     );
+                }
               },
               gradient: AppColors.buttonGradientPurple,
               child: Consumer(
