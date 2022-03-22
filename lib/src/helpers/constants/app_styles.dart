@@ -62,6 +62,10 @@ class Insets {
   
   /// [SizedBox] of height **30**.
   static const gapW30 = SizedBox(height: 30);
+
+  /// [Spacer] for adding infinite gaps, as much as the constraints
+  /// allow.
+  static const expand = Spacer();
 }
 
 

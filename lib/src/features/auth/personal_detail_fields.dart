@@ -134,6 +134,8 @@ class PersonalDetailFields extends HookWidget {
           ),
         ),
 
+        Insets.expand,
+
         // Birthday
         CustomTextButton.outlined(
           width: double.infinity,
@@ -197,7 +199,7 @@ class PersonalDetailFields extends HookWidget {
             },
             child: Center(
               child: Text(
-                'CONFIRM',
+                'NEXT',
                 style: AppTypography.secondary.body16.copyWith(
                   color: Colors.white,
                 ),
