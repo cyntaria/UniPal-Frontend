@@ -15,8 +15,11 @@ class Regexes {
   /// The regular expression for validating contacts in the app.
   static RegExp contactRegex = RegExp(r'^(03|3)\d{9}$');
 
-  /// The regular expression for validating full names in the app.
-  static RegExp fullNameRegex = RegExp(r'^[a-zA-Z ]+$');
+  /// The regular expression for validating erps in the app.
+  static RegExp erpRegex = RegExp(r'^[1-9]{1}\d{4}$');
+
+  /// The regular expression for validating names in the app.
+  static RegExp nameRegex = RegExp(r'^[a-zA-Z]+$');
 
   /// The regular expression for validating zip codes in the app.
   static RegExp zipCodeRegex = RegExp(r'^\d{5}$');

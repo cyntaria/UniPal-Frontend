@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 class IconSizes {
   const IconSizes._();
 
-  static const double sm = 19;
-  static const double med = 24;
-  static const double lg = 27;
+  static const double sm19 = 19;
+  static const double med24 = 24;
+  static const double lg27 = 27;
 }
 
 /// A utility class that holds all the gaps and insets used 
@@ -50,6 +50,12 @@ class Insets {
   
   /// [SizedBox] of height **20**.
   static const gapW20 = SizedBox(height: 20);
+
+  /// [SizedBox] of height **25**.
+  static const gapH25 = SizedBox(height: 25);
+  
+  /// [SizedBox] of height **25**.
+  static const gapW25 = SizedBox(height: 25);
   
   /// [SizedBox] of height **30**.
   static const gapH30 = SizedBox(height: 30);

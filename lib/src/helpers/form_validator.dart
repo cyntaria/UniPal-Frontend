@@ -28,8 +28,11 @@ class FormValidator{
   /// The error message for invalid new password input.
   static const _invalidNewPwError = "Current and new password can't be same";
 
-  /// The error message for invalid full name input.
-  static const _invalidFullNameError = 'Please enter a valid full name';
+  /// The error message for invalid name input.
+  static const _invalidNameError = 'Please enter a valid name';
+
+  /// The error message for invalid erp input.
+  static const _invalidErpError = 'Invalid erp format';
 
   /// The error message for empty address input.
   static const _emptyAddressInputError = 'Please enter a address';
@@ -79,10 +82,16 @@ class FormValidator{
     return null;
   }
 
-  /// A method containing validation logic for full name input.
-  static String? fullNameValidator(String? fullName) {
-    if (fullName != null && fullName.isValidFullName) return null;
-    return _invalidFullNameError;
+  /// A method containing validation logic for name input.
+  static String? nameValidator(String? name) {
+    if (name != null && name.isValidName) return null;
+    return _invalidNameError;
+  }
+
+  /// A method containing validation logic for ERP input.
+  static String? erpValidator(String? erp) {
+    if (erp != null && erp.isValidErp) return null;
+    return _invalidErpError;
   }
 
   /// A method containing validation logic for address input.

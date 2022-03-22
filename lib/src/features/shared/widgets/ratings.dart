@@ -45,7 +45,7 @@ class Ratings extends StatelessWidget {
                 : const EdgeInsets.symmetric(horizontal: 1),
             child: const Icon(
               Icons.star,
-              size: IconSizes.sm,
+              size: IconSizes.sm19,
               color: AppColors.starsColor,
             ),
           ),
@@ -58,7 +58,7 @@ class Ratings extends StatelessWidget {
                 : const EdgeInsets.symmetric(horizontal: 1),
             child: Icon(
               Icons.star,
-              size: IconSizes.sm,
+              size: IconSizes.sm19,
               color: Colors.grey[300],
             ),
           ),
