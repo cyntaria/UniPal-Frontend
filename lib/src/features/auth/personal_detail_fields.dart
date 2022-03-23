@@ -35,6 +35,7 @@ class PersonalDetailFields extends HookWidget {
       final initialDate = DateTime.now();
       birthday = await showDatePicker(
             context: context,
+            initialEntryMode: DatePickerEntryMode.calendarOnly,
             initialDate: initialDate,
             firstDate: DateTime(1950),
             lastDate: initialDate,
@@ -134,7 +135,7 @@ class PersonalDetailFields extends HookWidget {
           ),
         ),
 
-        Insets.expand,
+        Insets.gapH25,
 
         // Birthday
         CustomTextButton.outlined(
@@ -158,12 +159,13 @@ class PersonalDetailFields extends HookWidget {
               //Arrow
               Icon(
                 Icons.calendar_today_rounded,
-                size: IconSizes.med24,
                 color: AppColors.primaryColor,
               )
             ],
           ),
         ),
+
+        Insets.expand,
 
         // Confirm Details Button
         CustomTextButton.gradient(

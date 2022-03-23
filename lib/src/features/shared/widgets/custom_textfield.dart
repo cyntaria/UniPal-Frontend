@@ -24,7 +24,7 @@ class CustomTextField extends StatefulWidget {
   final Color fillColor;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
-  final String? Function(String? value) validator;
+  final String? Function(String? value)? validator;
 
   const CustomTextField({
     Key? key,
@@ -45,6 +45,7 @@ class CustomTextField extends StatefulWidget {
     this.floatingAlign = Alignment.centerLeft,
     this.fillColor = AppColors.backgroundColor,
     this.hintText,
+    this.validator,
     this.hintStyle = const TextStyle(
       fontSize: FontSizes.f16,
       color: AppColors.textWhite80Color,
@@ -60,7 +61,6 @@ class CustomTextField extends StatefulWidget {
     this.contentPadding = const EdgeInsets.fromLTRB(17, 10, 1, 10),
     required this.keyboardType,
     required this.textInputAction,
-    required this.validator,
   }) : super(key: key);
 
   @override
@@ -94,7 +94,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   String? _runValidator(String? value) {
-    final error = widget.validator(value!.trim());
+    final error = widget.validator?.call(value!.trim());
     setState(() {
       errorText = error;
     });
