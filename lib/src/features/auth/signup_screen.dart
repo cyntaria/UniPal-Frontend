@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Helpers
 import '../../helpers/constants/app_colors.dart';
@@ -9,7 +8,7 @@ import '../../helpers/constants/app_styles.dart';
 import '../shared/widgets/custom_dialog.dart';
 import '../shared/widgets/scrollable_column.dart';
 
-class SignupScreen extends StatefulHookWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
@@ -37,7 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return Future<bool>.value(true);
   }
 
-  void onFormChanged() {
+  void _onFormChanged() {
     if (!_formHasData) _formHasData = true;
   }
 
@@ -49,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Form(
           key: formKey,
           onWillPop: _showConfirmDialog,
-          onChanged: onFormChanged,
+          onChanged: _onFormChanged,
           child: const ScrollableColumn(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

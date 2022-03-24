@@ -23,8 +23,6 @@ class UniversityDetailFields extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final uniEmailController = useTextEditingController(text: '');
-    final favHangoutSpotController = useTextEditingController(text: '');
-    final favActivityController = useTextEditingController(text: '');
 
     late final DateTime gradYear;
 
@@ -85,35 +83,11 @@ class UniversityDetailFields extends HookWidget {
 
         Insets.gapH25,
 
-        // Program Dropdown
+        // TODO(arafaysaleem): Program Dropdown
 
         Insets.gapH25,
 
-        // Campus Dropdown
-
-        Insets.gapH25,
-
-        // Favorite Hangout Spot
-        CustomTextField(
-          controller: favHangoutSpotController,
-          floatingText: 'Favorite Campus Spot',
-          hintText: 'Type in your fav. hangout spot',
-          keyboardType: TextInputType.text,
-          maxLength: 45,
-          textInputAction: TextInputAction.next,
-        ),
-
-        Insets.gapH25,
-
-        // Favorite Activity
-        CustomTextField(
-          controller: favActivityController,
-          floatingText: 'Favorite Campus Activity',
-          hintText: 'Type in your fav. campus activity',
-          keyboardType: TextInputType.text,
-          maxLength: 45,
-          textInputAction: TextInputAction.done,
-        ),
+        // TODO(arafaysaleem): Campus Dropdown
 
         Insets.expand,
 
