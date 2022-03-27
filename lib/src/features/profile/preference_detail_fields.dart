@@ -12,6 +12,25 @@ import '../shared/widgets/custom_dialog.dart';
 import '../shared/widgets/custom_text_button.dart';
 import '../shared/widgets/custom_textfield.dart';
 import '../shared/widgets/scrollable_column.dart';
+import './filter_chips_list.dart';
+
+const hobbies = [
+  'Cricket',
+  'Cycling',
+  'Reading',
+  'Boxing',
+  'Painting',
+  'Clubbing',
+  'Dancing'
+];
+const interests = [
+  'Netflix',
+  'Literature',
+  'Art',
+  'Fitness',
+  'Education',
+  'Social Wellfare'
+];
 
 class PreferenceDetailFields extends StatefulHookWidget {
   const PreferenceDetailFields({Key? key}) : super(key: key);
@@ -62,11 +81,41 @@ class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
             children: [
               Insets.gapH20,
 
-              // TODO(arafaysaleem): Hobby Chips
+              // Hobbies Label
+              Text(
+                'Hobbies',
+                style: AppTypography.primary.subHeading16,
+              ),
+
+              Insets.gapH5,
+
+              // Hobby Chips
+              FilterChipsList(
+                filters: hobbies,
+                isSelected: (hobby) => hobbies.contains(hobby),
+                onSelected: (hobby) {
+                  // Add to selected hobbies provider
+                },
+              ),
 
               Insets.gapH20,
 
-              // TODO(arafaysaleem): Interest Chips
+              // Interests Label
+              Text(
+                'Interests',
+                style: AppTypography.primary.subHeading16,
+              ),
+
+              Insets.gapH5,
+
+              // Interest Chips
+              FilterChipsList(
+                filters: interests,
+                isSelected: (interest) => interests.contains(interest),
+                onSelected: (interest) {
+                  // Add to selected interests provider
+                },
+              ),
 
               Insets.gapH20,
 
