@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+// Helpers
 import 'app_colors.dart';
 import 'app_typography.dart';
 
 /// A utility class that holds themes for the app. It controls
 /// how the app looks on different platforms like android, ios etc.
-/// 
+///
 /// This class has no constructor and all methods are `static`.
 @immutable
 class AppThemes {
@@ -15,13 +16,13 @@ class AppThemes {
   ///
   /// Sets the following defaults:
   /// * primaryColor: [AppColors.primaryColor],
-  /// 
+  ///
   /// * fontFamily: [AppTypography.primary].fontFamily,
-  /// 
+  ///
   /// * textTheme: [AppTypography.primary].textTheme
-  /// 
+  ///
   /// * iconTheme: [Colors.white] for default icon
-  /// 
+  ///
   /// * textButtonTheme: [TextButtonTheme] without the default padding,
   static late final mainTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
@@ -43,6 +44,13 @@ class AppThemes {
     textTheme: AppTypography.primary.textTheme,
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(padding: EdgeInsets.zero),
+    ),
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      titleTextStyle: AppTypography.primary.heading24,
+      iconTheme: const IconThemeData(color: Colors.black),
     ),
     iconTheme: const IconThemeData(color: Colors.white),
   );
