@@ -1,15 +1,17 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
 
-//Screens
-
-//Routes
+// Screens
 import '../../features/auth/login_screen.dart';
+import '../../features/auth/qr_scanner_screen.dart';
+import '../../features/auth/signup_screen.dart';
 import '../../features/home/app_startup_screen.dart';
 import '../../features/home/home_screen.dart';
+
+// Routing
 import 'routes.dart';
 
-// Type Defs
+// Helpers
 import '../../helpers/typedefs.dart';
 
 /// A utility class provides basic methods for navigation.
@@ -23,7 +25,8 @@ class AppRouter {
     Routes.HomeScreen: (_) => const HomeScreen(),
     Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
     Routes.LoginScreen: (_) => const LoginScreen(),
-    Routes.RegisterScreen: (_) => const SizedBox.shrink(),
+    Routes.RegisterScreen: (_) => const SignupScreen(),
+    Routes.QrScannerScreen: (_) => const QrScannerScreen(),
     Routes.ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     Routes.ChangePasswordScreen: (_) => const SizedBox.shrink(),
     Routes.PostsFeedScreen: (_) => const SizedBox.shrink(),

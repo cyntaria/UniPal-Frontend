@@ -17,26 +17,32 @@ class CustomTextField extends StatefulWidget {
   final void Function(String? value)? onSaved, onChanged;
   final Widget? prefix;
   final bool showCursor;
+  final bool? enabled;
   final bool autofocus;
   final bool showErrorBorder;
   final TextAlign textAlign;
   final Alignment errorAlign, floatingAlign;
   final Color fillColor;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
   final String? Function(String? value)? validator;
 
   const CustomTextField({
     Key? key,
     this.controller,
     this.width,
-    this.height = 47,
     this.maxLength,
     this.floatingText,
     this.floatingStyle,
     this.onSaved,
     this.onChanged,
     this.prefix,
+    this.enabled,
+    this.keyboardType,
+    this.textInputAction,
+    this.hintText,
+    this.validator,
+    this.height = 47,
     this.showCursor = true,
     this.showErrorBorder = false,
     this.autofocus = false,
@@ -44,8 +50,6 @@ class CustomTextField extends StatefulWidget {
     this.errorAlign = Alignment.centerRight,
     this.floatingAlign = Alignment.centerLeft,
     this.fillColor = AppColors.backgroundColor,
-    this.hintText,
-    this.validator,
     this.hintStyle = const TextStyle(
       fontSize: FontSizes.f16,
       color: AppColors.textWhite80Color,
@@ -59,8 +63,6 @@ class CustomTextField extends StatefulWidget {
       color: AppColors.textWhite80Color,
     ),
     this.contentPadding = const EdgeInsets.fromLTRB(17, 10, 1, 10),
-    required this.keyboardType,
-    required this.textInputAction,
   }) : super(key: key);
 
   @override
@@ -165,6 +167,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             textAlign: widget.textAlign,
             autofocus: widget.autofocus,
             maxLength: widget.maxLength,
+            enabled: widget.enabled,
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
             style: widget.inputStyle,

@@ -23,6 +23,7 @@ dependencies:
   hooks_riverpod: ^1.0.3
   intl: ^0.17.0
   json_annotation: ^4.4.0
+  mobile_scanner: ^1.0.0
   mockito: ^5.1.0
   sentry_flutter: ^6.3.0
   shared_preferences: ^2.0.12

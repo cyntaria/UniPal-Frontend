@@ -19,6 +19,9 @@ class Routes {
   /// The name of the route for login screen.
   static const String LoginScreen = '/login-screen';
 
+  /// The name of the route for qr scanner screen.
+  static const String QrScannerScreen = '/qr-scanner-screen';
+
   /// The name of the route for register screen.
   static const String RegisterScreen = '/register-screen';
 

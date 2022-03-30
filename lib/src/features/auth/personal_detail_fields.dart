@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Routing
+import '../../config/routes/app_router.dart';
+import '../../config/routes/routes.dart';
+
 // Helpers
 import '../../helpers/constants/app_assets.dart';
 import '../../helpers/constants/app_colors.dart';
@@ -46,13 +50,32 @@ class PersonalDetailFields extends HookWidget {
     return Column(
       children: [
         // ERP
-        CustomTextField(
-          controller: erpController,
-          floatingText: 'ERP',
-          hintText: 'Type your erp',
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.next,
-          validator: FormValidator.erpValidator,
+        Row(
+          children: [
+            // Scanned value
+            CustomTextField(
+              controller: erpController,
+              enabled: false,
+              floatingText: 'ERP',
+              hintText: 'Scan your IBA ID card',
+              validator: FormValidator.erpValidator,
+            ),
+
+            // Scanner Button
+            IconButton(
+              color: AppColors.secondaryColor,
+              icon: const Icon(
+                Icons.qr_code_scanner_rounded,
+                color: AppColors.tertiaryColor,
+              ),
+              onPressed: () async {
+                final qrCode = await AppRouter.pushNamed(
+                  Routes.QrScannerScreen,
+                ) as String;
+                erpController.text = qrCode;
+              },
+            )
+          ],
         ),
 
         Insets.gapH25,
