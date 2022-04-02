@@ -3,14 +3,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
-import '../../helpers/constants/app_colors.dart';
-import '../../helpers/constants/app_styles.dart';
-import '../../helpers/constants/app_typography.dart';
-import '../../helpers/form_validator.dart';
+import '../../../helpers/constants/app_colors.dart';
+import '../../../helpers/constants/app_styles.dart';
+import '../../../helpers/constants/app_typography.dart';
+import '../../../helpers/form_validator.dart';
 
 // Widgets
-import '../shared/widgets/custom_text_button.dart';
-import '../shared/widgets/custom_textfield.dart';
+import '../../shared/widgets/custom_text_button.dart';
+import '../../shared/widgets/custom_textfield.dart';
 
 class UniversityDetailFields extends HookWidget {
   final GlobalKey<FormState> formKey;

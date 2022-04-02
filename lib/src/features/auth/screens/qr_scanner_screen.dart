@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-// Router
-import '../../config/routes/app_router.dart';
+// Routing
+import '../../../config/routes/app_router.dart';
 
 class QrScannerScreen extends StatefulWidget {
   const QrScannerScreen({Key? key}) : super(key: key);

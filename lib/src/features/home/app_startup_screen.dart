@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-//routes
-import '../auth/login_screen.dart';
-import 'home_screen.dart';
+// Screens
+import '../auth/screens/login_screen.dart';
+import './home_screen.dart';
 
 class AppStartupScreen extends HookConsumerWidget {
   const AppStartupScreen({Key? key}) : super(key: key);

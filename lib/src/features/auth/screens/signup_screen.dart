@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../helpers/constants/app_colors.dart';
-import '../../helpers/constants/app_styles.dart';
+import '../../../helpers/constants/app_colors.dart';
+import '../../../helpers/constants/app_styles.dart';
 
 // Widgets
-import '../shared/widgets/custom_dialog.dart';
-import '../shared/widgets/scrollable_column.dart';
+import '../../shared/widgets/custom_dialog.dart';
+import '../../shared/widgets/scrollable_column.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);

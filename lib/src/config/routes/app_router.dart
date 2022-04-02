@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Screens
-import '../../features/auth/login_screen.dart';
-import '../../features/auth/qr_scanner_screen.dart';
-import '../../features/auth/signup_screen.dart';
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/auth/screens/qr_scanner_screen.dart';
+import '../../features/auth/screens/signup_screen.dart';
 import '../../features/home/app_startup_screen.dart';
 import '../../features/home/home_screen.dart';
 
 // Routing
-import 'routes.dart';
+import './routes.dart';
 
 // Helpers
 import '../../helpers/typedefs.dart';
