@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../helpers/extensions/context_extensions.dart';
 
 //Services
-import '../../../core/networking/network_exception.dart';
+import '../../../core/networking/custom_exception.dart';
 
 //Widgets
 import 'custom_error_widget.dart';
@@ -28,14 +28,14 @@ class ErrorResponseHandler extends StatelessWidget {
     VoidCallback? onError,
     required Object error,
     required StackTrace? stackTrace,
-    required Widget Function(NetworkException) builder,
+    required Widget Function(CustomException) builder,
   }) = _ErrorResponseHandlerWithBuilder;
 
   @override
   Widget build(BuildContext context) {
-    if (error is NetworkException) {
+    if (error is CustomException) {
       return CustomErrorWidget.dark(
-        error: error as NetworkException,
+        error: error as CustomException,
         retryCallback: retryCallback!,
         height: context.screenHeight * 0.5,
       );
@@ -48,7 +48,7 @@ class ErrorResponseHandler extends StatelessWidget {
 }
 
 class _ErrorResponseHandlerWithBuilder extends ErrorResponseHandler {
-  final Widget Function(NetworkException) builder;
+  final Widget Function(CustomException) builder;
 
   const _ErrorResponseHandlerWithBuilder({
     Key? key,
@@ -66,7 +66,7 @@ class _ErrorResponseHandlerWithBuilder extends ErrorResponseHandler {
 
   @override
   Widget build(BuildContext context) {
-    if (error is NetworkException) return builder(error as NetworkException);
+    if (error is CustomException) return builder(error as CustomException);
     onError?.call();
     debugPrint(error.toString());
     debugPrint(stackTrace?.toString());

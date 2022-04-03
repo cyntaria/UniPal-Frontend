@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 // Exceptions
-import 'network_exception.dart';
+import './custom_exception.dart';
 
 // Helpers
 import '../../helpers/typedefs.dart';
@@ -50,7 +50,7 @@ class DioService {
   /// **decoded** response.
   ///
   /// Any errors encountered during the request are caught and a custom
-  /// [NetworkException] is thrown.
+  /// [CustomException] is thrown.
   ///
   /// [queryParams] holds any query parameters for the request.
   ///
@@ -64,24 +64,20 @@ class DioService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    try {
-      final response = await _dio.get<JSON>(
-        endpoint,
-        queryParameters: queryParams,
-        options: options,
-        cancelToken: cancelToken ?? _cancelToken,
-      );
-      return response.data!;
-    } on Exception catch (ex) {
-      throw NetworkException.fromDioException(ex);
-    }
+    final response = await _dio.get<JSON>(
+      endpoint,
+      queryParameters: queryParams,
+      options: options,
+      cancelToken: cancelToken ?? _cancelToken,
+    );
+    return response.data!;
   }
 
   /// This method sends a `POST` request to the [endpoint] and returns the
   /// **decoded** response.
   ///
   /// Any errors encountered during the request are caught and a custom
-  /// [NetworkException] is thrown.
+  /// [CustomException] is thrown.
   ///
   /// The [data] contains body for the request.
   ///
@@ -95,24 +91,20 @@ class DioService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    try {
-      final response = await _dio.post<JSON>(
-        endpoint,
-        data: data,
-        options: options,
-        cancelToken: cancelToken ?? _cancelToken,
-      );
-      return response.data!;
-    } on Exception catch (ex) {
-      throw NetworkException.fromDioException(ex);
-    }
+    final response = await _dio.post<JSON>(
+      endpoint,
+      data: data,
+      options: options,
+      cancelToken: cancelToken ?? _cancelToken,
+    );
+    return response.data!;
   }
 
   /// This method sends a `PATCH` request to the [endpoint] and returns the
   /// **decoded** response.
   ///
   /// Any errors encountered during the request are caught and a custom
-  /// [NetworkException] is thrown.
+  /// [CustomException] is thrown.
   ///
   /// The [data] contains body for the request.
   ///
@@ -126,24 +118,20 @@ class DioService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    try {
-      final response = await _dio.put<JSON>(
-        endpoint,
-        data: data,
-        options: options,
-        cancelToken: cancelToken ?? _cancelToken,
-      );
-      return response.data!;
-    } on Exception catch (ex) {
-      throw NetworkException.fromDioException(ex);
-    }
+    final response = await _dio.put<JSON>(
+      endpoint,
+      data: data,
+      options: options,
+      cancelToken: cancelToken ?? _cancelToken,
+    );
+    return response.data!;
   }
 
   /// This method sends a `DELETE` request to the [endpoint] and returns the
   /// **decoded** response.
   ///
   /// Any errors encountered during the request are caught and a custom
-  /// [NetworkException] is thrown.
+  /// [CustomException] is thrown.
   ///
   /// The [data] contains body for the request.
   ///
@@ -157,16 +145,12 @@ class DioService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    try {
-      final response = await _dio.delete<JSON>(
-        endpoint,
-        data: data,
-        options: options,
-        cancelToken: cancelToken ?? _cancelToken,
-      );
-      return response.data!;
-    } on Exception catch (ex) {
-      throw NetworkException.fromDioException(ex);
-    }
+    final response = await _dio.delete<JSON>(
+      endpoint,
+      data: data,
+      options: options,
+      cancelToken: cancelToken ?? _cancelToken,
+    );
+    return response.data!;
   }
 }

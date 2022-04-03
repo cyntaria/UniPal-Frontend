@@ -6,13 +6,13 @@ import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 //Services
-import '../../../core/networking/network_exception.dart';
+import '../../../core/networking/custom_exception.dart';
 
 //Widgets
 import 'custom_text_button.dart';
 
 class CustomErrorWidget extends StatelessWidget {
-  final NetworkException error;
+  final CustomException error;
   final Color backgroundColor;
   final double height;
   final VoidCallback retryCallback;
@@ -25,13 +25,13 @@ class CustomErrorWidget extends StatelessWidget {
   });
 
   const factory CustomErrorWidget.dark({
-    required NetworkException error,
+    required CustomException error,
     required VoidCallback retryCallback,
     double? height,
   }) = _CustomErrorWidgetDark;
 
   const factory CustomErrorWidget.light({
-    required NetworkException error,
+    required CustomException error,
     required VoidCallback retryCallback,
     double? height,
   }) = _CustomErrorWidgetLight;
@@ -91,7 +91,7 @@ class CustomErrorWidget extends StatelessWidget {
 
 class _CustomErrorWidgetDark extends CustomErrorWidget {
   const _CustomErrorWidgetDark({
-    required NetworkException error,
+    required CustomException error,
     required VoidCallback retryCallback,
     double? height,
   }) : super._(
@@ -104,7 +104,7 @@ class _CustomErrorWidgetDark extends CustomErrorWidget {
 
 class _CustomErrorWidgetLight extends CustomErrorWidget {
   const _CustomErrorWidgetLight({
-    required NetworkException error,
+    required CustomException error,
     required VoidCallback retryCallback,
     double? height,
   }) : super._(
