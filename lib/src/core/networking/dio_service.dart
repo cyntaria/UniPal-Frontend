@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 
-//Exceptions
+// Exceptions
 import 'network_exception.dart';
 
-//helpers
+// Helpers
 import '../../helpers/typedefs.dart';
 
 /// A service class that wraps the [Dio] instance and provides methods for
@@ -21,10 +21,18 @@ class DioService {
   /// A public constructor that is used to create a Dio service and initialize
   /// the underlying [Dio] client.
   ///
-  /// Attaches any external [Interceptor]s to the underlying [_dio] client.
-  DioService({required Dio dioClient, Iterable<Interceptor>? interceptors})
-  : _dio = dioClient, _cancelToken = CancelToken() {
+  /// * [interceptors]: An [Iterable] for attaching custom
+  /// [Interceptor]s to the underlying [_dio] client.
+  /// * [httpClientAdapter]: Replaces the underlying [HttpClientAdapter] with
+  /// this custom one.
+  DioService({
+    required Dio dioClient,
+    Iterable<Interceptor>? interceptors,
+    HttpClientAdapter? httpClientAdapter,
+  })  : _dio = dioClient,
+        _cancelToken = CancelToken() {
     if (interceptors != null) _dio.interceptors.addAll(interceptors);
+    if (httpClientAdapter != null) _dio.httpClientAdapter = httpClientAdapter;
   }
 
   /// This method invokes the [cancel()] method on either the input
