@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -16,6 +17,7 @@ import '../../../helpers/form_validator.dart';
 // Widgets
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
+import '../../shared/widgets/scrollable_column.dart';
 import './gender_selection_cards.dart';
 
 class PersonalDetailFields extends HookWidget {
@@ -33,11 +35,11 @@ class PersonalDetailFields extends HookWidget {
     final lastNameController = useTextEditingController(text: '');
     final contactController = useTextEditingController(text: '');
     final emailController = useTextEditingController(text: '');
-    late final DateTime birthday;
+    final birthdayController = useValueNotifier<DateTime?>(null);
 
     Future<void> pickDate() async {
       final initialDate = DateTime.now();
-      birthday = await showDatePicker(
+      birthdayController.value = await showDatePicker(
             context: context,
             initialEntryMode: DatePickerEntryMode.calendarOnly,
             initialDate: initialDate,
@@ -47,38 +49,34 @@ class PersonalDetailFields extends HookWidget {
           initialDate;
     }
 
-    return Column(
+    return ScrollableColumn(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
-        // ERP
-        Row(
-          children: [
-            // Scanned value
-            CustomTextField(
-              controller: erpController,
-              enabled: false,
-              floatingText: 'ERP',
-              hintText: 'Scan your IBA ID card',
-              validator: FormValidator.erpValidator,
-            ),
+        Insets.expand,
 
-            // Scanner Button
-            IconButton(
-              color: AppColors.secondaryColor,
-              icon: const Icon(
-                Icons.qr_code_scanner_rounded,
-                color: AppColors.tertiaryColor,
-              ),
-              onPressed: () async {
-                final qrCode = await AppRouter.pushNamed(
-                  Routes.QrScannerScreen,
-                ) as String;
-                erpController.text = qrCode;
-              },
-            )
-          ],
+        // ERP
+        CustomTextField(
+          controller: erpController,
+          readOnly: true,
+          floatingText: 'ERP',
+          hintText: 'Scan your IBA ID card',
+          validator: FormValidator.erpValidator,
+          suffix: IconButton(
+            icon: const Icon(
+              Icons.qr_code_scanner_rounded,
+              color: AppColors.tertiaryColor,
+              size: IconSizes.med22,
+            ),
+            onPressed: () async {
+              final qrCode = await AppRouter.pushNamed(
+                Routes.QrScannerScreen,
+              ) as String;
+              erpController.text = qrCode;
+            },
+          ),
         ),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
         // First name
         CustomTextField(
@@ -90,7 +88,7 @@ class PersonalDetailFields extends HookWidget {
           validator: FormValidator.nameValidator,
         ),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
         // Last name
         CustomTextField(
@@ -102,7 +100,7 @@ class PersonalDetailFields extends HookWidget {
           validator: FormValidator.nameValidator,
         ),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
         // Email
         CustomTextField(
@@ -114,12 +112,12 @@ class PersonalDetailFields extends HookWidget {
           validator: FormValidator.emailValidator,
         ),
 
-        Insets.gapH25,
+        Insets.gapH20,
 
         // Gender
         const GenderSelectionCards(),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
         // Contact
         CustomTextField(
@@ -131,19 +129,19 @@ class PersonalDetailFields extends HookWidget {
           validator: FormValidator.contactValidator,
           prefix: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(17, 0, 5, 0),
-                child: Image.asset(AppAssets.pkFlag, width: 25),
-              ),
-              const Text(
+            children: const [
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(17, 0, 5, 0),
+              //   child: Image.asset(AppAssets.pkFlag, width: 25),
+              // ),
+              Text(
                 '+92',
                 style: TextStyle(
                   fontSize: 18,
                   color: AppColors.textWhite80Color,
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: VerticalDivider(thickness: 1.1, color: Colors.white),
               )
@@ -151,29 +149,38 @@ class PersonalDetailFields extends HookWidget {
           ),
         ),
 
-        Insets.gapH25,
+        Insets.gapH20,
 
         // Birthday
         CustomTextButton.outlined(
           width: double.infinity,
           onPressed: pickDate,
           padding: const EdgeInsets.only(left: 20, right: 15),
-          border: Border.all(color: AppColors.primaryColor, width: 4),
+          border: Border.all(color: AppColors.primaryColor, width: 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Select Birthday',
-                style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 15,
-                  letterSpacing: 0.7,
-                  fontWeight: FontWeight.w600,
-                ),
+            children: [
+              ValueListenableBuilder<DateTime?>(
+                valueListenable: birthdayController,
+                builder: (_, birthday, __) {
+                  var bday = 'Select Birthday';
+                  if (birthday != null) {
+                    bday = DateFormat('d MMMM y').format(birthday);
+                  }
+                  return Text(
+                    bday,
+                    style: const TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 15,
+                      letterSpacing: 0.7,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
 
               //Arrow
-              Icon(
+              const Icon(
                 Icons.calendar_today_rounded,
                 color: AppColors.primaryColor,
               )

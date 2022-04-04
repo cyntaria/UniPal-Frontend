@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
+import '../../../helpers/constants/app_utils.dart';
 
 class CustomRadioButton<T> extends StatelessWidget {
   final bool isSelected;
   final IconData icon;
   final String label;
   final double width;
-  final ShapeBorder shape;
+  final double height;
+  final BorderRadiusGeometry borderRadius;
   final void Function(T) onTap;
   final T value;
 
   const CustomRadioButton({
     Key? key,
-    this.width = 95,
-    this.shape = const RoundedRectangleBorder(
-      borderRadius: Corners.rounded7,
-    ),
+    this.width = 106,
+    this.height = 47,
+    this.borderRadius = Corners.rounded7,
     required this.value,
     required this.isSelected,
     required this.onTap,
@@ -33,12 +34,19 @@ class CustomRadioButton<T> extends StatelessWidget {
       onTap: () => onTap.call(value),
       child: SizedBox(
         width: width,
-        child: Card(
-          shape: shape,
-          color: isSelected ? AppColors.primaryColor : AppColors.surfaceColor,
+        height: height,
+        child: AnimatedContainer(
+          curve: Curves.ease,
+          duration: Durations.medium,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            gradient: isSelected ? AppColors.buttonGradientPurple : null,
+            color: AppColors.surfaceColor,
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Icon
                 Icon(
@@ -46,17 +54,15 @@ class CustomRadioButton<T> extends StatelessWidget {
                   color: isSelected ? Colors.white : AppColors.textGreyColor,
                 ),
 
-                Insets.expand,
+                Insets.gapW3,
 
                 // Label
                 Text(
                   label,
-                  style: AppTypography.primary.label12.copyWith(
-                    color: AppColors.textGreyColor,
+                  style: AppTypography.primary.body14.copyWith(
+                    color: isSelected ? Colors.white : AppColors.textGreyColor,
                   ),
                 ),
-
-                Insets.expand,
               ],
             ),
           ),

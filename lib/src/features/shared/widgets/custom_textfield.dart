@@ -15,9 +15,10 @@ class CustomTextField extends StatefulWidget {
   final TextStyle? floatingStyle;
   final EdgeInsets? contentPadding;
   final void Function(String? value)? onSaved, onChanged;
-  final Widget? prefix;
+  final Widget? prefix, suffix;
   final bool showCursor;
   final bool? enabled;
+  final bool readOnly;
   final bool autofocus;
   final bool showErrorBorder;
   final TextAlign textAlign;
@@ -37,22 +38,24 @@ class CustomTextField extends StatefulWidget {
     this.onSaved,
     this.onChanged,
     this.prefix,
+    this.suffix,
     this.enabled,
     this.keyboardType,
     this.textInputAction,
     this.hintText,
     this.validator,
     this.height = 47,
+    this.readOnly = false,
     this.showCursor = true,
     this.showErrorBorder = false,
     this.autofocus = false,
     this.textAlign = TextAlign.start,
     this.errorAlign = Alignment.centerRight,
     this.floatingAlign = Alignment.centerLeft,
-    this.fillColor = AppColors.backgroundColor,
+    this.fillColor = AppColors.surfaceColor,
     this.hintStyle = const TextStyle(
       fontSize: FontSizes.f16,
-      color: AppColors.textWhite80Color,
+      color: AppColors.textGreyColor,
     ),
     this.errorStyle = const TextStyle(
       height: 0,
@@ -60,9 +63,9 @@ class CustomTextField extends StatefulWidget {
     ),
     this.inputStyle = const TextStyle(
       fontSize: FontSizes.f16,
-      color: AppColors.textWhite80Color,
+      color: AppColors.textGreyColor,
     ),
-    this.contentPadding = const EdgeInsets.fromLTRB(17, 10, 1, 10),
+    this.contentPadding = const EdgeInsets.fromLTRB(17, 13, 1, 13),
   }) : super(key: key);
 
   @override
@@ -139,7 +142,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        //Floating text
+        // Floating text
         if (hasFloatingText) ...[
           SizedBox(
             width: widget.width,
@@ -148,17 +151,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: Text(
                 widget.floatingText!,
                 style: widget.floatingStyle ??
-                    AppTypography.primary.body16.copyWith(
-                      color: AppColors.textGreyColor,
-                      fontSize: FontSizes.f16,
+                    AppTypography.primary.subHeading16.copyWith(
+                      color: AppColors.textBlackColor,
                     ),
               ),
             ),
           ),
-          Insets.gapH2,
+          const SizedBox(height: 4),
         ],
 
-        //TextField
+        // TextField
         SizedBox(
           height: widget.height,
           width: widget.width,
@@ -168,6 +170,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             autofocus: widget.autofocus,
             maxLength: widget.maxLength,
             enabled: widget.enabled,
+            readOnly: widget.readOnly,
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
             style: widget.inputStyle,
@@ -175,7 +178,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             textAlignVertical: TextAlignVertical.center,
             autovalidateMode: AutovalidateMode.disabled,
-            cursorColor: Colors.white,
+            cursorColor: AppColors.textGreyColor,
             obscureText: isPasswordField && hidePassword,
             validator: _runValidator,
             onFieldSubmitted: _runValidator,
@@ -195,32 +198,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
               focusedBorder: _focusedBorder(),
               focusedErrorBorder: _focusedBorder(),
               errorBorder: showErrorBorder ? _errorBorder() : null,
-              suffixIcon: isPasswordField
-                  ? InkWell(
-                      onTap: _togglePasswordVisibility,
-                      child: const Icon(
-                        Icons.remove_red_eye_sharp,
-                        color: AppColors.textGreyColor,
-                        size: 22,
-                      ),
-                    )
-                  : null,
+              suffixIcon: widget.suffix ??
+                  (isPasswordField
+                      ? InkWell(
+                          onTap: _togglePasswordVisibility,
+                          child: const Icon(
+                            Icons.remove_red_eye_sharp,
+                            color: AppColors.textGreyColor,
+                            size: IconSizes.med22,
+                          ),
+                        )
+                      : null),
             ),
           ),
         ),
 
-        //Error text
+        // Error text
         if (hasError) ...[
-          Insets.gapH2,
+          Insets.gapH3,
           SizedBox(
             width: widget.width,
             child: Align(
               alignment: widget.errorAlign,
               child: Text(
                 errorText!,
-                style: AppTypography.primary.body16.copyWith(
-                  fontSize: FontSizes.f16,
-                  color: AppColors.primaryColor,
+                style: AppTypography.primary.body14.copyWith(
+                  color: AppColors.redColor,
                 ),
               ),
             ),

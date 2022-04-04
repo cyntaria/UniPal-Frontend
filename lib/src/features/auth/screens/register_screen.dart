@@ -7,15 +7,16 @@ import '../../../helpers/constants/app_styles.dart';
 // Widgets
 import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/scrollable_column.dart';
+import '../widgets/personal_detail_fields.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _SignupScreenState createState() => _SignupScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _formHasData = false;
   late final formKey = GlobalKey<FormState>();
 
@@ -43,31 +44,14 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Form(
-          key: formKey,
-          onWillPop: _showConfirmDialog,
-          onChanged: _onFormChanged,
-          child: const ScrollableColumn(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Insets.gapH20,
-
-              // Do if-else on RegistrationState
-
-              // When Personal
-              // Display Personal Details Fields
-
-              // When University
-              // Display University Details Fields
-
-              // When Preferences
-              // Display Preferences Details Fields
-
-              // When Password
-              // Display Password Details Fields
-            ],
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Form(
+            key: formKey,
+            onWillPop: _showConfirmDialog,
+            onChanged: _onFormChanged,
+            child: PersonalDetailFields(formKey: formKey),
           ),
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // Screens
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/qr_scanner_screen.dart';
-import '../../features/auth/screens/signup_screen.dart';
+import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/app_startup_screen.dart';
 import '../../features/home/home_screen.dart';
 
@@ -25,7 +25,7 @@ class AppRouter {
     Routes.HomeScreen: (_) => const HomeScreen(),
     Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
     Routes.LoginScreen: (_) => const LoginScreen(),
-    Routes.RegisterScreen: (_) => const SignupScreen(),
+    Routes.RegisterScreen: (_) => const RegisterScreen(),
     Routes.QrScannerScreen: (_) => const QrScannerScreen(),
     Routes.ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     Routes.ChangePasswordScreen: (_) => const SizedBox.shrink(),

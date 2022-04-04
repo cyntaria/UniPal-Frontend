@@ -46,25 +46,39 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
           ),
 
           // Flash On/Off
-          if(_qrController.hasTorch) IconButton(
-            onPressed: _qrController.toggleTorch,
-            icon: ValueListenableBuilder<TorchState>(
-              valueListenable: _qrController.torchState,
-              builder: (_, state, __) {
-                return state == TorchState.on
-                    ? const Icon(Icons.lightbulb_rounded)
-                    : const Icon(Icons.lightbulb_outline);
-              },
+          ValueListenableBuilder<CameraFacing>(
+            valueListenable: _qrController.cameraFacingState,
+            builder: (_, state, child) {
+              return state == CameraFacing.back
+                  ? child!
+                  : const SizedBox.shrink();
+            },
+            child: IconButton(
+              onPressed: _qrController.toggleTorch,
+              icon: ValueListenableBuilder<TorchState>(
+                valueListenable: _qrController.torchState,
+                builder: (_, state, __) {
+                  return state == TorchState.on
+                      ? const Icon(Icons.lightbulb_rounded)
+                      : const Icon(Icons.lightbulb_outline);
+                },
+              ),
             ),
           ),
         ],
       ),
-      body: MobileScanner(
-        controller: _qrController,
-        onDetect: (barcode, args) {
-          final code = barcode.rawValue;
-          AppRouter.pop(code);
-        },
+      body: Center(
+        child: SizedBox(
+          height: 300,
+          width: 300,
+          child: MobileScanner(
+            controller: _qrController,
+            onDetect: (barcode, args) {
+              final code = barcode.rawValue;
+              AppRouter.pop(code);
+            },
+          ),
+        ),
       ),
     );
   }

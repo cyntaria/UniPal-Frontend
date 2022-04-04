@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Helpers
+import '../../../helpers/constants/app_styles.dart';
+
 // Enums
 import '../enums/gender_enum.dart';
 
@@ -29,35 +32,37 @@ class _GenderSelectionCardsState extends State<GenderSelectionCards> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: ValueListenableBuilder<Gender>(
-        valueListenable: genderNotifier,
-        builder: (_, gender, __) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              // Male Radio
-              CustomRadioButton<Gender>(
+    return ValueListenableBuilder<Gender>(
+      valueListenable: genderNotifier,
+      builder: (_, gender, __) {
+        return Row(
+          children: [
+            // Male Radio
+            Expanded(
+              child: CustomRadioButton<Gender>(
                 value: Gender.male,
                 isSelected: gender == Gender.male,
                 icon: Icons.male_rounded,
                 label: 'Male',
                 onTap: selectGender,
               ),
+            ),
 
-              // Female Radio
-              CustomRadioButton<Gender>(
+            Insets.gapW10,
+
+            // Female Radio
+            Expanded(
+              child: CustomRadioButton<Gender>(
                 value: Gender.female,
                 isSelected: gender == Gender.female,
                 icon: Icons.female_rounded,
                 label: 'Female',
                 onTap: selectGender,
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

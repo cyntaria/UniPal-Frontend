@@ -9,7 +9,7 @@ class IconSizes {
   const IconSizes._();
 
   static const double sm19 = 19;
-  static const double med24 = 24;
+  static const double med22 = 22;
   static const double lg27 = 27;
 }
 
@@ -22,10 +22,10 @@ class Insets {
   const Insets._();
 
   /// [SizedBox] of height **2**.
-  static const gapH2 = SizedBox(height: 2);
+  static const gapH3 = SizedBox(height: 3);
 
   /// [SizedBox] of width **2**.
-  static const gapW2 = SizedBox(width: 2);
+  static const gapW3 = SizedBox(width: 3);
 
   /// [SizedBox] of height **5**.
   static const gapH5 = SizedBox(height: 5);
@@ -43,25 +43,25 @@ class Insets {
   static const gapH15 = SizedBox(height: 15);
   
   /// [SizedBox] of height **15**.
-  static const gapW15 = SizedBox(height: 15);
+  static const gapW15 = SizedBox(width: 15);
 
   /// [SizedBox] of height **20**.
   static const gapH20 = SizedBox(height: 20);
   
   /// [SizedBox] of height **20**.
-  static const gapW20 = SizedBox(height: 20);
+  static const gapW20 = SizedBox(width: 20);
 
   /// [SizedBox] of height **25**.
   static const gapH25 = SizedBox(height: 25);
   
   /// [SizedBox] of height **25**.
-  static const gapW25 = SizedBox(height: 25);
+  static const gapW25 = SizedBox(width: 25);
   
   /// [SizedBox] of height **30**.
   static const gapH30 = SizedBox(height: 30);
   
   /// [SizedBox] of height **30**.
-  static const gapW30 = SizedBox(height: 30);
+  static const gapW30 = SizedBox(width: 30);
 
   /// [Spacer] for adding infinite gaps, as much as the constraints
   /// allow.

@@ -94,7 +94,7 @@ class AppColors {
   static const Color textGreyColor = Color(0xFF949494);
 
   /// The color value for dark grey text in the app.
-  static const Color textBlackColor = Color.fromARGB(211, 0, 0, 0);
+  static const Color textBlackColor = Color.fromARGB(255, 43, 43, 43);
 
   /// The color value for white text in the app.
   static const Color textWhite80Color = Color(0xFFf2f2f2);

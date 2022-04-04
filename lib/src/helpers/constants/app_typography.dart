@@ -44,11 +44,11 @@ class AppTypography {
     subHeading16: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f16,
+      fontWeight: FontWeight.bold,
     ),
     body16: _outfitFont.copyWith(
       color: Colors.black87,
       fontSize: FontSizes.f16,
-      fontWeight: FontWeight.w600,
     ),
     body14: _outfitFont.copyWith(
       color: Colors.black87,
