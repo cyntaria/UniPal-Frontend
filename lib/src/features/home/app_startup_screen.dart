@@ -10,7 +10,7 @@ class AppStartupScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const authState = true;
+    const authState = false;
     return authState ? const HomeScreen() : const LoginScreen();
   }
 }
