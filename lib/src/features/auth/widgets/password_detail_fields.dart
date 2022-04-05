@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Providers
+import '../providers/auth_provider.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -10,10 +13,11 @@ import '../../../helpers/form_validator.dart';
 
 // Widgets
 import '../../shared/widgets/custom_text_button.dart';
+import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 
-class PasswordDetailFields extends HookWidget {
+class PasswordDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const PasswordDetailFields({
@@ -21,8 +25,17 @@ class PasswordDetailFields extends HookWidget {
     required this.formKey,
   }) : super(key: key);
 
+  void saveForm(WidgetRef ref, {required String password}) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      ref.read(authProvider.notifier).register(
+            password: password,
+          );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final passwordController = useTextEditingController(text: '');
     final cPasswordController = useTextEditingController(text: '');
 
@@ -31,7 +44,7 @@ class PasswordDetailFields extends HookWidget {
       children: [
         Insets.expand,
 
-        //Password
+        // Password
         CustomTextField(
           controller: passwordController,
           autofocus: true,
@@ -44,7 +57,7 @@ class PasswordDetailFields extends HookWidget {
 
         Insets.gapH25,
 
-        //Confirm Password
+        // Confirm Password
         CustomTextField(
           controller: cPasswordController,
           floatingText: 'Confirm Password',
@@ -62,34 +75,18 @@ class PasswordDetailFields extends HookWidget {
         // Set Password Button
         CustomTextButton.gradient(
           width: double.infinity,
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              formKey.currentState!.save();
-              // ref.read(authProvider.notifier).register(
-              //       email: email,
-              //       password: password,
-              //       fullName: fullName,
-              //       address: address,
-              //       contact: contact,
-              //     );
-            }
-          },
+          onPressed: () => saveForm(
+            ref,
+            password: passwordController.text,
+          ),
           gradient: AppColors.buttonGradientPurple,
           child: Consumer(
             builder: (context, ref, child) {
-              return child!;
-              // final authState = ref.watch(authProvider);
-              // return authState.maybeWhen(
-              //   authenticating: () => const Center(
-              //     child: SpinKitRing(
-              //       color: Colors.white,
-              //       size: 30,
-              //       lineWidth: 4,
-              //       duration: Duration(milliseconds: 1100),
-              //     ),
-              //   ),
-              //   orElse: () => child!,
-              // );
+              final authState = ref.watch(authProvider);
+              return authState.maybeWhen(
+                authenticating: () => const CustomCircularLoader(),
+                orElse: () => child!,
+              );
             },
             child: Center(
               child: Text(

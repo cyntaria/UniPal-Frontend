@@ -3,6 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
+// Providers
+import '../providers/auth_provider.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -10,11 +13,12 @@ import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
 // Widgets
+import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 
-class UniversityDetailFields extends HookWidget {
+class UniversityDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const UniversityDetailFields({
@@ -22,9 +26,29 @@ class UniversityDetailFields extends HookWidget {
     required this.formKey,
   }) : super(key: key);
 
+  void saveForm(
+    WidgetRef ref, {
+    required String uniEmail,
+    required DateTime gradYear,
+    required String program,
+    required String campus,
+  }) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      ref.read(authProvider.notifier).saveUniversityDetails(
+            uniEmail: uniEmail,
+            gradYear: gradYear,
+            program: program,
+            campus: campus,
+          );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final uniEmailController = useTextEditingController(text: '');
+    final programController = useTextEditingController(text: '');
+    final campusController = useTextEditingController(text: '');
     final gradYearController = useValueNotifier<DateTime?>(null);
 
     Future<void> pickDate() async {
@@ -107,34 +131,21 @@ class UniversityDetailFields extends HookWidget {
         // Confirm Details Button
         CustomTextButton.gradient(
           width: double.infinity,
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              formKey.currentState!.save();
-              // ref.read(authProvider.notifier).register(
-              //       email: email,
-              //       password: password,
-              //       fullName: fullName,
-              //       address: address,
-              //       contact: contact,
-              //     );
-            }
-          },
+          onPressed: () => saveForm(
+            ref,
+            uniEmail: uniEmailController.text,
+            gradYear: gradYearController.value!,
+            program: programController.text,
+            campus: campusController.text,
+          ),
           gradient: AppColors.buttonGradientPurple,
           child: Consumer(
             builder: (context, ref, child) {
-              return child!;
-              // final authState = ref.watch(authProvider);
-              // return authState.maybeWhen(
-              //   authenticating: () => const Center(
-              //     child: SpinKitRing(
-              //       color: Colors.white,
-              //       size: 30,
-              //       lineWidth: 4,
-              //       duration: Duration(milliseconds: 1100),
-              //     ),
-              //   ),
-              //   orElse: () => child!,
-              // );
+              final authState = ref.watch(authProvider);
+              return authState.maybeWhen(
+                authenticating: () => const CustomCircularLoader(),
+                orElse: () => child!,
+              );
             },
             child: Center(
               child: Text(

@@ -3,6 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
+// Providers
+import '../providers/auth_provider.dart';
+
 // Routing
 import '../../../config/routes/app_router.dart';
 import '../../../config/routes/routes.dart';
@@ -15,12 +18,13 @@ import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
 // Widgets
+import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 import './gender_selection_cards.dart';
 
-class PersonalDetailFields extends HookWidget {
+class PersonalDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const PersonalDetailFields({
@@ -28,8 +32,30 @@ class PersonalDetailFields extends HookWidget {
     required this.formKey,
   }) : super(key: key);
 
+  void saveForm(
+    WidgetRef ref, {
+    required String erp,
+    required String firstName,
+    required String lastName,
+    required String contact,
+    required String email,
+    required DateTime birthday,
+  }) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      ref.read(authProvider.notifier).savePersonalDetails(
+            erp: erp,
+            firstName: firstName,
+            lastName: lastName,
+            contact: contact,
+            email: email,
+            birthday: birthday,
+          );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final erpController = useTextEditingController(text: '');
     final firstNameController = useTextEditingController(text: '');
     final lastNameController = useTextEditingController(text: '');
@@ -129,19 +155,19 @@ class PersonalDetailFields extends HookWidget {
           validator: FormValidator.contactValidator,
           prefix: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(17, 0, 5, 0),
-              //   child: Image.asset(AppAssets.pkFlag, width: 25),
-              // ),
-              Text(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(17, 0, 5, 0),
+                child: Image.asset(AppAssets.pkFlag, width: 25),
+              ),
+              const Text(
                 '+92',
                 style: TextStyle(
                   fontSize: 18,
                   color: AppColors.textWhite80Color,
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: VerticalDivider(thickness: 1.1, color: Colors.white),
               )
@@ -193,34 +219,23 @@ class PersonalDetailFields extends HookWidget {
         // Confirm Details Button
         CustomTextButton.gradient(
           width: double.infinity,
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              formKey.currentState!.save();
-              // ref.read(authProvider.notifier).register(
-              //       email: email,
-              //       password: password,
-              //       fullName: fullName,
-              //       address: address,
-              //       contact: contact,
-              //     );
-            }
-          },
+          onPressed: () => saveForm(
+            ref,
+            erp: erpController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            contact: contactController.text,
+            email: emailController.text,
+            birthday: birthdayController.value!,
+          ),
           gradient: AppColors.buttonGradientPurple,
           child: Consumer(
             builder: (context, ref, child) {
-              return child!;
-              // final authState = ref.watch(authProvider);
-              // return authState.maybeWhen(
-              //   authenticating: () => const Center(
-              //     child: SpinKitRing(
-              //       color: Colors.white,
-              //       size: 30,
-              //       lineWidth: 4,
-              //       duration: Duration(milliseconds: 1100),
-              //     ),
-              //   ),
-              //   orElse: () => child!,
-              // );
+              final authState = ref.watch(authProvider);
+              return authState.maybeWhen(
+                authenticating: () => const CustomCircularLoader(),
+                orElse: () => child!,
+              );
             },
             child: Center(
               child: Text(
