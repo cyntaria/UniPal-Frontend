@@ -74,6 +74,10 @@ class AuthProvider extends StateNotifier<AuthState> {
         );
   }
 
+  void saveGender(String gender) {
+    _currentUser['gender'] = gender;
+  }
+
   void saveUniversityDetails({
     required String uniEmail,
     required DateTime gradYear,
@@ -96,6 +100,10 @@ class AuthProvider extends StateNotifier<AuthState> {
         );
   }
 
+  void _savePassword(String password) {
+    _currentUser['password'] = password;
+  }
+
   Future<void> register({
     required String password,
   }) async {
@@ -106,7 +114,4 @@ class AuthProvider extends StateNotifier<AuthState> {
     state = const AuthState.authenticated(fullName: 'DONE!!');
   }
 
-  void _savePassword(String password) {
-    _currentUser['password'] = password;
-  }
 }

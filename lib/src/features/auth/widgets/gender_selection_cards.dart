@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Providers
+import '../providers/auth_provider.dart';
 
 // Helpers
 import '../../../helpers/constants/app_styles.dart';
@@ -9,29 +14,18 @@ import '../enums/gender_enum.dart';
 // Widgets
 import '../../shared/widgets/custom_radio_button.dart';
 
-class GenderSelectionCards extends StatefulWidget {
+class GenderSelectionCards extends HookConsumerWidget {
   const GenderSelectionCards({Key? key}) : super(key: key);
 
   @override
-  _GenderSelectionCardsState createState() => _GenderSelectionCardsState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final genderNotifier = useValueNotifier(Gender.male);
 
-class _GenderSelectionCardsState extends State<GenderSelectionCards> {
-  late final ValueNotifier<Gender> genderNotifier;
+    void selectGender(Gender gender) {
+      genderNotifier.value = gender;
+      ref.read(authProvider.notifier).saveGender(gender.name);
+    }
 
-  @override
-  void initState() {
-    super.initState();
-    genderNotifier = ValueNotifier(Gender.male);
-  }
-
-  void selectGender(Gender gender) {
-    genderNotifier.value = gender;
-    // TODO(arafaysaleem): add provider code;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return ValueListenableBuilder<Gender>(
       valueListenable: genderNotifier,
       builder: (_, gender, __) {
