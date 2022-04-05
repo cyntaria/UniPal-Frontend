@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Routers
 import 'src/config/routes/app_router.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     const showDebugBanner = false;
     final navigatorObservers = <NavigatorObserver>[SentryNavigatorObserver()];
     final platformIsIOS = Platform.isIOS;
-    return platformIsIOS
+    final app = platformIsIOS
         ? Theme(
             data: AppThemes.mainTheme,
             child: CupertinoApp(
@@ -43,5 +44,6 @@ class MyApp extends StatelessWidget {
             onGenerateRoute: AppRouter.generateRoute,
             navigatorKey: AppRouter.navigatorKey,
           );
+    return ProviderScope(child: app);
   }
 }

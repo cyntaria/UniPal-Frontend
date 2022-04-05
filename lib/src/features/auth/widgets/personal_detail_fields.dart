@@ -19,6 +19,7 @@ import '../../../helpers/form_validator.dart';
 
 // Widgets
 import '../../shared/widgets/custom_circular_loader.dart';
+import '../../shared/widgets/custom_date_picker.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
@@ -63,18 +64,6 @@ class PersonalDetailFields extends HookConsumerWidget {
     final emailController = useTextEditingController(text: '');
     final birthdayController = useValueNotifier<DateTime?>(null);
 
-    Future<void> pickDate() async {
-      final initialDate = DateTime.now();
-      birthdayController.value = await showDatePicker(
-            context: context,
-            initialEntryMode: DatePickerEntryMode.calendarOnly,
-            initialDate: initialDate,
-            firstDate: DateTime(1950),
-            lastDate: initialDate,
-          ) ??
-          initialDate;
-    }
-
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
@@ -90,7 +79,7 @@ class PersonalDetailFields extends HookConsumerWidget {
           suffix: IconButton(
             icon: const Icon(
               Icons.qr_code_scanner_rounded,
-              color: AppColors.tertiaryColor,
+              color: AppColors.primaryColor,
               size: IconSizes.med22,
             ),
             onPressed: () async {
@@ -104,26 +93,37 @@ class PersonalDetailFields extends HookConsumerWidget {
 
         Insets.gapH15,
 
-        // First name
-        CustomTextField(
-          controller: firstNameController,
-          floatingText: 'First name',
-          hintText: 'Type your first name',
-          keyboardType: TextInputType.name,
-          textInputAction: TextInputAction.next,
-          validator: FormValidator.nameValidator,
-        ),
+        // Names
+        Row(
+          children: [
+            // First name
+            Expanded(
+              flex: 6,
+              child: CustomTextField(
+                controller: firstNameController,
+                floatingText: 'First name',
+                hintText: 'Type your first name',
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                validator: FormValidator.nameValidator,
+              ),
+            ),
 
-        Insets.gapH15,
+            Insets.gapW15,
 
-        // Last name
-        CustomTextField(
-          controller: lastNameController,
-          floatingText: 'Last name',
-          hintText: 'Type your last name',
-          keyboardType: TextInputType.name,
-          textInputAction: TextInputAction.next,
-          validator: FormValidator.nameValidator,
+            // Last name
+            Expanded(
+              flex: 5,
+              child: CustomTextField(
+                controller: lastNameController,
+                floatingText: 'Last name',
+                hintText: 'Type your last name',
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                validator: FormValidator.nameValidator,
+              ),
+            ),
+          ],
         ),
 
         Insets.gapH15,
@@ -139,6 +139,19 @@ class PersonalDetailFields extends HookConsumerWidget {
         ),
 
         Insets.gapH20,
+
+        // Gender Label
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Gender',
+            style: AppTypography.primary.subHeading16.copyWith(
+              color: AppColors.textBlackColor,
+            ),
+          ),
+        ),
+
+        Insets.gapH5,
 
         // Gender
         const GenderSelectionCards(),
@@ -162,55 +175,43 @@ class PersonalDetailFields extends HookConsumerWidget {
               ),
               const Text(
                 '+92',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.textWhite80Color,
-                ),
+                style: TextStyle(fontSize: 16),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: VerticalDivider(thickness: 1.1, color: Colors.white),
+              const VerticalDivider(
+                thickness: 1.2,
+                width: 18,
+                indent: 10,
+                endIndent: 10,
+                color: Colors.grey,
               )
             ],
           ),
         ),
 
-        Insets.gapH20,
+        Insets.gapH15,
+
+        // Birthday Label
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Birthday',
+            style: AppTypography.primary.subHeading16.copyWith(
+              color: AppColors.textBlackColor,
+            ),
+          ),
+        ),
+
+        Insets.gapH5,
 
         // Birthday
-        CustomTextButton.outlined(
-          width: double.infinity,
-          onPressed: pickDate,
-          padding: const EdgeInsets.only(left: 20, right: 15),
-          border: Border.all(color: AppColors.primaryColor, width: 2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ValueListenableBuilder<DateTime?>(
-                valueListenable: birthdayController,
-                builder: (_, birthday, __) {
-                  var bday = 'Select Birthday';
-                  if (birthday != null) {
-                    bday = DateFormat('d MMMM y').format(birthday);
-                  }
-                  return Text(
-                    bday,
-                    style: const TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 15,
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                },
-              ),
-
-              //Arrow
-              const Icon(
-                Icons.calendar_today_rounded,
-                color: AppColors.primaryColor,
-              )
-            ],
+        CustomDatePicker(
+          firstDate: DateTime(1950),
+          dateNotifier: birthdayController,
+          dateFormat: DateFormat('d MMMM, y'),
+          helpText: 'SELECT BIRTHDAY',
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
+          pickerStyle: const CustomDatePickerStyle(
+            initialDateString: 'DD MONTH, YYYY',
           ),
         ),
 

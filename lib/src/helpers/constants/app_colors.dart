@@ -27,7 +27,7 @@ class AppColors {
 
   /// The light greyish color used for container/card surfaces
   /// of the app.
-  static const Color surfaceColor = Color.fromARGB(255, 240, 240, 240);
+  static const Color surfaceColor = Color.fromARGB(255, 235, 235, 235);
 
   /// The color value for red color in the app.
   static const Color redColor = Color(0xFFed0000);
@@ -91,7 +91,7 @@ class AppColors {
   static const Color scaffoldGreyColor = Color(0xFF2b2b2b);
 
   /// The color value for light grey text in the app.
-  static const Color textGreyColor = Color(0xFF949494);
+  static const Color textGreyColor = Color.fromARGB(255, 138, 138, 138);
 
   /// The color value for dark grey text in the app.
   static const Color textBlackColor = Color.fromARGB(255, 43, 43, 43);

@@ -65,7 +65,7 @@ class CustomTextField extends StatefulWidget {
       fontSize: FontSizes.f16,
       color: AppColors.textGreyColor,
     ),
-    this.contentPadding = const EdgeInsets.fromLTRB(17, 13, 1, 13),
+    this.contentPadding = const EdgeInsets.fromLTRB(12, 13, 1, 13),
   }) : super(key: key);
 
   @override

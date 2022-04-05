@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Providers
+import '../../shared/widgets/custom_date_picker.dart';
 import '../providers/auth_provider.dart';
 
 // Helpers
@@ -51,19 +53,6 @@ class UniversityDetailFields extends HookConsumerWidget {
     final campusController = useTextEditingController(text: '');
     final gradYearController = useValueNotifier<DateTime?>(null);
 
-    Future<void> pickDate() async {
-      final initialDate = DateTime.now();
-      gradYearController.value = await showDatePicker(
-            context: context,
-            initialEntryMode: DatePickerEntryMode.calendarOnly,
-            initialDatePickerMode: DatePickerMode.year,
-            initialDate: initialDate,
-            firstDate: DateTime(1980),
-            lastDate: initialDate,
-          ) ??
-          initialDate;
-    }
-
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
@@ -72,49 +61,37 @@ class UniversityDetailFields extends HookConsumerWidget {
         // Uni Email
         CustomTextField(
           controller: uniEmailController,
-          floatingText: 'Email',
+          floatingText: 'University Email',
           hintText: 'Type your university email address',
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           validator: FormValidator.emailValidator,
         ),
 
-        Insets.gapH25,
+        Insets.gapH15,
+
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Graduation Year',
+            style: AppTypography.primary.subHeading16.copyWith(
+              color: AppColors.textBlackColor,
+            ),
+          ),
+        ),
+
+        Insets.gapH5,
 
         // Graduation Year
-        CustomTextButton.outlined(
-          width: double.infinity,
-          onPressed: pickDate,
-          padding: const EdgeInsets.only(left: 20, right: 15),
-          border: Border.all(color: AppColors.primaryColor, width: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ValueListenableBuilder<DateTime?>(
-                valueListenable: gradYearController,
-                builder: (_, gradYear, __) {
-                  var gradYr = 'Select Graduation Year';
-                  if (gradYear != null) {
-                    gradYr = DateFormat.y().format(gradYear);
-                  }
-                  return Text(
-                    gradYr,
-                    style: const TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 15,
-                      letterSpacing: 0.7,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                },
-              ),
-
-              //Arrow
-              const Icon(
-                Icons.calendar_view_day_rounded,
-                color: AppColors.primaryColor,
-              )
-            ],
+        CustomDatePicker(
+          firstDate: DateTime(1980),
+          dateNotifier: gradYearController,
+          dateFormat: DateFormat.y(),
+          helpText: 'SELECT YEAR OF GRADUATION',
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
+          initialMaterialDatePickerMode: DatePickerMode.year,
+          pickerStyle: const CustomDatePickerStyle(
+            initialDateString: 'YYYY',
           ),
         ),
 
