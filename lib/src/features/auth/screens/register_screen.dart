@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
 
 // Widgets
 import '../../shared/widgets/custom_dialog.dart';
-import '../../shared/widgets/scrollable_column.dart';
+import '../providers/auth_provider.dart';
+import '../widgets/password_detail_fields.dart';
 import '../widgets/personal_detail_fields.dart';
+import '../widgets/university_detail_fields.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatefulHookConsumerWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   bool _formHasData = false;
   late final formKey = GlobalKey<FormState>();
 
@@ -43,6 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final registrationState = ref.watch(registerStateProvider);
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(
@@ -51,7 +54,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             key: formKey,
             onWillPop: _showConfirmDialog,
             onChanged: _onFormChanged,
-            child: PersonalDetailFields(formKey: formKey),
+            child: registrationState.when(
+              personal: () => PersonalDetailFields(formKey: formKey),
+              university: () => UniversityDetailFields(formKey: formKey),
+              password: () => PasswordDetailFields(formKey: formKey),
+            ),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
@@ -11,6 +12,7 @@ import '../../../helpers/form_validator.dart';
 // Widgets
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
+import '../../shared/widgets/scrollable_column.dart';
 
 class UniversityDetailFields extends HookWidget {
   final GlobalKey<FormState> formKey;
@@ -23,12 +25,11 @@ class UniversityDetailFields extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final uniEmailController = useTextEditingController(text: '');
-
-    late final DateTime gradYear;
+    final gradYearController = useValueNotifier<DateTime?>(null);
 
     Future<void> pickDate() async {
       final initialDate = DateTime.now();
-      gradYear = await showDatePicker(
+      gradYearController.value = await showDatePicker(
             context: context,
             initialEntryMode: DatePickerEntryMode.calendarOnly,
             initialDatePickerMode: DatePickerMode.year,
@@ -39,8 +40,11 @@ class UniversityDetailFields extends HookWidget {
           initialDate;
     }
 
-    return Column(
+    return ScrollableColumn(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
+        Insets.expand,
+
         // Uni Email
         CustomTextField(
           controller: uniEmailController,
@@ -61,19 +65,28 @@ class UniversityDetailFields extends HookWidget {
           border: Border.all(color: AppColors.primaryColor, width: 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Select Graduation Year',
-                style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 15,
-                  letterSpacing: 0.7,
-                  fontWeight: FontWeight.w600,
-                ),
+            children: [
+              ValueListenableBuilder<DateTime?>(
+                valueListenable: gradYearController,
+                builder: (_, gradYear, __) {
+                  var gradYr = 'Select Graduation Year';
+                  if (gradYear != null) {
+                    gradYr = DateFormat.y().format(gradYear);
+                  }
+                  return Text(
+                    gradYr,
+                    style: const TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 15,
+                      letterSpacing: 0.7,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                },
               ),
 
               //Arrow
-              Icon(
+              const Icon(
                 Icons.calendar_view_day_rounded,
                 color: AppColors.primaryColor,
               )

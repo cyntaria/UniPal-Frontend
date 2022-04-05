@@ -21,10 +21,10 @@ class IconSizes {
 class Insets {
   const Insets._();
 
-  /// [SizedBox] of height **2**.
+  /// [SizedBox] of height **3**.
   static const gapH3 = SizedBox(height: 3);
 
-  /// [SizedBox] of width **2**.
+  /// [SizedBox] of width **3**.
   static const gapW3 = SizedBox(width: 3);
 
   /// [SizedBox] of height **5**.

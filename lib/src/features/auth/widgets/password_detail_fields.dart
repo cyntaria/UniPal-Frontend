@@ -11,6 +11,7 @@ import '../../../helpers/form_validator.dart';
 // Widgets
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
+import '../../shared/widgets/scrollable_column.dart';
 
 class PasswordDetailFields extends HookWidget {
   final GlobalKey<FormState> formKey;
@@ -25,8 +26,11 @@ class PasswordDetailFields extends HookWidget {
     final passwordController = useTextEditingController(text: '');
     final cPasswordController = useTextEditingController(text: '');
 
-    return Column(
+    return ScrollableColumn(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
+        Insets.expand,
+
         //Password
         CustomTextField(
           controller: passwordController,
@@ -52,6 +56,8 @@ class PasswordDetailFields extends HookWidget {
             passwordController.text,
           ),
         ),
+
+        Insets.expand,
 
         // Set Password Button
         CustomTextButton.gradient(
