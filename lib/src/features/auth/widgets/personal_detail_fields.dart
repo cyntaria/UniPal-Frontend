@@ -102,7 +102,6 @@ class PersonalDetailFields extends HookConsumerWidget {
               child: CustomTextField(
                 controller: firstNameController,
                 floatingText: 'First name',
-                hintText: 'Type your first name',
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 validator: FormValidator.nameValidator,
@@ -117,7 +116,6 @@ class PersonalDetailFields extends HookConsumerWidget {
               child: CustomTextField(
                 controller: lastNameController,
                 floatingText: 'Last name',
-                hintText: 'Type your last name',
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
                 validator: FormValidator.nameValidator,
@@ -132,20 +130,20 @@ class PersonalDetailFields extends HookConsumerWidget {
         CustomTextField(
           controller: emailController,
           floatingText: 'Email',
-          hintText: 'Type your email address',
+          hintText: 'Type your personal email',
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           validator: FormValidator.emailValidator,
         ),
 
-        Insets.gapH20,
+        Insets.gapH15,
 
         // Gender Label
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
             'Gender',
-            style: AppTypography.primary.subHeading16.copyWith(
+            style: AppTypography.primary.body16.copyWith(
               color: AppColors.textBlackColor,
             ),
           ),
@@ -190,19 +188,6 @@ class PersonalDetailFields extends HookConsumerWidget {
 
         Insets.gapH15,
 
-        // Birthday Label
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Birthday',
-            style: AppTypography.primary.subHeading16.copyWith(
-              color: AppColors.textBlackColor,
-            ),
-          ),
-        ),
-
-        Insets.gapH5,
-
         // Birthday
         CustomDatePicker(
           firstDate: DateTime(1950),
@@ -212,6 +197,7 @@ class PersonalDetailFields extends HookConsumerWidget {
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           pickerStyle: const CustomDatePickerStyle(
             initialDateString: 'DD MONTH, YYYY',
+            floatingText: 'Birthday',
           ),
         ),
 

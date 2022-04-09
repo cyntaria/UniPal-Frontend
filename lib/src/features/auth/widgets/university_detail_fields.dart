@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Providers
-import '../../shared/widgets/custom_date_picker.dart';
 import '../providers/auth_provider.dart';
 
 // Helpers
@@ -15,6 +13,9 @@ import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
 // Widgets
+import '../../shared/widgets/custom_dropdown_field.dart';
+import '../../shared/widgets/custom_dropdown_sheet.dart';
+import '../../shared/widgets/custom_date_picker.dart';
 import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
@@ -49,9 +50,9 @@ class UniversityDetailFields extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final uniEmailController = useTextEditingController(text: '');
-    final programController = useTextEditingController(text: '');
-    final campusController = useTextEditingController(text: '');
     final gradYearController = useValueNotifier<DateTime?>(null);
+    final programController = useValueNotifier<int?>(null);
+    final campusController = useValueNotifier<int?>(null);
 
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -62,25 +63,13 @@ class UniversityDetailFields extends HookConsumerWidget {
         CustomTextField(
           controller: uniEmailController,
           floatingText: 'University Email',
-          hintText: 'Type your university email address',
+          hintText: 'Type your iba email',
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           validator: FormValidator.emailValidator,
         ),
 
         Insets.gapH15,
-
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Graduation Year',
-            style: AppTypography.primary.subHeading16.copyWith(
-              color: AppColors.textBlackColor,
-            ),
-          ),
-        ),
-
-        Insets.gapH5,
 
         // Graduation Year
         CustomDatePicker(
@@ -92,16 +81,60 @@ class UniversityDetailFields extends HookConsumerWidget {
           initialMaterialDatePickerMode: DatePickerMode.year,
           pickerStyle: const CustomDatePickerStyle(
             initialDateString: 'YYYY',
+            floatingText: 'Graduation Year'
           ),
         ),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
-        // TODO(arafaysaleem): Program Dropdown
+        // Program Dropdown
+        CustomDropdownField<int>(
+          controller: programController,
+          selectedItemText: (item) => '$item',
+          hintText: 'Select a degree',
+          floatingText: 'Programs',
+          itemsSheet: CustomDropdownSheet(
+            items: const [1, 2, 3],
+            bottomSheetTitle: 'Programs',
+            itemBuilder: (_, item) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 5,
+                ),
+                child: ListTile(
+                  tileColor: Colors.white,
+                  title: Text('$item'),
+                ),
+              );
+            },
+          ),
+        ),
 
-        Insets.gapH25,
+        Insets.gapH15,
 
-        // TODO(arafaysaleem): Campus Dropdown
+        // Campus Dropdown
+        CustomDropdownField<int>(
+          controller: campusController,
+          selectedItemText: (item) => '$item',
+          floatingText: 'Campuses',
+          itemsSheet: CustomDropdownSheet(
+            items: const [1, 2, 3],
+            bottomSheetTitle: 'Campuses',
+            itemBuilder: (_, item) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 5,
+                ),
+                child: ListTile(
+                  tileColor: Colors.white,
+                  title: Text('$item'),
+                ),
+              );
+            },
+          ),
+        ),
 
         Insets.expand,
 
@@ -112,8 +145,8 @@ class UniversityDetailFields extends HookConsumerWidget {
             ref,
             uniEmail: uniEmailController.text,
             gradYear: gradYearController.value!,
-            program: programController.text,
-            campus: campusController.text,
+            program: '${programController.value}',
+            campus: '${campusController.value}',
           ),
           gradient: AppColors.buttonGradientPurple,
           child: Consumer(

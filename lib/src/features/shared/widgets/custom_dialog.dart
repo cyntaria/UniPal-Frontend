@@ -73,7 +73,7 @@ class CustomDialog extends StatelessWidget {
       actions: <Widget>[
         if (_type == _CustomDialogType.ALERT)
           CustomTextButton.gradient(
-            gradient: AppColors.buttonGradientRed,
+            gradient: AppColors.buttonGradientPurple,
             height: 40,
             width: 60,
             onPressed: () {
@@ -88,6 +88,7 @@ class CustomDialog extends StatelessWidget {
             ),
           )
         else if (_type == _CustomDialogType.CONFIRM) ...[
+          // Yes
           CustomTextButton.outlined(
             border: Border.all(color: AppColors.primaryColor),
             height: 40,
@@ -103,8 +104,10 @@ class CustomDialog extends StatelessWidget {
               ),
             ),
           ),
+
+          // No
           CustomTextButton.gradient(
-            gradient: AppColors.buttonGradientRed,
+            gradient: AppColors.buttonGradientPurple,
             height: 40,
             width: 60,
             onPressed: () {

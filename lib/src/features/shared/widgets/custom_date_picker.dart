@@ -85,51 +85,71 @@ class CustomDatePicker extends StatelessWidget {
             firstDate: firstDate,
             lastDate: lastDate ?? nowDate,
           ) ??
-          nowDate;
+          dateNotifier.value;
     } else {
       dateNotifier.value = await showCupertinoModalPopup<DateTime>(
-        context: context,
-        builder: (BuildContext ctx) {
-          return CupertinoDatePickerDialog(
-            mode: initialCupertinoDatePickerMode,
-            initialDateTime: dateNotifier.value ?? initialDate ?? nowDate,
-            minimumDate: firstDate,
-            maximumDate: lastDate ?? nowDate,
-          );
-        },
-      );
+            context: context,
+            builder: (BuildContext ctx) {
+              return CupertinoDatePickerDialog(
+                mode: initialCupertinoDatePickerMode,
+                initialDateTime: dateNotifier.value ?? initialDate ?? nowDate,
+                minimumDate: firstDate,
+                maximumDate: lastDate ?? nowDate,
+              );
+            },
+          ) ??
+          dateNotifier.value;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextButton(
-      width: double.infinity,
-      height: 47,
-      onPressed: () => _pickDate(context),
-      color: pickerStyle.displayFieldColor,
-      padding: const EdgeInsets.only(left: 20, right: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ValueListenableBuilder<DateTime?>(
-            valueListenable: dateNotifier,
-            builder: (_, date, __) {
-              var dateString = pickerStyle.initialDateString;
-              if (date != null) {
-                dateString = dateFormat.format(date);
-              }
-              return Text(
-                dateString,
-                style: pickerStyle.displayTextStyle,
-              );
-            },
+    return Column(
+      children: [
+        // Label
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            pickerStyle.floatingText,
+            style: pickerStyle.floatingTextStyle ??
+                AppTypography.primary.body16.copyWith(
+                  color: AppColors.textBlackColor,
+                ),
           ),
+        ),
 
-          // Icon
-          pickerStyle.icon,
-        ],
-      ),
+        Insets.gapH5,
+
+        // Field
+        CustomTextButton(
+          width: double.infinity,
+          height: 47,
+          onPressed: () => _pickDate(context),
+          color: pickerStyle.displayFieldColor,
+          padding: const EdgeInsets.only(left: 20, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ValueListenableBuilder<DateTime?>(
+                valueListenable: dateNotifier,
+                builder: (_, date, __) {
+                  var dateString = pickerStyle.initialDateString;
+                  if (date != null) {
+                    dateString = dateFormat.format(date);
+                  }
+                  return Text(
+                    dateString,
+                    style: pickerStyle.displayTextStyle,
+                  );
+                },
+              ),
+
+              // Icon
+              pickerStyle.icon,
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -137,10 +157,13 @@ class CustomDatePicker extends StatelessWidget {
 class CustomDatePickerStyle {
   final Widget icon;
   final TextStyle displayTextStyle;
+  final TextStyle? floatingTextStyle;
+  final String floatingText;
   final Color displayFieldColor;
   final String initialDateString;
 
   const CustomDatePickerStyle({
+    this.floatingTextStyle,
     this.icon = const Icon(
       Icons.calendar_month_rounded,
       color: AppColors.primaryColor,
@@ -152,5 +175,6 @@ class CustomDatePickerStyle {
     ),
     this.displayFieldColor = AppColors.surfaceColor,
     this.initialDateString = 'Select a date',
+    this.floatingText = 'Date Picker',
   });
 }

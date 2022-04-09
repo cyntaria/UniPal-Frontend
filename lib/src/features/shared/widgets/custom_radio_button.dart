@@ -19,7 +19,7 @@ class CustomRadioButton<T> extends StatelessWidget {
   const CustomRadioButton({
     Key? key,
     this.width = 106,
-    this.height = 47,
+    this.height = 46,
     this.borderRadius = Corners.rounded7,
     required this.value,
     required this.isSelected,

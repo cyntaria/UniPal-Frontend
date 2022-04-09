@@ -151,7 +151,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: Text(
                 widget.floatingText!,
                 style: widget.floatingStyle ??
-                    AppTypography.primary.subHeading16.copyWith(
+                    AppTypography.primary.body16.copyWith(
                       color: AppColors.textBlackColor,
                     ),
               ),

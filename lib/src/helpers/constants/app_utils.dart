@@ -19,7 +19,7 @@ class Regexes {
   static RegExp erpRegex = RegExp(r'^[1-9]{1}\d{4}$');
 
   /// The regular expression for validating names in the app.
-  static RegExp nameRegex = RegExp(r'^[a-zA-Z]+$');
+  static RegExp nameRegex = RegExp(r'^[a-z A-Z]+$');
 
   /// The regular expression for validating zip codes in the app.
   static RegExp zipCodeRegex = RegExp(r'^\d{5}$');
