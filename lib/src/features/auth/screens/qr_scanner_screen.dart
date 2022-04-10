@@ -3,6 +3,8 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
+import '../../../helpers/constants/app_colors.dart';
+import '../../../helpers/constants/app_styles.dart';
 
 class QrScannerScreen extends StatefulWidget {
   const QrScannerScreen({Key? key}) : super(key: key);
@@ -68,11 +70,21 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
         ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Instructions
-          const Text(
-            'Please scan the QR code printed on the back side of your IBA ID card.',
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              'Please scan the QR code printed on the back side of your IBA ID card.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.textLightGreyColor,
+              ),
+            ),
           ),
+
+          Insets.gapH30,
 
           // Scanner
           SizedBox(

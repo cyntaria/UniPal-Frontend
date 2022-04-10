@@ -90,8 +90,11 @@ class AppColors {
   /// The color value for light grey scaffold in the app.
   static const Color scaffoldGreyColor = Color(0xFF2b2b2b);
 
-  /// The color value for light grey text in the app.
+  /// The color value for grey text in the app.
   static const Color textGreyColor = Color.fromARGB(255, 119, 119, 119);
+
+  /// The color value for light grey text in the app.
+  static const Color textLightGreyColor = Color.fromARGB(255, 163, 163, 163);
 
   /// The color value for dark grey text in the app.
   static const Color textBlackColor = Color.fromARGB(255, 43, 43, 43);
