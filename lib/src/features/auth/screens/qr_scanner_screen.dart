@@ -67,18 +67,26 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: SizedBox(
-          height: 300,
-          width: 300,
-          child: MobileScanner(
-            controller: _qrController,
-            onDetect: (barcode, args) {
-              final code = barcode.rawValue;
-              AppRouter.pop(code);
-            },
+      body: Column(
+        children: [
+          // Instructions
+          const Text(
+            'Please scan the QR code printed on the back side of your IBA ID card.',
           ),
-        ),
+
+          // Scanner
+          SizedBox(
+            height: 300,
+            width: 300,
+            child: MobileScanner(
+              controller: _qrController,
+              onDetect: (barcode, args) {
+                final code = barcode.rawValue;
+                AppRouter.pop(code);
+              },
+            ),
+          )
+        ],
       ),
     );
   }

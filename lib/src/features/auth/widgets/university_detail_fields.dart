@@ -81,7 +81,7 @@ class UniversityDetailFields extends HookConsumerWidget {
           initialMaterialDatePickerMode: DatePickerMode.year,
           pickerStyle: const CustomDatePickerStyle(
             initialDateString: 'YYYY',
-            floatingText: 'Graduation Year'
+            floatingText: 'Graduation Year',
           ),
         ),
 

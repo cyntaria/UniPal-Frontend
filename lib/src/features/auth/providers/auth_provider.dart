@@ -44,6 +44,16 @@ class AuthProvider extends StateNotifier<AuthState> {
 
   void init() {}
 
+  void moveToPreviousRegistration() {
+    _ref.read(registerStateProvider.notifier).update((state) {
+      return state.when(
+        personal: () => state,
+        university: () => const RegistrationState.personal(),
+        password: () => const RegistrationState.university(),
+      );
+    });
+  }
+
   void savePersonalDetails({
     required String erp,
     required String firstName,
@@ -69,7 +79,7 @@ class AuthProvider extends StateNotifier<AuthState> {
 
     // Stop loading and move to university form
     state = const AuthState.unauthenticated();
-    _ref.read(registerStateProvider.state).update(
+    _ref.read(registerStateProvider.notifier).update(
           (state) => const RegistrationState.university(),
         );
   }
@@ -95,7 +105,7 @@ class AuthProvider extends StateNotifier<AuthState> {
 
     // Stop loading and move to password form
     state = const AuthState.unauthenticated();
-    _ref.read(registerStateProvider.state).update(
+    _ref.read(registerStateProvider.notifier).update(
           (state) => const RegistrationState.password(),
         );
   }
@@ -113,5 +123,4 @@ class AuthProvider extends StateNotifier<AuthState> {
     // TODO(arafaysaleem): replace with actual authentication code
     state = const AuthState.authenticated(fullName: 'DONE!!');
   }
-
 }

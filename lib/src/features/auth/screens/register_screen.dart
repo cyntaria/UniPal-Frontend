@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Providers
+import '../providers/auth_provider.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 
 // Widgets
 import '../../shared/widgets/custom_dialog.dart';
-import '../providers/auth_provider.dart';
 import '../widgets/password_detail_fields.dart';
 import '../widgets/personal_detail_fields.dart';
 import '../widgets/university_detail_fields.dart';
@@ -47,6 +49,21 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     final registrationState = ref.watch(registerStateProvider);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          registrationState.when<String>(
+            personal: () => 'Personal Details',
+            university: () => 'University Details',
+            password: () => 'Password Details',
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.adaptive.arrow_back_rounded),
+          onPressed: () {
+            ref.read(authProvider.notifier).moveToPreviousRegistration();
+          },
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
