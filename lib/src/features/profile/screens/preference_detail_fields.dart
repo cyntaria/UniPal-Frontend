@@ -3,43 +3,27 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
-import '../../helpers/constants/app_colors.dart';
-import '../../helpers/constants/app_styles.dart';
-import '../../helpers/constants/app_typography.dart';
+import '../../../helpers/constants/app_colors.dart';
+import '../../../helpers/constants/app_styles.dart';
+import '../../../helpers/constants/app_typography.dart';
 
 // Widgets
-import '../shared/widgets/custom_dialog.dart';
-import '../shared/widgets/custom_text_button.dart';
-import '../shared/widgets/custom_textfield.dart';
-import '../shared/widgets/scrollable_column.dart';
-import './filter_chips_list.dart';
+import '../../shared/widgets/custom_dialog.dart';
+import '../../shared/widgets/custom_text_button.dart';
+import '../../shared/widgets/custom_textfield.dart';
+import '../../shared/widgets/scrollable_column.dart';
+import '../widgets/hobbies_filter_chips.dart';
+import '../widgets/interests_filter_chips.dart';
 
-const hobbies = [
-  'Cricket',
-  'Cycling',
-  'Reading',
-  'Boxing',
-  'Painting',
-  'Clubbing',
-  'Dancing'
-];
-const interests = [
-  'Netflix',
-  'Literature',
-  'Art',
-  'Fitness',
-  'Education',
-  'Social Wellfare'
-];
-
-class PreferenceDetailFields extends StatefulHookWidget {
-  const PreferenceDetailFields({Key? key}) : super(key: key);
+class UpdatePreferencesScreen extends StatefulHookConsumerWidget {
+  const UpdatePreferencesScreen({Key? key}) : super(key: key);
 
   @override
   _PreferenceDetailFieldsState createState() => _PreferenceDetailFieldsState();
 }
 
-class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
+class _PreferenceDetailFieldsState
+    extends ConsumerState<UpdatePreferencesScreen> {
   bool _formHasData = false;
   late final formKey = GlobalKey<FormState>();
 
@@ -70,6 +54,9 @@ class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
     final favActivityController = useTextEditingController(text: '');
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Update Preferences'),
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(
@@ -77,7 +64,8 @@ class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
           onWillPop: _showConfirmDialog,
           onChanged: _onFormChanged,
           child: ScrollableColumn(
-            mainAxisAlignment: MainAxisAlignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Insets.gapH20,
 
@@ -90,13 +78,7 @@ class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
               Insets.gapH5,
 
               // Hobby Chips
-              FilterChipsList(
-                filters: hobbies,
-                isSelected: (hobby) => hobbies.contains(hobby),
-                onSelected: (hobby) {
-                  // Add to selected hobbies provider
-                },
-              ),
+              const HobbiesFilterChips(),
 
               Insets.gapH20,
 
@@ -109,13 +91,7 @@ class _PreferenceDetailFieldsState extends State<PreferenceDetailFields> {
               Insets.gapH5,
 
               // Interest Chips
-              FilterChipsList(
-                filters: interests,
-                isSelected: (interest) => interests.contains(interest),
-                onSelected: (interest) {
-                  // Add to selected interests provider
-                },
-              ),
+              const InterestsFilterChips(),
 
               Insets.gapH20,
 

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_typography.dart';
 
-class CustomFilterChip extends StatelessWidget {
+class CustomFilterChip<T> extends StatefulWidget {
   final bool isSelected;
-  final void Function(bool) onSelected;
+  final void Function(bool, T value) onChanged;
   final Widget label;
+  final T value;
   final Color labelColor;
   final Color selectedLabelColor;
   final Color backgroundColor;
@@ -20,24 +21,39 @@ class CustomFilterChip extends StatelessWidget {
     this.selectedLabelColor = AppColors.textWhite80Color,
     this.backgroundColor = AppColors.surfaceColor,
     this.selectedColor = AppColors.primaryColor,
-    this.side = const BorderSide(color: AppColors.lightOutlineColor),
+    this.side = const BorderSide(
+      color: Color.fromARGB(255, 207, 207, 207),
+      width: 1.2,
+    ),
     required this.isSelected,
-    required this.onSelected,
+    required this.onChanged,
     required this.label,
+    required this.value,
   }) : super(key: key);
 
   @override
+  State<CustomFilterChip> createState() => _CustomFilterChipState<T>();
+}
+
+class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
+  @override
   Widget build(BuildContext context) {
     return FilterChip(
-      label: label,
+      label: widget.label,
+      showCheckmark: false,
       labelStyle: AppTypography.primary.subtitle13.copyWith(
-        color: isSelected ? selectedLabelColor : labelColor,
+        color:
+            widget.isSelected ? widget.selectedLabelColor : widget.labelColor,
       ),
-      side: side,
-      backgroundColor: backgroundColor,
-      selectedColor: selectedColor,
-      selected: isSelected,
-      onSelected: onSelected,
+      side: widget.isSelected ? null : widget.side,
+      backgroundColor: widget.backgroundColor,
+      selectedColor: widget.selectedColor,
+      selected: widget.isSelected,
+      onSelected: (selected) {
+        setState(() {
+          widget.onChanged(selected, widget.value);
+        });
+      },
     );
   }
 }

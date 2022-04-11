@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../config/routes/app_router.dart';
 import '../providers/auth_provider.dart';
 
 // Helpers
@@ -60,7 +61,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         leading: IconButton(
           icon: Icon(Icons.adaptive.arrow_back_rounded),
           onPressed: () {
-            ref.read(authProvider.notifier).moveToPreviousRegistration();
+            registrationState.maybeWhen(
+              personal: AppRouter.pop,
+              orElse: () {
+                ref.read(authProvider.notifier).moveToPreviousRegistration();
+              },
+            );
           },
         ),
       ),

@@ -51,7 +51,7 @@ class AppTypography {
       fontSize: FontSizes.f16,
     ),
     body14: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: Colors.black45,
     ),
     subtitle13: _outfitFont.copyWith(
       color: Colors.black54,

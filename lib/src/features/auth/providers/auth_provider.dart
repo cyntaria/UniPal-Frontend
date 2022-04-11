@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // States
+import '../../../core/networking/custom_exception.dart';
 import '../states/auth_state.codegen.dart';
 import '../states/registration_state.codegen.dart';
 
@@ -122,5 +123,17 @@ class AuthProvider extends StateNotifier<AuthState> {
 
     // TODO(arafaysaleem): replace with actual authentication code
     state = const AuthState.authenticated(fullName: 'DONE!!');
+  }
+
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    state = const AuthState.authenticating();
+    try {
+      state = const AuthState.authenticated(fullName: 'Rafay');
+    } on CustomException catch (e) {
+      state = AuthState.failed(reason: e.message);
+    }
   }
 }
