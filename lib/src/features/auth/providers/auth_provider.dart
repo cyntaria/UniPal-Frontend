@@ -136,4 +136,8 @@ class AuthProvider extends StateNotifier<AuthState> {
       state = AuthState.failed(reason: e.message);
     }
   }
+
+  Future<void> logout() async {
+    state = const AuthState.unauthenticated();
+  }
 }

@@ -23,7 +23,7 @@ class RoundedBottomContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
-        color: AppColors.scaffoldGreyColor,
+        color: AppColors.surfaceColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
