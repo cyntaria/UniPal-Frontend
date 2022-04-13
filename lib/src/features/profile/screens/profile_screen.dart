@@ -85,13 +85,13 @@ class ProfileScreen extends HookConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: DefaultTabController(
-          length: 3,
+          length: 4,
           child: NestedScrollView(
             headerSliverBuilder: (BuildContext context, _) {
               return <Widget>[
                 // Profile Picture and Name
                 ProfileAppBar(
-                  extent: 310,
+                  extent: 330,
                   avatarUrl: connectStudent['profile_picture_url']! as String,
                   title:
                       "${connectStudent['first_name']} ${connectStudent['last_name']}",
