@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Providers
+import '../providers/hobbies_provider.dart';
+import '../providers/interests_provider.dart';
+import '../providers/students_provider.dart';
+
+// Routing
+import '../../../config/routes/app_router.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -19,33 +27,45 @@ class UpdatePreferencesScreen extends StatefulHookConsumerWidget {
   const UpdatePreferencesScreen({Key? key}) : super(key: key);
 
   @override
-  _PreferenceDetailFieldsState createState() => _PreferenceDetailFieldsState();
+  _UpdatePreferencesScreenState createState() =>
+      _UpdatePreferencesScreenState();
 }
 
-class _PreferenceDetailFieldsState
+class _UpdatePreferencesScreenState
     extends ConsumerState<UpdatePreferencesScreen> {
-  bool _formHasData = false;
   late final formKey = GlobalKey<FormState>();
 
   Future<bool> _showConfirmDialog() async {
-    if (_formHasData) {
-      final doPop = await showDialog<bool>(
-        context: context,
-        barrierColor: AppColors.barrierColor,
-        builder: (ctx) => const CustomDialog.confirm(
-          title: 'Are you sure?',
-          body: 'Do you want to go back without saving your preferences?',
-          trueButtonText: 'Yes',
-          falseButtonText: 'No',
-        ),
-      );
-      if (doPop == null || !doPop) return Future<bool>.value(false);
-    }
+    final doPop = await showDialog<bool>(
+      context: context,
+      barrierColor: AppColors.barrierColor,
+      builder: (ctx) => const CustomDialog.confirm(
+        title: 'Are you sure?',
+        body: 'Do you want to go back without saving your preferences?',
+        trueButtonText: 'Yes',
+        falseButtonText: 'No',
+      ),
+    );
+    if (doPop == null || !doPop) return Future<bool>.value(false);
     return Future<bool>.value(true);
   }
 
-  void _onFormChanged() {
-    if (!_formHasData) _formHasData = true;
+  void _onUpdate({
+    required String favCampusSpot,
+    required String favActivity,
+  }) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      final interests = ref.read(interestsProvider).getSelectedInterests();
+      final hobbies = ref.read(hobbiesProvider).getSelectedHobbies();
+      ref.read(studentsProvider).updatePreferences(
+            interests: interests,
+            hobbies: hobbies,
+            favCampusHangoutSpot: favCampusSpot,
+            favCampusActivity: favActivity,
+          );
+      AppRouter.pop();
+    }
   }
 
   @override
@@ -62,7 +82,6 @@ class _PreferenceDetailFieldsState
         child: Form(
           key: formKey,
           onWillPop: _showConfirmDialog,
-          onChanged: _onFormChanged,
           child: ScrollableColumn(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,18 +141,10 @@ class _PreferenceDetailFieldsState
               // Confirm Details Button
               CustomTextButton.gradient(
                 width: double.infinity,
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    // ref.read(authProvider.notifier).register(
-                    //       email: email,
-                    //       password: password,
-                    //       fullName: fullName,
-                    //       address: address,
-                    //       contact: contact,
-                    //     );
-                  }
-                },
+                onPressed: () => _onUpdate(
+                  favCampusSpot: favHangoutSpotController.text,
+                  favActivity: favActivityController.text,
+                ),
                 gradient: AppColors.buttonGradientPurple,
                 child: Consumer(
                   builder: (context, ref, child) {

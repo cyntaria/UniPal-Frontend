@@ -170,7 +170,7 @@ class CustomDatePickerStyle {
       size: IconSizes.med22,
     ),
     this.displayTextStyle = const TextStyle(
-      fontSize: FontSizes.f16,
+      fontSize: 16,
       color: AppColors.textGreyColor,
     ),
     this.displayFieldColor = AppColors.surfaceColor,

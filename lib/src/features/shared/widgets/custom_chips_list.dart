@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
-import '../../../helpers/constants/app_typography.dart';
 
 class CustomChipsList extends StatelessWidget {
   final List<String> chipContents;
@@ -20,7 +19,7 @@ class CustomChipsList extends StatelessWidget {
     this.fontWeight,
     this.chipWidth,
     this.chipGap = 0.0,
-    this.fontSize = FontSizes.f12,
+    this.fontSize = 12,
     this.borderWidth = 1.0,
     this.isScrollable = false,
     this.borderColor = AppColors.textGreyColor,

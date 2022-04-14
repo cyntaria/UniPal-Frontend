@@ -24,46 +24,47 @@ class AppTypography {
     fontFamily: _outfitFont.fontFamily,
     heading34: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f34,
+      fontSize: 34,
       fontWeight: FontWeight.bold,
     ),
     heading24: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f24,
+      fontSize: 24,
       fontWeight: FontWeight.bold,
     ),
     title20: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f20,
+      fontSize: 20,
       fontWeight: FontWeight.w600,
     ),
     title18: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f18,
+      fontSize: 18,
     ),
     subHeading16: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f16,
+      fontSize: 16,
       fontWeight: FontWeight.bold,
     ),
     body16: _outfitFont.copyWith(
       color: Colors.black87,
-      fontSize: FontSizes.f16,
+      fontSize: 16,
     ),
     body14: _outfitFont.copyWith(
-      color: Colors.black45,
+      color: Colors.black54,
+      fontSize: 14,
     ),
     subtitle13: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.f13,
+      fontSize: 13,
     ),
     label12: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.f12,
+      fontSize: 12,
     ),
     label11: _outfitFont.copyWith(
       color: Colors.black54,
-      fontSize: FontSizes.f11,
+      fontSize: 11,
     ),
   );
 
@@ -74,7 +75,7 @@ class AppTypography {
 /// A class containing all the variations of a [TextTheme], that are
 /// commonly used throughout the app. It is used to map common typography
 /// [TextStyle] names to more readable and understable names.
-/// 
+///
 /// This allows non-designer programmers to be comfortable with the [TextTheme]
 @immutable
 class _FontStyle {
@@ -142,40 +143,4 @@ class _FontStyle {
       labelSmall: label11,
     );
   }
-}
-
-/// A utility class that holds all the font sizes used throughout
-/// the entire app.
-///
-/// This class has no constructor and all variables are `static`.
-@immutable
-class FontSizes {
-  const FontSizes._();
-
-  /// Font size 11
-  static const f11 = 11.0;
-
-  /// Font size 12
-  static const f12 = 12.0;
-
-  /// Font size 13
-  static const f13 = 13.0;
-
-  /// Font size 14
-  static const f14 = 14.0;
-
-  /// Font size 16
-  static const f16 = 16.0;
-
-  /// Font size 18
-  static const f18 = 18.0;
-
-  /// Font size 20
-  static const f20 = 20.0;
-
-  /// Font size 24
-  static const f24 = 24.0;
-
-  /// Font size 34
-  static const f34 = 34.0;
 }

@@ -50,7 +50,7 @@ class Routes {
   static const String StudentProfileScreen = '/student-profile-screen';
 
   /// The name of the route for user preferences screen.
-  static const String UserPreferencesScreen = '/user-preferences-screen';
+  static const String UpdatePreferencesScreen = '/update-preferences-screen';
 
   /// The name of the route for my sent/received friend requests screen.
   static const String MyFriendRequestsScreen = '/my-friend-requests-screen';

@@ -64,11 +64,11 @@ class CustomDialog extends StatelessWidget {
       content: Text(body),
       contentTextStyle: AppTypography.primary.body14.copyWith(
         color: AppColors.textGreyColor,
-        fontSize: FontSizes.f16,
+        fontSize: 16,
       ),
       titleTextStyle: AppTypography.primary.body14.copyWith(
         color: AppColors.textWhite80Color,
-        fontSize: FontSizes.f18,
+        fontSize: 18,
       ),
       actions: <Widget>[
         if (_type == _CustomDialogType.ALERT)

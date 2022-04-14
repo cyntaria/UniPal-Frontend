@@ -6,7 +6,7 @@ import '../../../helpers/constants/app_typography.dart';
 
 class CustomFilterChip<T> extends StatefulWidget {
   final bool isSelected;
-  final void Function(bool, T value) onChanged;
+  final bool Function(bool, T value) onChanged;
   final Widget label;
   final T value;
   final Color labelColor;
@@ -36,23 +36,37 @@ class CustomFilterChip<T> extends StatefulWidget {
 }
 
 class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
+  bool _isSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FilterChip(
       label: widget.label,
       showCheckmark: false,
       labelStyle: AppTypography.primary.subtitle13.copyWith(
-        color:
-            widget.isSelected ? widget.selectedLabelColor : widget.labelColor,
+        color: _isSelected ? widget.selectedLabelColor : widget.labelColor,
       ),
-      side: widget.isSelected ? null : widget.side,
+      side: !_isSelected
+          ? widget.side
+          : widget.side.copyWith(
+              color: widget.selectedColor,
+            ),
       backgroundColor: widget.backgroundColor,
       selectedColor: widget.selectedColor,
-      selected: widget.isSelected,
+      selected: _isSelected,
       onSelected: (selected) {
-        setState(() {
-          widget.onChanged(selected, widget.value);
-        });
+        final allowChange = widget.onChanged(selected, widget.value);
+        if (allowChange) {
+          setState(() {
+            _isSelected = selected;
+          });
+        }
       },
     );
   }

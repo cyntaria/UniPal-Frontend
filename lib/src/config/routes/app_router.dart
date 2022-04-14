@@ -7,6 +7,7 @@ import '../../features/auth/screens/qr_scanner_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/app_startup_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/profile/screens/update_preferences_screen.dart';
 
 // Routing
 import './routes.dart';
@@ -23,10 +24,11 @@ class AppRouter {
   static final Map<String, RouteBuilder> _routesMap = {
     Routes.AppStartupScreen: (_) => const AppStartupScreen(),
     Routes.HomeScreen: (_) => const HomeScreen(),
-    Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
     Routes.LoginScreen: (_) => const LoginScreen(),
     Routes.RegisterScreen: (_) => const RegisterScreen(),
     Routes.QrScannerScreen: (_) => const QrScannerScreen(),
+    Routes.UpdatePreferencesScreen: (_) => const UpdatePreferencesScreen(),
+    Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
     Routes.ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     Routes.ChangePasswordScreen: (_) => const SizedBox.shrink(),
     Routes.PostsFeedScreen: (_) => const SizedBox.shrink(),
@@ -35,7 +37,6 @@ class AppRouter {
     Routes.AddEditActivityScreen: (_) => const SizedBox.shrink(),
     Routes.StudentFinderScreen: (_) => const SizedBox.shrink(),
     Routes.StudentProfileScreen: (_) => const SizedBox.shrink(),
-    Routes.UserPreferencesScreen: (_) => const SizedBox.shrink(),
     Routes.MyFriendRequestsScreen: (_) => const SizedBox.shrink(),
     Routes.SchedulerScreen: (_) => const SizedBox.shrink(),
     Routes.GeneratedTimetablesScreen: (_) => const SizedBox.shrink(),

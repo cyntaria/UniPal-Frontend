@@ -21,8 +21,9 @@ class HobbiesFilterChips extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hobbiesProv = ref.watch(hobbiesProvider);
     final allHobbies = hobbiesProv.getAllHobbies();
-    final studentHobbies = hobbiesProv.getStudentHobbies();
+    final selectedHobbies = hobbiesProv.getSelectedHobbies();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Warning
         Text(
@@ -40,12 +41,12 @@ class HobbiesFilterChips extends ConsumerWidget {
               CustomFilterChip<HobbyModel>(
                 value: hobby,
                 label: Text(hobby.hobby),
-                isSelected: studentHobbies.contains(hobby),
+                isSelected: selectedHobbies.contains(hobby.hobbyId),
                 onChanged: (isSelected, hobby) {
-                  hobbiesProv.updateStudentHobbies(
-                    isSelected: isSelected,
-                    hobby: hobby,
-                  );
+                  return ref.read(hobbiesProvider).selectHobby(
+                        isSelected: isSelected,
+                        hobby: hobby,
+                      );
                 },
               ),
           ],

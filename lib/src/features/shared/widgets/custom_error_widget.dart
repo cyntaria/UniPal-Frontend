@@ -74,7 +74,7 @@ class CustomErrorWidget extends StatelessWidget {
                     'RETRY',
                     style: textTheme.label12.copyWith(
                       color: Colors.white,
-                      fontSize: FontSizes.f16,
+                      fontSize: 16,
                       letterSpacing: 1.1,
                       fontWeight: FontWeight.w600,
                     ),

@@ -6,7 +6,6 @@ import '../auth/providers/auth_provider.dart';
 
 // Screens
 import '../auth/screens/login_screen.dart';
-import '../profile/screens/preference_detail_fields.dart';
 import '../profile/screens/profile_screen.dart';
 
 class AppStartupScreen extends HookConsumerWidget {

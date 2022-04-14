@@ -19,10 +19,11 @@ class InterestsFilterChips extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final interestsProv = ref.watch(interestsProvider);
-    final allInterests = interestsProv.getAllInterests();
-    final studentInterests = interestsProv.getStudentInterests();
+    final interestProvider = ref.watch(interestsProvider);
+    final allInterests = interestProvider.getAllInterests();
+    final selectedInterests = interestProvider.getSelectedInterests();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Warning
         Text(
@@ -40,12 +41,12 @@ class InterestsFilterChips extends ConsumerWidget {
               CustomFilterChip<InterestModel>(
                 value: interest,
                 label: Text(interest.interest),
-                isSelected: studentInterests.contains(interest),
+                isSelected: selectedInterests.contains(interest.interestId),
                 onChanged: (isSelected, interest) {
-                  interestsProv.updateStudentInterests(
-                    isSelected: isSelected,
-                    interest: interest,
-                  );
+                  return ref.read(interestsProvider).selectInterest(
+                        isSelected: isSelected,
+                        interest: interest,
+                      );
                 },
               ),
           ],

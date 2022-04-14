@@ -54,7 +54,7 @@ class CustomTextField extends StatefulWidget {
     this.floatingAlign = Alignment.centerLeft,
     this.fillColor = AppColors.surfaceColor,
     this.hintStyle = const TextStyle(
-      fontSize: FontSizes.f16,
+      fontSize: 16,
       color: AppColors.textGreyColor,
     ),
     this.errorStyle = const TextStyle(
@@ -62,7 +62,7 @@ class CustomTextField extends StatefulWidget {
       color: Colors.transparent,
     ),
     this.inputStyle = const TextStyle(
-      fontSize: FontSizes.f16,
+      fontSize: 16,
       color: AppColors.textGreyColor,
     ),
     this.contentPadding = const EdgeInsets.fromLTRB(12, 13, 1, 13),
