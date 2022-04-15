@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../helpers/constants/app_styles.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../providers/students_provider.dart';
-
-// Routing
-import '../../../config/routes/app_router.dart';
-import '../../../config/routes/routes.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/typedefs.dart';
 
 // Widgets
+import '../widgets/about_tab_view.dart';
+import '../widgets/activities_tab_view.dart';
+import '../widgets/preferences_tab_view.dart';
 import '../widgets/profile_app_bar.dart';
 import '../widgets/profile_tab_bar.dart';
 import '../widgets/student_connection_buttons.dart';
+import '../widgets/university_tab_view.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class ProfileScreen extends HookConsumerWidget {
               return <Widget>[
                 // Profile Picture and Name
                 ProfileAppBar(
-                  extent: 330,
+                  extent: 320,
                   avatarUrl: otherStudent['profile_picture_url']! as String,
                   title:
                       "${otherStudent['first_name']} ${otherStudent['last_name']}",
@@ -60,15 +61,26 @@ class ProfileScreen extends HookConsumerWidget {
 
                 // Tabs
                 const ProfileTabBar(),
+
+                const SliverToBoxAdapter(
+                  child: Insets.gapH25,
+                )
               ];
             },
-            body: Center(
-              child: GestureDetector(
-                onTap: () => AppRouter.pushNamed(
-                  Routes.UpdatePreferencesScreen,
-                ),
-                child: const Text('Update Preferences'),
-              ),
+            body: const TabBarView(
+              children: [
+                // About
+                PreferencesTabView(),
+
+                // University
+                UniversityTabView(),
+
+                // About
+                AboutTabView(),
+
+                // Activities
+                ActivitiesTabView(),
+              ],
             ),
           ),
         ),

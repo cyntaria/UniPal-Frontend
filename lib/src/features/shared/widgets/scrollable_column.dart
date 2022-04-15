@@ -12,19 +12,15 @@ class ScrollableColumn extends StatelessWidget {
 
   const ScrollableColumn({
     Key? key,
-    CrossAxisAlignment? crossAxisAlignment,
-    MainAxisAlignment? mainAxisAlignment,
-    VerticalDirection? verticalDirection,
-    EdgeInsetsGeometry? padding,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.verticalDirection = VerticalDirection.down,
+    this.padding = EdgeInsets.zero,
     this.textBaseline,
     this.textDirection,
     this.physics,
     required this.children,
-  })  : crossAxisAlignment = crossAxisAlignment ?? CrossAxisAlignment.center,
-        mainAxisAlignment = mainAxisAlignment ?? MainAxisAlignment.start,
-        verticalDirection = verticalDirection ?? VerticalDirection.down,
-        padding = padding ?? EdgeInsets.zero,
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

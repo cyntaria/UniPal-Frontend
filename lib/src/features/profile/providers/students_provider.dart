@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final studentsProvider = Provider<StudentsProvider>((ref) {
+final studentsProvider = ChangeNotifierProvider<StudentsProvider>((ref) {
   // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
   return StudentsProvider(ref: ref);
 });
 
-class StudentsProvider {
+class StudentsProvider extends ChangeNotifier {
   final _connectStudent = <String, Object?>{
     'erp': '15030',
     'first_name': 'Mohammad Rafay',
@@ -73,26 +75,29 @@ class StudentsProvider {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlcnAiOiIxNzg1NSIsImlhdCI6MTYzMDAxMzEwMywiZXhwIjoxNjMwMjcyMzAzfQ.VMcjA3JcOTDlg6roDKBJjJBHShzjemeGh2w6degMfkc'
   };
 
-  final ProviderRef ref;
+  final Ref ref;
 
   StudentsProvider({
     required this.ref,
   });
 
-  Map<String, Object?> get currentStudent => _myProfile;
+  UnmodifiableMapView<String, Object?> get currentStudent =>
+      UnmodifiableMapView(_myProfile);
 
   // TODO(arafaysaleem): remove after demo
-  Map<String, Object?> get otherStudent => _connectStudent;
+  UnmodifiableMapView<String, Object?> get otherStudent =>
+      UnmodifiableMapView(_connectStudent);
 
-  void updatePreferences({
+  void updateStudent({
     required Set<int> interests,
     required Set<int> hobbies,
     required String favCampusHangoutSpot,
     required String favCampusActivity,
   }) {
-      _myProfile['interests'] = interests;
-      _myProfile['hobbies'] = hobbies;
-      _myProfile['favourite_campus_hangout_spot'] = favCampusHangoutSpot;
-      _myProfile['favourite_campus_activity'] = favCampusActivity;
+    _myProfile['interests'] = interests;
+    _myProfile['hobbies'] = hobbies;
+    _myProfile['favourite_campus_hangout_spot'] = favCampusHangoutSpot;
+    _myProfile['favourite_campus_activity'] = favCampusActivity;
+    notifyListeners();
   }
 }

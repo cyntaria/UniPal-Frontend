@@ -129,7 +129,10 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     final isChildVisible = progress < _childFadeOffset;
 
     return DecoratedBox(
-      decoration: BoxDecoration(border: bottomBorder),
+      decoration: BoxDecoration(
+        border: bottomBorder,
+        color: AppColors.backgroundColor,
+      ),
       child: Stack(
         children: <Widget>[
           // Avatar

@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../providers/hobbies_provider.dart';
+import '../../providers/hobbies_provider.dart';
+import '../../providers/preferences_provider.dart';
 
 // Models
-import '../models/hobby_model.codegen.dart';
+import '../../models/hobby_model.codegen.dart';
 
 // Helpers
-import '../../../helpers/constants/app_styles.dart';
-import '../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_typography.dart';
 
 // Widgets
-import '../../shared/widgets/custom_filter_chip.dart';
+import '../../../shared/widgets/custom_filter_chip.dart';
 
 class HobbiesFilterChips extends ConsumerWidget {
   const HobbiesFilterChips({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final hobbiesProv = ref.watch(hobbiesProvider);
-    final allHobbies = hobbiesProv.getAllHobbies();
-    final selectedHobbies = hobbiesProv.getSelectedHobbies();
+    final allHobbies = ref.watch(hobbiesProvider).getAllHobbies();
+    final selectedHobbies = ref.watch(prefsProvider).getSelectedHobbies();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,7 +43,7 @@ class HobbiesFilterChips extends ConsumerWidget {
                 label: Text(hobby.hobby),
                 isSelected: selectedHobbies.contains(hobby.hobbyId),
                 onChanged: (isSelected, hobby) {
-                  return ref.read(hobbiesProvider).selectHobby(
+                  return ref.read(prefsProvider).selectHobby(
                         isSelected: isSelected,
                         hobby: hobby,
                       );

@@ -3,9 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../providers/hobbies_provider.dart';
-import '../providers/interests_provider.dart';
-import '../providers/students_provider.dart';
+import '../providers/preferences_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -20,8 +18,8 @@ import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
-import '../widgets/hobbies_filter_chips.dart';
-import '../widgets/interests_filter_chips.dart';
+import '../widgets/update_preferences/hobbies_filter_chips.dart';
+import '../widgets/update_preferences/interests_filter_chips.dart';
 
 class UpdatePreferencesScreen extends StatefulHookConsumerWidget {
   const UpdatePreferencesScreen({Key? key}) : super(key: key);
@@ -47,6 +45,7 @@ class _UpdatePreferencesScreenState
       ),
     );
     if (doPop == null || !doPop) return Future<bool>.value(false);
+    ref.read(prefsProvider).clearUnupdatedPrefs();
     return Future<bool>.value(true);
   }
 
@@ -56,13 +55,9 @@ class _UpdatePreferencesScreenState
   }) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      final interests = ref.read(interestsProvider).getSelectedInterests();
-      final hobbies = ref.read(hobbiesProvider).getSelectedHobbies();
-      ref.read(studentsProvider).updatePreferences(
-            interests: interests,
-            hobbies: hobbies,
-            favCampusHangoutSpot: favCampusSpot,
-            favCampusActivity: favActivity,
+      ref.read(prefsProvider).updatePreferences(
+            newCampusHangoutSpot: favCampusSpot,
+            newCampusActivity: favActivity,
           );
       AppRouter.pop();
     }
@@ -70,8 +65,13 @@ class _UpdatePreferencesScreenState
 
   @override
   Widget build(BuildContext context) {
-    final favHangoutSpotController = useTextEditingController(text: '');
-    final favActivityController = useTextEditingController(text: '');
+    final prefsProv = ref.watch(prefsProvider);
+    final favHangoutSpotController = useTextEditingController(
+      text: prefsProv.favCampusHangoutSpot,
+    );
+    final favActivityController = useTextEditingController(
+      text: prefsProv.favCampusActivity,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +84,6 @@ class _UpdatePreferencesScreenState
           onWillPop: _showConfirmDialog,
           child: ScrollableColumn(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Insets.gapH20,
 
@@ -121,7 +120,7 @@ class _UpdatePreferencesScreenState
                 hintText: 'Type in your fav. hangout spot',
                 keyboardType: TextInputType.text,
                 maxLength: 45,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
               ),
 
               Insets.gapH25,

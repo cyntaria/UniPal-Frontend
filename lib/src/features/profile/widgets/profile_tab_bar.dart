@@ -14,16 +14,26 @@ class ProfileTabBar extends StatelessWidget {
         const TabBar(
           isScrollable: true,
           labelColor: Colors.black87,
+          labelStyle: TextStyle(fontWeight: FontWeight.bold),
           indicatorWeight: 3,
           indicatorColor: AppColors.primaryColor,
           labelPadding: EdgeInsets.symmetric(horizontal: 25),
           padding: EdgeInsets.symmetric(horizontal: 20),
-          unselectedLabelColor: Colors.grey,
+          unselectedLabelColor: AppColors.textLightGreyColor,
+          unselectedLabelStyle: TextStyle(),
           tabs: [
-            Tab(text: 'About'),
-            Tab(text: 'University'),
-            Tab(text: 'Activities'),
-            Tab(text: 'Memories'),
+            Tab(
+              child: Text('PREFERENCES'),
+            ),
+            Tab(
+              child: Text('UNIVERSITY'),
+            ),
+            Tab(
+              child: Text('ABOUT'),
+            ),
+            Tab(
+              child: Text('ACTIVITIES'),
+            ),
           ],
         ),
       ),
@@ -43,27 +53,30 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, _, __) {
-    return Stack(
-      children: [
-        // Bottom border
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Container(
-            margin: EdgeInsets.only(
-              left: (_tabBar.padding?.horizontal ?? 20) - 15,
-              bottom: 0.9,
-            ),
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: AppColors.lightOutlineColor),
+    return ColoredBox(
+      color: AppColors.backgroundColor,
+      child: Stack(
+        children: [
+          // Bottom border
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+              margin: EdgeInsets.only(
+                left: (_tabBar.padding?.horizontal ?? 20) - 15,
+                bottom: 0.9,
               ),
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: AppColors.lightOutlineColor),
+                ),
+              ),
+              width: _tabBar.preferredSize.width,
             ),
-            width: _tabBar.preferredSize.width,
           ),
-        ),
-
-        _tabBar,
-      ],
+    
+          _tabBar,
+        ],
+      ),
     );
   }
 

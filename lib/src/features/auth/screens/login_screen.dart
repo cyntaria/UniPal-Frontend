@@ -39,10 +39,12 @@ class LoginScreen extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              Text(
-                'UniPal',
-                style: AppTypography.primary.heading34.copyWith(
-                  fontSize: 50,
+              Align(
+                child: Text(
+                  'UniPal',
+                  style: AppTypography.primary.heading34.copyWith(
+                    fontSize: 50,
+                  ),
                 ),
               ),
 
@@ -137,23 +139,28 @@ class LoginScreen extends HookConsumerWidget {
               Insets.gapH10,
 
               // Register Link
-              GestureDetector(
-                onTap: () {
-                  AppRouter.pushNamed(Routes.RegisterScreen);
-                },
-                child: Text.rich(
-                  TextSpan(
-                    text: "Don't have an account yet? ",
-                    children: [
+              Align(
+                child: GestureDetector(
+                  onTap: () {
+                    AppRouter.pushNamed(Routes.RegisterScreen);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text.rich(
                       TextSpan(
-                        text: 'Register now',
-                        style: AppTypography.primary.body16.copyWith(
-                          color: AppColors.lightPrimaryColor,
-                        ),
+                        text: "Don't have an account yet? ",
+                        children: [
+                          TextSpan(
+                            text: 'Register now',
+                            style: AppTypography.primary.body16.copyWith(
+                              color: AppColors.lightPrimaryColor,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                      style: AppTypography.primary.body16,
+                    ),
                   ),
-                  style: AppTypography.primary.body16,
                 ),
               ),
             ],

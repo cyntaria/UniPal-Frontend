@@ -70,24 +70,24 @@ class PersonalDetailFields extends HookConsumerWidget {
         Insets.expand,
 
         // ERP
-        CustomTextField(
-          controller: erpController,
-          readOnly: true,
-          floatingText: 'ERP',
-          hintText: 'Scan your IBA ID card',
-          validator: FormValidator.erpValidator,
-          suffix: IconButton(
-            icon: const Icon(
+        GestureDetector(
+          onTap: () async {
+            final qrCode = await AppRouter.pushNamed(
+              Routes.QrScannerScreen,
+            ) as String;
+            erpController.text = qrCode;
+          },
+          child: CustomTextField(
+            controller: erpController,
+            enabled: false,
+            floatingText: 'ERP',
+            hintText: 'Scan your IBA ID card',
+            validator: FormValidator.erpValidator,
+            suffix: const Icon(
               Icons.qr_code_scanner_rounded,
               color: AppColors.primaryColor,
               size: IconSizes.med22,
             ),
-            onPressed: () async {
-              final qrCode = await AppRouter.pushNamed(
-                Routes.QrScannerScreen,
-              ) as String;
-              erpController.text = qrCode;
-            },
           ),
         ),
 
@@ -139,13 +139,10 @@ class PersonalDetailFields extends HookConsumerWidget {
         Insets.gapH15,
 
         // Gender Label
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Gender',
-            style: AppTypography.primary.body16.copyWith(
-              color: AppColors.textBlackColor,
-            ),
+        Text(
+          'Gender',
+          style: AppTypography.primary.body16.copyWith(
+            color: AppColors.textBlackColor,
           ),
         ),
 

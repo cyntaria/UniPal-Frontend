@@ -6,14 +6,13 @@ import '../../../helpers/constants/app_typography.dart';
 
 class CustomFilterChip<T> extends StatefulWidget {
   final bool isSelected;
-  final bool Function(bool, T value) onChanged;
+  final bool Function(bool, T value)? onChanged;
   final Widget label;
   final T value;
   final Color labelColor;
   final Color selectedLabelColor;
   final Color backgroundColor;
   final Color selectedColor;
-  final BorderSide side;
 
   const CustomFilterChip({
     Key? key,
@@ -21,12 +20,8 @@ class CustomFilterChip<T> extends StatefulWidget {
     this.selectedLabelColor = AppColors.textWhite80Color,
     this.backgroundColor = AppColors.surfaceColor,
     this.selectedColor = AppColors.primaryColor,
-    this.side = const BorderSide(
-      color: Color.fromARGB(255, 207, 207, 207),
-      width: 1.2,
-    ),
-    required this.isSelected,
-    required this.onChanged,
+    this.isSelected = false,
+    this.onChanged,
     required this.label,
     required this.value,
   }) : super(key: key);
@@ -48,21 +43,18 @@ class _CustomFilterChipState<T> extends State<CustomFilterChip<T>> {
   Widget build(BuildContext context) {
     return FilterChip(
       label: widget.label,
+      pressElevation: 0,
+      labelPadding: const EdgeInsets.symmetric(horizontal: 11),
       showCheckmark: false,
       labelStyle: AppTypography.primary.subtitle13.copyWith(
         color: _isSelected ? widget.selectedLabelColor : widget.labelColor,
       ),
-      side: !_isSelected
-          ? widget.side
-          : widget.side.copyWith(
-              color: widget.selectedColor,
-            ),
       backgroundColor: widget.backgroundColor,
       selectedColor: widget.selectedColor,
       selected: _isSelected,
       onSelected: (selected) {
-        final allowChange = widget.onChanged(selected, widget.value);
-        if (allowChange) {
+        final allowChange = widget.onChanged?.call(selected, widget.value);
+        if (allowChange != null && allowChange) {
           setState(() {
             _isSelected = selected;
           });
