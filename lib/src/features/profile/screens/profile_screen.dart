@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../../helpers/constants/app_styles.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../providers/students_provider.dart';
 
 // Helpers
+import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/typedefs.dart';
 
 // Widgets
-import '../widgets/about_tab_view.dart';
-import '../widgets/activities_tab_view.dart';
-import '../widgets/preferences_tab_view.dart';
-import '../widgets/profile_app_bar.dart';
-import '../widgets/profile_tab_bar.dart';
-import '../widgets/student_connection_buttons.dart';
-import '../widgets/university_tab_view.dart';
+import '../widgets/profile_tabs/about_tab_view.dart';
+import '../widgets/profile_tabs/activities_tab_view.dart';
+import '../widgets/profile_tabs/preferences_tab_view.dart';
+import '../widgets/profile_tabs/university_tab_view.dart';
+import '../widgets/profile_header/profile_app_bar.dart';
+import '../widgets/profile_header/profile_tab_bar.dart';
+import '../widgets/profile_header/student_connection_buttons.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);

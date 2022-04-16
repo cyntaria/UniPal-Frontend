@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_colors.dart';
 
 class ProfileTabBar extends StatelessWidget {
   const ProfileTabBar({Key? key}) : super(key: key);

@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../providers/hobbies_provider.dart';
-import '../providers/interests_provider.dart';
-import '../providers/students_provider.dart';
+import '../../providers/hobbies_provider.dart';
+import '../../providers/interests_provider.dart';
+import '../../providers/students_provider.dart';
 
 // Routing
-import '../../../config/routes/app_router.dart';
-import '../../../config/routes/routes.dart';
+import '../../../../config/routes/app_router.dart';
+import '../../../../config/routes/routes.dart';
 
 // Models
-import '../models/hobby_model.codegen.dart';
-import '../models/interest_model.codegen.dart';
+import '../../models/hobby_model.codegen.dart';
+import '../../models/interest_model.codegen.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
-import '../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_typography.dart';
 
 // Widgets
-import '../../shared/widgets/custom_filter_chip.dart';
-import '../../shared/widgets/custom_text_button.dart';
-import '../../shared/widgets/labeled_widget.dart';
+import '../../../shared/widgets/custom_filter_chip.dart';
+import '../../../shared/widgets/custom_text_button.dart';
+import '../../../shared/widgets/labeled_widget.dart';
 
 class PreferencesTabView extends HookConsumerWidget {
   const PreferencesTabView({Key? key}) : super(key: key);

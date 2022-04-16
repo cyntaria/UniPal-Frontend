@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_utils.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_utils.dart';
 
 class ProfileAppBar extends StatelessWidget {
   final String title;

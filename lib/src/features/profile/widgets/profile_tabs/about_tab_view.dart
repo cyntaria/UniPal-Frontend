@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../providers/students_provider.dart';
+import '../../providers/students_provider.dart';
 
 // Helpers
-import '../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_styles.dart';
 
 // Widgets
-import '../../shared/widgets/labeled_widget.dart';
+import '../../../shared/widgets/labeled_widget.dart';
 
 class AboutTabView extends HookConsumerWidget {
   const AboutTabView({Key? key}) : super(key: key);

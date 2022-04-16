@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
-import '../../../helpers/constants/app_typography.dart';
-import '../../../helpers/typedefs.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/typedefs.dart';
 
 // Widgets
-import '../../shared/widgets/custom_text_button.dart';
+import '../../../shared/widgets/custom_text_button.dart';
 
 class StudentConnectionButtons extends StatelessWidget {
   final JSON? studentConnection;
