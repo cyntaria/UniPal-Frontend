@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/qr_scanner_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
-import '../../features/home/app_startup_screen.dart';
-import '../../features/home/home_screen.dart';
+import '../../features/app_startup_screen.dart';
+import '../../features/home/screens/home_screen.dart';
 import '../../features/profile/screens/update_preferences_screen.dart';
 
 // Routing
