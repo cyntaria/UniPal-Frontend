@@ -46,7 +46,7 @@ class AboutTabView extends HookConsumerWidget {
 
               // Birthday
               LabeledWidget(
-                label: 'Birthday',
+                label: 'Birthday On',
                 child: Text(
                   currentStudent['birthday']! as String,
                 ),
@@ -60,11 +60,11 @@ class AboutTabView extends HookConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Uni Email
+              // Program
               LabeledWidget(
-                label: 'University Email',
+                label: 'Program',
                 child: Text(
-                  currentStudent['uni_email']! as String,
+                  programs[currentStudent['program_id']! as int]!,
                 ),
               ),
 
@@ -76,22 +76,6 @@ class AboutTabView extends HookConsumerWidget {
                 ),
               ),
 
-              // Program
-              LabeledWidget(
-                label: 'Program',
-                child: Text(
-                  programs[currentStudent['program_id']! as int]!,
-                ),
-              ),
-            ],
-          ),
-
-          Insets.gapH20,
-
-          // Contact Data
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               // Favourite Campus
               LabeledWidget(
                 label: 'Favourite Campus',
@@ -99,23 +83,37 @@ class AboutTabView extends HookConsumerWidget {
                   campuses[currentStudent['campus_id']! as int]!,
                 ),
               ),
-
-              // Contact
-              LabeledWidget(
-                label: 'Contact',
-                child: Text(
-                  currentStudent['contact']! as String,
-                ),
-              ),
-
-              // Email
-              LabeledWidget(
-                label: 'Email',
-                child: Text(
-                  currentStudent['email']! as String,
-                ),
-              ),
             ],
+          ),
+
+          Insets.gapH20,
+
+          // Uni Email
+          LabeledWidget(
+            label: 'University Email',
+            child: Text(
+              currentStudent['uni_email']! as String,
+            ),
+          ),
+
+          Insets.gapH20,
+
+          // Email
+          LabeledWidget(
+            label: 'Email',
+            child: Text(
+              currentStudent['email']! as String,
+            ),
+          ),
+
+          Insets.gapH20,
+
+          // Contact
+          LabeledWidget(
+            label: 'Contact',
+            child: Text(
+              currentStudent['contact']! as String,
+            ),
           ),
         ],
       ),

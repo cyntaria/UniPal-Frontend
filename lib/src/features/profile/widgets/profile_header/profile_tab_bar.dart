@@ -58,10 +58,7 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              margin: EdgeInsets.only(
-                left: (_tabBar.padding?.horizontal ?? 20) - 15,
-                bottom: 0.9,
-              ),
+              margin: const EdgeInsets.only(bottom: 0.9),
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: AppColors.lightOutlineColor),
