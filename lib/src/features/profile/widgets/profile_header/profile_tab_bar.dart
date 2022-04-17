@@ -26,9 +26,6 @@ class ProfileTabBar extends StatelessWidget {
               child: Text('PREFERENCES'),
             ),
             Tab(
-              child: Text('UNIVERSITY'),
-            ),
-            Tab(
               child: Text('ABOUT'),
             ),
             Tab(
@@ -73,7 +70,7 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
               width: _tabBar.preferredSize.width,
             ),
           ),
-    
+
           _tabBar,
         ],
       ),

@@ -11,13 +11,12 @@ import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/typedefs.dart';
 
 // Widgets
-import '../widgets/profile_tabs/about_tab_view.dart';
-import '../widgets/profile_tabs/activities_tab_view.dart';
-import '../widgets/profile_tabs/preferences_tab_view.dart';
-import '../widgets/profile_tabs/university_tab_view.dart';
 import '../widgets/profile_header/profile_app_bar.dart';
 import '../widgets/profile_header/profile_tab_bar.dart';
 import '../widgets/profile_header/student_connection_buttons.dart';
+import '../widgets/profile_tabs/about_tab_view.dart';
+import '../widgets/profile_tabs/activities_tab_view.dart';
+import '../widgets/profile_tabs/preferences_tab_view.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class ProfileScreen extends HookConsumerWidget {
     return Scaffold(
       body: SafeArea(
         child: DefaultTabController(
-          length: 4,
+          length: 3,
           child: NestedScrollView(
             headerSliverBuilder: (BuildContext context, _) {
               return <Widget>[
@@ -73,9 +72,6 @@ class ProfileScreen extends HookConsumerWidget {
                 PreferencesTabView(),
 
                 // University
-                UniversityTabView(),
-
-                // About
                 AboutTabView(),
 
                 // Activities
