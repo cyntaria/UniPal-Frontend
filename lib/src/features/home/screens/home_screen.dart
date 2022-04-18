@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+// Models
+import '../models/tab_item_model.dart';
+
 // Widgets
 import '../widgets/home_app_bar.dart';
+import '../../profile/widgets/profile_tabs/activities_tab_view.dart';
+import '../../requests/requests_tab_view.dart';
+import '../../student_finder/student_finder_tab_view.dart';
+import '../../timetables/scheduler_tab_view.dart';
 import '../../posts/posts_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,12 +16,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _tabs = <IconData>[
-      Icons.panorama_photosphere,
-      Icons.group,
-      Icons.festival_rounded,
-      Icons.person_search_rounded,
-      Icons.edit_calendar_rounded,
+    const _tabs = <TabItemModel>[
+      TabItemModel('Posts', Icons.panorama_photosphere),
+      TabItemModel('Friend Requests', Icons.group),
+      TabItemModel('Activities', Icons.festival_rounded),
+      TabItemModel('Student Finder', Icons.person_search_rounded),
+      TabItemModel('Scheduler', Icons.edit_calendar_rounded),
     ];
     return Scaffold(
       body: DefaultTabController(
@@ -27,19 +34,17 @@ class HomeScreen extends StatelessWidget {
                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                   context,
                 ),
-                sliver: HomeAppBar(
-                  tabs: _tabs.map((icon) => Tab(icon: Icon(icon))).toList(),
-                ),
+                sliver: const HomeAppBar(tabs: _tabs),
               ),
             ];
           },
           body: const TabBarView(
             children: [
               PostsTabView(),
-              PostsTabView(),
-              PostsTabView(),
-              PostsTabView(),
-              PostsTabView(),
+              RequestsTabView(),
+              ActivitiesTabView(),
+              StudentFinderTabView(),
+              SchedulerTabView(),
             ],
           ),
         ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Models
+import '../models/tab_item_model.dart';
+
 // Providers
 import '../../auth/providers/auth_provider.dart';
+import '../providers/home_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -12,7 +16,7 @@ import '../../../config/routes/routes.dart';
 import '../../../helpers/constants/app_colors.dart';
 
 class HomeAppBar extends ConsumerWidget {
-  final List<Widget> tabs;
+  final List<TabItemModel> tabs;
   const HomeAppBar({
     Key? key,
     required this.tabs,
@@ -20,11 +24,12 @@ class HomeAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final activeTabIndex = ref.watch(homeActiveTabProvider);
     return SliverAppBar(
       elevation: 0,
       toolbarHeight: 65,
       pinned: true,
-      title: const Text('UniPal'),
+      title: Text(tabs[activeTabIndex].tabName),
       backgroundColor: AppColors.backgroundColor,
       leading: InkWell(
         onTap: () => ref.read(authProvider.notifier).logout(),
@@ -36,9 +41,7 @@ class HomeAppBar extends ConsumerWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.person_rounded),
-          onPressed: () => AppRouter.pushNamed(
-            Routes.StudentProfileScreen,
-          ),
+          onPressed: () => AppRouter.pushNamed(Routes.StudentProfileScreen),
         )
       ],
       bottom: PreferredSize(
@@ -60,7 +63,8 @@ class HomeAppBar extends ConsumerWidget {
             indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             unselectedLabelColor: AppColors.textLightGreyColor,
-            tabs: tabs,
+            tabs: tabs.map((t) => Tab(icon: Icon(t.icon))).toList(),
+            onTap: (i) => ref.read(homeActiveTabProvider.notifier).state = i,
           ),
         ),
       ),
