@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+// Widgets
+import '../widgets/new_post_bar.dart';
+import '../widgets/posts_list.dart';
+
 class PostsTabView extends StatelessWidget {
   const PostsTabView({Key? key}) : super(key: key);
 
@@ -18,18 +22,14 @@ class PostsTabView extends StatelessWidget {
                   context,
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.all(8),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text('Item $index'),
-                      );
-                    },
-                    childCount: 30,
-                  ),
-                ),
+              
+              // New Post Button
+              const NewPostBar(),
+
+              // Posts List
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                sliver: PostsList(),
               ),
             ],
           );

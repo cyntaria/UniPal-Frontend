@@ -9,7 +9,7 @@ import '../../profile/widgets/profile_tabs/activities_tab_view.dart';
 import '../../requests/requests_tab_view.dart';
 import '../../student_finder/student_finder_tab_view.dart';
 import '../../timetables/scheduler_tab_view.dart';
-import '../../posts/posts_tab_view.dart';
+import '../../posts/screens/posts_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,13 +17,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const _tabs = <TabItemModel>[
-      TabItemModel('Posts', Icons.panorama_photosphere),
+      TabItemModel('Posts', Icons.forum_rounded),
       TabItemModel('Friend Requests', Icons.group),
       TabItemModel('Activities', Icons.festival_rounded),
       TabItemModel('Student Finder', Icons.person_search_rounded),
       TabItemModel('Scheduler', Icons.edit_calendar_rounded),
     ];
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       body: DefaultTabController(
         length: _tabs.length,
         child: NestedScrollView(
