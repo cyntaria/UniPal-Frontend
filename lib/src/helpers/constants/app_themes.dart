@@ -43,7 +43,10 @@ class AppThemes {
     fontFamily: AppTypography.primary.fontFamily,
     textTheme: AppTypography.primary.textTheme,
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(padding: EdgeInsets.zero),
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
     ),
     appBarTheme: AppBarTheme(
       centerTitle: true,

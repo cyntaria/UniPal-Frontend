@@ -8,15 +8,18 @@ class RequestTypeTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TabBar(
-      labelColor: AppColors.primaryColor,
-      indicatorWeight: 3,
-      indicatorColor: AppColors.primaryColor,
-      unselectedLabelColor: AppColors.textLightGreyColor,
-      tabs: [
-        Tab(child: Text('Received')),
-        Tab(child: Text('Sent')),
-      ],
+    return const ColoredBox(
+      color: Colors.white,
+      child: TabBar(
+        labelColor: AppColors.primaryColor,
+        indicatorWeight: 3,
+        indicatorColor: AppColors.primaryColor,
+        unselectedLabelColor: AppColors.textLightGreyColor,
+        tabs: [
+          Tab(child: Text('Received')),
+          Tab(child: Text('Sent')),
+        ],
+      ),
     );
   }
 }

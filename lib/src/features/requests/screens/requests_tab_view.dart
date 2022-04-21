@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-// Providers
-import '../providers/requests_provider.dart';
 
 // Widgets
+import '../widgets/received_requests_list.dart';
 import '../widgets/request_type_tab_bar.dart';
-import '../widgets/requests_list.dart';
+import '../widgets/sent_requests_list.dart';
 
 class RequestsTabView extends StatelessWidget {
   const RequestsTabView({Key? key}) : super(key: key);
@@ -26,35 +23,23 @@ class RequestsTabView extends StatelessWidget {
             ),
 
             // Sent/Received Tab Bar
-            const RequestTypeTabBar(),
+            const SliverToBoxAdapter(
+              child: RequestTypeTabBar(),
+            ),
 
             // Requests View
-            SliverToBoxAdapter(
-              child: Consumer(
-                builder: (_, ref, __) {
-                  final sentRequests = ref.watch(
-                    requestsProvider.select(
-                      (value) => value.getAllSentRequests(),
-                    ),
-                  );
-                  final receivedRequests = ref.watch(
-                    requestsProvider.select(
-                      (value) => value.getAllReceivedRequests(),
-                    ),
-                  );
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TabBarView(
-                      children: [
-                        // Sent list
-                        RequestsList(requests: sentRequests),
+            const SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              sliver: SliverFillRemaining(
+                child: TabBarView(
+                  children: [
+                    // Received list
+                    ReceivedRequestsList(),
 
-                        // Received list
-                        RequestsList(requests: receivedRequests),
-                      ],
-                    ),
-                  );
-                },
+                    // Sent list
+                    SentRequestsList(),
+                  ],
+                ),
               ),
             ),
           ],
