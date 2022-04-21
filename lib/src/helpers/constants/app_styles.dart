@@ -77,6 +77,9 @@ class Insets {
 class Corners {
   const Corners._();
 
+  /// [BorderRadius] rounded on all corners by **4**
+  static const BorderRadius rounded4 = BorderRadius.all(Radius.circular(4));
+
   /// [BorderRadius] rounded on all corners by **7**
   static const BorderRadius rounded7 = BorderRadius.all(Radius.circular(7));
 

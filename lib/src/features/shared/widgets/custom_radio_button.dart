@@ -41,7 +41,7 @@ class CustomRadioButton<T> extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: borderRadius,
             gradient: isSelected ? AppColors.buttonGradientPurple : null,
-            color: AppColors.surfaceColor,
+            color: AppColors.fieldFillColor,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),

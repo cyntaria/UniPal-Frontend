@@ -173,7 +173,7 @@ class CustomDatePickerStyle {
       fontSize: 16,
       color: AppColors.textGreyColor,
     ),
-    this.displayFieldColor = AppColors.surfaceColor,
+    this.displayFieldColor = AppColors.fieldFillColor,
     this.initialDateString = 'Select a date',
     this.floatingText = 'Date Picker',
   });

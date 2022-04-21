@@ -18,7 +18,7 @@ class CustomFilterChip<T> extends StatefulWidget {
     Key? key,
     this.labelColor = AppColors.textBlackColor,
     this.selectedLabelColor = AppColors.textWhite80Color,
-    this.backgroundColor = AppColors.surfaceColor,
+    this.backgroundColor = AppColors.fieldFillColor,
     this.selectedColor = AppColors.primaryColor,
     this.isSelected = false,
     this.onChanged,
