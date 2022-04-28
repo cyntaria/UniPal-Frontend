@@ -1,19 +1,8 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
 
-// Screens
-import '../../features/auth/screens/login_screen.dart';
-import '../../features/auth/screens/qr_scanner_screen.dart';
-import '../../features/auth/screens/register_screen.dart';
-import '../../features/app_startup_screen.dart';
-import '../../features/home/screens/home_screen.dart';
-import '../../features/profile/screens/update_preferences_screen.dart';
-
 // Routing
 import './routes.dart';
-
-// Helpers
-import '../../helpers/typedefs.dart';
 
 /// A utility class provides basic methods for navigation.
 /// This class has no constructor and all variables are `static`.
@@ -21,37 +10,9 @@ import '../../helpers/typedefs.dart';
 class AppRouter {
   const AppRouter._();
 
-  static final Map<String, RouteBuilder> _routesMap = {
-    Routes.AppStartupScreen: (_) => const AppStartupScreen(),
-    Routes.HomeScreen: (_) => const HomeScreen(),
-    Routes.LoginScreen: (_) => const LoginScreen(),
-    Routes.RegisterScreen: (_) => const RegisterScreen(),
-    Routes.QrScannerScreen: (_) => const QrScannerScreen(),
-    Routes.UpdatePreferencesScreen: (_) => const UpdatePreferencesScreen(),
-    Routes.RouteNotFoundScreen: (_) => const SizedBox.shrink(),
-    Routes.ForgotPasswordScreen: (_) => const SizedBox.shrink(),
-    Routes.ChangePasswordScreen: (_) => const SizedBox.shrink(),
-    Routes.PostsFeedScreen: (_) => const SizedBox.shrink(),
-    Routes.AddEditPostScreen: (_) => const SizedBox.shrink(),
-    Routes.ActivitiesFeedScreen: (_) => const SizedBox.shrink(),
-    Routes.AddEditActivityScreen: (_) => const SizedBox.shrink(),
-    Routes.StudentFinderScreen: (_) => const SizedBox.shrink(),
-    Routes.StudentProfileScreen: (_) => const SizedBox.shrink(),
-    Routes.MyFriendRequestsScreen: (_) => const SizedBox.shrink(),
-    Routes.SchedulerScreen: (_) => const SizedBox.shrink(),
-    Routes.GeneratedTimetablesScreen: (_) => const SizedBox.shrink(),
-    Routes.TimetablesScreen: (_) => const SizedBox.shrink(),
-    Routes.TimetableDetailsScreen: (_) => const SizedBox.shrink(),
-    Routes.TeacherReviewsScreen: (_) => const SizedBox.shrink(),
-    Routes.AddEditTeacherReviewScreen: (_) => const SizedBox.shrink(),
-  };
-
   /// The global key used to access navigator without context
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
-
-  /// The name of the route that loads on app startup
-  static const String initialRoute = Routes.AppStartupScreen;
 
   /// This method is used when the app is navigating using named routes.
   ///
@@ -60,12 +21,11 @@ class AppRouter {
   /// In case of unknown route name, it returns a route indicating error.
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     return MaterialPageRoute<dynamic>(
-      builder:
-          _routesMap[settings.name] ?? _routesMap[Routes.RouteNotFoundScreen]!,
+      builder: Routes.getRoute(settings.name),
       settings: RouteSettings(
-        name: _routesMap.containsKey(settings.name)
+        name: Routes.routeExists(settings.name)
             ? settings.name
-            : Routes.RouteNotFoundScreen,
+            : Routes.fallbackRoute,
         arguments: settings.arguments,
       ),
     );
@@ -73,7 +33,10 @@ class AppRouter {
 
   /// This method is used to navigate to a screen using it's name
   static Future<dynamic> pushNamed(String routeName, {dynamic args}) {
-    return navigatorKey.currentState!.pushNamed(routeName, arguments: args);
+    return navigatorKey.currentState!.pushNamed(
+      routeName,
+      arguments: args,
+    );
   }
 
   /// This method is used to navigate back to the previous screen.
@@ -88,12 +51,16 @@ class AppRouter {
   ///
   /// The [routeName] is the name of the screen we want to go back to.
   static void popUntil(String routeName) {
-    navigatorKey.currentState!.popUntil(ModalRoute.withName(routeName));
+    navigatorKey.currentState!.popUntil(
+      ModalRoute.withName(routeName),
+    );
   }
 
   /// This method is used to navigate all the way back to the first screen
   /// shown on startup i.e. the [initialRoute].
   static void popUntilRoot() {
-    navigatorKey.currentState!.popUntil(ModalRoute.withName(initialRoute));
+    navigatorKey.currentState!.popUntil(
+      ModalRoute.withName(Routes.initialRoute),
+    );
   }
 }

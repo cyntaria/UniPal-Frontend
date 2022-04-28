@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Routers
 import 'src/config/routes/app_router.dart';
+import 'src/config/routes/routes.dart';
 
 // Helpers
 import 'src/helpers/constants/app_colors.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
               title: title,
               navigatorObservers: navigatorObservers,
               debugShowCheckedModeBanner: showDebugBanner,
-              initialRoute: AppRouter.initialRoute,
+              initialRoute: Routes.initialRoute,
               color: AppColors.primaryColor,
               onGenerateRoute: AppRouter.generateRoute,
               navigatorKey: AppRouter.navigatorKey,
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: showDebugBanner,
             color: AppColors.primaryColor,
             theme: AppThemes.mainTheme,
-            initialRoute: AppRouter.initialRoute,
+            initialRoute: Routes.initialRoute,
             onGenerateRoute: AppRouter.generateRoute,
             navigatorKey: AppRouter.navigatorKey,
           );

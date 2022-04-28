@@ -1,11 +1,30 @@
 // ignore_for_file: constant_identifier_names
 import 'package:flutter/material.dart';
 
+// Screens
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/auth/screens/qr_scanner_screen.dart';
+import '../../features/auth/screens/register_screen.dart';
+import '../../features/app_startup_screen.dart';
+import '../../features/home/screens/home_screen.dart';
+import '../../features/posts/screens/add_edit_post_screen.dart';
+import '../../features/profile/screens/profile_screen.dart';
+import '../../features/profile/screens/update_preferences_screen.dart';
+
+// Helpers
+import '../../helpers/typedefs.dart';
+
 /// A utility class that holds screen names for named navigation.
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Routes {
   const Routes._();
+
+  /// The route to be loaded when app launches
+  static const String initialRoute = AppStartupScreen;
+
+  /// The route to be loaded in case of unrecognized route name
+  static const String fallbackRoute = RouteNotFoundScreen;
 
   /// The name of the route for app startup screen
   static const String AppStartupScreen = '/app-startup-screen';
@@ -47,7 +66,7 @@ class Routes {
   static const String StudentFinderScreen = '/student-finder-screen';
 
   /// The name of the route for student profile screen.
-  static const String StudentProfileScreen = '/student-profile-screen';
+  static const String ProfileScreen = '/student-profile-screen';
 
   /// The name of the route for user preferences screen.
   static const String UpdatePreferencesScreen = '/update-preferences-screen';
@@ -59,7 +78,8 @@ class Routes {
   static const String SchedulerScreen = '/scheduler-screen';
 
   /// The name of the route for generated timetables screen.
-  static const String GeneratedTimetablesScreen = '/generated-timetables-screen';
+  static const String GeneratedTimetablesScreen =
+      '/generated-timetables-screen';
 
   /// The name of the route for my/students' timetables screen.
   static const String TimetablesScreen = '/timetables-screen';
@@ -71,5 +91,41 @@ class Routes {
   static const String TeacherReviewsScreen = '/teacher-reviews-screen';
 
   /// The name of the route for timetable details screen.
-  static const String AddEditTeacherReviewScreen = '/add-edit-teacher-review-screen';
+  static const String AddEditTeacherReviewScreen =
+      '/add-edit-teacher-review-screen';
+
+  static final Map<String, RouteBuilder> _routesMap = {
+    AppStartupScreen: (_) => const AppStartupScreen(),
+    HomeScreen: (_) => const HomeScreen(),
+    LoginScreen: (_) => const LoginScreen(),
+    RegisterScreen: (_) => const RegisterScreen(),
+    QrScannerScreen: (_) => const QrScannerScreen(),
+    UpdatePreferencesScreen: (_) => const UpdatePreferencesScreen(),
+    RouteNotFoundScreen: (_) => const SizedBox.shrink(),
+    ForgotPasswordScreen: (_) => const SizedBox.shrink(),
+    ChangePasswordScreen: (_) => const SizedBox.shrink(),
+    PostsFeedScreen: (_) => const SizedBox.shrink(),
+    AddEditPostScreen: (_) => const AddEditPostScreen(),
+    ActivitiesFeedScreen: (_) => const SizedBox.shrink(),
+    AddEditActivityScreen: (_) => const SizedBox.shrink(),
+    StudentFinderScreen: (_) => const SizedBox.shrink(),
+    ProfileScreen: (_) => const ProfileScreen(),
+    MyFriendRequestsScreen: (_) => const SizedBox.shrink(),
+    SchedulerScreen: (_) => const SizedBox.shrink(),
+    GeneratedTimetablesScreen: (_) => const SizedBox.shrink(),
+    TimetablesScreen: (_) => const SizedBox.shrink(),
+    TimetableDetailsScreen: (_) => const SizedBox.shrink(),
+    TeacherReviewsScreen: (_) => const SizedBox.shrink(),
+    AddEditTeacherReviewScreen: (_) => const SizedBox.shrink(),
+  };
+
+  static RouteBuilder getRoute(String? routeName) {
+    return routeExists(routeName)
+        ? _routesMap[routeName]!
+        : _routesMap[Routes.RouteNotFoundScreen]!;
+  }
+
+  static bool routeExists(String? routeName) {
+    return _routesMap.containsKey(routeName);
+  }
 }
