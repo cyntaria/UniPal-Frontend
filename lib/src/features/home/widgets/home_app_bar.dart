@@ -41,7 +41,7 @@ class HomeAppBar extends ConsumerWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.person_rounded),
-          onPressed: () => AppRouter.pushNamed(Routes.StudentProfileScreen),
+          onPressed: () => AppRouter.pushNamed(Routes.ProfileScreen),
         )
       ],
       bottom: PreferredSize(

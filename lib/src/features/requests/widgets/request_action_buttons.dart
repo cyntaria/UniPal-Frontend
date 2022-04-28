@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 // Widgets

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../config/routes/app_router.dart';
+import '../../../config/routes/routes.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../profile/providers/students_provider.dart';
@@ -38,7 +40,9 @@ class NewPostBar extends StatelessWidget {
               // New Post Button
               Expanded(
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    AppRouter.pushNamed(Routes.AddEditPostScreen);
+                  },
                   child: const CustomTextField(
                     height: 40,
                     enabled: false,
