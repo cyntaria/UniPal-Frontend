@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 
 // Screens
-import '../../features/auth/screens/login_screen.dart';
-import '../../features/auth/screens/qr_scanner_screen.dart';
-import '../../features/auth/screens/register_screen.dart';
-import '../../features/app_startup_screen.dart';
-import '../../features/home/screens/home_screen.dart';
-import '../../features/posts/screens/add_edit_post_screen.dart';
-import '../../features/profile/screens/profile_screen.dart';
-import '../../features/profile/screens/update_preferences_screen.dart';
+import '../../features/auth/screens/login_screen.dart' as s;
+import '../../features/auth/screens/qr_scanner_screen.dart' as s;
+import '../../features/auth/screens/register_screen.dart' as s;
+import '../../features/app_startup_screen.dart' as s;
+import '../../features/home/screens/home_screen.dart' as s;
+import '../../features/posts/screens/add_edit_post_screen.dart' as s;
+import '../../features/profile/screens/profile_screen.dart' as s;
+import '../../features/profile/screens/update_preferences_screen.dart' as s;
 
 // Helpers
 import '../../helpers/typedefs.dart';
@@ -95,23 +95,18 @@ class Routes {
       '/add-edit-teacher-review-screen';
 
   static final Map<String, RouteBuilder> _routesMap = {
-    AppStartupScreen: (_) => const AppStartupScreen(),
-    HomeScreen: (_) => const HomeScreen(),
-    LoginScreen: (_) => const LoginScreen(),
-    RegisterScreen: (_) => const RegisterScreen(),
-    QrScannerScreen: (_) => const QrScannerScreen(),
-    UpdatePreferencesScreen: (_) => const UpdatePreferencesScreen(),
+    AppStartupScreen: (_) => const s.AppStartupScreen(),
+    HomeScreen: (_) => const s.HomeScreen(),
+    LoginScreen: (_) => const s.LoginScreen(),
+    RegisterScreen: (_) => const s.RegisterScreen(),
+    QrScannerScreen: (_) => const s.QrScannerScreen(),
+    ProfileScreen: (_) => const s.ProfileScreen(),
+    UpdatePreferencesScreen: (_) => const s.UpdatePreferencesScreen(),
+    AddEditPostScreen: (_) => const s.AddEditPostScreen(),
     RouteNotFoundScreen: (_) => const SizedBox.shrink(),
     ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     ChangePasswordScreen: (_) => const SizedBox.shrink(),
-    PostsFeedScreen: (_) => const SizedBox.shrink(),
-    AddEditPostScreen: (_) => const AddEditPostScreen(),
-    ActivitiesFeedScreen: (_) => const SizedBox.shrink(),
     AddEditActivityScreen: (_) => const SizedBox.shrink(),
-    StudentFinderScreen: (_) => const SizedBox.shrink(),
-    ProfileScreen: (_) => const ProfileScreen(),
-    MyFriendRequestsScreen: (_) => const SizedBox.shrink(),
-    SchedulerScreen: (_) => const SizedBox.shrink(),
     GeneratedTimetablesScreen: (_) => const SizedBox.shrink(),
     TimetablesScreen: (_) => const SizedBox.shrink(),
     TimetableDetailsScreen: (_) => const SizedBox.shrink(),
