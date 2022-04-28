@@ -18,10 +18,14 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefix, suffix;
   final bool showCursor;
   final bool? enabled;
+  final bool multiline;
+  final bool expands;
   final bool readOnly;
   final bool autofocus;
   final bool showErrorBorder;
+  final bool showFocusedBorder;
   final TextAlign textAlign;
+  final TextAlignVertical textAlignVertical;
   final Alignment errorAlign, floatingAlign;
   final Color fillColor;
   final TextInputType? keyboardType;
@@ -46,10 +50,14 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.height = 47,
     this.readOnly = false,
+    this.showFocusedBorder = true,
+    this.multiline = false,
+    this.expands = false,
     this.showCursor = true,
     this.showErrorBorder = false,
     this.autofocus = false,
     this.textAlign = TextAlign.start,
+    this.textAlignVertical = TextAlignVertical.center,
     this.errorAlign = Alignment.centerRight,
     this.floatingAlign = Alignment.centerLeft,
     this.fillColor = AppColors.fieldFillColor,
@@ -167,16 +175,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: TextFormField(
             controller: widget.controller,
             textAlign: widget.textAlign,
+            textAlignVertical: widget.textAlignVertical,
             autofocus: widget.autofocus,
             maxLength: widget.maxLength,
             enabled: widget.enabled,
+            expands: widget.expands,
             readOnly: widget.readOnly,
-            keyboardType: widget.keyboardType,
-            textInputAction: widget.textInputAction,
+            maxLines: widget.multiline ? null : 1,
+            keyboardType: widget.keyboardType ??
+                (widget.multiline ? TextInputType.multiline : null),
+            textInputAction: widget.textInputAction ??
+                (widget.multiline ? TextInputAction.newline : null),
             style: widget.inputStyle,
             showCursor: widget.showCursor,
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            textAlignVertical: TextAlignVertical.center,
             autovalidateMode: AutovalidateMode.disabled,
             cursorColor: AppColors.textGreyColor,
             obscureText: isPasswordField && hidePassword,
@@ -195,8 +207,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               filled: true,
               counterText: '',
               border: _normalBorder(),
-              focusedBorder: _focusedBorder(),
-              focusedErrorBorder: _focusedBorder(),
+              focusedBorder: widget.showFocusedBorder ? _focusedBorder() : null,
+              focusedErrorBorder:
+                  widget.showFocusedBorder ? _focusedBorder() : null,
               errorBorder: showErrorBorder ? _errorBorder() : null,
               suffixIcon: widget.suffix ??
                   (isPasswordField
