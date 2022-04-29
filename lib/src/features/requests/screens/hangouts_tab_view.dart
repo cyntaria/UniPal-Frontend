@@ -35,10 +35,11 @@ class _ConnectionsTabView extends State<HangoutsTabView> {
         ),
 
         // Connection Requests List
-        if (_selectedSegmentValue == 0)
-          const ReceivedConnectionsList()
-        else
-          const SentConnectionsList(),
+        Expanded(
+          child: _selectedSegmentValue == 0
+              ? const SentConnectionsList()
+              : const ReceivedConnectionsList(),
+        ),
       ],
     );
   }
