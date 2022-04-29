@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../providers/requests_provider.dart';
+import '../../providers/requests_provider.dart';
 
 // Helpers
-import '../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_styles.dart';
 
 // Widgets
-import 'request_list_item.dart';
+import 'connection_list_item.dart';
 
-class SentRequestsList extends ConsumerWidget {
-  const SentRequestsList({Key? key}) : super(key: key);
+class SentConnectionsList extends ConsumerWidget {
+  const SentConnectionsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final requests = ref.watch(
-      requestsProvider.select((value) => value.getAllSentRequests()),
+      requestsProvider.select(
+        (value) => value.getAllSentConnectionRequests(),
+      ),
     );
     return ListView.separated(
       itemCount: requests.length,
       separatorBuilder: (_, __) => Insets.gapH15,
-      itemBuilder: (_, i) => RequestListItem(
+      itemBuilder: (_, i) => ConnectionListItem(
         isReceived: false,
         authorImageUrl:
             requests[i]['receiver']['profile_picture_url']! as String,

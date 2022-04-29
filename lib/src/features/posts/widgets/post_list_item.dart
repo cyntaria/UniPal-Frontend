@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
+import '../../../helpers/extensions/datetime_extension.dart';
 import '../../../helpers/typedefs.dart';
 
 // Widgets
@@ -65,9 +65,8 @@ class PostListItem extends StatelessWidget {
 
                               // Post Datetime
                               Text(
-                                DateFormat('d MM, y -- hh:mm a').format(
-                                  DateTime.parse(post['posted_at']! as String),
-                                ),
+                                DateTime.parse(post['posted_at']! as String)
+                                    .toTimeAgoLabel(),
                                 style:
                                     AppTypography.primary.subtitle13.copyWith(
                                   color: AppColors.textLightGreyColor,

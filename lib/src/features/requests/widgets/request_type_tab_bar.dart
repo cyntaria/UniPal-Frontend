@@ -16,8 +16,8 @@ class RequestTypeTabBar extends StatelessWidget {
         indicatorColor: AppColors.primaryColor,
         unselectedLabelColor: AppColors.textLightGreyColor,
         tabs: [
-          Tab(child: Text('Received')),
-          Tab(child: Text('Sent')),
+          Tab(child: Text('Connections')),
+          Tab(child: Text('Hangouts')),
         ],
       ),
     );

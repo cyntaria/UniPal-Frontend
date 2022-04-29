@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
-import '../../../helpers/constants/app_typography.dart';
-import '../../../helpers/extensions/datetime_extension.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/extensions/datetime_extension.dart';
 
 // Widgets
-import '../../shared/widgets/custom_network_image.dart';
-import 'request_action_buttons.dart';
+import '../../../shared/widgets/custom_network_image.dart';
+import '../request_action_buttons.dart';
 
-class RequestListItem extends StatelessWidget {
+class ConnectionListItem extends StatelessWidget {
   final String authorName;
   final String authorErp;
   final String authorImageUrl;
   final DateTime requestSentAt;
   final bool isReceived;
 
-  const RequestListItem({
+  const ConnectionListItem({
     Key? key,
     required this.authorImageUrl,
     required this.authorName,
@@ -76,7 +76,7 @@ class RequestListItem extends StatelessWidget {
                   ),
                 ),
 
-                // Post Datetime
+                // Request Sent Datetime
                 Text(
                   requestSentAt.toTimeAgoLabel(),
                   style: AppTypography.primary.subtitle13.copyWith(

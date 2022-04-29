@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 // Widgets
-import '../widgets/received_requests_list.dart';
 import '../widgets/request_type_tab_bar.dart';
-import '../widgets/sent_requests_list.dart';
+import 'connections_tab_view.dart';
+import 'hangouts_tab_view.dart';
 
 class RequestsTabView extends StatelessWidget {
   const RequestsTabView({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class RequestsTabView extends StatelessWidget {
       child: DefaultTabController(
         length: 2,
         child: CustomScrollView(
-          key: const PageStorageKey<String>('Friend Requests'),
+          key: const PageStorageKey<String>('Requests'),
           slivers: <Widget>[
             SliverOverlapInjector(
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
@@ -33,11 +33,11 @@ class RequestsTabView extends StatelessWidget {
               sliver: SliverFillRemaining(
                 child: TabBarView(
                   children: [
-                    // Received list
-                    ReceivedRequestsList(),
+                    // Connections
+                    ConnectionsTabView(),
 
                     // Sent list
-                    SentRequestsList(),
+                    HangoutsTabView(),
                   ],
                 ),
               ),
