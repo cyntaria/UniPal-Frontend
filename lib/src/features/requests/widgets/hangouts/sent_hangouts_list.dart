@@ -23,6 +23,7 @@ class SentHangoutsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: requests.length,
       separatorBuilder: (_, __) => Insets.gapH15,
+      padding: EdgeInsets.zero,
       itemBuilder: (_, i) => HangoutListItem(
         isReceived: false,
         authorImageUrl:

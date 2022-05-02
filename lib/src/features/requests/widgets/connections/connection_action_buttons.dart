@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_typography.dart';
 
 // Widgets
-import '../../shared/widgets/custom_text_button.dart';
+import '../../../shared/widgets/custom_text_button.dart';
 
-class RequestActionButtons extends StatelessWidget {
+class ConnectionActionButtons extends StatelessWidget {
   final bool isReceived;
 
-  const RequestActionButtons({
+  const ConnectionActionButtons({
     Key? key,
     required this.isReceived,
   }) : super(key: key);

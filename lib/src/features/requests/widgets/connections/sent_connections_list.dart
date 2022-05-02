@@ -22,6 +22,7 @@ class SentConnectionsList extends ConsumerWidget {
     );
     return ListView.separated(
       itemCount: requests.length,
+      padding: EdgeInsets.zero,
       separatorBuilder: (_, __) => Insets.gapH15,
       itemBuilder: (_, i) => ConnectionListItem(
         isReceived: false,

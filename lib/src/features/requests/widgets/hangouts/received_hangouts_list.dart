@@ -23,6 +23,7 @@ class ReceivedHangoutsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: requests.length,
       separatorBuilder: (_, __) => Insets.gapH15,
+      padding: EdgeInsets.zero,
       itemBuilder: (_, i) => HangoutListItem(
         isReceived: true,
         authorImageUrl: requests[i]['sender']['profile_picture_url']! as String,
@@ -30,7 +31,7 @@ class ReceivedHangoutsList extends ConsumerWidget {
         purpose: requests[i]['purpose']! as String,
         authorName:
             '${requests[i]['sender']['first_name']} ${requests[i]['sender']['last_name']}',
-        meetupAt: DateTime.parse(requests[i]['sent_at']! as String),
+        meetupAt: DateTime.parse(requests[i]['meetup_at']! as String),
         meetupSpotId: requests[i]['meetup_spot_id']! as int,
       ),
     );

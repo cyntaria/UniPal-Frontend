@@ -8,7 +8,8 @@ import '../../../../helpers/extensions/datetime_extension.dart';
 
 // Widgets
 import '../../../shared/widgets/custom_network_image.dart';
-import '../request_action_buttons.dart';
+import '../../../shared/widgets/labeled_widget.dart';
+import 'hangout_action_buttons.dart';
 
 class HangoutListItem extends StatelessWidget {
   final String authorName;
@@ -33,8 +34,8 @@ class HangoutListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      padding: const EdgeInsets.all(10),
+      height: 235,
+      padding: const EdgeInsets.all(15),
       decoration: const BoxDecoration(
         color: AppColors.surfaceColor,
         borderRadius: Corners.rounded7,
@@ -46,106 +47,109 @@ class HangoutListItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Other Author Image
-          CustomNetworkImage(
-            width: 69,
-            height: 74,
-            borderRadius: Corners.rounded4,
-            fit: BoxFit.cover,
-            imageUrl: authorImageUrl,
-          ),
-
-          Insets.gapW10,
-
           // Author Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Author Name And Erp
-                RichText(
-                  text: TextSpan(
-                    text: '$authorName ',
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Other Author Image
+              CustomNetworkImage(
+                width: 50,
+                height: 45,
+                borderRadius: Corners.rounded4,
+                fit: BoxFit.cover,
+                imageUrl: authorImageUrl,
+              ),
+
+              Insets.gapW10,
+
+              // Author Name and ERP
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Author Name
+                  Text(
+                    '$authorName ',
                     style: AppTypography.primary.body14.copyWith(
                       color: AppColors.textBlackColor,
-                      fontWeight: FontWeight.bold,
                     ),
-                    children: [
-                      TextSpan(
-                        text: '($authorErp)',
-                        style: AppTypography.primary.body14.copyWith(
-                          color: AppColors.textBlackColor,
-                        ),
-                      ),
-                    ],
                   ),
-                ),
 
-                // Hangout Purpose
-                RichText(
-                  text: TextSpan(
-                    text: 'Purpose: ',
-                    style: AppTypography.primary.subtitle13.copyWith(
-                      color: AppColors.textBlackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: purpose,
-                        style: AppTypography.primary.subtitle13.copyWith(
-                          color: AppColors.textBlackColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                  Insets.gapH5,
 
-                // Meeting Spot
-                RichText(
-                  text: TextSpan(
-                    text: 'Meetup Spot: ',
+                  // ERP
+                  Text(
+                    '($authorErp)',
                     style: AppTypography.primary.subtitle13.copyWith(
-                      color: AppColors.textBlackColor,
-                      fontWeight: FontWeight.bold,
+                      color: AppColors.textLightGreyColor,
                     ),
-                    children: [
-                      TextSpan(
-                        text: '$meetupSpotId',
-                        style: AppTypography.primary.subtitle13.copyWith(
-                          color: AppColors.textBlackColor,
-                        ),
-                      ),
-                    ],
                   ),
-                ),
+                ],
+              ),
+            ],
+          ),
 
-                // Meetup Datetime
-                RichText(
-                  text: TextSpan(
-                    text: 'Meetup At: ',
-                    style: AppTypography.primary.subtitle13.copyWith(
-                      color: AppColors.textBlackColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: meetupAt.toDateString(),
-                        style: AppTypography.primary.subtitle13.copyWith(
-                          color: AppColors.textLightGreyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+          Insets.gapH15,
+
+          // Hangout Purpose
+          LabeledWidget(
+            label: 'Purpose',
+            labelGap: Insets.gapH3,
+            labelStyle: AppTypography.primary.body14.copyWith(
+              color: AppColors.textBlackColor,
+            ),
+            child: Text(
+              purpose,
+              style: AppTypography.primary.subtitle13.copyWith(
+                color: AppColors.textLightGreyColor,
+              ),
             ),
           ),
 
+          Insets.gapH15,
+
+          // Meetup Details
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Meeting Spot
+              LabeledWidget(
+                label: 'Meetup Spot',
+                labelGap: Insets.gapH3,
+                labelStyle: AppTypography.primary.body14.copyWith(
+                  color: AppColors.textBlackColor,
+                ),
+                child: Text(
+                  '$meetupSpotId',
+                  style: AppTypography.primary.subtitle13.copyWith(
+                    color: AppColors.textLightGreyColor,
+                  ),
+                ),
+              ),
+
+              // Meetup Datetime
+              LabeledWidget(
+                label: 'Meetup At',
+                labelGap: Insets.gapH3,
+                labelStyle: AppTypography.primary.body14.copyWith(
+                  color: AppColors.textBlackColor,
+                ),
+                child: Text(
+                  meetupAt.toDateString(),
+                  style: AppTypography.primary.subtitle13.copyWith(
+                    color: AppColors.textLightGreyColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          Insets.gapH20,
+
           // Action Buttons
-          RequestActionButtons(
+          HangoutActionButtons(
             isReceived: isReceived,
           ),
         ],

@@ -7,12 +7,14 @@ import '../../../helpers/constants/app_styles.dart';
 class LabeledWidget extends StatelessWidget {
   final Widget child;
   final String label;
+  final SizedBox labelGap;
   final TextStyle labelStyle;
 
   const LabeledWidget({
     Key? key,
     required this.child,
     required this.label,
+    this.labelGap = Insets.gapH5,
     this.labelStyle = const TextStyle(
       fontSize: 14,
       color: AppColors.textLightGreyColor,
@@ -30,7 +32,7 @@ class LabeledWidget extends StatelessWidget {
           style: labelStyle,
         ),
 
-        Insets.gapH5,
+        labelGap,
 
         // Widget
         child,

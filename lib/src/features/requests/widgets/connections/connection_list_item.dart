@@ -8,7 +8,7 @@ import '../../../../helpers/extensions/datetime_extension.dart';
 
 // Widgets
 import '../../../shared/widgets/custom_network_image.dart';
-import '../request_action_buttons.dart';
+import 'connection_action_buttons.dart';
 
 class ConnectionListItem extends StatelessWidget {
   final String authorName;
@@ -88,7 +88,7 @@ class ConnectionListItem extends StatelessWidget {
           ),
 
           // Action Buttons
-          RequestActionButtons(
+          ConnectionActionButtons(
             isReceived: isReceived,
           ),
         ],

@@ -77,7 +77,7 @@ extension DateHelpers on DateTime {
     return inSeconds >= 3 ? 'In $inSeconds seconds' : 'Just about now';
   }
 
-  String toDateString([String format = 'd MM, y -- hh:mm a']) {
+  String toDateString([String format = 'd MMM, y - hh:mm a']) {
     return DateFormat(format).format(this);
   }
 }
