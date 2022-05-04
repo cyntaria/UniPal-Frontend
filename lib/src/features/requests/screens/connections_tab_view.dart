@@ -6,6 +6,7 @@ import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 
 // Widgets
+import '../../../helpers/constants/app_utils.dart';
 import '../widgets/connections/received_connections_list.dart';
 import '../widgets/connections/sent_connections_list.dart';
 
@@ -70,9 +71,13 @@ class _ConnectionsTabView extends State<ConnectionsTabView> {
 
         // Connection Requests List
         Expanded(
-          child: _selectedSegmentValue == 0
-              ? const SentConnectionsList()
-              : const ReceivedConnectionsList(),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            switchInCurve: Curves.easeIn,
+            child: _selectedSegmentValue == 0
+                ? const SentConnectionsList()
+                : const ReceivedConnectionsList(),
+          ),
         ),
       ],
     );

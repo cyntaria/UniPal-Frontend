@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// A utility class that holds all the icon sizes used throughout 
+/// A utility class that holds all the icon sizes used throughout
 /// the entire app.
-/// 
+///
 /// This class has no constructor and all variables are `static`.
 @immutable
 class IconSizes {
@@ -13,9 +13,9 @@ class IconSizes {
   static const double lg27 = 27;
 }
 
-/// A utility class that holds all the gaps and insets used 
+/// A utility class that holds all the gaps and insets used
 /// throughout the entire app by things such as padding, sizedbox etc.
-/// 
+///
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Insets {
@@ -41,25 +41,25 @@ class Insets {
 
   /// [SizedBox] of height **15**.
   static const gapH15 = SizedBox(height: 15);
-  
+
   /// [SizedBox] of height **15**.
   static const gapW15 = SizedBox(width: 15);
 
   /// [SizedBox] of height **20**.
   static const gapH20 = SizedBox(height: 20);
-  
+
   /// [SizedBox] of height **20**.
   static const gapW20 = SizedBox(width: 20);
 
   /// [SizedBox] of height **25**.
   static const gapH25 = SizedBox(height: 25);
-  
+
   /// [SizedBox] of height **25**.
   static const gapW25 = SizedBox(width: 25);
-  
+
   /// [SizedBox] of height **30**.
   static const gapH30 = SizedBox(height: 30);
-  
+
   /// [SizedBox] of height **30**.
   static const gapW30 = SizedBox(width: 30);
 
@@ -68,10 +68,9 @@ class Insets {
   static const expand = Spacer();
 }
 
-
-/// A utility class that holds all the border radiuses used throughout 
+/// A utility class that holds all the border radiuses used throughout
 /// the entire app by things such as container, card etc.
-/// 
+///
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Corners {
@@ -85,7 +84,7 @@ class Corners {
 
   /// [BorderRadius] rounded on all corners by **9**
   static const BorderRadius rounded9 = BorderRadius.all(Radius.circular(9));
-  
+
   /// [BorderRadius] rounded on all corners by **10**
   static const BorderRadius rounded10 = BorderRadius.all(Radius.circular(10));
 
@@ -94,12 +93,11 @@ class Corners {
 
   /// [BorderRadius] rounded on all corners by **20**
   static const BorderRadius rounded20 = BorderRadius.all(Radius.circular(20));
-  
 }
 
-/// A utility class that holds all the shadows used throughout 
+/// A utility class that holds all the shadows used throughout
 /// the entire app by things such as animations, tickers etc.
-/// 
+///
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Shadows {
@@ -109,6 +107,21 @@ class Shadows {
     BoxShadow(
       color: Color.fromRGBO(51, 51, 51, 0.15),
       blurRadius: 10,
+    ),
+  ];
+
+  static const elevated = <BoxShadow>[
+    BoxShadow(
+      color: Color.fromARGB(76, 158, 158, 158),
+      blurRadius: 3,
+      spreadRadius: -0.2,
+      offset: Offset(2, 0),
+    ),
+    BoxShadow(
+      color: Color.fromARGB(76, 158, 158, 158),
+      blurRadius: 3,
+      spreadRadius: -0.2,
+      offset: Offset(-2, 0),
     ),
   ];
 

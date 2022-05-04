@@ -70,9 +70,13 @@ class _ConnectionsTabView extends State<HangoutsTabView> {
 
         // Connection Requests List
         Expanded(
-          child: _selectedSegmentValue == 0
-              ? const SentHangoutsList()
-              : const ReceivedHangoutsList(),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            switchInCurve: Curves.easeIn,
+            child: _selectedSegmentValue == 0
+                ? const SentHangoutsList()
+                : const ReceivedHangoutsList(),
+          ),
         ),
       ],
     );
