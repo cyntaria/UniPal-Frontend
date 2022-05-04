@@ -45,7 +45,7 @@ class CustomDropdownField<T> extends StatelessWidget {
       fontSize: 16,
       color: AppColors.textGreyColor,
     ),
-    this.displayFieldColor = AppColors.surfaceColor,
+    this.displayFieldColor = AppColors.fieldFillColor,
     this.hintText = 'Select a value',
     this.floatingText = 'Dropdown',
   }) : super(key: key);

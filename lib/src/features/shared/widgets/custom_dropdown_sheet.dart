@@ -7,12 +7,12 @@ import '../../../config/routes/app_router.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 // Widgets
 import './custom_text_button.dart';
 import './custom_textfield.dart';
+import 'custom_scrollable_bottom_sheet.dart';
 
 typedef WidgetBuilder<T> = Widget Function(BuildContext context, T item);
 typedef SearchFilter<T> = bool Function(String, T);
@@ -118,57 +118,36 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.7,
-      minChildSize: 0.13,
-      maxChildSize: 0.9,
-      expand: false,
+    return CustomScrollableBottomSheet(
+      initialSheetSize: 0.7,
+      minSheetSize: 0.13,
+      maxSheetSize: 0.9,
+      snapSizes: const [0.7, 1],
+      trailing: widget.enableMultipleSelection
+          ? Align(
+              alignment: Alignment.centerRight,
+              child: CustomTextButton(
+                color: widget.submitButtonColor,
+                width: 50,
+                onPressed: () {
+                  widget.onMultipleSelect?.call(_selectedItemList);
+                  _removeFocusAndPopValue<List<T>>(_selectedItemList);
+                },
+                child: Center(
+                  child: Text(
+                    widget.submitButtonText,
+                    style: AppTypography.secondary.body14.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : null,
       builder: (_, scrollController) {
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  /// Bottom sheet title text
-                  Text(
-                    widget.bottomSheetTitle ?? 'Title',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-
-                  if (widget.enableMultipleSelection) ...[
-                    Insets.expand,
-
-                    /// Done button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: CustomTextButton(
-                        color: widget.submitButtonColor,
-                        width: 50,
-                        onPressed: () {
-                          widget.onMultipleSelect?.call(_selectedItemList);
-                          _removeFocusAndPopValue<List<T>>(_selectedItemList);
-                        },
-                        child: Center(
-                          child: Text(
-                            widget.submitButtonText,
-                            style: AppTypography.secondary.body14.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
-                ],
-              ),
-            ),
-
-            /// A [TextField] that displays a list of suggestions as the user types with clear button.
+            // A [TextField] that displays a list of suggestions as the user types with clear button.
             if (widget.showSearch)
               CustomTextField(
                 controller: searchController,
@@ -185,7 +164,7 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
                 ),
               ),
 
-            /// Item builder
+            // Item builder
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
