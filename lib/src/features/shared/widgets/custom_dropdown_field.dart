@@ -20,7 +20,7 @@ abstract class CustomDropdownField<T> extends StatelessWidget {
     required CustomDropdownSheet<T> itemsSheet,
     required String Function(T) selectedItemText,
     Widget suffixIcon,
-    TextStyle displayTextStyle,
+    TextStyle selectedStyle,
     Color displayFieldColor,
     String hintText,
   }) = _CustomDropdownFieldSheet;
@@ -51,7 +51,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
   final Widget suffixIcon;
 
   /// The [TextStyle] used for displaying selected value in the field.
-  final TextStyle displayTextStyle;
+  final TextStyle selectedStyle;
 
   /// The [Color] used for filling background of the field.
   final Color displayFieldColor;
@@ -72,7 +72,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
     required this.itemsSheet,
     required this.selectedItemText,
     this.suffixIcon = const Icon(Icons.arrow_drop_down_rounded),
-    this.displayTextStyle = const TextStyle(
+    this.selectedStyle = const TextStyle(
       fontSize: 16,
       color: AppColors.textGreyColor,
     ),
@@ -116,7 +116,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
               }
               return Text(
                 displayValue,
-                style: displayTextStyle,
+                style: selectedStyle,
               );
             },
           ),
@@ -145,10 +145,13 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
     Key? key,
     this.hintText,
     this.hintStyle,
-    this.selectedStyle,
     this.listItemStyle,
+    this.selectedStyle = const TextStyle(
+      fontSize: 16,
+      color: AppColors.textGreyColor,
+    ),
     this.fillColor = AppColors.fieldFillColor,
-    this.borderRadius = Corners.rounded15,
+    this.borderRadius = Corners.rounded7,
     this.enableSearch = false,
     required this.onSelected,
     required this.controller,
@@ -168,7 +171,13 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
             hintStyle: hintStyle,
             selectedStyle: selectedStyle,
             listItemStyle: listItemStyle,
+            borderRadius: borderRadius,
             fillColor: fillColor,
+            fieldSuffixIcon: const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: IconSizes.med22,
+              color: AppColors.textLightGreyColor,
+            ),
             items: items.keys.toList(growable: false),
             onChanged: onChanged,
           )
@@ -178,7 +187,13 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
             hintStyle: hintStyle,
             selectedStyle: selectedStyle,
             listItemStyle: listItemStyle,
+            borderRadius: borderRadius,
             fillColor: fillColor,
+            fieldSuffixIcon: const Icon(
+              Icons.keyboard_arrow_down_rounded,
+              size: IconSizes.med22,
+              color: AppColors.textLightGreyColor,
+            ),
             items: items.keys.toList(growable: false),
             onChanged: onChanged,
           );

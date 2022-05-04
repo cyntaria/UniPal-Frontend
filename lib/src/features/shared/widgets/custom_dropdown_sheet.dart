@@ -119,10 +119,6 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollableBottomSheet(
-      initialSheetSize: 0.7,
-      minSheetSize: 0.13,
-      maxSheetSize: 0.9,
-      snapSizes: const [0.7, 1],
       titleText: widget.bottomSheetTitle,
       trailing: widget.enableMultipleSelection
           ? Align(

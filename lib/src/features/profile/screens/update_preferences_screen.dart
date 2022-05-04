@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../shared/widgets/labeled_widget.dart';
 import '../providers/preferences_provider.dart';
 
 // Routing
@@ -87,29 +88,21 @@ class _UpdatePreferencesScreenState
             children: [
               Insets.gapH20,
 
-              // Hobbies Label
-              Text(
-                'Hobbies',
-                style: AppTypography.primary.subHeading16,
-              ),
-
-              Insets.gapH5,
-
               // Hobby Chips
-              const HobbiesFilterChips(),
+              LabeledWidget(
+                label: 'Hobbies',
+                labelStyle: AppTypography.primary.subHeading16,
+                child: const HobbiesFilterChips(),
+              ),
 
               Insets.gapH20,
 
-              // Interests Label
-              Text(
-                'Interests',
-                style: AppTypography.primary.subHeading16,
+              // Interests
+              LabeledWidget(
+                label: 'Interests',
+                labelStyle: AppTypography.primary.subHeading16,
+                child: const InterestsFilterChips(),
               ),
-
-              Insets.gapH5,
-
-              // Interest Chips
-              const InterestsFilterChips(),
 
               Insets.gapH20,
 

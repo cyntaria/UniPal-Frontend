@@ -9,6 +9,7 @@ class ScrollableColumn extends StatelessWidget {
   final TextBaseline? textBaseline;
   final ScrollPhysics? physics;
   final EdgeInsetsGeometry padding;
+  final ScrollController? controller;
 
   const ScrollableColumn({
     Key? key,
@@ -19,6 +20,7 @@ class ScrollableColumn extends StatelessWidget {
     this.textBaseline,
     this.textDirection,
     this.physics,
+    this.controller,
     required this.children,
   }) : super(key: key);
 
@@ -37,6 +39,7 @@ class ScrollableColumn extends StatelessWidget {
             return false;
           },
           child: SingleChildScrollView(
+            controller: controller,
             physics: physics,
             child: Padding(
               padding: padding,

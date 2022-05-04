@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Widgets
-import '../widgets/finder/search_bar.dart';
+import '../widgets/finder/search_and_filter_bar.dart';
 import '../widgets/finder/students_grid_list.dart';
 
 class StudentFinderTabView extends StatelessWidget {
@@ -21,7 +21,7 @@ class StudentFinderTabView extends StatelessWidget {
 
           // Search bar
           const SliverToBoxAdapter(
-            child: SearchBar(),
+            child: SearchAndFilterBar(),
           ),
 
           // Posts List

@@ -140,10 +140,10 @@ class PersonalDetailFields extends HookConsumerWidget {
         Insets.gapH15,
 
         // Gender
-        LabeledWidget(
+        const LabeledWidget(
           label: 'Gender',
-          labelStyle: AppTypography.primary.body16,
-          child: const GenderSelectionCards(),
+          useDarkerLabel: true,
+          child: GenderSelectionCards(),
         ),
 
         Insets.gapH15,

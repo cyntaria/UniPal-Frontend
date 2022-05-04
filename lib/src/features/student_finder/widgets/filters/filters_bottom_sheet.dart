@@ -45,168 +45,198 @@ class _FiltersBottomSheetState extends ConsumerState<FiltersBottomSheet> {
     final interestController = useTextEditingController(text: '');
     final statusController = useTextEditingController(text: '');
     final batchController = useTextEditingController(text: '');
-    return CustomScrollableBottomSheet(
-      titleText: 'Filters',
-      leading: !hasFilters
-          ? null
-          : GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Text(
-                  'Cancel',
-                  style: AppTypography.primary.body14.copyWith(
-                    color: AppColors.textGreyColor,
+    return SafeArea(
+      child: CustomScrollableBottomSheet(
+        titleText: 'Filters',
+        leading: !hasFilters
+            ? null
+            : GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Text(
+                    'Reset',
+                    style: AppTypography.primary.body14.copyWith(
+                      color: AppColors.textGreyColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-      trailing: CustomTextButton.gradient(
-        width: 60,
-        height: 30,
-        onPressed: () {
-          // TODO(arafaysaleem): add code to save filters
-          // TODO(arafaysaleem): add code to refresh finder provider
-          AppRouter.pop();
-        },
-        gradient: AppColors.buttonGradientPurple,
-        child: Center(
-          child: Text(
-            'Edit',
-            style: AppTypography.secondary.title18.copyWith(
-              color: Colors.white,
+        trailing: CustomTextButton.gradient(
+          width: 60,
+          height: 30,
+          onPressed: () {
+            // TODO(arafaysaleem): add code to save filters
+            // TODO(arafaysaleem): add code to refresh finder provider
+            AppRouter.pop();
+          },
+          gradient: AppColors.buttonGradientPurple,
+          child: Center(
+            child: Text(
+              'Apply',
+              style: AppTypography.secondary.title18.copyWith(
+                color: Colors.white,
+              ),
             ),
           ),
         ),
+        builder: (_, scrollController) {
+          return ListView(
+            controller: scrollController,
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            children: [
+              // Gender Filter
+              const LabeledWidget(
+                label: 'Gender',
+                useDarkerLabel: true,
+                child: GenderSelectionCards(),
+              ),
+
+              Insets.gapH20,
+
+              // Program Dropdown Filter
+              LabeledWidget(
+                label: 'Program',
+                useDarkerLabel: true,
+                child: CustomDropdownField<int>.animated(
+                  controller: programController,
+                  hintText: 'Select a program',
+                  items: programs.map((key, value) => MapEntry(value, key)),
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Campuses Dropdown Filter
+              LabeledWidget(
+                label: 'Campus',
+                useDarkerLabel: true,
+                child: CustomDropdownField<int>.animated(
+                  controller: campusController,
+                  hintText: 'Select a campus',
+                  items: campuses.map((key, value) => MapEntry(value, key)),
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Batch Dropdown Filter
+              LabeledWidget(
+                label: 'Batch Of',
+                useDarkerLabel: true,
+                child: CustomDropdownField<int>.animated(
+                  controller: batchController,
+                  enableSearch: true,
+                  hintText: 'Select a batch',
+                  items: const {
+                    '2025': 2025,
+                    '2024': 2024,
+                    '2023': 2023,
+                    '2022': 2022,
+                    '2021': 2021,
+                    '2020': 2020,
+                  },
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Hobbies Dropdown Filter
+              LabeledWidget(
+                label: 'Hobby',
+                useDarkerLabel: true,
+                child: CustomDropdownField<HobbyModel>.animated(
+                  controller: hobbyController,
+                  enableSearch: true,
+                  hintText: 'Select a hobby',
+                  items: ref
+                      .watch(
+                        hobbiesProvider.select(
+                          (value) => value.getHobbiesMap(),
+                        ),
+                      )
+                      .map((k, v) => MapEntry(v.hobby, v)),
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Interests Dropdown Filter
+              LabeledWidget(
+                label: 'Interest',
+                useDarkerLabel: true,
+                child: CustomDropdownField<InterestModel>.animated(
+                  controller: interestController,
+                  enableSearch: true,
+                  hintText: 'Select an interest',
+                  items: ref
+                      .watch(
+                        interestsProvider.select(
+                          (value) => value.getInterestsMap(),
+                        ),
+                      )
+                      .map((k, v) => MapEntry(v.interest, v)),
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Student Statuses Dropdown Filter
+              LabeledWidget(
+                label: 'Student Status',
+                useDarkerLabel: true,
+                child: CustomDropdownField<int>.animated(
+                  controller: statusController,
+                  enableSearch: true,
+                  hintText: 'Select a status',
+                  items: const {
+                    'Looking for friends': 1,
+                    'Looking for transport': 2,
+                    'Looking for lunch pal': 3,
+                    'Looking for relationships': 4,
+                    'Looking for jamming': 5,
+                    'Looking for basketball': 6,
+                    'Looking for futsal': 7,
+                    'Looking for cricket': 8,
+                    'Looking for cards': 9,
+                  },
+                  onSelected: (id) {},
+                ),
+              ),
+
+              Insets.gapH20,
+
+              // Age Slider Filter
+              LabeledWidget(
+                label: 'Student Status',
+                useDarkerLabel: true,
+                child: CustomDropdownField<int>.animated(
+                  controller: statusController,
+                  enableSearch: true,
+                  hintText: 'Select a status',
+                  items: const {
+                    'Looking for friends': 1,
+                    'Looking for transport': 2,
+                    'Looking for lunch pal': 3,
+                    'Looking for relationships': 4,
+                    'Looking for jamming': 5,
+                    'Looking for basketball': 6,
+                    'Looking for futsal': 7,
+                    'Looking for cricket': 8,
+                    'Looking for cards': 9,
+                  },
+                  onSelected: (id) {},
+                ),
+              ),
+            ],
+          );
+        },
       ),
-      builder: (_, scrollController) {
-        return ListView(
-          controller: scrollController,
-          padding: EdgeInsets.zero,
-          children: [
-            // Gender Filter
-            const LabeledWidget(
-              label: 'Gender',
-              child: GenderSelectionCards(),
-            ),
-
-            Insets.gapH20,
-
-            // Program Dropdown Filter
-            LabeledWidget(
-              label: 'Program',
-              child: CustomDropdownField<int>.animated(
-                controller: programController,
-                hintText: 'Select a program',
-                items: programs.map((key, value) => MapEntry(value, key)),
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Campuses Dropdown Filter
-            LabeledWidget(
-              label: 'Campus',
-              child: CustomDropdownField<int>.animated(
-                controller: campusController,
-                hintText: 'Select a campus',
-                items: campuses.map((key, value) => MapEntry(value, key)),
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Batch Dropdown Filter
-            LabeledWidget(
-              label: 'Batch Of',
-              child: CustomDropdownField<int>.animated(
-                controller: batchController,
-                enableSearch: true,
-                hintText: 'Select a batch',
-                items: const {
-                  '2025': 2025,
-                  '2024': 2024,
-                  '2023': 2023,
-                  '2022': 2022,
-                  '2021': 2021,
-                  '2020': 2020,
-                },
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Hobbies Dropdown Filter
-            LabeledWidget(
-              label: 'Hobby',
-              child: CustomDropdownField<HobbyModel>.animated(
-                controller: hobbyController,
-                enableSearch: true,
-                hintText: 'Select a hobby',
-                items: ref
-                    .watch(
-                      hobbiesProvider.select(
-                        (value) => value.getHobbiesMap(),
-                      ),
-                    )
-                    .map((k, v) => MapEntry(v.hobby, v)),
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Interests Dropdown Filter
-            LabeledWidget(
-              label: 'Interest',
-              child: CustomDropdownField<InterestModel>.animated(
-                controller: interestController,
-                enableSearch: true,
-                hintText: 'Select an interest',
-                items: ref
-                    .watch(
-                      interestsProvider.select(
-                        (value) => value.getInterestsMap(),
-                      ),
-                    )
-                    .map((k, v) => MapEntry(v.interest, v)),
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Student Statuses Dropdown Filter
-            LabeledWidget(
-              label: 'Student Status',
-              child: CustomDropdownField<int>.animated(
-                controller: statusController,
-                enableSearch: true,
-                hintText: 'Select a status',
-                items: const {
-                  'Looking for friends': 1,
-                  'Looking for transport': 2,
-                  'Looking for lunch pal': 3,
-                  'Looking for relationships': 4,
-                  'Looking for jamming': 5,
-                  'Looking for basketball': 6,
-                  'Looking for futsal': 7,
-                  'Looking for cricket': 8,
-                  'Looking for cards': 9,
-                },
-                onSelected: (id) {},
-              ),
-            ),
-
-            Insets.gapH20,
-
-            // Age Slider Filter
-          ],
-        );
-      },
     );
   }
 }

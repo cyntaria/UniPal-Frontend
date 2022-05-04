@@ -9,8 +9,8 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/custom_textfield.dart';
 import '../filters/filters_bottom_sheet.dart';
 
-class SearchBar extends HookWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class SearchAndFilterBar extends HookWidget {
+  const SearchAndFilterBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class SearchBar extends HookWidget {
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(15),
+                    top: Radius.circular(20),
                   ),
                 ),
                 context: context,

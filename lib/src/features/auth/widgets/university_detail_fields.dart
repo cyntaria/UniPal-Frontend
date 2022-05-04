@@ -91,7 +91,7 @@ class UniversityDetailFields extends HookConsumerWidget {
         // Program Dropdown
         LabeledWidget(
           label: 'Programs',
-          labelStyle: AppTypography.primary.subHeading16,
+          useDarkerLabel: true,
           child: CustomDropdownField<int>.sheet(
             controller: programController,
             selectedItemText: (item) => '$item',
@@ -120,7 +120,7 @@ class UniversityDetailFields extends HookConsumerWidget {
         // Campus Dropdown
         LabeledWidget(
           label: 'Campuses',
-          labelStyle: AppTypography.primary.subHeading16,
+          useDarkerLabel: true,
           child: CustomDropdownField<int>.sheet(
             controller: campusController,
             selectedItemText: (item) => '$item',

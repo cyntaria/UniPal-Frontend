@@ -35,12 +35,12 @@ class CustomScrollableBottomSheet extends StatelessWidget {
     this.leading,
     this.title,
     this.trailing,
-    this.initialSheetSize = 1,
-    this.minSheetSize = 0.9,
+    this.initialSheetSize = 0.7,
+    this.minSheetSize = 0.5,
     this.maxSheetSize = 1,
     this.expand = false,
     this.snap = true,
-    this.snapSizes = const [1],
+    this.snapSizes = const [0.7, 1],
   })  : assert(
           titleText == null || title == null,
           'Cannot specify both sheetTitle and title widget',
@@ -49,6 +49,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget? child;
     return DraggableScrollableSheet(
       initialChildSize: initialSheetSize,
       minChildSize: minSheetSize,
@@ -57,7 +58,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
       snap: snap,
       snapSizes: snapSizes,
       builder: (_, scrollController) {
-        return Column(
+        child ??= Column(
           children: [
             // Handle
             const Padding(
@@ -75,7 +76,9 @@ class CustomScrollableBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
-
+        
+            Insets.gapH5,
+        
             // Header
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -86,7 +89,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
                 children: [
                   // Leading
                   if (leading != null) leading!,
-
+        
                   // Title
                   title ??
                       Text(
@@ -96,28 +99,29 @@ class CustomScrollableBottomSheet extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-
+        
                   // Trailing
                   if (trailing != null) trailing!,
                 ],
               ),
             ),
-
+        
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(
                 height: 0,
                 thickness: 1.2,
                 color: Color(0xFFE0E0E0),
               ),
             ),
-
+        
             // Child builder
             Expanded(
               child: builder(context, scrollController),
             ),
           ],
         );
+        return child!;
       },
     );
   }
