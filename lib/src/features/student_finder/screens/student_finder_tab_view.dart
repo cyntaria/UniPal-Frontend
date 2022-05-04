@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // Widgets
-import 'search_bar.dart';
-import 'students_grid_list.dart';
+import '../widgets/finder/search_bar.dart';
+import '../widgets/finder/students_grid_list.dart';
 
 class StudentFinderTabView extends StatelessWidget {
   const StudentFinderTabView({Key? key}) : super(key: key);

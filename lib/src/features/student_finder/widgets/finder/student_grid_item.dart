@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 // Helpers
-import '../../helpers/constants/app_colors.dart';
-import '../../helpers/constants/app_styles.dart';
-import '../../helpers/constants/app_typography.dart';
-import '../../helpers/extensions/string_extension.dart';
-import '../../helpers/typedefs.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/extensions/string_extension.dart';
+import '../../../../helpers/typedefs.dart';
 
 class StudentGridItem extends StatelessWidget {
   final JSON student;

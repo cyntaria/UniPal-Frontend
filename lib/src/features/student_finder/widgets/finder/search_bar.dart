@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Helpers
-import '../../helpers/constants/app_colors.dart';
-import '../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_colors.dart';
+import '../../../../helpers/constants/app_styles.dart';
 
 // Widgets
-import '../shared/widgets/custom_textfield.dart';
+import '../../../shared/widgets/custom_textfield.dart';
+import '../filters/filters_bottom_sheet.dart';
 
 class SearchBar extends HookWidget {
   const SearchBar({Key? key}) : super(key: key);
@@ -50,7 +51,20 @@ class SearchBar extends HookWidget {
 
           // Filters Button
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet<dynamic>(
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(15),
+                  ),
+                ),
+                context: context,
+                builder: (context) {
+                  return const FiltersBottomSheet();
+                },
+              );
+            },
             child: Container(
               height: 47,
               width: 47,
