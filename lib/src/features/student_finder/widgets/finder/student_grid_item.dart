@@ -18,7 +18,7 @@ class StudentGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: () {},
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: Corners.rounded9,
@@ -42,20 +42,18 @@ class StudentGridItem extends StatelessWidget {
                 ),
               ),
             ),
-    
+
             Insets.gapH5,
-    
+
             // Full Name
             Text(
               '${student['first_name']} ${student['last_name']}',
               textAlign: TextAlign.center,
-              style: AppTypography.primary.body14.copyWith(
-                color: AppColors.textBlackColor,
-              ),
+              style: AppTypography.primary.body14,
             ),
-    
+
             Insets.expand,
-    
+
             // Program
             Text(
               "${student['program']}'${'${student['graduation_year']}'.substring(2)}",
@@ -64,20 +62,18 @@ class StudentGridItem extends StatelessWidget {
                 color: AppColors.textLightGreyColor,
               ),
             ),
-    
+
             Insets.gapH3,
-    
+
             // Batch Type
             Text(
               '${student['batch_type']}'.capitalize,
               textAlign: TextAlign.center,
-              style: AppTypography.primary.subtitle13.copyWith(
-                color: AppColors.textBlackColor,
-              ),
+              style: AppTypography.primary.subtitle13,
             ),
-    
+
             Insets.gapH3,
-    
+
             // Current Status
             Text(
               '${student['current_status']}',

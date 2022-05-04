@@ -90,7 +90,6 @@ class AddEditPostScreen extends HookConsumerWidget {
                 Text(
                   '${currentUser['first_name']} ${currentUser['last_name']}',
                   style: AppTypography.primary.body14.copyWith(
-                    color: AppColors.textBlackColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -64,16 +64,13 @@ class ConnectionListItem extends StatelessWidget {
                 Text(
                   authorName,
                   style: AppTypography.primary.body14.copyWith(
-                    color: AppColors.textBlackColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
 
                 Text(
                   authorErp,
-                  style: AppTypography.primary.subtitle13.copyWith(
-                    color: AppColors.textBlackColor,
-                  ),
+                  style: AppTypography.primary.subtitle13,
                 ),
 
                 // Request Sent Datetime

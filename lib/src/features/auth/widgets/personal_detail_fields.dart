@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Providers
+import '../../shared/widgets/labeled_widget.dart';
 import '../providers/auth_provider.dart';
 
 // Routing
@@ -138,18 +139,12 @@ class PersonalDetailFields extends HookConsumerWidget {
 
         Insets.gapH15,
 
-        // Gender Label
-        Text(
-          'Gender',
-          style: AppTypography.primary.body16.copyWith(
-            color: AppColors.textBlackColor,
-          ),
-        ),
-
-        Insets.gapH5,
-
         // Gender
-        const GenderSelectionCards(),
+        LabeledWidget(
+          label: 'Gender',
+          labelStyle: AppTypography.primary.body16,
+          child: const GenderSelectionCards(),
+        ),
 
         Insets.gapH15,
 

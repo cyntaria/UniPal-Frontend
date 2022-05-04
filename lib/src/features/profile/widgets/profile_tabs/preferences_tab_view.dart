@@ -87,9 +87,7 @@ class PreferencesTabView extends HookConsumerWidget {
             label: 'Favourite Campus Hangout Spot',
             child: Text(
               currentStudent['favourite_campus_hangout_spot']! as String,
-              style: AppTypography.primary.body14.copyWith(
-                color: AppColors.textBlackColor,
-              ),
+              style: AppTypography.primary.body14,
             ),
           ),
 

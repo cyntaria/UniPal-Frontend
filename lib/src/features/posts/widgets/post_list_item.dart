@@ -58,7 +58,6 @@ class PostListItem extends StatelessWidget {
                               Text(
                                 '${post['author']['first_name']} ${post['author']['last_name']}',
                                 style: AppTypography.primary.body14.copyWith(
-                                  color: AppColors.textBlackColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -90,7 +89,9 @@ class PostListItem extends StatelessWidget {
                   // Body Text
                   Text(
                     post['body']! as String,
-                    style: AppTypography.primary.body14,
+                    style: AppTypography.primary.body14.copyWith(
+                      color: Colors.black54,
+                    ),
                   ),
 
                   Insets.gapH15,

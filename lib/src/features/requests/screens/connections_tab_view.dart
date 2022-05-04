@@ -6,7 +6,6 @@ import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 
 // Widgets
-import '../../../helpers/constants/app_utils.dart';
 import '../widgets/connections/received_connections_list.dart';
 import '../widgets/connections/sent_connections_list.dart';
 

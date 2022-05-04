@@ -128,7 +128,6 @@ class _CupertinoDatePickerDialogState extends State<CupertinoDatePickerDialog> {
                     widget.helpText ?? 'Select A Date',
                     style: AppTypography.primary.body16.copyWith(
                       fontSize: 17,
-                      color: AppColors.textBlackColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

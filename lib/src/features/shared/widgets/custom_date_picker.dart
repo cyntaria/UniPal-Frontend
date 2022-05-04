@@ -111,10 +111,8 @@ class CustomDatePicker extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             pickerStyle.floatingText,
-            style: pickerStyle.floatingTextStyle ??
-                AppTypography.primary.body16.copyWith(
-                  color: AppColors.textBlackColor,
-                ),
+            style:
+                pickerStyle.floatingTextStyle ?? AppTypography.primary.body16,
           ),
         ),
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io' show Platform;
 
+import 'app_colors.dart';
+
 /// A utility class that holds all the core [TextStyle] used
 /// throughout the entire app.
 /// This class has no constructor and all variables are `static`.
@@ -23,47 +25,47 @@ class AppTypography {
   static final primary = _FontStyle(
     fontFamily: _outfitFont.fontFamily,
     heading34: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 34,
       fontWeight: FontWeight.bold,
     ),
     heading24: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 24,
       fontWeight: FontWeight.bold,
     ),
     title20: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 20,
       fontWeight: FontWeight.w600,
     ),
     title18: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 18,
     ),
     subHeading16: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 16,
       fontWeight: FontWeight.bold,
     ),
     body16: _outfitFont.copyWith(
-      color: Colors.black87,
+      color: AppColors.textBlackColor,
       fontSize: 16,
     ),
     body14: _outfitFont.copyWith(
-      color: Colors.black54,
+      color: AppColors.textBlackColor,
       fontSize: 14,
     ),
     subtitle13: _outfitFont.copyWith(
-      color: Colors.black54,
+      color: AppColors.textBlackColor,
       fontSize: 13,
     ),
     label12: _outfitFont.copyWith(
-      color: Colors.black54,
+      color: AppColors.textBlackColor,
       fontSize: 12,
     ),
     label11: _outfitFont.copyWith(
-      color: Colors.black54,
+      color: AppColors.textBlackColor,
       fontSize: 11,
     ),
   );

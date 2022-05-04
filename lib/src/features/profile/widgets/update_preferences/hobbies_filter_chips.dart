@@ -28,7 +28,9 @@ class HobbiesFilterChips extends ConsumerWidget {
         // Warning
         Text(
           'Only select your top 3 hobbies.',
-          style: AppTypography.primary.body14,
+          style: AppTypography.primary.body14.copyWith(
+            color: Colors.black54,
+          ),
         ),
 
         Insets.gapH5,
