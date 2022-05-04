@@ -72,9 +72,7 @@ class HangoutListItem extends StatelessWidget {
                   // Author Name
                   Text(
                     '$authorName ',
-                    style: AppTypography.primary.body14.copyWith(
-                      color: AppColors.textBlackColor,
-                    ),
+                    style: AppTypography.primary.body14,
                   ),
 
                   Insets.gapH5,
@@ -97,9 +95,7 @@ class HangoutListItem extends StatelessWidget {
           LabeledWidget(
             label: 'Purpose',
             labelGap: Insets.gapH3,
-            labelStyle: AppTypography.primary.body14.copyWith(
-              color: AppColors.textBlackColor,
-            ),
+            labelStyle: AppTypography.primary.body14,
             child: Text(
               purpose,
               style: AppTypography.primary.subtitle13.copyWith(
@@ -118,9 +114,7 @@ class HangoutListItem extends StatelessWidget {
               LabeledWidget(
                 label: 'Meetup Spot',
                 labelGap: Insets.gapH3,
-                labelStyle: AppTypography.primary.body14.copyWith(
-                  color: AppColors.textBlackColor,
-                ),
+                labelStyle: AppTypography.primary.body14,
                 child: Text(
                   '$meetupSpotId',
                   style: AppTypography.primary.subtitle13.copyWith(
@@ -133,9 +127,7 @@ class HangoutListItem extends StatelessWidget {
               LabeledWidget(
                 label: 'Meetup At',
                 labelGap: Insets.gapH3,
-                labelStyle: AppTypography.primary.body14.copyWith(
-                  color: AppColors.textBlackColor,
-                ),
+                labelStyle: AppTypography.primary.body14,
                 child: Text(
                   meetupAt.toDateString(),
                   style: AppTypography.primary.subtitle13.copyWith(

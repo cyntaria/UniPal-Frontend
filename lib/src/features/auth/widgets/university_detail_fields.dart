@@ -13,6 +13,7 @@ import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
 // Widgets
+import '../../shared/widgets/labeled_widget.dart';
 import '../../shared/widgets/custom_dropdown_field.dart';
 import '../../shared/widgets/custom_dropdown_sheet.dart';
 import '../../shared/widgets/custom_date_picker.dart';
@@ -88,51 +89,57 @@ class UniversityDetailFields extends HookConsumerWidget {
         Insets.gapH15,
 
         // Program Dropdown
-        CustomDropdownField<int>(
-          controller: programController,
-          selectedItemText: (item) => '$item',
-          hintText: 'Select a degree',
-          floatingText: 'Programs',
-          itemsSheet: CustomDropdownSheet(
-            items: const [1, 2, 3],
-            bottomSheetTitle: 'Programs',
-            itemBuilder: (_, item) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 5,
-                ),
-                child: ListTile(
-                  tileColor: Colors.white,
-                  title: Text('$item'),
-                ),
-              );
-            },
+        LabeledWidget(
+          label: 'Programs',
+          labelStyle: AppTypography.primary.subHeading16,
+          child: CustomDropdownField<int>.sheet(
+            controller: programController,
+            selectedItemText: (item) => '$item',
+            hintText: 'Select a degree',
+            itemsSheet: CustomDropdownSheet(
+              items: const [1, 2, 3],
+              bottomSheetTitle: 'Programs',
+              itemBuilder: (_, item) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  child: ListTile(
+                    tileColor: Colors.white,
+                    title: Text('$item'),
+                  ),
+                );
+              },
+            ),
           ),
         ),
 
         Insets.gapH15,
 
         // Campus Dropdown
-        CustomDropdownField<int>(
-          controller: campusController,
-          selectedItemText: (item) => '$item',
-          floatingText: 'Campuses',
-          itemsSheet: CustomDropdownSheet(
-            items: const [1, 2, 3],
-            bottomSheetTitle: 'Campuses',
-            itemBuilder: (_, item) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 5,
-                ),
-                child: ListTile(
-                  tileColor: Colors.white,
-                  title: Text('$item'),
-                ),
-              );
-            },
+        LabeledWidget(
+          label: 'Campuses',
+          labelStyle: AppTypography.primary.subHeading16,
+          child: CustomDropdownField<int>.sheet(
+            controller: campusController,
+            selectedItemText: (item) => '$item',
+            itemsSheet: CustomDropdownSheet(
+              items: const [1, 2, 3],
+              bottomSheetTitle: 'Campuses',
+              itemBuilder: (_, item) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  child: ListTile(
+                    tileColor: Colors.white,
+                    title: Text('$item'),
+                  ),
+                );
+              },
+            ),
           ),
         ),
 

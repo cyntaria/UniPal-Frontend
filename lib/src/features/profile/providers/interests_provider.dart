@@ -23,6 +23,10 @@ class InterestsProvider {
 
   InterestsProvider({required this.ref});
 
+  UnmodifiableMapView<int, InterestModel> getInterestsMap() {
+    return UnmodifiableMapView(_interestsMap);
+  }
+
   UnmodifiableListView<InterestModel> getAllInterests() {
     return UnmodifiableListView(_interestsMap.values);
   }

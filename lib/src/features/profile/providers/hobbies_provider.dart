@@ -23,6 +23,10 @@ class HobbiesProvider {
 
   HobbiesProvider({required this.ref});
 
+  UnmodifiableMapView<int, HobbyModel> getHobbiesMap() {
+    return UnmodifiableMapView(_hobbiesMap);
+  }
+
   UnmodifiableListView<HobbyModel> getAllHobbies() {
     return UnmodifiableListView(_hobbiesMap.values);
   }
