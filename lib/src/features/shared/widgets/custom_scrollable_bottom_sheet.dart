@@ -7,7 +7,7 @@ import '../../../helpers/constants/app_styles.dart';
 /// A scrollable rounded bottom sheet with a pre-designed header
 class CustomScrollableBottomSheet extends StatelessWidget {
   /// This gives the bottom sheet title.
-  final String? sheetTitle;
+  final String? titleText;
 
   /// The widget to use at the start of the header.
   final Widget? leading;
@@ -31,7 +31,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
   const CustomScrollableBottomSheet({
     Key? key,
     required this.builder,
-    this.sheetTitle,
+    this.titleText,
     this.leading,
     this.title,
     this.trailing,
@@ -42,7 +42,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
     this.snap = true,
     this.snapSizes = const [1],
   })  : assert(
-          sheetTitle == null || title == null,
+          titleText == null || title == null,
           'Cannot specify both sheetTitle and title widget',
         ),
         super(key: key);
@@ -90,7 +90,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
                   // Title
                   title ??
                       Text(
-                        sheetTitle ?? 'Title',
+                        titleText ?? 'Title',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
