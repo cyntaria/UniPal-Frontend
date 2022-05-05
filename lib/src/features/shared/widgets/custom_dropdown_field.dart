@@ -11,12 +11,12 @@ import '../../../helpers/constants/app_styles.dart';
 import './custom_dropdown_sheet.dart';
 import './custom_text_button.dart';
 
-abstract class CustomDropdownField<T> extends StatelessWidget {
+abstract class CustomDropdownField<T> extends StatefulWidget {
   const CustomDropdownField({Key? key}) : super(key: key);
 
   const factory CustomDropdownField.sheet({
     Key? key,
-    required ValueNotifier<T?> controller,
+    ValueNotifier<T?>? controller,
     required CustomDropdownSheet<T> itemsSheet,
     required String Function(T) selectedItemText,
     Widget suffixIcon,
@@ -40,12 +40,18 @@ abstract class CustomDropdownField<T> extends StatelessWidget {
   }) = _CustomDropdownFieldAnimated;
 
   @override
+  _CustomDropdownFieldState createState();
+}
+
+abstract class _CustomDropdownFieldState<T, W extends CustomDropdownField<T>>
+    extends State<W> {
+  @override
   Widget build(BuildContext context);
 }
 
 class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
   /// The notifier used to store and passback selected values to the parent.
-  final ValueNotifier<T?> controller;
+  final ValueNotifier<T?>? controller;
 
   /// The icon to display at the end of the field.
   final Widget suffixIcon;
@@ -68,7 +74,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
 
   const _CustomDropdownFieldSheet({
     Key? key,
-    required this.controller,
+    this.controller,
     required this.itemsSheet,
     required this.selectedItemText,
     this.suffixIcon = const Icon(Icons.arrow_drop_down_rounded),
@@ -80,6 +86,15 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
     this.hintText = 'Select a value',
   }) : super(key: key);
 
+  @override
+  _CustomDropdownFieldSheetState createState() =>
+      _CustomDropdownFieldSheetState<T>();
+}
+
+class _CustomDropdownFieldSheetState<T>
+    extends _CustomDropdownFieldState<T, _CustomDropdownFieldSheet<T>> {
+  late final ValueNotifier<T?> controller;
+
   Future<void> _pickValue(BuildContext context) async {
     controller.value = await showModalBottomSheet<T?>(
           isScrollControlled: true,
@@ -90,10 +105,25 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
           ),
           context: context,
           builder: (context) {
-            return itemsSheet;
+            return widget.itemsSheet;
           },
         ) ??
         controller.value;
+  }
+
+  @override
+  void initState() {
+    controller = widget.controller ?? ValueNotifier(null);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      // If we created our own notifier
+      controller.dispose(); // then dispose it
+    }
+    super.dispose();
   }
 
   @override
@@ -102,7 +132,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
       width: double.infinity,
       height: 47,
       onPressed: () => _pickValue(context),
-      color: displayFieldColor,
+      color: widget.displayFieldColor,
       padding: const EdgeInsets.only(left: 20, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,19 +140,19 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
           ValueListenableBuilder<T?>(
             valueListenable: controller,
             builder: (_, value, __) {
-              var displayValue = hintText;
+              var displayValue = widget.hintText;
               if (value != null) {
-                displayValue = selectedItemText(value);
+                displayValue = widget.selectedItemText(value);
               }
               return Text(
                 displayValue,
-                style: selectedStyle,
+                style: widget.selectedStyle,
               );
             },
           ),
 
           // Icon
-          suffixIcon,
+          widget.suffixIcon,
         ],
       ),
     );
@@ -159,43 +189,50 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    void onChanged(String label) {
-      onSelected.call(items[label]!);
-    }
+  _CustomDropdownFieldState createState() =>
+      _CustomDropdownFieldAnimatedState<T>();
+}
 
-    return enableSearch
+class _CustomDropdownFieldAnimatedState<T>
+    extends _CustomDropdownFieldState<T, _CustomDropdownFieldAnimated<T>> {
+  void onChanged(String label) {
+    widget.onSelected.call(widget.items[label]!);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.enableSearch
         ? CustomDropdown.search(
-            controller: controller,
-            hintText: hintText,
-            hintStyle: hintStyle,
-            selectedStyle: selectedStyle,
-            listItemStyle: listItemStyle,
-            borderRadius: borderRadius,
-            fillColor: fillColor,
+            controller: widget.controller,
+            items: widget.items.keys.toList(growable: false),
+            onChanged: onChanged,
+            hintText: widget.hintText,
+            hintStyle: widget.hintStyle,
+            selectedStyle: widget.selectedStyle,
+            listItemStyle: widget.listItemStyle,
+            borderRadius: widget.borderRadius,
+            fillColor: widget.fillColor,
             fieldSuffixIcon: const Icon(
               Icons.keyboard_arrow_down_rounded,
               size: IconSizes.med22,
               color: AppColors.textLightGreyColor,
             ),
-            items: items.keys.toList(growable: false),
-            onChanged: onChanged,
           )
         : CustomDropdown(
-            controller: controller,
-            hintText: hintText,
-            hintStyle: hintStyle,
-            selectedStyle: selectedStyle,
-            listItemStyle: listItemStyle,
-            borderRadius: borderRadius,
-            fillColor: fillColor,
+            controller: widget.controller,
+            items: widget.items.keys.toList(growable: false),
+            onChanged: onChanged,
+            hintText: widget.hintText,
+            hintStyle: widget.hintStyle,
+            selectedStyle: widget.selectedStyle,
+            listItemStyle: widget.listItemStyle,
+            borderRadius: widget.borderRadius,
+            fillColor: widget.fillColor,
             fieldSuffixIcon: const Icon(
               Icons.keyboard_arrow_down_rounded,
               size: IconSizes.med22,
               color: AppColors.textLightGreyColor,
             ),
-            items: items.keys.toList(growable: false),
-            onChanged: onChanged,
           );
   }
 }
