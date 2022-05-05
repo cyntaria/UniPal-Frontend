@@ -7,7 +7,7 @@ import '../models/tab_item_model.dart';
 import '../widgets/home_app_bar.dart';
 import '../../profile/widgets/profile_tabs/activities_tab_view.dart';
 import '../../student_finder/screens/student_finder_tab_view.dart';
-import '../../timetables/scheduler_tab_view.dart';
+import '../../timetables/screens/scheduler_tab_view.dart';
 import '../../requests/screens/requests_tab_view.dart';
 import '../../posts/screens/posts_tab_view.dart';
 

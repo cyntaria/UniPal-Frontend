@@ -9,14 +9,18 @@ class LabeledWidget extends StatelessWidget {
   final Widget child;
   final String label;
   final SizedBox labelGap;
+  final SizedBox horizontalLabelGap;
   final TextStyle labelStyle;
   final bool useDarkerLabel;
+  final Axis labelDirection;
 
   const LabeledWidget({
     Key? key,
     required this.child,
     required this.label,
     this.labelGap = Insets.gapH5,
+    this.horizontalLabelGap = Insets.gapW5,
+    this.labelDirection = Axis.vertical,
     this.useDarkerLabel = false,
     this.labelStyle = const TextStyle(
       fontSize: 14,
@@ -26,20 +30,23 @@ class LabeledWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Label
-        Text(
-          label,
-          style: useDarkerLabel ? AppTypography.primary.body16 : labelStyle,
-        ),
+    final children = [
+      // Label
+      Text(
+        label,
+        style: useDarkerLabel ? AppTypography.primary.body16 : labelStyle,
+      ),
 
-        labelGap,
+      if (labelDirection == Axis.vertical) labelGap else horizontalLabelGap,
 
-        // Widget
-        child,
-      ],
-    );
+      // Widget
+      child,
+    ];
+    return labelDirection == Axis.vertical
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children,
+          )
+        : Row(children: children);
   }
 }
