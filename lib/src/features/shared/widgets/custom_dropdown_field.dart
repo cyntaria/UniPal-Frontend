@@ -23,6 +23,7 @@ abstract class CustomDropdownField<T> extends StatelessWidget {
     TextStyle selectedStyle,
     Color displayFieldColor,
     String hintText,
+    T? initialValue,
   }) = _CustomDropdownFieldSheet;
 
   const factory CustomDropdownField.animated({
@@ -66,19 +67,26 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
   /// [String] for displaying.
   final String Function(T) selectedItemText;
 
+  /// The initial value to be selected in the dropdown
+  final T? initialValue;
+
   _CustomDropdownFieldSheet({
     Key? key,
     ValueNotifier<T?>? controller,
     required this.itemsSheet,
     required this.selectedItemText,
-    this.suffixIcon = const Icon(Icons.arrow_drop_down_rounded),
+    this.suffixIcon = const Icon(
+      Icons.arrow_drop_down_rounded,
+      color: AppColors.textGreyColor,
+    ),
     this.selectedStyle = const TextStyle(
       fontSize: 16,
       color: AppColors.textGreyColor,
     ),
     this.displayFieldColor = AppColors.fieldFillColor,
     this.hintText = 'Select a value',
-  })  : controller = controller ?? ValueNotifier(null),
+    this.initialValue,
+  })  : controller = controller ?? ValueNotifier(initialValue),
         super(key: key);
 
   Future<void> _pickValue(BuildContext context) async {
@@ -100,7 +108,6 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
   @override
   Widget build(BuildContext context) {
     return CustomTextButton(
-      width: double.infinity,
       height: 47,
       onPressed: () => _pickValue(context),
       color: displayFieldColor,
@@ -155,7 +162,6 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
     this.fieldSuffixIcon = const Icon(
       Icons.keyboard_arrow_down_rounded,
       size: IconSizes.med22,
-      color: AppColors.textLightGreyColor,
     ),
     this.fillColor = AppColors.fieldFillColor,
     this.borderRadius = Corners.rounded7,

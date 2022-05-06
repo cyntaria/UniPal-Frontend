@@ -55,6 +55,9 @@ class CustomDropdownSheet<T> extends StatefulWidget {
   /// The callback used to define how each dropdown item will be built.
   final WidgetBuilder<T> itemBuilder;
 
+  /// The padding added around the sheet contents
+  final EdgeInsets contentPadding;
+
   const CustomDropdownSheet({
     Key? key,
     required this.items,
@@ -65,12 +68,17 @@ class CustomDropdownSheet<T> extends StatefulWidget {
     this.searchBackgroundColor,
     this.onMultipleSelect,
     this.onItemSelect,
+    this.contentPadding = EdgeInsets.zero,
     String? submitButtonText,
     Color? submitButtonColor,
     // TODO(arafaysaleem): move to a .single() factory constructor
     bool? enableMultipleSelection,
     this.showSearch = false,
-  })  : this.submitButtonColor = submitButtonColor ?? AppColors.secondaryColor,
+  })  : assert(
+          showSearch == false || searchFilterCondition != null,
+          'Search must be used with a search condition',
+        ),
+        this.submitButtonColor = submitButtonColor ?? AppColors.secondaryColor,
         this.submitButtonText = submitButtonText ?? 'DONE',
         this.enableMultipleSelection = enableMultipleSelection ?? false,
         super(key: key);
@@ -96,7 +104,7 @@ class CustomDropdownSheet<T> extends StatefulWidget {
 
 class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
   final List<T> _selectedItemList = [];
-  late final List<T> _filteredItemList;
+  late List<T> _filteredItemList;
   late final TextEditingController? searchController;
 
   @override
@@ -120,8 +128,9 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
   Widget build(BuildContext context) {
     return CustomScrollableBottomSheet(
       titleText: widget.bottomSheetTitle,
-      trailing: widget.enableMultipleSelection
-          ? Align(
+      trailing: !widget.enableMultipleSelection
+          ? null
+          : Align(
               alignment: Alignment.centerRight,
               child: CustomTextButton(
                 color: widget.submitButtonColor,
@@ -139,73 +148,86 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
                   ),
                 ),
               ),
-            )
-          : null,
+            ),
       builder: (_, scrollController) {
-        return Column(
-          children: [
-            // A [TextField] that displays a list of suggestions as the user types with clear button.
-            if (widget.showSearch)
-              CustomTextField(
-                controller: searchController,
-                textInputAction: TextInputAction.search,
-                hintText: widget.searchHintText ?? 'Search',
-                onSaved: (_) => _onSearchSaved,
-                prefix: const Icon(Icons.search),
-                suffix: GestureDetector(
-                  onTap: _onClearTap,
-                  child: const Icon(
-                    Icons.cancel,
-                    color: Colors.grey,
+        return Padding(
+          padding: widget.contentPadding,
+          child: Column(
+            children: [
+              // A [TextField] that displays a list of suggestions as the user types with clear button.
+              if (widget.showSearch)
+                CustomTextField(
+                  controller: searchController,
+                  onChanged: (_) => _onSearchChanged(),
+                  fillColor: Colors.white,
+                  border: const BorderSide(
+                    color: AppColors.textLightGreyColor,
+                  ),
+                  textInputAction: TextInputAction.search,
+                  hintText: widget.searchHintText ?? 'Search',
+                  hintStyle: const TextStyle(
+                    color: AppColors.textLightGreyColor,
+                    fontSize: 14,
+                  ),
+                  prefix: const Icon(Icons.search),
+                  suffix: GestureDetector(
+                    onTap: _onClearTap,
+                    child: const Icon(
+                      Icons.cancel,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
-              ),
 
-            // Item builder
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount: _filteredItemList.length,
-                itemBuilder: (context, index) {
-                  final item = _filteredItemList[index];
+              const SizedBox(height: 10),
 
-                  return InkWell(
-                    onTap: !widget.enableMultipleSelection
-                        ? () {
-                            widget.onItemSelect?.call(item);
-                            _removeFocusAndPopValue<T>(item);
-                          }
-                        : null,
-                    child: widget.itemBuilder(context, item),
-                  );
-                },
+              // Item builder
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: _filteredItemList.length,
+                  itemBuilder: (context, index) {
+                    final item = _filteredItemList[index];
+
+                    return InkWell(
+                      onTap: !widget.enableMultipleSelection
+                          ? () {
+                              widget.onItemSelect?.call(item);
+                              _removeFocusAndPopValue<T>(item);
+                            }
+                          : null,
+                      child: widget.itemBuilder(context, item),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
   }
 
   /// This helps when search enabled & show the filtered data in list.
-  void _onSearchSaved() {
+  void _onSearchChanged() {
     if (searchController == null ||
         searchController!.text.isEmpty ||
         widget.searchFilterCondition == null) {
       _filteredItemList = widget.items;
-    }
-    final fItems = <T>[];
+    } else {
+      final fItems = <T>[];
 
-    for (final item in widget.items) {
-      final filterItem = widget.searchFilterCondition!.call(
-        searchController!.text,
-        item,
-      );
-      if (filterItem) {
-        fItems.add(item);
+      for (final item in widget.items) {
+        final filterItem = widget.searchFilterCondition!.call(
+          searchController!.text,
+          item,
+        );
+        if (filterItem) {
+          fItems.add(item);
+        }
       }
+      _filteredItemList = fItems;
     }
-    _filteredItemList = fItems;
     setState(() {});
   }
 

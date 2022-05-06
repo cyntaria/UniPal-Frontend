@@ -13,13 +13,15 @@ class LabeledWidget extends StatelessWidget {
   final TextStyle labelStyle;
   final bool useDarkerLabel;
   final Axis labelDirection;
+  final bool expand;
 
   const LabeledWidget({
     Key? key,
     required this.child,
     required this.label,
     this.labelGap = Insets.gapH5,
-    this.horizontalLabelGap = Insets.gapW5,
+    this.expand = false,
+    this.horizontalLabelGap = Insets.gapW10,
     this.labelDirection = Axis.vertical,
     this.useDarkerLabel = false,
     this.labelStyle = const TextStyle(
@@ -40,7 +42,7 @@ class LabeledWidget extends StatelessWidget {
       if (labelDirection == Axis.vertical) labelGap else horizontalLabelGap,
 
       // Widget
-      child,
+      if (expand) Expanded(child: child) else child,
     ];
     return labelDirection == Axis.vertical
         ? Column(

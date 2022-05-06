@@ -24,7 +24,6 @@ class PostReactions extends StatelessWidget {
                 Icon(
                   Icons.add_reaction_rounded,
                   size: 21,
-                  color: AppColors.textLightGreyColor,
                 ),
 
                 Insets.gapW10,

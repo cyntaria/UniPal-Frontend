@@ -1,7 +1,7 @@
 class SchedulerClassModel {
-  final String subject;
-  final String teacher;
-  final String timeslot;
+  final String? subject;
+  final String? teacher;
+  final String? timeslot;
 
   const SchedulerClassModel({
     required this.subject,
@@ -10,9 +10,9 @@ class SchedulerClassModel {
   });
 
   const SchedulerClassModel.initial()
-      : subject = '',
-        teacher = '',
-        timeslot = '';
+      : subject = null,
+        teacher = null,
+        timeslot = null;
 
   SchedulerClassModel copyWith({
     String? subject,

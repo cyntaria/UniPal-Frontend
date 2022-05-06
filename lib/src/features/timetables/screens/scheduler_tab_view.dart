@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Widgets
-import '../widgets/schedule_generator.dart';
+import '../widgets/scheduler/schedule_generator.dart';
 
 class SchedulerTabView extends StatelessWidget {
   const SchedulerTabView({Key? key}) : super(key: key);
@@ -23,8 +23,10 @@ class SchedulerTabView extends StatelessWidget {
 
           // Classes Selector
           const SliverPadding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            sliver: ScheduleGenerator(),
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            sliver: SliverFillRemaining(
+              child: ScheduleGenerator(),
+            ),
           ),
         ],
       ),

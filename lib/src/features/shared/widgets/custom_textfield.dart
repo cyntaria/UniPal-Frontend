@@ -24,6 +24,7 @@ class CustomTextField extends StatefulWidget {
   final bool autofocus;
   final bool showErrorBorder;
   final bool showFocusedBorder;
+  final BorderSide border;
   final TextAlign textAlign;
   final TextAlignVertical textAlignVertical;
   final Alignment errorAlign, floatingAlign;
@@ -57,6 +58,7 @@ class CustomTextField extends StatefulWidget {
     this.showErrorBorder = false,
     this.autofocus = false,
     this.textAlign = TextAlign.start,
+    this.border = BorderSide.none,
     this.textAlignVertical = TextAlignVertical.center,
     this.errorAlign = Alignment.centerRight,
     this.floatingAlign = Alignment.centerLeft,
@@ -131,9 +133,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   OutlineInputBorder _normalBorder() {
-    return const OutlineInputBorder(
+    return OutlineInputBorder(
       borderRadius: Corners.rounded7,
-      borderSide: BorderSide.none,
+      borderSide: widget.border,
     );
   }
 
@@ -204,6 +206,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               filled: true,
               counterText: '',
               border: _normalBorder(),
+              enabledBorder: _normalBorder(),
               focusedBorder: widget.showFocusedBorder ? _focusedBorder() : null,
               focusedErrorBorder:
                   widget.showFocusedBorder ? _focusedBorder() : null,

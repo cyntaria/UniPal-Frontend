@@ -55,6 +55,6 @@ class AppThemes {
       titleTextStyle: AppTypography.primary.heading24,
       iconTheme: const IconThemeData(color: Colors.black),
     ),
-    iconTheme: const IconThemeData(color: Colors.white),
+    iconTheme: const IconThemeData(color: AppColors.textLightGreyColor),
   );
 }

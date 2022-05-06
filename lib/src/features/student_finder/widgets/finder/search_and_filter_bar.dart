@@ -41,7 +41,6 @@ class SearchAndFilterBar extends HookWidget {
                 prefix: const Icon(
                   Icons.search_rounded,
                   size: IconSizes.med22,
-                  color: AppColors.textLightGreyColor,
                 ),
               ),
             ),
@@ -73,10 +72,7 @@ class SearchAndFilterBar extends HookWidget {
                 borderRadius: Corners.rounded7,
                 boxShadow: Shadows.elevated,
               ),
-              child: const Icon(
-                Icons.tune_rounded,
-                color: AppColors.textLightGreyColor,
-              ),
+              child: const Icon(Icons.tune_rounded),
             ),
           ),
         ],
