@@ -34,7 +34,7 @@ abstract class CustomDropdownField<T> extends StatelessWidget {
     Color fillColor,
     BorderRadius borderRadius,
     bool enableSearch,
-    required void Function(T) onSelected,
+    required void Function(T?) onSelected,
     required TextEditingController controller,
     required Map<String, T> items,
   }) = _CustomDropdownFieldAnimated;
@@ -137,10 +137,11 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
   final TextStyle? listItemStyle;
   final Color fillColor;
   final BorderRadius borderRadius;
-  final void Function(T) onSelected;
+  final void Function(T?) onSelected;
   final TextEditingController controller;
   final Map<String, T> items;
   final bool enableSearch;
+  final Widget fieldSuffixIcon;
 
   const _CustomDropdownFieldAnimated({
     Key? key,
@@ -151,6 +152,11 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
       fontSize: 16,
       color: AppColors.textGreyColor,
     ),
+    this.fieldSuffixIcon = const Icon(
+      Icons.keyboard_arrow_down_rounded,
+      size: IconSizes.med22,
+      color: AppColors.textLightGreyColor,
+    ),
     this.fillColor = AppColors.fieldFillColor,
     this.borderRadius = Corners.rounded7,
     this.enableSearch = false,
@@ -160,15 +166,16 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
   }) : super(key: key);
 
   void onChanged(String label) {
-    onSelected.call(items[label]!);
+    onSelected.call(items[label]);
   }
 
   @override
   Widget build(BuildContext context) {
+    final _items = [hintText ?? 'Select value', ...items.keys];
     return enableSearch
         ? CustomDropdown.search(
             controller: controller,
-            items: items.keys.toList(growable: false),
+            items: _items,
             onChanged: onChanged,
             hintText: hintText,
             hintStyle: hintStyle,
@@ -176,15 +183,11 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
             listItemStyle: listItemStyle,
             borderRadius: borderRadius,
             fillColor: fillColor,
-            fieldSuffixIcon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              size: IconSizes.med22,
-              color: AppColors.textLightGreyColor,
-            ),
+            fieldSuffixIcon: fieldSuffixIcon,
           )
         : CustomDropdown(
             controller: controller,
-            items: items.keys.toList(growable: false),
+            items: _items,
             onChanged: onChanged,
             hintText: hintText,
             hintStyle: hintStyle,
@@ -192,11 +195,7 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
             listItemStyle: listItemStyle,
             borderRadius: borderRadius,
             fillColor: fillColor,
-            fieldSuffixIcon: const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              size: IconSizes.med22,
-              color: AppColors.textLightGreyColor,
-            ),
+            fieldSuffixIcon: fieldSuffixIcon,
           );
   }
 }
