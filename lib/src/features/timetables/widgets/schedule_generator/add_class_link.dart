@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Providers
-import '../../providers/scheduler_provider.dart';
+import '../../providers/classes_selector_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_typography.dart';
@@ -19,7 +19,7 @@ class AddClassLink extends ConsumerWidget {
     return CustomTextButton(
       height: 35,
       width: 60,
-      onPressed: ref.read(schedulerProvider.notifier).addClass,
+      onPressed: ref.read(classesSelectorProvider.notifier).addClass,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

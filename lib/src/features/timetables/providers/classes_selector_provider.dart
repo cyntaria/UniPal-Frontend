@@ -5,16 +5,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../models/scheduler_class_model.dart';
 
-final schedulerProvider = ChangeNotifierProvider<SchedulerProvider>((ref) {
-  return SchedulerProvider([
-    const SchedulerClassModel.initial(),
-  ]);
-});
+final classesSelectorProvider = ChangeNotifierProvider<ClassesSelectorProvider>(
+  (ref) {
+    return ClassesSelectorProvider([
+      const SchedulerClassModel.initial(),
+    ]);
+  },
+);
 
-class SchedulerProvider extends ChangeNotifier {
+class ClassesSelectorProvider extends ChangeNotifier {
   final List<SchedulerClassModel> _selectedClasses;
 
-  SchedulerProvider(this._selectedClasses);
+  ClassesSelectorProvider(this._selectedClasses);
 
   UnmodifiableListView<SchedulerClassModel> get selectedClasses =>
       UnmodifiableListView(_selectedClasses);

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
-import '../../../../helpers/constants/app_colors.dart';
 import '../../models/scheduler_class_model.dart';
 
 // Providers
-import '../../providers/scheduler_provider.dart';
+import '../../providers/classes_selector_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_styles.dart';
@@ -20,7 +19,7 @@ import 'dropdown_sheet_item.dart';
 final _selectedClassProvider =
     Provider.family.autoDispose<SchedulerClassModel, int>(
   (ref, index) {
-    final classes = ref.watch(schedulerProvider).selectedClasses;
+    final classes = ref.watch(classesSelectorProvider).selectedClasses;
     return classes[index];
   },
 );
@@ -44,7 +43,7 @@ class ClassesSelectorItem extends ConsumerWidget {
             alignment: Alignment.topRight,
             child: InkWell(
               onTap: () {
-                ref.read(schedulerProvider.notifier).removeClass(index);
+                ref.read(classesSelectorProvider.notifier).removeClass(index);
               },
               child: const Padding(
                 padding: EdgeInsets.all(5),
@@ -95,7 +94,7 @@ class ClassesSelectorItem extends ConsumerWidget {
                     ],
                     onItemSelect: (subject) {
                       ref
-                          .read(schedulerProvider.notifier)
+                          .read(classesSelectorProvider.notifier)
                           .updateClass(index, cls.copyWith(subject: subject));
                     },
                     searchFilterCondition: (searchTerm, item) {
@@ -125,7 +124,7 @@ class ClassesSelectorItem extends ConsumerWidget {
                     ],
                     onItemSelect: (teacher) {
                       ref
-                          .read(schedulerProvider.notifier)
+                          .read(classesSelectorProvider.notifier)
                           .updateClass(index, cls.copyWith(teacher: teacher));
                     },
                     itemBuilder: (_, teacher) =>
@@ -157,7 +156,7 @@ class ClassesSelectorItem extends ConsumerWidget {
                     ],
                     onItemSelect: (timeslot) {
                       ref
-                          .read(schedulerProvider.notifier)
+                          .read(classesSelectorProvider.notifier)
                           .updateClass(index, cls.copyWith(timeslot: timeslot));
                     },
                     itemBuilder: (_, tslot) => DropdownSheetItem(label: tslot),

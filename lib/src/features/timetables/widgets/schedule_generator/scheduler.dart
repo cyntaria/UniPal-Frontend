@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../providers/scheduler_provider.dart';
+import '../../providers/classes_selector_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_typography.dart';
@@ -14,13 +14,13 @@ import 'add_class_link.dart';
 import 'classes_selector_item.dart';
 import '../../../shared/widgets/custom_text_button.dart';
 
-class ScheduleGenerator extends ConsumerWidget {
-  const ScheduleGenerator({Key? key}) : super(key: key);
+class Scheduler extends ConsumerWidget {
+  const Scheduler({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final noOfSelectedClasses = ref.watch(
-      schedulerProvider.select(
+      classesSelectorProvider.select(
         (value) => value.selectedClasses.length,
       ),
     );
