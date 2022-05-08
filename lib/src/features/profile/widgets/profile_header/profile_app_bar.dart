@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_utils.dart';
 
+// Routing
+import '../../../../config/routes/app_router.dart';
+
 class ProfileAppBar extends StatelessWidget {
   final String title;
   final String avatarUrl;
@@ -48,13 +51,15 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   final Widget? trailing;
   final Widget? child;
 
+  static const _iconTopMargin = 21.0;
+  static const _iconSideMargin = 16.0;
+  static const _backIconSize = 24.0;
   static const _avatarMaxSize = 90.0;
   static const _avatarMinSize = 36.0;
   static const _avatarTopMargin = 45.0;
   static const _titleTopMargin = _avatarMaxSize + _avatarTopMargin + 50;
   static const _subtitleTopMargin = _titleTopMargin + 31;
   static const _buttonTopMargin = _subtitleTopMargin + 40;
-  static const _iconTopMargin = 21.0;
   static const _childFadeOffset = 0.1;
 
   _TransitionAppBarDelegate({
@@ -81,12 +86,14 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   static final _avatarMarginTween = EdgeInsetsTween(
     begin: const EdgeInsets.only(top: _avatarTopMargin),
-    end: const EdgeInsets.only(left: 15, top: 12),
+    end: const EdgeInsets.only(
+        left: _iconSideMargin + _backIconSize + 16, top: 12),
   );
 
   static final _titleMarginTween = EdgeInsetsTween(
     begin: const EdgeInsets.only(top: _titleTopMargin),
-    end: const EdgeInsets.only(left: 60, top: 22),
+    end: const EdgeInsets.only(
+        left: _iconSideMargin + _backIconSize + 60, top: 22),
   );
 
   static final _avatarAlignTween = AlignmentTween(
@@ -135,6 +142,24 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
       ),
       child: Stack(
         children: <Widget>[
+          // Back Button
+          InkWell(
+            onTap: AppRouter.pop,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: _iconTopMargin,
+                left: _iconSideMargin,
+              ),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.adaptive.arrow_back_rounded,
+                  size: _backIconSize,
+                ),
+              ),
+            ),
+          ),
+
           // Avatar
           Padding(
             padding: avatarMargin,
@@ -210,7 +235,10 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
           // Icon
           if (trailing != null)
             Padding(
-              padding: const EdgeInsets.only(top: _iconTopMargin, right: 16),
+              padding: const EdgeInsets.only(
+                top: _iconTopMargin,
+                right: _iconSideMargin,
+              ),
               child: Align(
                 alignment: Alignment.topRight,
                 child: trailing,
