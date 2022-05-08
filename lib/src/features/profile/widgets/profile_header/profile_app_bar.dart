@@ -87,13 +87,17 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   static final _avatarMarginTween = EdgeInsetsTween(
     begin: const EdgeInsets.only(top: _avatarTopMargin),
     end: const EdgeInsets.only(
-        left: _iconSideMargin + _backIconSize + 16, top: 12),
+      top: 12,
+      left: _iconSideMargin + _backIconSize + 16,
+    ),
   );
 
   static final _titleMarginTween = EdgeInsetsTween(
     begin: const EdgeInsets.only(top: _titleTopMargin),
     end: const EdgeInsets.only(
-        left: _iconSideMargin + _backIconSize + 60, top: 22),
+      top: 22,
+      left: _iconSideMargin + _backIconSize + 60,
+    ),
   );
 
   static final _avatarAlignTween = AlignmentTween(
