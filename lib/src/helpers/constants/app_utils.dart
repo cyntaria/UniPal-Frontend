@@ -1,6 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-/// A utility class that holds commonly used regular expressions 
+// Helpers
+import 'app_colors.dart';
+
+/// A utility class that holds commonly used functions
+/// This class has no constructor and all variables are `static`.
+@immutable
+class AppUtils {
+  const AppUtils._();
+
+  static Random randomizer([int? seed]) => Random(seed);
+
+  /// A utility method to map an integer to a color code
+  /// Useful for color coding class erps
+  static Color getRandomColor([int? seed]) {
+    final rInt = seed != null ? (seed + DateTime.now().minute) : null;
+    return AppColors.primaries[randomizer(rInt).nextInt(
+      AppColors.primaries.length,
+    )];
+  }
+
+  /// A utility method to convert any instance to null
+  static T? toNull<T>(Object? _) => null;
+}
+
+/// A utility class that holds commonly used regular expressions
 /// employed throughout the entire app.
 /// This class has no constructor and all variables are `static`.
 @immutable
@@ -25,24 +51,23 @@ class Regexes {
   static RegExp zipCodeRegex = RegExp(r'^\d{5}$');
 
   /// The regular expression for validating credit card numbers in the app.
-  static RegExp creditCardNumberRegex = RegExp(r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$');
+  static RegExp creditCardNumberRegex =
+      RegExp(r'^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$');
 
   /// The regular expression for validating credit card CVV in the app.
   static RegExp creditCardCVVRegex = RegExp(r'^[0-9]{3}$');
 
   /// The regular expression for validating credit card expiry in the app.
-  static RegExp creditCardExpiryRegex = RegExp(r'(0[1-9]|10|11|12)/20[0-9]{2}$');
+  static RegExp creditCardExpiryRegex =
+      RegExp(r'(0[1-9]|10|11|12)/20[0-9]{2}$');
 
   /// The regular expression for validating credit card expiry in the app.
   static final RegExp otpDigitRegex = RegExp(r'^[0-9]{1}$');
-
-  /// A utility method to convert any instance to null
-  static T? toNull<T>(Object? _) => null;
 }
 
-/// A utility class that holds all the timings used throughout 
+/// A utility class that holds all the timings used throughout
 /// the entire app by things such as animations, tickers etc.
-/// 
+///
 /// This class has no constructor and all variables are `static`.
 @immutable
 class Durations {

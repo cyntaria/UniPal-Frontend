@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_utils.dart';
 import '../../../../helpers/extensions/string_extension.dart';
 import '../../../../helpers/typedefs.dart';
 
 class TimetableClassItem extends StatelessWidget {
   final double height, width;
   final bool isBreakSlot;
-  final JSON classModel;
+  final JSON? classModel;
 
   const TimetableClassItem({
     Key? key,
@@ -24,13 +25,29 @@ class TimetableClassItem extends StatelessWidget {
     if (isBreakSlot) {
       return _BreakSlotItem(width: width);
     }
-    final classErp = classModel['class_erp'] as String;
-    final semester = classModel['semester'] as String;
-    final subject = classModel['subject']['subject'] as String;
-    final teacherName = classModel['teacher']['full_name'] as String;
-    final teacherRating = classModel['teacher']['average_rating'] as String;
-    final classroom = classModel['classroom']['classroom'] as String;
-    final campus = classModel['classroom']['campus']['campus'] as String;
+    if (classModel == null) {
+      return SizedBox(
+        height: height,
+        width: width,
+        child: const DecoratedBox(
+          decoration: BoxDecoration(
+            border: Border(
+              right: BorderSide(
+                color: AppColors.lightOutlineColor,
+                width: 1.1,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    final classErp = classModel!['class_erp'] as String;
+    final semester = classModel!['semester'] as String;
+    final subject = classModel!['subject']['subject'] as String;
+    final teacherName = classModel!['teacher']['full_name'] as String;
+    final teacherRating = classModel!['teacher']['average_rating'] as String;
+    final classroom = classModel!['classroom']['classroom'] as String;
+    final campus = classModel!['classroom']['campus']['campus'] as String;
     return Container(
       height: height,
       width: width,
@@ -43,8 +60,7 @@ class TimetableClassItem extends StatelessWidget {
           ),
         ),
       ),
-      child: Container(
-        padding: const EdgeInsets.all(12),
+      child: DecoratedBox(
         decoration: const BoxDecoration(
           color: AppColors.surfaceColor,
           borderRadius: Corners.rounded20,
@@ -54,47 +70,119 @@ class TimetableClassItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Class name
-            Text(
-              '$subject ($classErp)',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+            _ClassHeader(
+              subject: subject,
+              classErp: classErp,
             ),
 
-            Insets.gapH3,
+            // Class details
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 11, 15, 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Teacher Name and Rating
+                  Text(
+                    'By $teacherName (${teacherRating.substring(0, 3)})',
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
 
-            // Teacher Name and Rating
-            Text(
-              'By $teacherName (${teacherRating.substring(0, 3)})',
-              style: const TextStyle(
-                fontSize: 13,
-              ),
-            ),
+                  Insets.gapH3,
 
-            Insets.gapH3,
+                  // Semester
+                  Text(
+                    'Semester: $semester',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textLightGreyColor,
+                    ),
+                  ),
 
-            // Classroom and Campus
-            Text(
-              'Room: $classroom, ${campus.capitalize}',
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.textLightGreyColor,
-              ),
-            ),
+                  const SizedBox(height: 8),
 
-            Insets.gapH3,
+                  // Classroom and Campus
+                  Row(
+                    children: [
+                      // Icon
+                      const Icon(
+                        Icons.location_pin,
+                        size: 16,
+                        color: AppColors.greyOutlineColor,
+                      ),
 
-            // Semester
-            Text(
-              'Semester: $semester',
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.textLightGreyColor,
+                      Insets.gapW5,
+
+                      // Room
+                      Text(
+                        '$classroom, ${campus.capitalize} Campus',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textLightGreyColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ClassHeader extends StatelessWidget {
+  const _ClassHeader({
+    Key? key,
+    required this.subject,
+    required this.classErp,
+  }) : super(key: key);
+
+  final String subject;
+  final String classErp;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 42,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+        color: AppUtils.getRandomColor(int.parse(classErp)),
+      ),
+      padding: const EdgeInsets.fromLTRB(15, 12, 15, 10),
+      child: Row(
+        children: [
+          // Name
+          LimitedBox(
+            maxWidth: 114,
+            child: Text(
+              subject,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              softWrap: false,
+            ),
+          ),
+
+          Insets.gapW5,
+
+          // Erp
+          Text(
+            '($classErp)',
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -119,7 +207,7 @@ class _BreakSlotItem extends StatelessWidget {
           ),
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(0, 20, 0, 15),
+      padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
       child: Container(
         height: 65,
         width: width,

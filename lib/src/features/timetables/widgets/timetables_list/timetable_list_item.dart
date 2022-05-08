@@ -6,21 +6,19 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/typedefs.dart';
 
-// Routing
-import '../../../../config/routes/app_router.dart';
-
 // Widgets
 import '../../../shared/widgets/custom_text_button.dart';
-import '../timetable_viewer/timetable_view.dart';
 
 class TimetableListItem extends StatelessWidget {
-  final int timetableNumber;
+  final String title;
   final JSON timetable;
+  final VoidCallback onTap;
 
   const TimetableListItem({
     Key? key,
-    required this.timetableNumber,
+    required this.title,
     required this.timetable,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -30,14 +28,7 @@ class TimetableListItem extends StatelessWidget {
     final slots = (timetable[classDays[0]] as JSON).values.toList();
     final termId = slots[0]['term_id']! as int;
     return GestureDetector(
-      onTap: () {
-        AppRouter.push(
-          TimetableView(
-            timetable: timetable,
-            title: 'Timetable Number $timetableNumber',
-          ),
-        );
-      },
+      onTap: onTap,
       child: Container(
         height: 170,
         width: double.infinity,
@@ -56,14 +47,17 @@ class TimetableListItem extends StatelessWidget {
               children: [
                 // Timetable Number
                 Text(
-                  'Timetable Number $timetableNumber',
+                  title,
                   style: AppTypography.primary.title18.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
 
                 // Arrow
-                const Icon(Icons.arrow_forward_rounded, size: 25,)
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 25,
+                )
               ],
             ),
 
