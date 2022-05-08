@@ -29,7 +29,6 @@ class Scheduler extends ConsumerWidget {
       ),
     );
     return Scaffold(
-      backgroundColor: Colors.transparent,
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 15),
         itemCount: noOfSelectedClasses,

@@ -27,10 +27,10 @@ class HomeAppBar extends ConsumerWidget {
     final activeTabIndex = ref.watch(homeActiveTabProvider);
     return SliverAppBar(
       elevation: 0,
-      toolbarHeight: 65,
+      toolbarHeight: 60,
       pinned: true,
       title: Text(tabs[activeTabIndex].tabName),
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.lightBackgroundColor,
       leading: InkWell(
         onTap: () => ref.read(authProvider.notifier).logout(),
         child: const RotatedBox(
@@ -50,7 +50,7 @@ class HomeAppBar extends ConsumerWidget {
           decoration: const BoxDecoration(
             border: Border.symmetric(
               horizontal: BorderSide(
-                color: AppColors.greyOutlineColor,
+                color: AppColors.lightOutlineColor,
                 width: 1.5,
               ),
             ),

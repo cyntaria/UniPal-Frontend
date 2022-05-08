@@ -51,7 +51,7 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, _, __) {
     return ColoredBox(
-      color: AppColors.backgroundColor,
+      color: AppColors.lightBackgroundColor,
       child: Stack(
         children: [
           // Bottom border

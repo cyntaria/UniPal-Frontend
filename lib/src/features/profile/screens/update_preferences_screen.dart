@@ -75,6 +75,7 @@ class _UpdatePreferencesScreenState
     );
 
     return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
       appBar: AppBar(
         title: const Text('Update Preferences'),
       ),

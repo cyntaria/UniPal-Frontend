@@ -18,12 +18,18 @@ class GeneratedTimetablesScreen extends ConsumerWidget {
     final generatedTimetables = ref.watch(
       timetablesProvider.select((value) => value.generatedTimetables),
     );
-    return ListView.separated(
-      itemCount: generatedTimetables.length,
-      separatorBuilder: (_, __) => Insets.gapH15,
-      itemBuilder: (_, i) => TimetableListItem(
-        timetableNumber: i,
-        timetable: generatedTimetables[i],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Generated Timetables'),
+      ),
+      body: ListView.separated(
+        itemCount: generatedTimetables.length,
+        separatorBuilder: (_, __) => Insets.gapH15,
+        padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+        itemBuilder: (_, i) => TimetableListItem(
+          timetableNumber: i,
+          timetable: generatedTimetables[i],
+        ),
       ),
     );
   }

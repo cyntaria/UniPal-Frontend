@@ -30,6 +30,7 @@ class ProfileScreen extends HookConsumerWidget {
       studentsProvider.select((value) => value.currentStudent),
     );
     return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
       body: SafeArea(
         child: DefaultTabController(
           length: 3,

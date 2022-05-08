@@ -24,7 +24,6 @@ class HomeScreen extends StatelessWidget {
       TabItemModel('Scheduler', Icons.edit_calendar_rounded),
     ];
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       body: DefaultTabController(
         length: _tabs.length,
         child: NestedScrollView(

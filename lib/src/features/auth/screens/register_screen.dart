@@ -50,6 +50,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     final registrationState = ref.watch(registerStateProvider);
     return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
       appBar: AppBar(
         title: Text(
           registrationState.when<String>(

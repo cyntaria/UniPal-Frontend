@@ -23,7 +23,11 @@ class AppColors {
 
   /// The light greyish color used for background surfaces
   /// of the app like behind scrolling screens or scaffolds etc.
-  static const Color backgroundColor = Color.fromARGB(255, 253, 253, 253);
+  static const Color lightBackgroundColor = Color.fromARGB(255, 253, 253, 253);
+
+  /// The darker greyish color used for background surfaces
+  /// of the app like behind scrolling screens or scaffolds etc.
+  static const Color backgroundColor = Color.fromARGB(255, 240, 240, 240);
 
   /// The light greyish color used for container/card surfaces
   /// of the app.
@@ -44,10 +48,10 @@ class AppColors {
   /// The color value for light grey skeleton containers in the app.
   static const Color lightSkeletonColor = Colors.grey;
 
-    /// The color value for grey borders in the app.
+  /// The color value for grey borders in the app.
   static const Color greyOutlineColor = Color.fromARGB(255, 207, 207, 207);
 
-    /// The color value for light grey borders in the app.
+  /// The color value for light grey borders in the app.
   static const Color lightOutlineColor = Color(0xFFE0E0E0);
 
   /// The red [LinearGradient] for buttons in the app.

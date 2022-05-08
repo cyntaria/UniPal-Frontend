@@ -30,6 +30,7 @@ class LoginScreen extends HookConsumerWidget {
     final emailController = useTextEditingController(text: '');
     final passwordController = useTextEditingController(text: '');
     return Scaffold(
+      backgroundColor: AppColors.lightBackgroundColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(

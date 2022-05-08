@@ -131,7 +131,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: bottomBorder,
-        color: AppColors.backgroundColor,
+        color: AppColors.lightBackgroundColor,
       ),
       child: Stack(
         children: <Widget>[

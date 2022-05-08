@@ -40,6 +40,7 @@ class AppThemes {
       error: AppColors.redColor,
       onError: AppColors.textWhite80Color,
     ),
+    scaffoldBackgroundColor: AppColors.backgroundColor,
     fontFamily: AppTypography.primary.fontFamily,
     textTheme: AppTypography.primary.textTheme,
     textButtonTheme: TextButtonThemeData(
@@ -51,8 +52,8 @@ class AppThemes {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
-      backgroundColor: Colors.transparent,
-      titleTextStyle: AppTypography.primary.heading24,
+      backgroundColor: AppColors.lightBackgroundColor,
+      titleTextStyle: AppTypography.primary.heading22,
       iconTheme: const IconThemeData(color: Colors.black),
     ),
     iconTheme: const IconThemeData(color: AppColors.textLightGreyColor),

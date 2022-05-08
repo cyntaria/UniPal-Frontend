@@ -29,9 +29,9 @@ class AppTypography {
       fontSize: 34,
       fontWeight: FontWeight.bold,
     ),
-    heading24: _outfitFont.copyWith(
+    heading22: _outfitFont.copyWith(
       color: AppColors.textBlackColor,
-      fontSize: 24,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
     ),
     title20: _outfitFont.copyWith(
@@ -83,7 +83,7 @@ class AppTypography {
 class _FontStyle {
   final String? fontFamily;
   final TextStyle heading34;
-  final TextStyle heading24;
+  final TextStyle heading22;
   final TextStyle title20;
   final TextStyle title18;
   final TextStyle subHeading16;
@@ -96,7 +96,7 @@ class _FontStyle {
   const _FontStyle({
     required this.fontFamily,
     required this.heading34,
-    required this.heading24,
+    required this.heading22,
     required this.title20,
     required this.title18,
     required this.subHeading16,
@@ -111,7 +111,7 @@ class _FontStyle {
     return _FontStyle(
       fontFamily: textTheme.bodyLarge!.fontFamily,
       heading34: textTheme.headlineLarge!,
-      heading24: textTheme.headlineSmall!,
+      heading22: textTheme.headlineSmall!,
       title20: textTheme.titleLarge!,
       title18: textTheme.titleSmall!,
       subHeading16: textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w400),
@@ -130,9 +130,9 @@ class _FontStyle {
     return typography.white.copyWith(
       displayLarge: heading34,
       displayMedium: heading34,
-      displaySmall: heading24,
+      displaySmall: heading22,
       headlineLarge: heading34,
-      headlineMedium: heading24,
+      headlineMedium: heading22,
       headlineSmall: title20,
       titleLarge: title18,
       titleMedium: subtitle13,
