@@ -39,6 +39,13 @@ class AppRouter {
     );
   }
 
+  /// This method is used to navigate to a screen using builder
+  static Future<dynamic> push(Widget page) {
+    return navigatorKey.currentState!.push(
+      MaterialPageRoute(builder: (_) => page),
+    );
+  }
+
   /// This method is used to navigate back to the previous screen.
   ///
   /// The [result] can contain any value that we want to return to the previous

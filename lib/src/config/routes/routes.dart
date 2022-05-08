@@ -10,6 +10,7 @@ import '../../features/home/screens/home_screen.dart' as s;
 import '../../features/posts/screens/add_edit_post_screen.dart' as s;
 import '../../features/profile/screens/profile_screen.dart' as s;
 import '../../features/profile/screens/update_preferences_screen.dart' as s;
+import '../../features/timetables/screens/generated_timetables_screen.dart' as s;
 
 // Helpers
 import '../../helpers/typedefs.dart';
@@ -84,9 +85,6 @@ class Routes {
   /// The name of the route for my/students' timetables screen.
   static const String TimetablesScreen = '/timetables-screen';
 
-  /// The name of the route for timetable details screen.
-  static const String TimetableDetailsScreen = '/timetable-details-screen';
-
   /// The name of the route for teacher reviews screen.
   static const String TeacherReviewsScreen = '/teacher-reviews-screen';
 
@@ -107,9 +105,8 @@ class Routes {
     ForgotPasswordScreen: (_) => const SizedBox.shrink(),
     ChangePasswordScreen: (_) => const SizedBox.shrink(),
     AddEditActivityScreen: (_) => const SizedBox.shrink(),
-    GeneratedTimetablesScreen: (_) => const SizedBox.shrink(),
+    GeneratedTimetablesScreen: (_) => const s.GeneratedTimetablesScreen(),
     TimetablesScreen: (_) => const SizedBox.shrink(),
-    TimetableDetailsScreen: (_) => const SizedBox.shrink(),
     TeacherReviewsScreen: (_) => const SizedBox.shrink(),
     AddEditTeacherReviewScreen: (_) => const SizedBox.shrink(),
   };

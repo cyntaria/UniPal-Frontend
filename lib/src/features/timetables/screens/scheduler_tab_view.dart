@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Widgets
-import '../widgets/schedule_generator/scheduler.dart';
+import '../widgets/timetable_generator/scheduler.dart';
 
 class SchedulerTabView extends StatelessWidget {
   const SchedulerTabView({Key? key}) : super(key: key);

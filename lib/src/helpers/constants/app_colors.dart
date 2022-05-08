@@ -44,8 +44,11 @@ class AppColors {
   /// The color value for light grey skeleton containers in the app.
   static const Color lightSkeletonColor = Colors.grey;
 
+    /// The color value for grey borders in the app.
+  static const Color greyOutlineColor = Color.fromARGB(255, 207, 207, 207);
+
     /// The color value for light grey borders in the app.
-  static const Color lightOutlineColor = Color.fromARGB(255, 207, 207, 207);
+  static const Color lightOutlineColor = Color(0xFFE0E0E0);
 
   /// The red [LinearGradient] for buttons in the app.
   static const Gradient buttonGradientRed = LinearGradient(

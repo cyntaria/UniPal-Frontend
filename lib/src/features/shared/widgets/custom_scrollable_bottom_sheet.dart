@@ -69,7 +69,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
                   height: 5,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: AppColors.lightOutlineColor,
+                      color: AppColors.greyOutlineColor,
                       borderRadius: Corners.rounded4,
                     ),
                   ),

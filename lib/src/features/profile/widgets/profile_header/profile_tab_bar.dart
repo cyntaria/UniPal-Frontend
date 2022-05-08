@@ -61,7 +61,7 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
               margin: const EdgeInsets.only(bottom: 0.9),
               decoration: const BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: AppColors.lightOutlineColor),
+                  bottom: BorderSide(color: AppColors.greyOutlineColor),
                 ),
               ),
               width: _tabBar.preferredSize.width,

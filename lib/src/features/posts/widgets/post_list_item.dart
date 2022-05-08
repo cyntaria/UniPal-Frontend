@@ -78,7 +78,7 @@ class PostListItem extends StatelessWidget {
                         // More Options Icon
                         const Icon(
                           Icons.more_horiz_rounded,
-                          color: AppColors.lightOutlineColor,
+                          color: AppColors.greyOutlineColor,
                         ),
                       ],
                     ),
@@ -109,7 +109,7 @@ class PostListItem extends StatelessWidget {
 
             const Divider(
               height: 0,
-              color: AppColors.lightOutlineColor,
+              color: AppColors.greyOutlineColor,
             ),
 
             // Post Reactions

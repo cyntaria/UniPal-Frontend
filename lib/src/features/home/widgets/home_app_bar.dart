@@ -50,7 +50,7 @@ class HomeAppBar extends ConsumerWidget {
           decoration: const BoxDecoration(
             border: Border.symmetric(
               horizontal: BorderSide(
-                color: AppColors.lightOutlineColor,
+                color: AppColors.greyOutlineColor,
                 width: 1.5,
               ),
             ),

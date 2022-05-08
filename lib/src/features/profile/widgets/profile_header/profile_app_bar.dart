@@ -103,7 +103,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     begin: const Border(),
     end: const Border(
       bottom: BorderSide(
-        color: AppColors.lightOutlineColor,
+        color: AppColors.greyOutlineColor,
         width: 1.2,
       ),
     ),

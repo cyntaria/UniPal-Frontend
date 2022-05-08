@@ -43,7 +43,7 @@ class PostReactions extends StatelessWidget {
           Insets.gapW30,
 
           const VerticalDivider(
-            color: AppColors.lightOutlineColor,
+            color: AppColors.greyOutlineColor,
             width: 0,
           ),
 

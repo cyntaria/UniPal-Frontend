@@ -9,6 +9,10 @@ import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 
+// Routing
+import '../../../../config/routes/app_router.dart';
+import '../../../../config/routes/routes.dart';
+
 // Widgets
 import 'add_class_link.dart';
 import 'classes_selector_item.dart';
@@ -54,7 +58,9 @@ class Scheduler extends ConsumerWidget {
         child: CustomTextButton.gradient(
           width: double.infinity,
           gradient: AppColors.buttonGradientPurple,
-          onPressed: () {},
+          onPressed: () {
+            AppRouter.pushNamed(Routes.GeneratedTimetablesScreen);
+          },
           child: Consumer(
             builder: (context, ref, child) {
               return child!;

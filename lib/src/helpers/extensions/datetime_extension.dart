@@ -2,7 +2,7 @@
 
 import 'package:intl/intl.dart';
 
-extension DateHelpers on DateTime {
+extension DateExt on DateTime {
   String toTimeAgoLabel({bool numericIntervals = false}) {
     final now = DateTime.now();
     final durationSinceNow = now.difference(this);

@@ -30,6 +30,7 @@ dependencies:
   mockito: ^5.1.0
   sentry_flutter: ^6.4.0
   shared_preferences: ^2.0.12
+  table_sticky_headers: ^2.0.0
   time: ^2.1.0
 
 dev_dependencies:
