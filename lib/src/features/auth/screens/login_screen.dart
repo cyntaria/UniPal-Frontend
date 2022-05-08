@@ -79,7 +79,7 @@ class LoginScreen extends HookConsumerWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      AppRouter.pushNamed(Routes.ForgotPasswordScreen);
+                      AppRouter.pushNamed(Routes.ForgotPasswordScreenRoute);
                     },
                     child: Text(
                       'Forgot your password?',
@@ -142,7 +142,7 @@ class LoginScreen extends HookConsumerWidget {
               Align(
                 child: GestureDetector(
                   onTap: () {
-                    AppRouter.pushNamed(Routes.RegisterScreen);
+                    AppRouter.pushNamed(Routes.RegisterScreenRoute);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10),

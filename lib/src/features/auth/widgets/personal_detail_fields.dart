@@ -74,7 +74,7 @@ class PersonalDetailFields extends HookConsumerWidget {
         GestureDetector(
           onTap: () async {
             final qrCode = await AppRouter.pushNamed(
-              Routes.QrScannerScreen,
+              Routes.QrScannerScreenRoute,
             ) as String;
             erpController.text = qrCode;
           },

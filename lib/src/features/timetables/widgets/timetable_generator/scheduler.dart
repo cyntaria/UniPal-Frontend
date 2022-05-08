@@ -59,7 +59,7 @@ class Scheduler extends ConsumerWidget {
           width: double.infinity,
           gradient: AppColors.buttonGradientPurple,
           onPressed: () {
-            AppRouter.pushNamed(Routes.GeneratedTimetablesScreen);
+            AppRouter.pushNamed(Routes.GeneratedTimetablesScreenRoute);
           },
           child: Consumer(
             builder: (context, ref, child) {

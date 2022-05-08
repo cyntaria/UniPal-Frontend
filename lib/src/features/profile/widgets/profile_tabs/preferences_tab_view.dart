@@ -65,7 +65,7 @@ class PreferencesTabView extends HookConsumerWidget {
                 width: 60,
                 height: 30,
                 onPressed: () {
-                  AppRouter.pushNamed(Routes.UpdatePreferencesScreen);
+                  AppRouter.pushNamed(Routes.UpdatePreferencesScreenRoute);
                 },
                 gradient: AppColors.buttonGradientPurple,
                 child: Center(

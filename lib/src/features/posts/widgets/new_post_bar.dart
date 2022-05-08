@@ -41,7 +41,7 @@ class NewPostBar extends StatelessWidget {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    AppRouter.pushNamed(Routes.AddEditPostScreen);
+                    AppRouter.pushNamed(Routes.AddEditPostScreenRoute);
                   },
                   child: const CustomTextField(
                     height: 40,
