@@ -1,9 +1,5 @@
+// ignore_for_file: use_setters_to_change_properties
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-// Providers
-import '../providers/auth_provider.dart';
 
 // Helpers
 import '../../../helpers/constants/app_styles.dart';
@@ -14,28 +10,30 @@ import '../enums/gender_enum.dart';
 // Widgets
 import '../../shared/widgets/custom_radio_button.dart';
 
-class GenderSelectionCards extends HookConsumerWidget {
-  const GenderSelectionCards({Key? key}) : super(key: key);
+class GenderSelectionCards extends StatelessWidget {
+  final ValueNotifier<Gender> controller;
+
+  const GenderSelectionCards({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  void selectGender(Gender gender) {
+    controller.value = gender;
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final genderNotifier = useValueNotifier(Gender.male);
-
-    void selectGender(Gender gender) {
-      genderNotifier.value = gender;
-      ref.read(authProvider.notifier).saveGender(gender.name);
-    }
-
+  Widget build(BuildContext context) {
     return ValueListenableBuilder<Gender>(
-      valueListenable: genderNotifier,
+      valueListenable: controller,
       builder: (_, gender, __) {
         return Row(
           children: [
             // Male Radio
             Expanded(
               child: CustomRadioButton<Gender>(
-                value: Gender.male,
-                isSelected: gender == Gender.male,
+                value: Gender.MALE,
+                isSelected: gender == Gender.MALE,
                 icon: Icons.male_rounded,
                 label: 'Male',
                 onTap: selectGender,
@@ -47,8 +45,8 @@ class GenderSelectionCards extends HookConsumerWidget {
             // Female Radio
             Expanded(
               child: CustomRadioButton<Gender>(
-                value: Gender.female,
-                isSelected: gender == Gender.female,
+                value: Gender.FEMALE,
+                isSelected: gender == Gender.FEMALE,
                 icon: Icons.female_rounded,
                 label: 'Female',
                 onTap: selectGender,

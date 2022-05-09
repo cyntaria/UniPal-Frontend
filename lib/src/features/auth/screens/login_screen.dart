@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,6 +19,7 @@ import '../../../config/routes/routes.dart';
 
 // Widgets
 import '../../shared/widgets/custom_circular_loader.dart';
+import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
@@ -27,8 +30,29 @@ class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = useMemoized(GlobalKey<FormState>.new);
-    final emailController = useTextEditingController(text: '');
+    final erpController = useTextEditingController(text: '');
     final passwordController = useTextEditingController(text: '');
+
+    void onData(bool isAuthenticated) {
+      if (isAuthenticated) {
+        erpController.clear();
+        passwordController.clear();
+        AppRouter.popUntilRoot();
+      }
+    }
+
+    ref.listen<AsyncValue<bool>>(
+      authProvider,
+      (_, authState) => authState.whenOrNull(
+        data: onData,
+        error: (reason, stackTrace) => CustomDialog.showAlertDialog(
+          context: context,
+          reason: reason as String,
+          stackTrace: stackTrace,
+          errorButtonText: 'Login Failed',
+        ),
+      ),
+    );
     return Scaffold(
       backgroundColor: AppColors.lightBackgroundColor,
       body: GestureDetector(
@@ -53,12 +77,11 @@ class LoginScreen extends HookConsumerWidget {
 
               // ERP-Email Input
               CustomTextField(
-                controller: emailController,
-                floatingText: 'ERP/Email',
-                hintText: 'Type your ERP or email address',
-                keyboardType: TextInputType.emailAddress,
+                controller: erpController,
+                floatingText: 'ERP',
+                keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
-                validator: FormValidator.emailValidator,
+                validator: FormValidator.erpValidator,
               ),
 
               Insets.gapH10,
@@ -67,7 +90,6 @@ class LoginScreen extends HookConsumerWidget {
               CustomTextField(
                 controller: passwordController,
                 floatingText: 'Password',
-                hintText: 'Type your password',
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 validator: FormValidator.passwordValidator,
@@ -101,7 +123,7 @@ class LoginScreen extends HookConsumerWidget {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     ref.read(authProvider.notifier).login(
-                          email: emailController.text,
+                          erp: erpController.text,
                           password: passwordController.text,
                         );
                   }
@@ -111,7 +133,7 @@ class LoginScreen extends HookConsumerWidget {
                   builder: (context, ref, child) {
                     final authState = ref.watch(authProvider);
                     return authState.maybeWhen(
-                      authenticating: () => const CustomCircularLoader(),
+                      loading: () => const CustomCircularLoader(),
                       orElse: () => child!,
                     );
                   },

@@ -3,9 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
+// Enums
+import '../enums/gender_enum.dart';
+
 // Providers
-import '../../shared/widgets/labeled_widget.dart';
-import '../providers/auth_provider.dart';
+import '../providers/register_form_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -19,11 +21,11 @@ import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
 // Widgets
-import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_date_picker.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
+import '../../shared/widgets/labeled_widget.dart';
 import './gender_selection_cards.dart';
 
 class PersonalDetailFields extends HookConsumerWidget {
@@ -40,30 +42,52 @@ class PersonalDetailFields extends HookConsumerWidget {
     required String firstName,
     required String lastName,
     required String contact,
-    required String email,
+    required String uniEmail,
     required DateTime birthday,
+    required Gender gender,
   }) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      ref.read(authProvider.notifier).savePersonalDetails(
+      ref.read(registerFormProvider.notifier).savePersonalDetails(
             erp: erp,
             firstName: firstName,
             lastName: lastName,
             contact: contact,
-            email: email,
+            uniEmail: uniEmail,
             birthday: birthday,
+            gender: gender,
           );
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final erpController = useTextEditingController(text: '');
-    final firstNameController = useTextEditingController(text: '');
-    final lastNameController = useTextEditingController(text: '');
-    final contactController = useTextEditingController(text: '');
-    final emailController = useTextEditingController(text: '');
-    final birthdayController = useValueNotifier<DateTime?>(null);
+    final savedFormData = ref.watch(
+      registerFormProvider.notifier.select(
+        (value) => value.savedFormStudent,
+      ),
+    );
+    final erpController = useTextEditingController(
+      text: savedFormData?.erp ?? '',
+    );
+    final firstNameController = useTextEditingController(
+      text: savedFormData?.firstName ?? '',
+    );
+    final lastNameController = useTextEditingController(
+      text: savedFormData?.lastName ?? '',
+    );
+    final contactController = useTextEditingController(
+      text: savedFormData?.contact ?? '',
+    );
+    final uniEmailController = useTextEditingController(
+      text: savedFormData?.uniEmail ?? '',
+    );
+    final birthdayController = useValueNotifier<DateTime?>(
+      savedFormData?.birthday,
+    );
+    final genderController = useValueNotifier<Gender>(
+      savedFormData != null ? savedFormData.gender : Gender.MALE,
+    );
 
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -127,11 +151,11 @@ class PersonalDetailFields extends HookConsumerWidget {
 
         Insets.gapH15,
 
-        // Email
+        // Uni Email
         CustomTextField(
-          controller: emailController,
-          floatingText: 'Email',
-          hintText: 'Type your personal email',
+          controller: uniEmailController,
+          floatingText: 'University Email',
+          hintText: 'Type your iba email',
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           validator: FormValidator.emailValidator,
@@ -140,10 +164,12 @@ class PersonalDetailFields extends HookConsumerWidget {
         Insets.gapH15,
 
         // Gender
-        const LabeledWidget(
+        LabeledWidget(
           label: 'Gender',
           useDarkerLabel: true,
-          child: GenderSelectionCards(),
+          child: GenderSelectionCards(
+            controller: genderController,
+          ),
         ),
 
         Insets.gapH15,
@@ -204,24 +230,16 @@ class PersonalDetailFields extends HookConsumerWidget {
             firstName: firstNameController.text,
             lastName: lastNameController.text,
             contact: contactController.text,
-            email: emailController.text,
+            uniEmail: uniEmailController.text,
             birthday: birthdayController.value!,
+            gender: genderController.value,
           ),
           gradient: AppColors.buttonGradientPurple,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final authState = ref.watch(authProvider);
-              return authState.maybeWhen(
-                authenticating: () => const CustomCircularLoader(),
-                orElse: () => child!,
-              );
-            },
-            child: Center(
-              child: Text(
-                'NEXT',
-                style: AppTypography.secondary.body16.copyWith(
-                  color: Colors.white,
-                ),
+          child: Center(
+            child: Text(
+              'NEXT',
+              style: AppTypography.secondary.body16.copyWith(
+                color: Colors.white,
               ),
             ),
           ),

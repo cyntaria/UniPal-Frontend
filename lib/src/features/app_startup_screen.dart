@@ -15,7 +15,9 @@ class AppStartupScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
     return authState.maybeWhen(
-      authenticated: (fullName) => const HomeScreen(),
+      data: (isAuthenticated) {
+        return isAuthenticated ? const HomeScreen() : const LoginScreen();
+      },
       orElse: () => const LoginScreen(),
     );
   }

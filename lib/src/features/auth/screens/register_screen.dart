@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../../config/routes/app_router.dart';
-import '../providers/auth_provider.dart';
+import '../providers/register_form_provider.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
+
+// Routing
+import '../../../config/routes/app_router.dart';
 
 // Widgets
 import '../../shared/widgets/custom_dialog.dart';
@@ -48,7 +50,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final registrationState = ref.watch(registerStateProvider);
+    final registrationState = ref.watch(registerFormProvider);
     return Scaffold(
       backgroundColor: AppColors.lightBackgroundColor,
       appBar: AppBar(
@@ -65,7 +67,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             registrationState.maybeWhen(
               personal: AppRouter.pop,
               orElse: () {
-                ref.read(authProvider.notifier).moveToPreviousRegistration();
+                ref
+                    .read(registerFormProvider.notifier)
+                    .moveToPreviousRegistration();
               },
             );
           },

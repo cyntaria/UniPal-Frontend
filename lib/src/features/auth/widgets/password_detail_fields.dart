@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_positional_boolean_parameters
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +13,11 @@ import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 import '../../../helpers/form_validator.dart';
 
+// Routing
+import '../../../config/routes/app_router.dart';
+
 // Widgets
+import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_textfield.dart';
@@ -39,6 +45,26 @@ class PasswordDetailFields extends HookConsumerWidget {
     final passwordController = useTextEditingController(text: '');
     final cPasswordController = useTextEditingController(text: '');
 
+    void onData(bool isAuthenticated) {
+      if (isAuthenticated) {
+        passwordController.clear();
+        cPasswordController.clear();
+        AppRouter.popUntilRoot();
+      }
+    }
+
+    ref.listen<AsyncValue<bool>>(
+      authProvider,
+      (_, authState) => authState.whenOrNull(
+        data: onData,
+        error: (reason, stackTrace) => CustomDialog.showAlertDialog(
+          context: context,
+          reason: reason as String,
+          stackTrace: stackTrace,
+          errorButtonText: 'Register Failed',
+        ),
+      ),
+    );
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
@@ -84,7 +110,7 @@ class PasswordDetailFields extends HookConsumerWidget {
             builder: (context, ref, child) {
               final authState = ref.watch(authProvider);
               return authState.maybeWhen(
-                authenticating: () => const CustomCircularLoader(),
+                loading: () => const CustomCircularLoader(),
                 orElse: () => child!,
               );
             },

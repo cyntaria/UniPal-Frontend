@@ -22,6 +22,13 @@ class AppUtils {
     )];
   }
 
+  /// A utility method to convert 0/1 to false/true
+  static bool boolFromInt(int i) => i == 1;
+
+  /// A utility method to convert true/false to 1/0
+  // ignore: avoid_positional_boolean_parameters
+  static int boolToInt(bool b) => b ? 1 : 0;
+
   /// A utility method to convert any instance to null
   static T? toNull<T>(Object? _) => null;
 }

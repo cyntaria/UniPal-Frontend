@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 // Providers
-import '../providers/auth_provider.dart';
+import '../providers/register_form_provider.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
-import '../../../helpers/form_validator.dart';
 
 // Widgets
+import '../../shared/widgets/dropdown_sheet_item.dart';
 import '../../shared/widgets/labeled_widget.dart';
 import '../../shared/widgets/custom_dropdown_field.dart';
 import '../../shared/widgets/custom_dropdown_sheet.dart';
-import '../../shared/widgets/custom_date_picker.dart';
-import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/custom_text_button.dart';
-import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 
 class UniversityDetailFields extends HookConsumerWidget {
@@ -32,57 +28,55 @@ class UniversityDetailFields extends HookConsumerWidget {
 
   void saveForm(
     WidgetRef ref, {
-    required String uniEmail,
-    required DateTime gradYear,
-    required String program,
-    required String campus,
+    required int gradYear,
+    required int programId,
+    required int campusId,
   }) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      ref.read(authProvider.notifier).saveUniversityDetails(
-            uniEmail: uniEmail,
+      ref.read(registerFormProvider.notifier).saveUniversityDetails(
             gradYear: gradYear,
-            program: program,
-            campus: campus,
+            programId: programId,
+            campusId: campusId,
           );
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uniEmailController = useTextEditingController(text: '');
-    final gradYearController = useValueNotifier<DateTime?>(null);
-    final programController = useValueNotifier<int?>(null);
-    final campusController = useValueNotifier<int?>(null);
+    final savedFormData = ref.watch(
+      registerFormProvider.notifier.select((value) => value.savedFormStudent),
+    );
+    final gradYearController = useValueNotifier<int?>(
+      savedFormData?.graduationYear,
+    );
+    final programIdController = useValueNotifier<int?>(
+      savedFormData?.programId,
+    );
+    final campusIdController = useValueNotifier<int?>(
+      savedFormData?.campusId,
+    );
 
     return ScrollableColumn(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       children: [
         Insets.expand,
 
-        // Uni Email
-        CustomTextField(
-          controller: uniEmailController,
-          floatingText: 'University Email',
-          hintText: 'Type your iba email',
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          validator: FormValidator.emailValidator,
-        ),
-
-        Insets.gapH15,
-
         // Graduation Year
-        CustomDatePicker(
-          firstDate: DateTime(1980),
-          dateNotifier: gradYearController,
-          dateFormat: DateFormat.y(),
-          helpText: 'SELECT YEAR OF GRADUATION',
-          initialEntryMode: DatePickerEntryMode.calendarOnly,
-          initialMaterialDatePickerMode: DatePickerMode.year,
-          pickerStyle: const CustomDatePickerStyle(
-            initialDateString: 'YYYY',
-            floatingText: 'Graduation Year',
+        LabeledWidget(
+          label: 'Graduation Year',
+          useDarkerLabel: true,
+          child: CustomDropdownField<int>.sheet(
+            controller: gradYearController,
+            selectedItemText: (item) => '$item',
+            hintText: 'YYYY',
+            itemsSheet: CustomDropdownSheet(
+              items: const [1, 2, 3],
+              bottomSheetTitle: 'Years',
+              itemBuilder: (_, item) => DropdownSheetItem(
+                label: '$item',
+              ),
+            ),
           ),
         ),
 
@@ -93,24 +87,15 @@ class UniversityDetailFields extends HookConsumerWidget {
           label: 'Programs',
           useDarkerLabel: true,
           child: CustomDropdownField<int>.sheet(
-            controller: programController,
+            controller: programIdController,
             selectedItemText: (item) => '$item',
             hintText: 'Select a degree',
             itemsSheet: CustomDropdownSheet(
               items: const [1, 2, 3],
               bottomSheetTitle: 'Programs',
-              itemBuilder: (_, item) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 5,
-                  ),
-                  child: ListTile(
-                    tileColor: Colors.white,
-                    title: Text('$item'),
-                  ),
-                );
-              },
+              itemBuilder: (_, item) => DropdownSheetItem(
+                label: '$item',
+              ),
             ),
           ),
         ),
@@ -122,23 +107,14 @@ class UniversityDetailFields extends HookConsumerWidget {
           label: 'Campuses',
           useDarkerLabel: true,
           child: CustomDropdownField<int>.sheet(
-            controller: campusController,
+            controller: campusIdController,
             selectedItemText: (item) => '$item',
             itemsSheet: CustomDropdownSheet(
               items: const [1, 2, 3],
               bottomSheetTitle: 'Campuses',
-              itemBuilder: (_, item) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 5,
-                  ),
-                  child: ListTile(
-                    tileColor: Colors.white,
-                    title: Text('$item'),
-                  ),
-                );
-              },
+              itemBuilder: (_, item) => DropdownSheetItem(
+                label: '$item',
+              ),
             ),
           ),
         ),
@@ -150,26 +126,16 @@ class UniversityDetailFields extends HookConsumerWidget {
           width: double.infinity,
           onPressed: () => saveForm(
             ref,
-            uniEmail: uniEmailController.text,
             gradYear: gradYearController.value!,
-            program: '${programController.value}',
-            campus: '${campusController.value}',
+            programId: programIdController.value!,
+            campusId: campusIdController.value!,
           ),
           gradient: AppColors.buttonGradientPurple,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final authState = ref.watch(authProvider);
-              return authState.maybeWhen(
-                authenticating: () => const CustomCircularLoader(),
-                orElse: () => child!,
-              );
-            },
-            child: Center(
-              child: Text(
-                'NEXT',
-                style: AppTypography.secondary.body16.copyWith(
-                  color: Colors.white,
-                ),
+          child: Center(
+            child: Text(
+              'NEXT',
+              style: AppTypography.secondary.body16.copyWith(
+                color: Colors.white,
               ),
             ),
           ),

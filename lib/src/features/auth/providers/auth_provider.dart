@@ -1,143 +1,122 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// States
-import '../../../core/networking/custom_exception.dart';
-import '../states/auth_state.codegen.dart';
-import '../states/registration_state.codegen.dart';
+// Services
+import '../../../core/local/key_value_storage_service.dart';
 
-final registerStateProvider = StateProvider<RegistrationState>((ref) {
-  return const RegistrationState.personal();
-});
+// Models
+import '../../profile/models/student_model.codegen.dart';
 
-final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
-  // final _authRepository = ref.watch(_authRepositoryProvider);
-  // final _keyValueStorageService = ref.watch(keyValueStorageServiceProvider);
-  return AuthProvider(
-    ref: ref,
-    // authRepository: _authRepository,
-    // keyValueStorageService: _keyValueStorageService,
-  );
-});
+// Providers
+import '../../all_providers.dart';
+import 'register_form_provider.dart';
 
-class AuthProvider extends StateNotifier<AuthState> {
-  final Map<String, Object?> _currentUser = {
-    'erp': '',
-    'firstName': '',
-    'lastName': '',
-    'contact': '',
-    'email': '',
-    'birthday': null,
-    'uniEmail': '',
-    'gradYear': '',
-    'program': '',
-    'campus': '',
-    'password': '',
-    'role': 'student',
-  };
+// Repositories
+import '../repositories/auth_repository.dart';
+
+final currentStudentProvider = StateProvider<StudentModel?>((ref) => null);
+
+final authProvider = StateNotifierProvider<AuthProvider, AsyncValue<bool>>(
+  (ref) {
+    final _authRepository = ref.watch(authRepositoryProvider);
+    final _keyValueStorageService = ref.watch(keyValueStorageServiceProvider);
+    return AuthProvider(
+      ref: ref,
+      authRepository: _authRepository,
+      keyValueStorageService: _keyValueStorageService,
+    );
+  },
+);
+
+class AuthProvider extends StateNotifier<AsyncValue<bool>> {
+  final AuthRepository _authRepository;
+  final KeyValueStorageService _keyValueStorageService;
   final Ref _ref;
 
   AuthProvider({
     required Ref ref,
+    required AuthRepository authRepository,
+    required KeyValueStorageService keyValueStorageService,
   })  : _ref = ref,
-        super(const AuthState.unauthenticated()) {
+        _authRepository = authRepository,
+        _keyValueStorageService = keyValueStorageService,
+        super(const AsyncValue.data(false)) {
     init();
   }
 
-  void init() {}
-
-  void moveToPreviousRegistration() {
-    _ref.read(registerStateProvider.notifier).update((state) {
-      return state.when(
-        personal: () => state,
-        university: () => const RegistrationState.personal(),
-        password: () => const RegistrationState.university(),
-      );
-    });
-  }
-
-  void savePersonalDetails({
-    required String erp,
-    required String firstName,
-    required String lastName,
-    required String contact,
-    required String email,
-    required DateTime birthday,
-  }) {
-    // Change to loading
-    state = const AuthState.authenticating();
-
-    // Save details
-    _currentUser['erp'] = erp;
-    _currentUser['firstName'] = firstName;
-    _currentUser['lastName'] = lastName;
-    if (contact.startsWith('0')) {
-      _currentUser['contact'] = '+92${contact.substring(1)}';
+  Future<void> init() async {
+    final student = _keyValueStorageService.getAuthUser();
+    final password = await _keyValueStorageService.getAuthPassword();
+    if (student == null || password.isEmpty) {
+      logout();
     } else {
-      _currentUser['contact'] = contact;
+      _ref.watch(currentStudentProvider.notifier).state = student;
+      state = const AsyncValue.data(true);
     }
-    _currentUser['email'] = email;
-    _currentUser['birthday'] = birthday;
-
-    // Stop loading and move to university form
-    state = const AuthState.unauthenticated();
-    _ref.read(registerStateProvider.notifier).update(
-          (state) => const RegistrationState.university(),
-        );
   }
 
-  void saveGender(String gender) {
-    _currentUser['gender'] = gender;
+  void _cacheAuthProfile(StudentModel student, String password) {
+    _keyValueStorageService
+      ..setAuthUser(student)
+      ..setAuthPassword(password);
   }
 
-  void saveUniversityDetails({
-    required String uniEmail,
-    required DateTime gradYear,
-    required String program,
-    required String campus,
-  }) {
-    // Change to loading
-    state = const AuthState.authenticating();
-
-    // Save details
-    _currentUser['uniEmail'] = uniEmail;
-    _currentUser['gradYear'] = gradYear;
-    _currentUser['program'] = program;
-    _currentUser['campus'] = campus;
-
-    // Stop loading and move to password form
-    state = const AuthState.unauthenticated();
-    _ref.read(registerStateProvider.notifier).update(
-          (state) => const RegistrationState.password(),
-        );
-  }
-
-  void _savePassword(String password) {
-    _currentUser['password'] = password;
+  void _cacheAuthToken(String value) {
+    _keyValueStorageService.setAuthToken(value);
   }
 
   Future<void> register({
     required String password,
   }) async {
-    state = const AuthState.authenticating();
-    _savePassword(password);
+    state = const AsyncValue.loading();
+    final savedFormStudent = _ref.watch(
+      registerFormProvider.notifier.select(
+        (value) => value.savedFormStudent,
+      ),
+    )!;
+    final data = savedFormStudent.toJson();
+    data['password'] = password;
 
-    // TODO(arafaysaleem): replace with actual authentication code
-    state = const AuthState.authenticated(fullName: 'DONE!!');
+    state = await AsyncValue.guard(() async {
+      final student = await _authRepository.sendRegisterData(
+        data: data,
+        updateTokenCallback: _cacheAuthToken,
+      );
+
+      // Update current user in memory
+      _ref.watch(currentStudentProvider.notifier).state = student;
+
+      // Save authentication details in cache
+      _cacheAuthProfile(student, password);
+
+      return true;
+    });
   }
 
   Future<void> login({
-    required String email,
+    required String erp,
     required String password,
   }) async {
-    state = const AuthState.authenticating();
-    try {
-      state = const AuthState.authenticated(fullName: 'Rafay');
-    } on CustomException catch (e) {
-      state = AuthState.failed(reason: e.message);
-    }
+    final data = {'erp': erp, 'password': password};
+
+    state = await AsyncValue.guard(() async {
+      final student = await _authRepository.sendLoginData(
+        data: data,
+        updateTokenCallback: _cacheAuthToken,
+      );
+
+      // Update current user in memory
+      _ref.watch(currentStudentProvider.notifier).state = student;
+
+      // Save authentication details in cache
+      _cacheAuthProfile(student, password);
+
+      return true;
+    });
   }
 
-  Future<void> logout() async {
-    state = const AuthState.unauthenticated();
+  void logout() {
+    _keyValueStorageService.resetKeys();
+    state = const AsyncValue.data(false);
+    _ref.invalidate(currentStudentProvider);
   }
 }
