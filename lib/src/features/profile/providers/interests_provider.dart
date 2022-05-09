@@ -1,4 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:collection';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
