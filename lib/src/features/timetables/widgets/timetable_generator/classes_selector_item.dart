@@ -14,7 +14,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/custom_dropdown_field.dart';
 import '../../../shared/widgets/custom_dropdown_sheet.dart';
 import '../../../shared/widgets/labeled_widget.dart';
-import 'dropdown_sheet_item.dart';
+import '../../../shared/widgets/dropdown_sheet_item.dart';
 
 final _selectedClassProvider =
     Provider.family.autoDispose<SchedulerClassModel, int>(

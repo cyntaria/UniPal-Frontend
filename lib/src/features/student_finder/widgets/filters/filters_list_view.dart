@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Enums
+import '../../../auth/enums/gender_enum.dart';
+
 // Models
 import '../../../profile/models/hobby_model.codegen.dart';
 import '../../../profile/models/interest_model.codegen.dart';
@@ -36,15 +39,19 @@ class FiltersListView extends HookConsumerWidget {
     final interestController = useTextEditingController(text: '');
     final statusController = useTextEditingController(text: '');
     final batchController = useTextEditingController(text: '');
+    final genderController = useValueNotifier<Gender>(Gender.MALE);
+
     return ListView(
       controller: scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 15),
       children: [
         // Gender Filter
-        const LabeledWidget(
+        LabeledWidget(
           label: 'Gender',
           useDarkerLabel: true,
-          child: GenderSelectionCards(),
+          child: GenderSelectionCards(
+            controller: genderController,
+          ),
         ),
 
         Insets.gapH20,
