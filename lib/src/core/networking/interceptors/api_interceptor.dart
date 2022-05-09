@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Providers
+import '../../../features/all_providers.dart';
+
 /// A class that holds intercepting logic for API related requests. This is
 /// the first interceptor in case of both request and response.
 ///
@@ -35,10 +38,12 @@ class ApiInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     if (options.headers.containsKey('requiresAuthToken')) {
-      if(options.headers['requiresAuthToken'] == true){
-        // final token = await _ref.read(keyValueStorageServiceProvider).getAuthToken();
-        const token = 'CHANGE ME';
-        options.headers.addAll(<String, Object?>{'Authorization': 'Bearer $token'});
+      if (options.headers['requiresAuthToken'] == true) {
+        final token =
+            await _ref.watch(keyValueStorageServiceProvider).getAuthToken();
+        options.headers.addAll(
+          <String, Object?>{'Authorization': 'Bearer $token'},
+        );
       }
 
       options.headers.remove('requiresAuthToken');

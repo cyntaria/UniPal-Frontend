@@ -71,7 +71,6 @@ class CustomDropdownSheet<T> extends StatefulWidget {
     this.contentPadding = EdgeInsets.zero,
     String? submitButtonText,
     Color? submitButtonColor,
-    // TODO(arafaysaleem): move to a .single() factory constructor
     bool? enableMultipleSelection,
     this.showSearch = false,
   })  : assert(

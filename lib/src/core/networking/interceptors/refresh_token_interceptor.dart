@@ -1,9 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Providers
-// import '../../../features/shared/all_providers.dart';
+import '../../../features/all_providers.dart';
+import '../../../features/auth/providers/auth_provider.dart';
 
 // Endpoints
 import '../api_endpoint.dart';
@@ -60,12 +63,13 @@ class RefreshTokenInterceptor extends Interceptor {
           _dio.lock();
 
           // Get auth details for refresh token request
-          // final kVStorageService = _ref.read(keyValueStorageServiceProvider);
-          final data = <JSON>{
-            // 'email': kVStorageService.getAuthUser()!.email,
-            // 'password': await kVStorageService.getAuthPassword(),
-            // 'oldToken': await kVStorageService.getAuthToken(),
-          } as JSON;
+          final kVStorageService = _ref.watch(keyValueStorageServiceProvider);
+          final currentUser = _ref.watch(currentStudentProvider);
+          final data = {
+            'erp': currentUser!.erp,
+            'password': await kVStorageService.getAuthPassword(),
+            'oldToken': await kVStorageService.getAuthToken(),
+          };
 
           // Make refresh request and get new token
           final newToken = await _refreshTokenRequest(
@@ -78,11 +82,7 @@ class RefreshTokenInterceptor extends Interceptor {
           if (newToken == null) return super.onError(dioError, handler);
 
           // Update auth and unlock old dio
-          // kVStorageService.setAuthToken(newToken);
-          // TODO(arafaysaleem): remove after shift to finally clause
-          _dio
-            ..unlock()
-            ..clear();
+          kVStorageService.setAuthToken(newToken);
 
           // Make original req with new token
           final response = await _dio.request<JSON>(
@@ -149,11 +149,11 @@ class RefreshTokenInterceptor extends Interceptor {
       debugPrint('\t<-- END ERROR');
       debugPrint('<-- END REFRESH');
 
-      // TODO(arafaysaleem): shift to finally clause
+      return null;
+    } finally {
       _dio
         ..unlock()
         ..clear();
-      return null;
     }
   }
 }
