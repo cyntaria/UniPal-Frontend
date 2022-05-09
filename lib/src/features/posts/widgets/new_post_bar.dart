@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../config/routes/app_router.dart';
-import '../../../config/routes/routes.dart';
+// Providers
+import '../../auth/providers/auth_provider.dart';
+
+// Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
-import '../../profile/providers/students_provider.dart';
+
+// Routing
+import '../../../config/routes/app_router.dart';
+import '../../../config/routes/routes.dart';
+
+// Widgets
 import '../../shared/widgets/custom_textfield.dart';
 
 class NewPostBar extends StatelessWidget {
@@ -24,10 +31,10 @@ class NewPostBar extends StatelessWidget {
               Consumer(
                 builder: (_, ref, __) {
                   final authorProfilePicture = ref.watch(
-                    studentsProvider.select(
-                      (value) => value.currentStudent['profile_picture_url'],
+                    currentStudentProvider.select(
+                      (value) => value!.profilePictureUrl,
                     ),
-                  )! as String;
+                  );
                   return CircleAvatar(
                     radius: 20,
                     backgroundImage: NetworkImage(authorProfilePicture),

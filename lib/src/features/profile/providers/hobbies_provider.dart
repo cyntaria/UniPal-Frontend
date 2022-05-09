@@ -7,11 +7,11 @@ import '../models/hobby_model.codegen.dart';
 
 final hobbiesProvider = Provider<HobbiesProvider>((ref) {
   // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return HobbiesProvider(ref: ref);
+  return HobbiesProvider(ref.read);
 });
 
 class HobbiesProvider {
-  final Ref ref;
+  final Reader _read;
 
   final _hobbiesMap = const <int, HobbyModel>{
     0: HobbyModel(hobbyId: 0, hobby: 'Cricket'),
@@ -22,7 +22,7 @@ class HobbiesProvider {
     5: HobbyModel(hobbyId: 5, hobby: 'Clubbing'),
   };
 
-  HobbiesProvider({required this.ref});
+  HobbiesProvider(this._read);
 
   UnmodifiableMapView<int, HobbyModel> getHobbiesMap() {
     return UnmodifiableMapView(_hobbiesMap);

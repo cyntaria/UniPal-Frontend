@@ -6,7 +6,6 @@ import '../models/tab_item_model.dart';
 
 // Providers
 import '../../auth/providers/auth_provider.dart';
-import '../providers/home_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -15,7 +14,7 @@ import '../../../config/routes/routes.dart';
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 
-class HomeAppBar extends ConsumerWidget {
+class HomeAppBar extends ConsumerStatefulWidget {
   final List<TabItemModel> tabs;
   const HomeAppBar({
     Key? key,
@@ -23,16 +22,22 @@ class HomeAppBar extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final activeTabIndex = ref.watch(homeActiveTabProvider);
+  _HomeAppBarState createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends ConsumerState<HomeAppBar> {
+  int activeTabIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 0,
       toolbarHeight: 60,
       pinned: true,
-      title: Text(tabs[activeTabIndex].tabName),
+      title: Text(widget.tabs[activeTabIndex].tabName),
       backgroundColor: AppColors.lightBackgroundColor,
       leading: InkWell(
-        onTap: () => ref.read(authProvider.notifier).logout(),
+        onTap: ref.read(authProvider.notifier).logout,
         child: const RotatedBox(
           quarterTurns: 2,
           child: Icon(Icons.logout_rounded, color: AppColors.redColor),
@@ -63,8 +68,8 @@ class HomeAppBar extends ConsumerWidget {
             indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.symmetric(horizontal: 20),
             unselectedLabelColor: AppColors.textLightGreyColor,
-            tabs: tabs.map((t) => Tab(icon: Icon(t.icon))).toList(),
-            onTap: (i) => ref.read(homeActiveTabProvider.notifier).state = i,
+            tabs: widget.tabs.map((t) => Tab(icon: Icon(t.icon))).toList(),
+            onTap: (i) => setState(() => activeTabIndex = i),
           ),
         ),
       ),

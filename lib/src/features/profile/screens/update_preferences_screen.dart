@@ -3,18 +3,18 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../shared/widgets/labeled_widget.dart';
 import '../providers/preferences_provider.dart';
-
-// Routing
-import '../../../config/routes/app_router.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
+// Routing
+import '../../../config/routes/app_router.dart';
+
 // Widgets
+import '../../shared/widgets/labeled_widget.dart';
 import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
@@ -46,7 +46,7 @@ class _UpdatePreferencesScreenState
       ),
     );
     if (doPop == null || !doPop) return Future<bool>.value(false);
-    ref.read(prefsProvider).clearUnupdatedPrefs();
+    ref.read(prefsProvider).clearUnUpdatedPrefs();
     return Future<bool>.value(true);
   }
 

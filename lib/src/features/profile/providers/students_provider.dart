@@ -3,9 +3,12 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Providers
+import '../../auth/providers/auth_provider.dart';
+
 final studentsProvider = ChangeNotifierProvider<StudentsProvider>((ref) {
   // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return StudentsProvider(ref: ref);
+  return StudentsProvider(ref.read);
 });
 
 class StudentsProvider extends ChangeNotifier {
@@ -43,47 +46,9 @@ class StudentsProvider extends ChangeNotifier {
       'accepted_at': null
     }
   };
+  final Reader _read;
 
-  final _myProfile = <String, Object?>{
-    'erp': '17855',
-    'first_name': 'Abdur Rafay',
-    'last_name': 'Saleem',
-    'gender': 'male',
-    'contact': '+923009999999',
-    'email': 'arafaysaleem@gmail.com',
-    'birthday': '1999-09-18',
-    'profile_picture_url':
-        'https://i.pinimg.com/564x/8d/e3/89/8de389c84e919d3577f47118e2627d95.jpg',
-    'graduation_year': 2022,
-    'uni_email': 'a.rafay.17855@iba.khi.edu.pk',
-    'hobby_1': 1,
-    'hobby_2': 2,
-    'hobby_3': 3,
-    // TODO(arafaysaleem): add hobbies to Set
-    'hobbies': <int>{1, 2, 3},
-    'interest_1': 1,
-    'interest_2': 2,
-    'interest_3': 3,
-    'interests': <int>{1, 2, 3},
-    'program_id': 1,
-    'campus_id': 1,
-    'favourite_campus_hangout_spot': 'CED',
-    'favourite_campus_activity': 'Lifting',
-    'current_status': 1,
-    'is_active': 1,
-    'role': 'api_user',
-    'token':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlcnAiOiIxNzg1NSIsImlhdCI6MTYzMDAxMzEwMywiZXhwIjoxNjMwMjcyMzAzfQ.VMcjA3JcOTDlg6roDKBJjJBHShzjemeGh2w6degMfkc'
-  };
-
-  final Ref ref;
-
-  StudentsProvider({
-    required this.ref,
-  });
-
-  UnmodifiableMapView<String, Object?> get currentStudent =>
-      UnmodifiableMapView(_myProfile);
+  StudentsProvider(this._read);
 
   // TODO(arafaysaleem): remove after demo
   UnmodifiableMapView<String, Object?> get otherStudent =>
@@ -95,10 +60,14 @@ class StudentsProvider extends ChangeNotifier {
     required String favCampusHangoutSpot,
     required String favCampusActivity,
   }) {
-    _myProfile['interests'] = interests;
-    _myProfile['hobbies'] = hobbies;
-    _myProfile['favourite_campus_hangout_spot'] = favCampusHangoutSpot;
-    _myProfile['favourite_campus_activity'] = favCampusActivity;
+    _read(currentStudentProvider.notifier).update(
+      (currentStudent) => currentStudent!.copyWith(
+        hobbies: hobbies,
+        interests: interests,
+        favouriteCampusHangoutSpot: favCampusHangoutSpot,
+        favouriteCampusActivity: favCampusActivity,
+      ),
+    );
     notifyListeners();
   }
 }

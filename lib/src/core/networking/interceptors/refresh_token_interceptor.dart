@@ -19,13 +19,12 @@ import '../../../helpers/typedefs.dart';
 class RefreshTokenInterceptor extends Interceptor {
   /// An instance of [Dio] for network requests
   final Dio _dio;
-  final Ref _ref;
+  final Reader _read;
 
-  RefreshTokenInterceptor({
+  RefreshTokenInterceptor(
+    this._read, {
     required Dio dioClient,
-    required Ref ref,
-  })  : _dio = dioClient,
-        _ref = ref;
+  }) : _dio = dioClient;
 
   /// The name of the exception on which this interceptor is triggered.
   // ignore: non_constant_identifier_names
@@ -63,8 +62,8 @@ class RefreshTokenInterceptor extends Interceptor {
           _dio.lock();
 
           // Get auth details for refresh token request
-          final kVStorageService = _ref.watch(keyValueStorageServiceProvider);
-          final currentUser = _ref.watch(currentStudentProvider);
+          final kVStorageService = _read(keyValueStorageServiceProvider);
+          final currentUser = _read(currentStudentProvider);
           final data = {
             'erp': currentUser!.erp,
             'password': await kVStorageService.getAuthPassword(),

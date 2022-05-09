@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../auth/providers/auth_provider.dart';
 import '../../providers/campus_provider.dart';
 import '../../providers/program_provider.dart';
-import '../../providers/students_provider.dart';
 
 // Helpers
+import '../../../../helpers/extensions/datetime_extension.dart';
+import '../../../../helpers/extensions/string_extension.dart';
 import '../../../../helpers/constants/app_styles.dart';
 
 // Widgets
@@ -17,9 +19,7 @@ class AboutTabView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentStudent = ref.watch(
-      studentsProvider.select((value) => value.currentStudent),
-    );
+    final currentStudent = ref.watch(currentStudentProvider)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: ListView(
@@ -32,7 +32,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'ERP',
                 child: Text(
-                  currentStudent['erp']! as String,
+                  currentStudent.erp,
                 ),
               ),
 
@@ -40,7 +40,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Gender',
                 child: Text(
-                  currentStudent['gender']! as String,
+                  currentStudent.gender.name.capitalize,
                 ),
               ),
 
@@ -48,7 +48,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Birthday On',
                 child: Text(
-                  currentStudent['birthday']! as String,
+                  currentStudent.birthday.toDateString('d MMM, y'),
                 ),
               ),
             ],
@@ -64,7 +64,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Program',
                 child: Text(
-                  programs[currentStudent['program_id']! as int]!,
+                  programs[currentStudent.programId]!,
                 ),
               ),
 
@@ -72,7 +72,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Batch',
                 child: Text(
-                  currentStudent['graduation_year'].toString(),
+                  '${currentStudent.graduationYear}',
                 ),
               ),
 
@@ -80,7 +80,7 @@ class AboutTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Favourite Campus',
                 child: Text(
-                  campuses[currentStudent['campus_id']! as int]!,
+                  campuses[currentStudent.campusId]!,
                 ),
               ),
             ],
@@ -92,7 +92,7 @@ class AboutTabView extends HookConsumerWidget {
           LabeledWidget(
             label: 'University Email',
             child: Text(
-              currentStudent['uni_email']! as String,
+              currentStudent.uniEmail,
             ),
           ),
 
@@ -102,7 +102,7 @@ class AboutTabView extends HookConsumerWidget {
           LabeledWidget(
             label: 'Email',
             child: Text(
-              currentStudent['email']! as String,
+              currentStudent.email ?? 'Not specified',
             ),
           ),
 
@@ -112,7 +112,7 @@ class AboutTabView extends HookConsumerWidget {
           LabeledWidget(
             label: 'Contact',
             child: Text(
-              currentStudent['contact']! as String,
+              currentStudent.contact,
             ),
           ),
         ],

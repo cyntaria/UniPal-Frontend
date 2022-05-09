@@ -20,7 +20,7 @@ final authProvider = StateNotifierProvider<AuthProvider, AsyncValue<bool>>(
     final _authRepository = ref.watch(authRepositoryProvider);
     final _keyValueStorageService = ref.watch(keyValueStorageServiceProvider);
     return AuthProvider(
-      ref: ref,
+      ref,
       authRepository: _authRepository,
       keyValueStorageService: _keyValueStorageService,
     );
@@ -32,12 +32,11 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
   final KeyValueStorageService _keyValueStorageService;
   final Ref _ref;
 
-  AuthProvider({
-    required Ref ref,
+  AuthProvider(
+    this._ref, {
     required AuthRepository authRepository,
     required KeyValueStorageService keyValueStorageService,
-  })  : _ref = ref,
-        _authRepository = authRepository,
+  })  : _authRepository = authRepository,
         _keyValueStorageService = keyValueStorageService,
         super(const AsyncValue.data(false)) {
     init();
@@ -49,7 +48,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
     if (student == null || password.isEmpty) {
       logout();
     } else {
-      _ref.watch(currentStudentProvider.notifier).state = student;
+      _ref.read(currentStudentProvider.notifier).state = student;
       state = const AsyncValue.data(true);
     }
   }
@@ -68,12 +67,12 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
     required String password,
   }) async {
     state = const AsyncValue.loading();
-    final savedFormStudent = _ref.watch(
-      registerFormProvider.notifier.select(
-        (value) => value.savedFormStudent,
-      ),
-    )!;
-    final data = savedFormStudent.toJson();
+    final data = _ref
+        .read(
+          registerFormProvider.notifier,
+        )
+        .savedFormStudent!
+        .toJson();
     data['password'] = password;
 
     state = await AsyncValue.guard(() async {
@@ -83,7 +82,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
       );
 
       // Update current user in memory
-      _ref.watch(currentStudentProvider.notifier).state = student;
+      _ref.read(currentStudentProvider.notifier).state = student;
 
       // Save authentication details in cache
       _cacheAuthProfile(student, password);
@@ -105,7 +104,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
       );
 
       // Update current user in memory
-      _ref.watch(currentStudentProvider.notifier).state = student;
+      _ref.read(currentStudentProvider.notifier).state = student;
 
       // Save authentication details in cache
       _cacheAuthProfile(student, password);

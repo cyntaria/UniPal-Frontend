@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../auth/providers/auth_provider.dart';
 import '../../providers/hobbies_provider.dart';
 import '../../providers/interests_provider.dart';
-import '../../providers/students_provider.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
@@ -39,11 +39,7 @@ class PreferencesTabView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentStudent = ref.watch(
-      studentsProvider.select((value) {
-        return value.currentStudent;
-      }),
-    );
+    final currentStudent = ref.watch(currentStudentProvider)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Column(
@@ -56,7 +52,7 @@ class PreferencesTabView extends HookConsumerWidget {
               LabeledWidget(
                 label: 'Favourite Campus Activity',
                 child: Text(
-                  currentStudent['favourite_campus_activity']! as String,
+                  currentStudent.favouriteCampusActivity ?? 'Not Specified',
                 ),
               ),
 
@@ -86,7 +82,7 @@ class PreferencesTabView extends HookConsumerWidget {
           LabeledWidget(
             label: 'Favourite Campus Hangout Spot',
             child: Text(
-              currentStudent['favourite_campus_hangout_spot']! as String,
+              currentStudent.favouriteCampusHangoutSpot ?? 'Not Specified',
               style: AppTypography.primary.body14,
             ),
           ),
@@ -99,14 +95,21 @@ class PreferencesTabView extends HookConsumerWidget {
             child: Wrap(
               spacing: 8,
               children: [
-                for (var hobby in getHobbyModels(
-                  ref,
-                  currentStudent['hobbies']! as Set<int>,
-                ))
-                  CustomFilterChip<HobbyModel>(
-                    value: hobby,
-                    label: Text(hobby.hobby),
-                  ),
+                if (currentStudent.hobbies == null)
+                  Text(
+                    'Not Specified',
+                    style: AppTypography.primary.body14,
+                  )
+                else ...[
+                  for (var hobby in getHobbyModels(
+                    ref,
+                    currentStudent.hobbies!,
+                  ))
+                    CustomFilterChip<HobbyModel>(
+                      value: hobby,
+                      label: Text(hobby.hobby),
+                    ),
+                ]
               ],
             ),
           ),
@@ -119,14 +122,21 @@ class PreferencesTabView extends HookConsumerWidget {
             child: Wrap(
               spacing: 8,
               children: [
-                for (var interest in getInterestModels(
-                  ref,
-                  currentStudent['interests']! as Set<int>,
-                ))
-                  CustomFilterChip<InterestModel>(
-                    value: interest,
-                    label: Text(interest.interest),
-                  ),
+                if (currentStudent.interests == null)
+                  Text(
+                    'Not Specified',
+                    style: AppTypography.primary.body14,
+                  )
+                else ...[
+                  for (var interest in getInterestModels(
+                    ref,
+                    currentStudent.interests!,
+                  ))
+                    CustomFilterChip<InterestModel>(
+                      value: interest,
+                      label: Text(interest.interest),
+                    ),
+                ]
               ],
             ),
           ),

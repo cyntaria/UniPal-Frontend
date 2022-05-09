@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../auth/providers/auth_provider.dart';
 import 'students_provider.dart';
 
 // Models
@@ -11,28 +12,25 @@ import '../models/hobby_model.codegen.dart';
 
 final prefsProvider = Provider.autoDispose<PreferencesProvider>((ref) {
   // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  final currentStudent = ref.watch(
-    studentsProvider.select((value) => value.currentStudent),
-  );
+  final currentStudent = ref.watch(currentStudentProvider)!;
   return PreferencesProvider(
-    ref: ref,
-    selectedHobbyIds: {...currentStudent['hobbies']! as Set<int>},
-    selectedInterestIds: {...currentStudent['interests']! as Set<int>},
-    favCampusActivity: currentStudent['favourite_campus_activity']! as String,
-    favCampusHangoutSpot:
-        currentStudent['favourite_campus_hangout_spot']! as String,
+    ref.read,
+    selectedHobbyIds: {...currentStudent.hobbies ?? {}},
+    selectedInterestIds: {...currentStudent.interests ?? {}},
+    favCampusActivity: currentStudent.favouriteCampusActivity ?? '',
+    favCampusHangoutSpot: currentStudent.favouriteCampusHangoutSpot ?? '',
   );
 });
 
 class PreferencesProvider {
-  final Ref ref;
+  final Reader _read;
   final Set<int> _selectedHobbyIds;
   final Set<int> _selectedInterestIds;
   final String favCampusActivity;
   final String favCampusHangoutSpot;
 
-  PreferencesProvider({
-    required this.ref,
+  PreferencesProvider(
+    this._read, {
     required Set<int> selectedHobbyIds,
     required Set<int> selectedInterestIds,
     required this.favCampusActivity,
@@ -78,15 +76,15 @@ class PreferencesProvider {
     required String newCampusHangoutSpot,
     required String newCampusActivity,
   }) {
-    ref.read(studentsProvider).updateStudent(
-          interests: _selectedInterestIds,
-          hobbies: _selectedHobbyIds,
-          favCampusHangoutSpot: newCampusHangoutSpot,
-          favCampusActivity: newCampusActivity,
-        );
+    _read(studentsProvider).updateStudent(
+      interests: _selectedInterestIds,
+      hobbies: _selectedHobbyIds,
+      favCampusHangoutSpot: newCampusHangoutSpot,
+      favCampusActivity: newCampusActivity,
+    );
   }
 
-  void clearUnupdatedPrefs() {
+  void clearUnUpdatedPrefs() {
     _selectedHobbyIds.clear();
     _selectedInterestIds.clear();
   }

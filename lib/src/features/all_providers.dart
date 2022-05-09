@@ -42,7 +42,7 @@ final _dioServiceProvider = Provider<DioService>((ref) {
       // Order of interceptors very important
       ApiInterceptor(ref),
       if (kDebugMode) LoggingInterceptor(),
-      RefreshTokenInterceptor(dioClient: _dio, ref: ref)
+      RefreshTokenInterceptor(ref.read, dioClient: _dio)
     ],
   );
 });

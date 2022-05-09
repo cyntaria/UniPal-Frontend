@@ -26,9 +26,7 @@ class ProfileScreen extends HookConsumerWidget {
     final otherStudent = ref.watch(
       studentsProvider.select((value) => value.otherStudent),
     );
-    final currentStudent = ref.watch(
-      studentsProvider.select((value) => value.currentStudent),
-    );
+    final currentStudent = ref.watch(currentStudentProvider);
     return Scaffold(
       backgroundColor: AppColors.lightBackgroundColor,
       body: SafeArea(
@@ -45,7 +43,7 @@ class ProfileScreen extends HookConsumerWidget {
                       "${otherStudent['first_name']} ${otherStudent['last_name']}",
                   subtitle: otherStudent['current_status']! as String,
                   trailing: InkWell(
-                    onTap: () => ref.read(authProvider.notifier).logout(),
+                    onTap: ref.read(authProvider.notifier).logout,
                     child: const Icon(
                       Icons.logout_rounded,
                       color: AppColors.redColor,
@@ -54,7 +52,7 @@ class ProfileScreen extends HookConsumerWidget {
                   child: StudentConnectionButtons(
                     studentConnection:
                         otherStudent['student_connection'] as JSON?,
-                    myErp: currentStudent['erp']! as String,
+                    myErp: currentStudent!.erp,
                     studentErp: otherStudent['erp']! as String,
                   ),
                 ),

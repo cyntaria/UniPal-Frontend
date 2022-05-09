@@ -7,11 +7,11 @@ import '../models/interest_model.codegen.dart';
 
 final interestsProvider = Provider<InterestsProvider>((ref) {
   // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return InterestsProvider(ref: ref);
+  return InterestsProvider(ref.read);
 });
 
 class InterestsProvider {
-  final Ref ref;
+  final Reader _read;
 
   final _interestsMap = const <int, InterestModel>{
     0: InterestModel(interestId: 0, interest: 'Netflix'),
@@ -22,7 +22,7 @@ class InterestsProvider {
     5: InterestModel(interestId: 5, interest: 'Technology'),
   };
 
-  InterestsProvider({required this.ref});
+  InterestsProvider(this._read);
 
   UnmodifiableMapView<int, InterestModel> getInterestsMap() {
     return UnmodifiableMapView(_interestsMap);

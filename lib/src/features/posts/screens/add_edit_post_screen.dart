@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../profile/providers/students_provider.dart';
+import '../../auth/providers/auth_provider.dart';
 
 // Helpers
 import '../../../helpers/extensions/context_extensions.dart';
@@ -22,22 +22,14 @@ class AddEditPostScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final postBodyController = useTextEditingController(text: '');
-    final currentUser = ref.watch(
-      studentsProvider.select((value) => value.currentStudent),
-    );
+    final currentStudent = ref.watch(currentStudentProvider)!;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: kToolbarHeight + 5,
-          title: const Text(
-            'Create post',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
+          title: const Text('Create post'),
           bottom: const PreferredSize(
             preferredSize: Size.fromHeight(0),
             child: Divider(
@@ -80,7 +72,7 @@ class AddEditPostScreen extends HookConsumerWidget {
                 CircleAvatar(
                   radius: 20,
                   backgroundImage: NetworkImage(
-                    currentUser['profile_picture_url']! as String,
+                    currentStudent.profilePictureUrl,
                   ),
                 ),
 
@@ -88,7 +80,7 @@ class AddEditPostScreen extends HookConsumerWidget {
 
                 // Author & Post Detals
                 Text(
-                  '${currentUser['first_name']} ${currentUser['last_name']}',
+                  '${currentStudent.firstName} ${currentStudent.lastName}',
                   style: AppTypography.primary.body14.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -102,6 +94,7 @@ class AddEditPostScreen extends HookConsumerWidget {
             CustomTextField(
               controller: postBodyController,
               showFocusedBorder: false,
+              autofocus: true,
               multiline: true,
               textAlignVertical: TextAlignVertical.top,
               expands: true,
