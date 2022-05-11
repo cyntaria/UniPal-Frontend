@@ -9,10 +9,12 @@ import '../../auth/providers/auth_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
-import '../../../config/routes/routes.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
+
+// Screens
+import '../../profile/screens/profile_screen.dart';
 
 class HomeAppBar extends ConsumerStatefulWidget {
   final List<TabItemModel> tabs;
@@ -40,13 +42,21 @@ class _HomeAppBarState extends ConsumerState<HomeAppBar> {
         onTap: ref.read(authProvider.notifier).logout,
         child: const RotatedBox(
           quarterTurns: 2,
-          child: Icon(Icons.logout_rounded, color: AppColors.redColor),
+          child: Icon(
+            Icons.logout_rounded,
+            color: AppColors.redColor,
+          ),
         ),
       ),
       actions: [
         IconButton(
           icon: const Icon(Icons.person_rounded),
-          onPressed: () => AppRouter.pushNamed(Routes.ProfileScreenRoute),
+          onPressed: () => AppRouter.push(
+            ProfileScreen(
+              student: ref.watch(currentStudentProvider)!,
+              isMyProfile: true,
+            ),
+          ),
         )
       ],
       bottom: PreferredSize(

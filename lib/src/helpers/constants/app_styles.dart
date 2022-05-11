@@ -66,6 +66,18 @@ class Insets {
   /// [Spacer] for adding infinite gaps, as much as the constraints
   /// allow.
   static const expand = Spacer();
+
+  /// The value for bottom padding of buttons in the app.
+  /// It is measured from the bottom of the screen, that is
+  /// behind the android system navigation.
+  /// Used to prevent overlapping of android navigation with the button.
+  static const bottomInsets = SizedBox(height: 38);
+
+  /// The value for a smaller bottom padding of buttons in the app.
+  /// It is measured from the bottom of the screen, that is
+  /// behind the android system navigation.
+  /// Used to prevent overlapping of android navigation with the button.
+  static const bottomInsetsLow = SizedBox(height: 20);
 }
 
 /// A utility class that holds all the border radiuses used throughout

@@ -7,6 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Providers
 import '../providers/auth_provider.dart';
 
+// States
+import '../../shared/states/future_state.codegen.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -33,23 +36,22 @@ class LoginScreen extends HookConsumerWidget {
     final erpController = useTextEditingController(text: '');
     final passwordController = useTextEditingController(text: '');
 
-    void onData(bool isAuthenticated) {
-      if (isAuthenticated) {
+    void onData(bool? isAuthenticated) {
+      if (isAuthenticated != null && isAuthenticated) {
         erpController.clear();
         passwordController.clear();
         AppRouter.popUntilRoot();
       }
     }
 
-    ref.listen<AsyncValue<bool>>(
+    ref.listen<FutureState<bool?>>(
       authProvider,
       (_, authState) => authState.whenOrNull(
         data: onData,
-        error: (reason, stackTrace) => CustomDialog.showAlertDialog(
+        failed: (reason) => CustomDialog.showAlertDialog(
           context: context,
-          reason: reason as String,
-          stackTrace: stackTrace,
-          errorButtonText: 'Login Failed',
+          reason: reason,
+          errorDialogTitle: 'Login Failed',
         ),
       ),
     );
@@ -68,17 +70,18 @@ class LoginScreen extends HookConsumerWidget {
                 child: Text(
                   'UniPal',
                   style: AppTypography.primary.heading34.copyWith(
-                    fontSize: 50,
+                    fontSize: 60,
                   ),
                 ),
               ),
 
               Insets.gapH30,
 
-              // ERP-Email Input
+              // ERP Input
               CustomTextField(
                 controller: erpController,
                 floatingText: 'ERP',
+                hintText: 'Type your 5 digit erp',
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: FormValidator.erpValidator,
@@ -90,28 +93,10 @@ class LoginScreen extends HookConsumerWidget {
               CustomTextField(
                 controller: passwordController,
                 floatingText: 'Password',
+                hintText: 'Type your password',
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 validator: FormValidator.passwordValidator,
-              ),
-
-              Insets.gapH5,
-
-              // Forgot Password Link
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      AppRouter.pushNamed(Routes.ForgotPasswordScreenRoute);
-                    },
-                    child: Text(
-                      'Forgot your password?',
-                      style: AppTypography.primary.body16.copyWith(
-                        color: AppColors.lightPrimaryColor,
-                      ),
-                    ),
-                  ),
-                ],
               ),
 
               Insets.gapH30,
@@ -161,20 +146,20 @@ class LoginScreen extends HookConsumerWidget {
 
               Insets.gapH10,
 
-              // Register Link
+              // Forgot Password Link
               Align(
                 child: GestureDetector(
                   onTap: () {
-                    AppRouter.pushNamed(Routes.RegisterScreenRoute);
+                    AppRouter.pushNamed(Routes.ForgotPasswordScreenRoute);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text.rich(
                       TextSpan(
-                        text: "Don't have an account yet? ",
+                        text: 'Forgot your password? ',
                         children: [
                           TextSpan(
-                            text: 'Register now',
+                            text: 'Reset Now',
                             style: AppTypography.primary.body16.copyWith(
                               color: AppColors.lightPrimaryColor,
                             ),

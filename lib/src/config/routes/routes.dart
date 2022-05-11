@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/qr_scanner_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
-import '../../features/app_startup_screen.dart';
+import '../../features/app_startup/app_startup_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/posts/screens/add_edit_post_screen.dart';
-import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/update_preferences_screen.dart';
 import '../../features/timetables/screens/generated_timetables_screen.dart';
 
@@ -66,9 +65,6 @@ class Routes {
   /// The name of the route for student finder screen.
   static const String StudentFinderScreenRoute = '/student-finder-screen';
 
-  /// The name of the route for student profile screen.
-  static const String ProfileScreenRoute = '/student-profile-screen';
-
   /// The name of the route for user preferences screen.
   static const String UpdatePreferencesScreenRoute =
       '/update-preferences-screen';
@@ -100,7 +96,6 @@ class Routes {
     LoginScreenRoute: (_) => const LoginScreen(),
     RegisterScreenRoute: (_) => const RegisterScreen(),
     QrScannerScreenRoute: (_) => const QrScannerScreen(),
-    ProfileScreenRoute: (_) => const ProfileScreen(),
     UpdatePreferencesScreenRoute: (_) => const UpdatePreferencesScreen(),
     AddEditPostScreenRoute: (_) => const AddEditPostScreen(),
     NotFoundScreenRoute: (_) => const SizedBox.shrink(),

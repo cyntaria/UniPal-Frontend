@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Helpers
+import '../extensions/datetime_extension.dart';
 import 'app_colors.dart';
 
 /// A utility class that holds commonly used functions
@@ -28,6 +29,12 @@ class AppUtils {
   /// A utility method to convert true/false to 1/0
   // ignore: avoid_positional_boolean_parameters
   static int boolToInt(bool b) => b ? 1 : 0;
+
+  /// A utility method to convert DateTime to API
+  /// accepted JSON format
+  static String dateToJson(DateTime date) {
+    return date.toDateString('yyyy-MM-dd');
+  }
 
   /// A utility method to convert any instance to null
   static T? toNull<T>(Object? _) => null;

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import 'auth/providers/auth_provider.dart';
+import '../auth/providers/auth_provider.dart';
 
 // Screens
-import 'auth/screens/login_screen.dart';
-import 'home/screens/home_screen.dart';
+import '../home/screens/home_screen.dart';
+import 'welcome_screen.dart';
 
 class AppStartupScreen extends HookConsumerWidget {
   const AppStartupScreen({Key? key}) : super(key: key);
@@ -15,10 +15,8 @@ class AppStartupScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authProvider);
     return authState.maybeWhen(
-      data: (isAuthenticated) {
-        return isAuthenticated ? const HomeScreen() : const LoginScreen();
-      },
-      orElse: () => const LoginScreen(),
+      data: (_) => const HomeScreen(),
+      orElse: () => const WelcomeScreen(),
     );
   }
 }

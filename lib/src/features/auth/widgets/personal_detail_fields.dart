@@ -64,7 +64,7 @@ class PersonalDetailFields extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final savedFormData = ref.watch(
       registerFormProvider.notifier.select(
-        (value) => value.savedFormStudent,
+        (value) => value.savedPersonalDetails,
       ),
     );
     final erpController = useTextEditingController(
@@ -244,6 +244,8 @@ class PersonalDetailFields extends HookConsumerWidget {
             ),
           ),
         ),
+
+        Insets.bottomInsetsLow,
       ],
     );
   }

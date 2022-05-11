@@ -54,6 +54,15 @@ class AppRouter {
     navigatorKey.currentState!.pop(result);
   }
 
+  /// This method is used to pop the current screen and then navigate to another
+  /// screen using it's name
+  static Future<dynamic> popAndPushNamed(String routeName, {dynamic args}) {
+    return navigatorKey.currentState!.popAndPushNamed(
+      routeName,
+      arguments: args,
+    );
+  }
+
   /// This method is used to navigate all the way back to a specific screen.
   ///
   /// The [routeName] is the name of the screen we want to go back to.

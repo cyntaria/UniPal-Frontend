@@ -25,7 +25,6 @@ class CustomDialog extends StatelessWidget {
   static Future<void> showAlertDialog({
     required BuildContext context,
     required String reason,
-    StackTrace? stackTrace,
     String? errorDialogTitle,
     String? errorButtonText,
   }) async {
@@ -71,75 +70,76 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-        borderRadius: Corners.rounded10,
+        borderRadius: Corners.rounded15,
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 19),
       titlePadding: const EdgeInsets.fromLTRB(19, 14, 19, 0),
       contentPadding: const EdgeInsets.fromLTRB(19, 9, 19, 9),
       actionsPadding: const EdgeInsets.fromLTRB(0, 0, 8, 8),
-      backgroundColor: AppColors.scaffoldGreyColor,
+      backgroundColor: AppColors.surfaceColor,
       title: Text(title),
       content: Text(body),
       contentTextStyle: AppTypography.primary.body14.copyWith(
-        color: AppColors.textGreyColor,
-        fontSize: 16,
+        color: AppColors.textLightGreyColor,
       ),
-      titleTextStyle: AppTypography.primary.body14.copyWith(
-        color: AppColors.textWhite80Color,
-        fontSize: 18,
-      ),
+      titleTextStyle: AppTypography.primary.title18,
       actions: <Widget>[
-        if (_type == _CustomDialogType.ALERT)
-          CustomTextButton.gradient(
-            gradient: AppColors.buttonGradientPurple,
-            height: 40,
-            width: 60,
-            onPressed: () {
-              trueButtonPressed?.call();
-              AppRouter.pop();
-            },
-            child: Center(
-              child: Text(
-                buttonText!,
-                style: const TextStyle(color: Colors.white),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (_type == _CustomDialogType.ALERT)
+              CustomTextButton.gradient(
+                gradient: AppColors.buttonGradientPurple,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                height: 35,
+                onPressed: () {
+                  trueButtonPressed?.call();
+                  AppRouter.pop();
+                },
+                child: Center(
+                  child: Text(
+                    buttonText!,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            else if (_type == _CustomDialogType.CONFIRM) ...[
+              // Yes
+              CustomTextButton.outlined(
+                border: Border.all(color: AppColors.primaryColor),
+                height: 35,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                onPressed: () {
+                  trueButtonPressed?.call();
+                  AppRouter.pop(true);
+                },
+                child: Center(
+                  child: Text(
+                    trueButtonText!,
+                    style: const TextStyle(color: AppColors.primaryColor),
+                  ),
+                ),
               ),
-            ),
-          )
-        else if (_type == _CustomDialogType.CONFIRM) ...[
-          // Yes
-          CustomTextButton.outlined(
-            border: Border.all(color: AppColors.primaryColor),
-            height: 40,
-            width: 60,
-            onPressed: () {
-              trueButtonPressed?.call();
-              AppRouter.pop(true);
-            },
-            child: Center(
-              child: Text(
-                trueButtonText!,
-                style: const TextStyle(color: AppColors.primaryColor),
-              ),
-            ),
-          ),
 
-          // No
-          CustomTextButton.gradient(
-            gradient: AppColors.buttonGradientPurple,
-            height: 40,
-            width: 60,
-            onPressed: () {
-              falseButtonPressed?.call();
-              AppRouter.pop(false);
-            },
-            child: Center(
-              child: Text(
-                falseButtonText!,
-                style: const TextStyle(color: Colors.white),
+              // No
+              CustomTextButton.gradient(
+                gradient: AppColors.buttonGradientPurple,
+                height: 35,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                onPressed: () {
+                  falseButtonPressed?.call();
+                  AppRouter.pop(false);
+                },
+                child: Center(
+                  child: Text(
+                    falseButtonText!,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ]
+            ]
+          ],
+        ),
       ],
     );
   }

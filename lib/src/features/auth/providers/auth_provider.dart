@@ -13,9 +13,12 @@ import 'register_form_provider.dart';
 // Repositories
 import '../repositories/auth_repository.dart';
 
+// States
+import '../../shared/states/future_state.codegen.dart';
+
 final currentStudentProvider = StateProvider<StudentModel?>((ref) => null);
 
-final authProvider = StateNotifierProvider<AuthProvider, AsyncValue<bool>>(
+final authProvider = StateNotifierProvider<AuthProvider, FutureState<bool?>>(
   (ref) {
     final _authRepository = ref.watch(authRepositoryProvider);
     final _keyValueStorageService = ref.watch(keyValueStorageServiceProvider);
@@ -27,7 +30,7 @@ final authProvider = StateNotifierProvider<AuthProvider, AsyncValue<bool>>(
   },
 );
 
-class AuthProvider extends StateNotifier<AsyncValue<bool>> {
+class AuthProvider extends StateNotifier<FutureState<bool?>> {
   final AuthRepository _authRepository;
   final KeyValueStorageService _keyValueStorageService;
   final Ref _ref;
@@ -38,7 +41,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
     required KeyValueStorageService keyValueStorageService,
   })  : _authRepository = authRepository,
         _keyValueStorageService = keyValueStorageService,
-        super(const AsyncValue.data(false)) {
+        super(const FutureState.idle()) {
     init();
   }
 
@@ -49,7 +52,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
       logout();
     } else {
       _ref.read(currentStudentProvider.notifier).state = student;
-      state = const AsyncValue.data(true);
+      state = const FutureState.data(data: true);
     }
   }
 
@@ -66,16 +69,33 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
   Future<void> register({
     required String password,
   }) async {
-    state = const AsyncValue.loading();
-    final data = _ref
-        .read(
-          registerFormProvider.notifier,
-        )
-        .savedFormStudent!
-        .toJson();
+    state = const FutureState.loading();
+
+    final registerFormProv = _ref.read(
+      registerFormProvider.notifier,
+    );
+    final personalData = registerFormProv.savedPersonalDetails!;
+    final uniData = registerFormProv.savedUniversityDetails!;
+
+    final data = StudentModel(
+      erp: personalData.erp,
+      firstName: personalData.firstName,
+      lastName: personalData.lastName,
+      gender: personalData.gender,
+      uniEmail: personalData.uniEmail,
+      contact: personalData.contact.startsWith('0')
+          ? '+92${personalData.contact.substring(1)}'
+          : personalData.contact,
+      birthday: personalData.birthday,
+      profilePictureUrl: 'https://avatars.githubusercontent.com/u/62943972?v=4',
+      graduationYear: uniData.gradYear,
+      programId: uniData.programId,
+      campusId: uniData.campusId,
+      isActive: true,
+    ).toJson();
     data['password'] = password;
 
-    state = await AsyncValue.guard(() async {
+    state = await FutureState.makeGuardedRequest(() async {
       final student = await _authRepository.sendRegisterData(
         data: data,
         updateTokenCallback: _cacheAuthToken,
@@ -95,9 +115,11 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
     required String erp,
     required String password,
   }) async {
+    state = const FutureState.loading();
+
     final data = {'erp': erp, 'password': password};
 
-    state = await AsyncValue.guard(() async {
+    state = await FutureState.makeGuardedRequest(() async {
       final student = await _authRepository.sendLoginData(
         data: data,
         updateTokenCallback: _cacheAuthToken,
@@ -115,7 +137,7 @@ class AuthProvider extends StateNotifier<AsyncValue<bool>> {
 
   void logout() {
     _keyValueStorageService.resetKeys();
-    state = const AsyncValue.data(false);
+    state = const FutureState.idle();
     _ref.invalidate(currentStudentProvider);
   }
 }

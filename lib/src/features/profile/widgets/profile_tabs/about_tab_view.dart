@@ -22,7 +22,7 @@ class AboutTabView extends HookConsumerWidget {
     final currentStudent = ref.watch(currentStudentProvider)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: ListView(
+      child: Column(
         children: [
           // Bio Data
           Row(

@@ -1,13 +1,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // States
+import '../models/personal_details_data.dart';
+import '../models/university_details_data.dart';
 import '../states/registration_state.codegen.dart';
 
-// Models
-import '../enums/gender_enum.dart';
-
 // Enums
-import '../../profile/models/student_model.codegen.dart';
+import '../enums/gender_enum.dart';
 
 final registerFormProvider =
     StateNotifierProvider<RegisterFormProvider, RegistrationState>(
@@ -15,9 +14,11 @@ final registerFormProvider =
 );
 
 class RegisterFormProvider extends StateNotifier<RegistrationState> {
-  late StudentModel? _savedFormStudent;
+  PersonalDetailsData? _personalDetailsData;
+  UniversityDetailsData? _universityDetailsData;
 
-  StudentModel? get savedFormStudent => _savedFormStudent;
+  PersonalDetailsData? get savedPersonalDetails => _personalDetailsData;
+  UniversityDetailsData? get savedUniversityDetails => _universityDetailsData;
 
   RegisterFormProvider() : super(const RegistrationState.personal());
 
@@ -39,20 +40,16 @@ class RegisterFormProvider extends StateNotifier<RegistrationState> {
     required Gender gender,
   }) {
     // Save details
-    _savedFormStudent = StudentModel(
+    _personalDetailsData = PersonalDetailsData(
       erp: erp,
       firstName: firstName,
       lastName: lastName,
-      gender: gender,
-      contact: contact.startsWith('0') ? '+92${contact.substring(1)}' : contact,
-      birthday: birthday,
-      profilePictureUrl: '',
-      graduationYear: 0,
       uniEmail: uniEmail,
-      programId: 0,
-      campusId: 0,
-      isActive: true,
+      contact: contact,
+      gender: gender,
+      birthday: birthday,
     );
+    
 
     // Move to university form
     state = const RegistrationState.university();
@@ -64,8 +61,8 @@ class RegisterFormProvider extends StateNotifier<RegistrationState> {
     required int campusId,
   }) {
     // Save details
-    _savedFormStudent = _savedFormStudent!.copyWith(
-      graduationYear: gradYear,
+    _universityDetailsData = UniversityDetailsData(
+      gradYear: gradYear,
       programId: programId,
       campusId: campusId,
     );

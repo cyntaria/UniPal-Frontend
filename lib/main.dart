@@ -7,9 +7,11 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 // Main App
 import 'app.dart';
 import 'src/config/config.dart';
+import 'src/core/local/key_value_storage_base.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await KeyValueStorageBase.init();
   debugPrint = setDebugPrint;
   await SentryFlutter.init(
     (options) {

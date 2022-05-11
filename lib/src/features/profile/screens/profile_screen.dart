@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Models
+import '../models/student_model.codegen.dart';
+
 // Providers
 import '../../auth/providers/auth_provider.dart';
 import '../providers/students_provider.dart';
@@ -19,7 +22,14 @@ import '../widgets/profile_tabs/activities_tab_view.dart';
 import '../widgets/profile_tabs/preferences_tab_view.dart';
 
 class ProfileScreen extends HookConsumerWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final StudentModel student;
+  final bool isMyProfile;
+
+  const ProfileScreen({
+    Key? key,
+    required this.student,
+    required this.isMyProfile,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,24 +47,18 @@ class ProfileScreen extends HookConsumerWidget {
               return <Widget>[
                 // Profile Picture and Name
                 ProfileAppBar(
-                  extent: 320,
-                  avatarUrl: otherStudent['profile_picture_url']! as String,
-                  title:
-                      "${otherStudent['first_name']} ${otherStudent['last_name']}",
-                  subtitle: otherStudent['current_status']! as String,
-                  trailing: InkWell(
-                    onTap: ref.read(authProvider.notifier).logout,
-                    child: const Icon(
-                      Icons.logout_rounded,
-                      color: AppColors.redColor,
-                    ),
-                  ),
-                  child: StudentConnectionButtons(
-                    studentConnection:
-                        otherStudent['student_connection'] as JSON?,
-                    myErp: currentStudent!.erp,
-                    studentErp: otherStudent['erp']! as String,
-                  ),
+                  extent: isMyProfile ? 270 : 320,
+                  avatarUrl: student.profilePictureUrl,
+                  title: '${student.firstName} ${student.lastName}',
+                  subtitle: "${student.currentStatusId ?? 'Not Specified'}",
+                  child: isMyProfile
+                      ? null
+                      : StudentConnectionButtons(
+                          myErp: currentStudent!.erp,
+                          studentConnection:
+                              otherStudent['student_connection'] as JSON?,
+                          studentErp: otherStudent['erp']! as String,
+                        ),
                 ),
 
                 // Tabs

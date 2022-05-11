@@ -20,7 +20,7 @@ class StudentModel with _$StudentModel {
     required Gender gender,
     required String contact,
     @JsonKey(includeIfNull: false) String? email,
-    required DateTime birthday,
+    @JsonKey(toJson: AppUtils.dateToJson) required DateTime birthday,
     required String profilePictureUrl,
     required int graduationYear,
     required String uniEmail,

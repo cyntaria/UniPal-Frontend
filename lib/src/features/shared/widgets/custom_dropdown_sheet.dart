@@ -68,7 +68,7 @@ class CustomDropdownSheet<T> extends StatefulWidget {
     this.searchBackgroundColor,
     this.onMultipleSelect,
     this.onItemSelect,
-    this.contentPadding = EdgeInsets.zero,
+    this.contentPadding = const EdgeInsets.symmetric(horizontal: 20),
     String? submitButtonText,
     Color? submitButtonColor,
     bool? enableMultipleSelection,

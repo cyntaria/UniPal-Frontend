@@ -155,7 +155,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
                 left: _iconSideMargin,
               ),
               child: Align(
-                alignment: Alignment.topRight,
+                alignment: Alignment.topLeft,
                 child: Icon(
                   Icons.adaptive.arrow_back_rounded,
                   size: _backIconSize,

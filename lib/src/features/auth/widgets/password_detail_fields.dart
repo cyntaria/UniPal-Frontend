@@ -7,6 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Providers
 import '../providers/auth_provider.dart';
 
+// States
+import '../../shared/states/future_state.codegen.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -45,23 +48,22 @@ class PasswordDetailFields extends HookConsumerWidget {
     final passwordController = useTextEditingController(text: '');
     final cPasswordController = useTextEditingController(text: '');
 
-    void onData(bool isAuthenticated) {
-      if (isAuthenticated) {
+    void onData(bool? isAuthenticated) {
+      if (isAuthenticated != null && isAuthenticated) {
         passwordController.clear();
         cPasswordController.clear();
         AppRouter.popUntilRoot();
       }
     }
 
-    ref.listen<AsyncValue<bool>>(
+    ref.listen<FutureState<bool?>>(
       authProvider,
       (_, authState) => authState.whenOrNull(
         data: onData,
-        error: (reason, stackTrace) => CustomDialog.showAlertDialog(
+        failed: (reason) => CustomDialog.showAlertDialog(
           context: context,
-          reason: reason as String,
-          stackTrace: stackTrace,
-          errorButtonText: 'Register Failed',
+          reason: reason,
+          errorDialogTitle: 'Register Failed',
         ),
       ),
     );
@@ -124,6 +126,8 @@ class PasswordDetailFields extends HookConsumerWidget {
             ),
           ),
         ),
+
+        Insets.bottomInsetsLow,
       ],
     );
   }

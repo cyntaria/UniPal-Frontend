@@ -45,10 +45,11 @@ class UniversityDetailFields extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final savedFormData = ref.watch(
-      registerFormProvider.notifier.select((value) => value.savedFormStudent),
+      registerFormProvider.notifier
+          .select((value) => value.savedUniversityDetails),
     );
     final gradYearController = useValueNotifier<int?>(
-      savedFormData?.graduationYear,
+      savedFormData?.gradYear,
     );
     final programIdController = useValueNotifier<int?>(
       savedFormData?.programId,
@@ -71,8 +72,12 @@ class UniversityDetailFields extends HookConsumerWidget {
             selectedItemText: (item) => '$item',
             hintText: 'YYYY',
             itemsSheet: CustomDropdownSheet(
-              items: const [1, 2, 3],
               bottomSheetTitle: 'Years',
+              showSearch: true,
+              searchFilterCondition: (searchTerm, item) {
+                return '$item'.startsWith(searchTerm);
+              },
+              items: [for (var i = 2050; i >= 1950; i--) i],
               itemBuilder: (_, item) => DropdownSheetItem(
                 label: '$item',
               ),
@@ -140,6 +145,8 @@ class UniversityDetailFields extends HookConsumerWidget {
             ),
           ),
         ),
+        
+        Insets.bottomInsetsLow,
       ],
     );
   }
