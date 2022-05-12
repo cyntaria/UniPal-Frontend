@@ -5,27 +5,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../models/hobby_model.codegen.dart';
 
+// Repositories
+import '../repositories/hobbies_repository.dart';
+
+final hobbyByIdProvider = Provider.family<HobbyModel, int>((ref, id) {
+  return ref.watch(hobbiesProvider).getHobbyById(id);
+});
+
 final hobbiesProvider = Provider<HobbiesProvider>((ref) {
-  // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return HobbiesProvider(ref.read);
+  final _hobbiesRepository = ref.watch(hobbiesRepositoryProvider);
+  return HobbiesProvider(_hobbiesRepository);
 });
 
 class HobbiesProvider {
-  final Reader _read;
+  final HobbiesRepository _hobbiesRepository;
 
-  final _hobbiesMap = const <int, HobbyModel>{
-    0: HobbyModel(hobbyId: 0, hobby: 'Cricket'),
-    1: HobbyModel(hobbyId: 1, hobby: 'Cycling'),
-    2: HobbyModel(hobbyId: 2, hobby: 'Reading'),
-    3: HobbyModel(hobbyId: 3, hobby: 'Boxing'),
-    4: HobbyModel(hobbyId: 4, hobby: 'Painting'),
-    5: HobbyModel(hobbyId: 5, hobby: 'Clubbing'),
-  };
+  late final Map<int, HobbyModel> _hobbiesMap;
 
-  HobbiesProvider(this._read);
+  HobbiesProvider(this._hobbiesRepository);
 
-  UnmodifiableMapView<int, HobbyModel> getHobbiesMap() {
-    return UnmodifiableMapView(_hobbiesMap);
+  Future<void> loadHobbiesInMemory() async {
+    final hobbies = await _hobbiesRepository.fetchAll();
+    _hobbiesMap = {for (var e in hobbies) e.hobbyId: e};
   }
 
   UnmodifiableListView<HobbyModel> getAllHobbies() {

@@ -5,27 +5,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../models/interest_model.codegen.dart';
 
+// Repositories
+import '../repositories/interests_repository.dart';
+
+final interestByIdProvider = Provider.family<InterestModel, int>((ref, id) {
+  return ref.watch(interestsProvider).getInterestById(id);
+});
+
 final interestsProvider = Provider<InterestsProvider>((ref) {
-  // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return InterestsProvider(ref.read);
+  final _interestsRepository = ref.watch(interestsRepositoryProvider);
+  return InterestsProvider(_interestsRepository);
 });
 
 class InterestsProvider {
-  final Reader _read;
+  final InterestsRepository _interestsRepository;
 
-  final _interestsMap = const <int, InterestModel>{
-    0: InterestModel(interestId: 0, interest: 'Netflix'),
-    1: InterestModel(interestId: 1, interest: 'Art'),
-    2: InterestModel(interestId: 2, interest: 'History'),
-    3: InterestModel(interestId: 3, interest: 'Geography'),
-    4: InterestModel(interestId: 4, interest: 'Sports'),
-    5: InterestModel(interestId: 5, interest: 'Technology'),
-  };
+  late final Map<int, InterestModel> _interestsMap;
 
-  InterestsProvider(this._read);
+  InterestsProvider(this._interestsRepository);
 
-  UnmodifiableMapView<int, InterestModel> getInterestsMap() {
-    return UnmodifiableMapView(_interestsMap);
+  Future<void> loadInterestsInMemory() async {
+    final interests = await _interestsRepository.fetchAll();
+    _interestsMap = {for (var e in interests) e.interestId: e};
   }
 
   UnmodifiableListView<InterestModel> getAllInterests() {
