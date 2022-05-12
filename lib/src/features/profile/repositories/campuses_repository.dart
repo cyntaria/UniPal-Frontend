@@ -1,3 +1,4 @@
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Networking
@@ -29,6 +30,8 @@ class CampusesRepository {
     return _apiService.getCollectionData<CampusModel>(
       endpoint: ApiEndpoint.campuses(CampusEndpoint.BASE),
       queryParams: queryParameters,
+      cachePolicy: CachePolicy.request,
+      cacheAgeDays: 180,
       converter: CampusModel.fromJson,
     );
   }

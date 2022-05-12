@@ -6,7 +6,7 @@ import '../../../core/networking/api_endpoint.dart';
 import '../../../core/networking/api_service.dart';
 
 // Models
-import '../models/hobby_model.codegen.dart';
+import '../models/student_status_model.codegen.dart';
 
 // Providers
 import '../../all_providers.dart';
@@ -14,24 +14,25 @@ import '../../all_providers.dart';
 // Helpers
 import '../../../helpers/typedefs.dart';
 
-final hobbiesRepositoryProvider = Provider<HobbiesRepository>((ref) {
+final studentStatusesRepositoryProvider = Provider<StudentStatusesRepository>((ref) {
   final _apiService = ref.watch(apiServiceProvider);
-  return HobbiesRepository(apiService: _apiService);
+  return StudentStatusesRepository(apiService: _apiService);
 });
 
-class HobbiesRepository {
+class StudentStatusesRepository {
   final ApiService _apiService;
 
-  HobbiesRepository({
+  StudentStatusesRepository({
     required ApiService apiService,
   }) : _apiService = apiService;
 
-  Future<List<HobbyModel>> fetchAll({JSON? queryParameters}) async {
-    return _apiService.getCollectionData<HobbyModel>(
-      endpoint: ApiEndpoint.hobbies(HobbyEndpoint.BASE),
+  Future<List<StudentStatusModel>> fetchAll({JSON? queryParameters}) async {
+    return _apiService.getCollectionData<StudentStatusModel>(
+      endpoint: ApiEndpoint.studentStatuses(StudentStatusEndpoint.BASE),
       queryParams: queryParameters,
       cachePolicy: CachePolicy.request,
-      converter: HobbyModel.fromJson,
+      cacheAgeDays: 15,
+      converter: StudentStatusModel.fromJson,
     );
   }
 }

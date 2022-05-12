@@ -1,3 +1,4 @@
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Networking
@@ -29,6 +30,8 @@ class ProgramsRepository {
     return _apiService.getCollectionData<ProgramModel>(
       endpoint: ApiEndpoint.programs(ProgramEndpoint.BASE),
       queryParams: queryParameters,
+      cachePolicy: CachePolicy.request,
+      cacheAgeDays: 60,
       converter: ProgramModel.fromJson,
     );
   }

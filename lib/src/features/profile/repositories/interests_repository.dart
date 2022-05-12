@@ -1,3 +1,4 @@
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Networking
@@ -29,6 +30,7 @@ class InterestsRepository {
     return _apiService.getCollectionData<InterestModel>(
       endpoint: ApiEndpoint.interests(InterestEndpoint.BASE),
       queryParams: queryParameters,
+      cachePolicy: CachePolicy.request,
       converter: InterestModel.fromJson,
     );
   }
