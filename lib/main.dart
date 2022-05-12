@@ -8,10 +8,12 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'app.dart';
 import 'src/config/config.dart';
 import 'src/core/local/key_value_storage_base.dart';
+import 'src/core/local/path_provider_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await KeyValueStorageBase.init();
+  await PathProviderService.init();
   debugPrint = setDebugPrint;
   await SentryFlutter.init(
     (options) {

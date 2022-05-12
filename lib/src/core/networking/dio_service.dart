@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 // Exceptions
 import './custom_exception.dart';
@@ -15,11 +16,14 @@ import 'response_model.dart';
 /// basic network requests.
 class DioService {
   /// An instance of [Dio] for executing network requests.
-  late final Dio _dio;
+  final Dio _dio;
+
+  /// A set of cache options to be used for each request
+  final CacheOptions? globalCacheOptions;
 
   /// An instance of [CancelToken] used to pre-maturely cancel
   /// network requests.
-  late final CancelToken _cancelToken;
+  final CancelToken _cancelToken;
 
   /// A public constructor that is used to create a Dio service and initialize
   /// the underlying [Dio] client.
@@ -30,6 +34,7 @@ class DioService {
   /// this custom one.
   DioService({
     required Dio dioClient,
+    this.globalCacheOptions,
     Iterable<Interceptor>? interceptors,
     HttpClientAdapter? httpClientAdapter,
   })  : _dio = dioClient,
@@ -60,17 +65,24 @@ class DioService {
   /// [cancelToken] is used to cancel the request pre-maturely. If null,
   /// the **default** [cancelToken] inside [DioService] is used.
   ///
+  /// [cacheOptions] are special cache instructions that can merge and override
+  /// the [globalCacheOptions].
+  ///
   /// [options] are special instructions that can be merged with the request.
   Future<ResponseModel<R>> get<R>({
     required String endpoint,
     JSON? queryParams,
     Options? options,
+    CacheOptions? cacheOptions,
     CancelToken? cancelToken,
   }) async {
     final response = await _dio.get<JSON>(
       endpoint,
       queryParameters: queryParams,
-      options: options,
+      options: _mergeDioAndCacheOptions(
+        dioOptions: options,
+        cacheOptions: cacheOptions,
+      ),
       cancelToken: cancelToken ?? _cancelToken,
     );
     return ResponseModel<R>.fromJson(response.data!);
@@ -155,5 +167,57 @@ class DioService {
       cancelToken: cancelToken ?? _cancelToken,
     );
     return ResponseModel<R>.fromJson(response.data!);
+  }
+
+  // /// A utility method to merge [globalCacheOptions] and request
+  // /// supplied [CacheOptions].
+  // ///
+  // /// The request [CacheOptions] overrides the overlapping values in
+  // /// [globalCacheOptions].
+  // ///
+  // /// Returns a merged [CacheOptions] object.
+  // CacheOptions? _mergeGlobalAndRequestCacheOptions(
+  //   CacheOptions? cacheOptions,
+  // ) {
+  //   return globalCacheOptions?.copyWith(
+  //     policy: cacheOptions?.policy,
+  //     keyBuilder: cacheOptions?.keyBuilder,
+  //     priority: cacheOptions?.priority,
+  //     store: cacheOptions?.store,
+  //     allowPostMethod: cacheOptions?.allowPostMethod,
+  //     hitCacheOnErrorExcept: (cacheOptions?.hitCacheOnErrorExcept) != null
+  //         ? Nullable(cacheOptions!.hitCacheOnErrorExcept)
+  //         : null,
+  //     maxStale: (cacheOptions?.maxStale) != null
+  //         ? Nullable(cacheOptions!.maxStale)
+  //         : null,
+  //     cipher: (cacheOptions?.cipher) != null
+  //         ? Nullable(cacheOptions!.cipher)
+  //         : null,
+  //   );
+  // }
+
+  /// A utility method used to merge together [Options]
+  /// and [CacheOptions].
+  ///
+  /// Returns an [Options] object with [CacheOptions] stored
+  /// in the [options.extra] key.
+  Options? _mergeDioAndCacheOptions({
+    Options? dioOptions,
+    CacheOptions? cacheOptions,
+  }) {
+    if (dioOptions == null && cacheOptions == null) {
+      return null;
+    } else if (dioOptions == null && cacheOptions != null) {
+      return cacheOptions.toOptions();
+    } else if (dioOptions != null && cacheOptions == null) {
+      return dioOptions;
+    }
+
+    final _cacheOptionsMap = cacheOptions!.toExtra();
+    final options = dioOptions!.copyWith(
+      extra: <String, dynamic>{...dioOptions.extra!, ..._cacheOptionsMap},
+    );
+    return options;
   }
 }

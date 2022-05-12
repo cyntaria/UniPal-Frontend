@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 // Exceptions
 import './custom_exception.dart';
@@ -44,6 +45,8 @@ class ApiService implements ApiInterface {
     required String endpoint,
     JSON? queryParams,
     CancelToken? cancelToken,
+    CachePolicy? cachePolicy,
+    int? cacheAgeDays,
     bool requiresAuthToken = true,
     required T Function(JSON responseBody) converter,
   }) async {
@@ -53,6 +56,12 @@ class ApiService implements ApiInterface {
       // Entire map of response
       final data = await _dioService.get<List<JSON>>(
         endpoint: endpoint,
+        cacheOptions: _dioService.globalCacheOptions?.copyWith(
+          policy: cachePolicy,
+          maxStale: cacheAgeDays != null
+              ? Nullable(Duration(days: cacheAgeDays))
+              : null,
+        ),
         options: Options(
           headers: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
@@ -98,6 +107,8 @@ class ApiService implements ApiInterface {
     required String endpoint,
     JSON? queryParams,
     CancelToken? cancelToken,
+    CachePolicy? cachePolicy,
+    int? cacheAgeDays,
     bool requiresAuthToken = true,
     required T Function(JSON response) converter,
   }) async {
@@ -107,6 +118,12 @@ class ApiService implements ApiInterface {
       final data = await _dioService.get<JSON>(
         endpoint: endpoint,
         queryParams: queryParams,
+        cacheOptions: _dioService.globalCacheOptions?.copyWith(
+          policy: cachePolicy,
+          maxStale: cacheAgeDays != null
+              ? Nullable(Duration(days: cacheAgeDays))
+              : null,
+        ),
         options: Options(
           headers: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
