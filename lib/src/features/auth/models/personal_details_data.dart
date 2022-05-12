@@ -1,4 +1,4 @@
-import '../enums/gender_enum.dart';
+import '../../profile/enums/gender_enum.dart';
 
 class PersonalDetailsData {
   final String erp;

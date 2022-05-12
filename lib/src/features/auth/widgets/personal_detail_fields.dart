@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Enums
-import '../enums/gender_enum.dart';
+import '../../profile/enums/gender_enum.dart';
 
 // Providers
 import '../providers/register_form_provider.dart';

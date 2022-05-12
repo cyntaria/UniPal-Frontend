@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Enums
-import '../../../auth/enums/gender_enum.dart';
+import '../../../profile/enums/gender_enum.dart';
 
 // Models
 import '../../../profile/models/campus_model.codegen.dart';

@@ -1,12 +1,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// States
+// Models
 import '../models/personal_details_data.dart';
 import '../models/university_details_data.dart';
+
+// States
 import '../states/registration_state.codegen.dart';
 
 // Enums
-import '../enums/gender_enum.dart';
+import '../../profile/enums/gender_enum.dart';
 
 final registerFormProvider =
     StateNotifierProvider<RegisterFormProvider, RegistrationState>(
@@ -49,7 +51,6 @@ class RegisterFormProvider extends StateNotifier<RegistrationState> {
       gender: gender,
       birthday: birthday,
     );
-    
 
     // Move to university form
     state = const RegistrationState.university();

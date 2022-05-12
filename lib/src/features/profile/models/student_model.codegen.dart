@@ -5,7 +5,7 @@ import '../../../helpers/constants/app_utils.dart';
 import '../../../helpers/typedefs.dart';
 
 // Enums
-import '../../auth/enums/gender_enum.dart';
+import '../enums/gender_enum.dart';
 import '../enums/student_role_enum.dart';
 
 part 'student_model.codegen.freezed.dart';

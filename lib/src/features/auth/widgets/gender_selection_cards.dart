@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../helpers/constants/app_styles.dart';
 
 // Enums
-import '../enums/gender_enum.dart';
+import '../../profile/enums/gender_enum.dart';
 
 // Widgets
 import '../../shared/widgets/custom_radio_button.dart';

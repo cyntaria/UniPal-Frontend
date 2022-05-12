@@ -3,6 +3,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
+import '../enums/connection_status_enum.dart';
 import '../../../helpers/typedefs.dart';
 import 'request_student_model.codegen.dart';
 
@@ -13,7 +14,7 @@ part 'student_connection_model.codegen.g.dart';
 class StudentConnectionModel with _$StudentConnectionModel {
   const factory StudentConnectionModel({
     required int studentConnectionModel,
-    required String connectionStatus,
+    required ConnectionStatus connectionStatus,
     required DateTime sentAt,
     DateTime? acceptedAt,
     required RequestStudentModel sender,
