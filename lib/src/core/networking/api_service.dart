@@ -10,6 +10,9 @@ import './dio_service.dart';
 // Helpers
 import '../../helpers/typedefs.dart';
 
+// Models
+import 'response_model.dart';
+
 /// A service class implementing methods for basic API requests.
 class ApiService implements ApiInterface {
   /// An instance of [DioService] for network requests
@@ -44,11 +47,11 @@ class ApiService implements ApiInterface {
     bool requiresAuthToken = true,
     required T Function(JSON responseBody) converter,
   }) async {
-    List<Object?> body;
+    List<JSON> body;
 
     try {
       // Entire map of response
-      final data = await _dioService.get(
+      final data = await _dioService.get<List<JSON>>(
         endpoint: endpoint,
         options: Options(
           headers: <String, Object?>{
@@ -60,14 +63,14 @@ class ApiService implements ApiInterface {
       );
 
       // Items of table as json
-      body = data['body'] as List<Object?>;
+      body = data.body;
     } on Exception catch (ex) {
       throw CustomException.fromDioException(ex);
     }
 
     try {
       // Returning the deserialized objects
-      return body.map((dataMap) => converter(dataMap! as JSON)).toList();
+      return body.map((dataMap) => converter(dataMap)).toList();
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }
@@ -96,12 +99,12 @@ class ApiService implements ApiInterface {
     JSON? queryParams,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON responseBody) converter,
+    required T Function(JSON response) converter,
   }) async {
     JSON body;
     try {
       // Entire map of response
-      final data = await _dioService.get(
+      final data = await _dioService.get<JSON>(
         endpoint: endpoint,
         queryParams: queryParams,
         options: Options(
@@ -112,7 +115,7 @@ class ApiService implements ApiInterface {
         cancelToken: cancelToken,
       );
 
-      body = data['body'] as JSON;
+      body = data.body;
     } on Exception catch (ex) {
       throw CustomException.fromDioException(ex);
     }
@@ -131,9 +134,9 @@ class ApiService implements ApiInterface {
   ///
   /// The [data] contains body for the request.
   ///
-  /// The [converter] callback is used to **deserialize** the response body
+  /// The [converter] callback is used to **deserialize** the [ResponseModel]
   /// into an object of type [T].
-  /// The callback is executed on the response `body`.
+  /// The callback is executed on the response.
   ///
   /// [cancelToken] is used to cancel the request pre-maturely. If null,
   /// the **default** [cancelToken] inside [DioService] is used.
@@ -147,13 +150,13 @@ class ApiService implements ApiInterface {
     required JSON data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   }) async {
-    JSON dataMap;
+    ResponseModel<JSON> response;
 
     try {
       // Entire map of response
-      dataMap = await _dioService.post(
+      response = await _dioService.post<JSON>(
         endpoint: endpoint,
         data: data,
         options: Options(
@@ -169,7 +172,7 @@ class ApiService implements ApiInterface {
 
     try {
       // Returning the serialized object
-      return converter(dataMap);
+      return converter(response);
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }
@@ -181,9 +184,9 @@ class ApiService implements ApiInterface {
   ///
   /// The [data] contains body for the request.
   ///
-  /// The [converter] callback is used to **deserialize** the response body
+  /// The [converter] callback is used to **deserialize** the [ResponseModel]
   /// into an object of type [T].
-  /// The callback is executed on the response `body`.
+  /// The callback is executed on the response.
   ///
   /// [cancelToken] is used to cancel the request pre-maturely. If null,
   /// the **default** [cancelToken] inside [DioService] is used.
@@ -197,13 +200,13 @@ class ApiService implements ApiInterface {
     required JSON data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   }) async {
-    JSON dataMap;
+    ResponseModel<JSON> response;
 
     try {
       // Entire map of response
-      dataMap = await _dioService.patch(
+      response = await _dioService.patch<JSON>(
         endpoint: endpoint,
         data: data,
         options: Options(
@@ -219,7 +222,7 @@ class ApiService implements ApiInterface {
 
     try {
       // Returning the serialized object
-      return converter(dataMap);
+      return converter(response);
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }
@@ -231,9 +234,9 @@ class ApiService implements ApiInterface {
   ///
   /// The [data] contains body for the request.
   ///
-  /// The [converter] callback is used to **deserialize** the response body
+  /// The [converter] callback is used to **deserialize** the [ResponseModel]
   /// into an object of type [T].
-  /// The callback is executed on the response `body`.
+  /// The callback is executed on the response.
   ///
   /// [cancelToken] is used to cancel the request pre-maturely. If null,
   /// the **default** [cancelToken] inside [DioService] is used.
@@ -247,13 +250,13 @@ class ApiService implements ApiInterface {
     JSON? data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   }) async {
-    JSON dataMap;
+    ResponseModel<JSON> response;
 
     try {
       // Entire map of response
-      dataMap = await _dioService.delete(
+      response = await _dioService.delete<JSON>(
         endpoint: endpoint,
         data: data,
         options: Options(
@@ -269,7 +272,7 @@ class ApiService implements ApiInterface {
 
     try {
       // Returning the serialized object
-      return converter(dataMap);
+      return converter(response);
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }

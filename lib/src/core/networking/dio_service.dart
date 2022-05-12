@@ -9,7 +9,7 @@ import './custom_exception.dart';
 import '../../helpers/typedefs.dart';
 
 // Models
-import 'response_model.codegen.dart';
+import 'response_model.dart';
 
 /// A service class that wraps the [Dio] instance and provides methods for
 /// basic network requests.
@@ -50,7 +50,7 @@ class DioService {
   }
 
   /// This method sends a `GET` request to the [endpoint], **decodes**
-  /// the response and returns a parsed [ResponseModel].
+  /// the response and returns a parsed [ResponseModel] with a body of type [R].
   ///
   /// Any errors encountered during the request are caught and a custom
   /// [CustomException] is thrown.
@@ -61,7 +61,7 @@ class DioService {
   /// the **default** [cancelToken] inside [DioService] is used.
   ///
   /// [options] are special instructions that can be merged with the request.
-  Future<ResponseModel> get({
+  Future<ResponseModel<R>> get<R>({
     required String endpoint,
     JSON? queryParams,
     Options? options,
@@ -73,11 +73,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel.fromJson(response.data!);
+    return ResponseModel<R>.fromJson(response.data!);
   }
 
   /// This method sends a `POST` request to the [endpoint], **decodes**
-  /// the response and returns a parsed [ResponseModel].
+  /// the response and returns a parsed [ResponseModel] with a body of type [R].
   ///
   /// Any errors encountered during the request are caught and a custom
   /// [CustomException] is thrown.
@@ -88,7 +88,7 @@ class DioService {
   /// the **default** [cancelToken] inside [DioService] is used.
   ///
   /// [options] are special instructions that can be merged with the request.
-  Future<ResponseModel> post({
+  Future<ResponseModel<R>> post<R>({
     required String endpoint,
     JSON? data,
     Options? options,
@@ -100,11 +100,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel.fromJson(response.data!);
+    return ResponseModel<R>.fromJson(response.data!);
   }
 
   /// This method sends a `PATCH` request to the [endpoint], **decodes**
-  /// the response and returns a parsed [ResponseModel].
+  /// the response and returns a parsed [ResponseModel] with a body of type [R].
   ///
   /// Any errors encountered during the request are caught and a custom
   /// [CustomException] is thrown.
@@ -115,7 +115,7 @@ class DioService {
   /// the **default** [cancelToken] inside [DioService] is used.
   ///
   /// [options] are special instructions that can be merged with the request.
-  Future<ResponseModel> patch({
+  Future<ResponseModel<R>> patch<R>({
     required String endpoint,
     JSON? data,
     Options? options,
@@ -127,11 +127,11 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel.fromJson(response.data!);
+    return ResponseModel<R>.fromJson(response.data!);
   }
 
   /// This method sends a `DELETE` request to the [endpoint], **decodes**
-  /// the response and returns a parsed [ResponseModel].
+  /// the response and returns a parsed [ResponseModel] with a body of type [R].
   ///
   /// Any errors encountered during the request are caught and a custom
   /// [CustomException] is thrown.
@@ -142,7 +142,7 @@ class DioService {
   /// the **default** [cancelToken] inside [DioService] is used.
   ///
   /// [options] are special instructions that can be merged with the request.
-  Future<ResponseModel> delete({
+  Future<ResponseModel<R>> delete<R>({
     required String endpoint,
     JSON? data,
     Options? options,
@@ -154,6 +154,6 @@ class DioService {
       options: options,
       cancelToken: cancelToken ?? _cancelToken,
     );
-    return ResponseModel.fromJson(response.data!);
+    return ResponseModel<R>.fromJson(response.data!);
   }
 }

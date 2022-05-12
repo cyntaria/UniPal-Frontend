@@ -32,8 +32,8 @@ class AuthRepository {
       data: data,
       requiresAuthToken: false,
       converter: (response) {
-        updateTokenCallback(response['body']['token'] as String);
-        return StudentModel.fromJson(response['body'] as JSON);
+        updateTokenCallback(response.body['token'] as String);
+        return StudentModel.fromJson(response.body);
       },
     );
   }
@@ -47,7 +47,7 @@ class AuthRepository {
       data: data,
       requiresAuthToken: false,
       converter: (response) {
-        updateTokenCallback(response['body']['token'] as String);
+        updateTokenCallback(response.body['token'] as String);
         return StudentModel.fromJson(data);
       },
     );
@@ -60,7 +60,7 @@ class AuthRepository {
       endpoint: ApiEndpoint.auth(AuthEndpoint.FORGOT_PW_SEND_OTP),
       data: data,
       requiresAuthToken: false,
-      converter: (response) => response['headers']['message'] as String,
+      converter: (response) => response.headers.message,
     );
   }
 
@@ -71,7 +71,7 @@ class AuthRepository {
       endpoint: ApiEndpoint.auth(AuthEndpoint.FORGOT_PW_RESET_PASSWORD),
       data: data,
       requiresAuthToken: false,
-      converter: (response) => response['headers']['message'] as String,
+      converter: (response) => response.headers.message,
     );
   }
 
@@ -82,7 +82,7 @@ class AuthRepository {
       endpoint: ApiEndpoint.auth(AuthEndpoint.CHANGE_PASSWORD),
       data: data,
       requiresAuthToken: false,
-      converter: (response) => response['headers']['message'] as String,
+      converter: (response) => response.headers.message,
     );
   }
 
@@ -91,7 +91,7 @@ class AuthRepository {
       endpoint: ApiEndpoint.auth(AuthEndpoint.FORGOT_PW_VERIFY_OTP),
       data: data,
       requiresAuthToken: false,
-      converter: (response) => response['headers']['message'] as String,
+      converter: (response) => response.headers.message,
     );
   }
 }

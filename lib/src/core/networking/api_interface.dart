@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 
-//helpers
+// Helpers
 import '../../helpers/typedefs.dart';
+
+// Models
+import 'response_model.dart';
 
 /// A base class containing methods for basic API functionality.
 ///
@@ -70,7 +73,7 @@ abstract class ApiInterface {
     required JSON data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   });
 
   /// Base method for updating [data] at the [endpoint].
@@ -90,7 +93,7 @@ abstract class ApiInterface {
     required JSON data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   });
 
   /// Base method for deleting [data] at the [endpoint].
@@ -110,7 +113,7 @@ abstract class ApiInterface {
     JSON? data,
     CancelToken? cancelToken,
     bool requiresAuthToken = true,
-    required T Function(JSON response) converter,
+    required T Function(ResponseModel<JSON> response) converter,
   });
 
   /// Base method for cancelling requests pre-maturely
