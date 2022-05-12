@@ -2,21 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../auth/providers/auth_provider.dart';
+import '../posts/providers/reaction_types_provider.dart';
+import '../profile/providers/campuses_provider.dart';
+import '../profile/providers/hobbies_provider.dart';
+import '../profile/providers/interests_provider.dart';
+import '../profile/providers/programs_provider.dart';
+import '../profile/providers/student_statuses_provider.dart';
 
-// Screens
-import '../home/screens/home_screen.dart';
-import 'welcome_screen.dart';
+// Widgets
+import '../shared/widgets/custom_circular_loader.dart';
+import '../shared/widgets/error_response_handler.dart';
+import 'auth_widget_builder.dart';
 
-class AppStartupScreen extends HookConsumerWidget {
+final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
+  (ref) async {
+    await Future.wait([
+      ref.watch(interestsProvider).loadInterestsInMemory(),
+      ref.watch(hobbiesProvider).loadHobbiesInMemory(),
+      ref.watch(campusesProvider).loadCampusesInMemory(),
+      ref.watch(programsProvider).loadProgramsInMemory(),
+      ref.watch(studentStatusesProvider).loadStudentStatusesInMemory(),
+      ref.watch(reactionTypesProvider).loadReactionTypesInMemory(),
+    ]);
+  },
+);
+
+class AppStartupScreen extends ConsumerWidget {
   const AppStartupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authProvider);
-    return authState.maybeWhen(
-      data: (_) => const HomeScreen(),
-      orElse: () => const WelcomeScreen(),
+    final cacheLoaderFuture = ref.watch(_cacheLoaderFutureProvider);
+    return cacheLoaderFuture.when(
+      data: (_) => const AuthWidgetBuilder(),
+      loading: () => const LottieAnimationLoader(),
+      error: (error, st) => ErrorResponseHandler(
+        error: error,
+        retryCallback: () => ref.refresh(_cacheLoaderFutureProvider),
+        stackTrace: st,
+      ),
     );
+  }
+}
+
+class LottieAnimationLoader extends StatelessWidget {
+  const LottieAnimationLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const CustomCircularLoader();
   }
 }
