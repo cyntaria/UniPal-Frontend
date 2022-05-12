@@ -37,8 +37,8 @@ class ApiInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    if (options.headers.containsKey('requiresAuthToken')) {
-      if (options.headers['requiresAuthToken'] == true) {
+    if (options.extra.containsKey('requiresAuthToken')) {
+      if (options.extra['requiresAuthToken'] == true) {
         final token =
             await _ref.watch(keyValueStorageServiceProvider).getAuthToken();
         options.headers.addAll(
@@ -46,7 +46,7 @@ class ApiInterceptor extends Interceptor {
         );
       }
 
-      options.headers.remove('requiresAuthToken');
+      options.extra.remove('requiresAuthToken');
     }
     return handler.next(options);
   }

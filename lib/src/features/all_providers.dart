@@ -38,7 +38,7 @@ final _dioServiceProvider = Provider<DioService>((ref) {
   );
   return DioService(
     dioClient: _dio,
-    cacheOptions: _cacheOptions,
+    globalCacheOptions: _cacheOptions,
     httpClientAdapter: Http2Adapter(
       ConnectionManager(
         idleTimeout: 10000,

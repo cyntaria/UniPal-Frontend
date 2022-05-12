@@ -63,7 +63,7 @@ class ApiService implements ApiInterface {
               : null,
         ),
         options: Options(
-          headers: <String, Object?>{
+          extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
           },
         ),
@@ -125,7 +125,7 @@ class ApiService implements ApiInterface {
               : null,
         ),
         options: Options(
-          headers: <String, Object?>{
+          extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
           },
         ),
@@ -177,7 +177,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          headers: <String, Object?>{
+          extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
           },
         ),
@@ -227,7 +227,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          headers: <String, Object?>{
+          extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
           },
         ),
@@ -277,7 +277,7 @@ class ApiService implements ApiInterface {
         endpoint: endpoint,
         data: data,
         options: Options(
-          headers: <String, Object?>{
+          extra: <String, Object?>{
             'requiresAuthToken': requiresAuthToken,
           },
         ),
