@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 
 // Screens
+import '../../features/app_startup/app_startup_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/qr_scanner_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
-import '../../features/app_startup/app_startup_screen.dart';
+import '../../features/app_startup/auth_widget_builder.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/posts/screens/add_edit_post_screen.dart';
 import '../../features/profile/screens/update_preferences_screen.dart';
@@ -28,6 +29,9 @@ class Routes {
 
   /// The name of the route for app startup screen
   static const String AppStartupScreenRoute = '/app-startup-screen';
+
+  // The name for the auth widget screen
+  static const String AuthWidgetBuilderRoute = '/auth-widget-builder';
 
   /// The name of the route for home dashboard screen
   static const String HomeScreenRoute = '/home-screen';
@@ -91,6 +95,7 @@ class Routes {
       '/add-edit-teacher-review-screen';
 
   static final Map<String, RouteBuilder> _routesMap = {
+    AuthWidgetBuilderRoute: (_) => const AuthWidgetBuilder(),
     AppStartupScreenRoute: (_) => const AppStartupScreen(),
     HomeScreenRoute: (_) => const HomeScreen(),
     LoginScreenRoute: (_) => const LoginScreen(),

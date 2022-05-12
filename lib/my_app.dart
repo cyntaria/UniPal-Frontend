@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-//Routers
+// Routers
 import 'src/config/routes/app_router.dart';
 import 'src/config/routes/routes.dart';
 
