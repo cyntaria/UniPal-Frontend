@@ -68,7 +68,7 @@ class CustomErrorWidget extends StatelessWidget {
               CustomTextButton.gradient(
                 width: double.infinity,
                 onPressed: retryCallback,
-                gradient: AppColors.buttonGradientRed,
+                gradient: AppColors.buttonGradientPurple,
                 child: Center(
                   child: Text(
                     'RETRY',
@@ -109,7 +109,7 @@ class _CustomErrorWidgetLight extends CustomErrorWidget {
     double? height,
   }) : super._(
           error: error,
-          backgroundColor: const Color(0xFFEF9A9A),
+          backgroundColor: AppColors.surfaceColor,
           retryCallback: retryCallback,
           height: height ?? double.infinity,
         );

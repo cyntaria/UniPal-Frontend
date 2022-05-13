@@ -30,7 +30,7 @@ class CampusesRepository {
     return _apiService.getCollectionData<CampusModel>(
       endpoint: ApiEndpoint.campuses(CampusEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       cacheAgeDays: 180,
       converter: CampusModel.fromJson,
     );

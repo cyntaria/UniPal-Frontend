@@ -30,7 +30,7 @@ class HobbiesRepository {
     return _apiService.getCollectionData<HobbyModel>(
       endpoint: ApiEndpoint.hobbies(HobbyEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       converter: HobbyModel.fromJson,
     );
   }

@@ -30,7 +30,7 @@ class ProgramsRepository {
     return _apiService.getCollectionData<ProgramModel>(
       endpoint: ApiEndpoint.programs(ProgramEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       cacheAgeDays: 60,
       converter: ProgramModel.fromJson,
     );

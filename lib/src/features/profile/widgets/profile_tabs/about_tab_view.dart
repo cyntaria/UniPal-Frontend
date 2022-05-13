@@ -23,10 +23,10 @@ class AboutTabView extends HookConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Bio Data
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // ERP
               LabeledWidget(
@@ -36,6 +36,8 @@ class AboutTabView extends HookConsumerWidget {
                 ),
               ),
 
+              const SizedBox(width: 60),
+
               // Gender
               LabeledWidget(
                 label: 'Gender',
@@ -44,9 +46,11 @@ class AboutTabView extends HookConsumerWidget {
                 ),
               ),
 
+              const SizedBox(width: 50),
+
               // Birthday
               LabeledWidget(
-                label: 'Birthday On',
+                label: 'Birthday Date',
                 child: Text(
                   currentStudent.birthday.toDateString('d MMM, y'),
                 ),
@@ -58,7 +62,6 @@ class AboutTabView extends HookConsumerWidget {
 
           // Uni Data
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Program
               LabeledWidget(
@@ -68,6 +71,8 @@ class AboutTabView extends HookConsumerWidget {
                 ),
               ),
 
+              const SizedBox(width: 45),
+
               // Batch
               LabeledWidget(
                 label: 'Batch',
@@ -76,9 +81,11 @@ class AboutTabView extends HookConsumerWidget {
                 ),
               ),
 
-              // Favourite Campus
+              const SizedBox(width: 60),
+
+              // Enrolled Campus
               LabeledWidget(
-                label: 'Favourite Campus',
+                label: 'Enrolled Campus',
                 child: Text(
                   campuses[currentStudent.campusId]!,
                 ),

@@ -50,11 +50,11 @@ class ApiService implements ApiInterface {
     bool requiresAuthToken = true,
     required T Function(JSON responseBody) converter,
   }) async {
-    List<JSON> body;
+    List<Object?> body;
 
     try {
       // Entire map of response
-      final data = await _dioService.get<List<JSON>>(
+      final data = await _dioService.get<List<Object?>>(
         endpoint: endpoint,
         cacheOptions: _dioService.globalCacheOptions?.copyWith(
           policy: cachePolicy,
@@ -79,7 +79,7 @@ class ApiService implements ApiInterface {
 
     try {
       // Returning the deserialized objects
-      return body.map((dataMap) => converter(dataMap)).toList();
+      return body.map((dataMap) => converter(dataMap! as JSON)).toList();
     } on Exception catch (ex) {
       throw CustomException.fromParsingException(ex);
     }

@@ -30,7 +30,7 @@ class InterestsRepository {
     return _apiService.getCollectionData<InterestModel>(
       endpoint: ApiEndpoint.interests(InterestEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       converter: InterestModel.fromJson,
     );
   }

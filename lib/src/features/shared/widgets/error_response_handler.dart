@@ -34,7 +34,7 @@ class ErrorResponseHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (error is CustomException) {
-      return CustomErrorWidget.dark(
+      return CustomErrorWidget.light(
         error: error as CustomException,
         retryCallback: retryCallback!,
         height: context.screenHeight * 0.5,

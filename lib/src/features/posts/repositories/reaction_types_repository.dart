@@ -30,7 +30,7 @@ class ReactionTypesRepository {
     return _apiService.getCollectionData<ReactionTypeModel>(
       endpoint: ApiEndpoint.reactionTypes(ReactionTypeEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       converter: ReactionTypeModel.fromJson,
     );
   }

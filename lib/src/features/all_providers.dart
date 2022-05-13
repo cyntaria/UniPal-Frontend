@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,15 +38,6 @@ final _dioServiceProvider = Provider<DioService>((ref) {
   return DioService(
     dioClient: _dio,
     globalCacheOptions: _cacheOptions,
-    httpClientAdapter: Http2Adapter(
-      ConnectionManager(
-        idleTimeout: 10000,
-        onClientCreate: (_, config) {
-          // Ignore bad certificate
-          config.onBadCertificate = (_) => true;
-        },
-      ),
-    ),
     interceptors: [
       // Order of interceptors very important
       ApiInterceptor(ref),

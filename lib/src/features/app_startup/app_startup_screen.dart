@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../auth/providers/auth_provider.dart';
 import '../posts/providers/reaction_types_provider.dart';
 import '../profile/providers/campuses_provider.dart';
 import '../profile/providers/hobbies_provider.dart';
@@ -17,6 +18,7 @@ import 'auth_widget_builder.dart';
 final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
   (ref) async {
     await Future.wait([
+      ref.watch(authProvider.notifier).loadUserAuthDataInMemory(),
       ref.watch(interestsProvider).loadInterestsInMemory(),
       ref.watch(hobbiesProvider).loadHobbiesInMemory(),
       ref.watch(campusesProvider).loadCampusesInMemory(),
@@ -36,10 +38,12 @@ class AppStartupScreen extends ConsumerWidget {
     return cacheLoaderFuture.when(
       data: (_) => const AuthWidgetBuilder(),
       loading: () => const LottieAnimationLoader(),
-      error: (error, st) => ErrorResponseHandler(
-        error: error,
-        retryCallback: () => ref.refresh(_cacheLoaderFutureProvider),
-        stackTrace: st,
+      error: (error, st) => Scaffold(
+        body: ErrorResponseHandler(
+          error: error,
+          retryCallback: () => ref.refresh(_cacheLoaderFutureProvider),
+          stackTrace: st,
+        ),
       ),
     );
   }
@@ -50,6 +54,8 @@ class LottieAnimationLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomCircularLoader();
+    return const Scaffold(
+      body: CustomCircularLoader(color: Colors.purpleAccent),
+    );
   }
 }

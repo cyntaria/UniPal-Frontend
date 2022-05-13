@@ -41,16 +41,12 @@ class AuthProvider extends StateNotifier<FutureState<bool?>> {
     required KeyValueStorageService keyValueStorageService,
   })  : _authRepository = authRepository,
         _keyValueStorageService = keyValueStorageService,
-        super(const FutureState.idle()) {
-    init();
-  }
+        super(const FutureState.idle());
 
-  Future<void> init() async {
+  Future<void> loadUserAuthDataInMemory() async {
     final student = _keyValueStorageService.getAuthUser();
     final password = await _keyValueStorageService.getAuthPassword();
-    if (student == null || password.isEmpty) {
-      logout();
-    } else {
+    if (student != null && password.isNotEmpty) {
       _ref.read(currentStudentProvider.notifier).state = student;
       state = const FutureState.data(data: true);
     }

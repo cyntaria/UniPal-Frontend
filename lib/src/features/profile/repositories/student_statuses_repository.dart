@@ -30,7 +30,7 @@ class StudentStatusesRepository {
     return _apiService.getCollectionData<StudentStatusModel>(
       endpoint: ApiEndpoint.studentStatuses(StudentStatusEndpoint.BASE),
       queryParams: queryParameters,
-      cachePolicy: CachePolicy.request,
+      cachePolicy: CachePolicy.forceCache,
       cacheAgeDays: 15,
       converter: StudentStatusModel.fromJson,
     );
