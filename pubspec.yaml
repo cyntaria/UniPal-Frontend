@@ -10,6 +10,7 @@ environment:
 
 dependencies:
   animated_custom_dropdown: ^1.2.0
+  audioplayers: ^0.20.1
   cached_network_image: ^3.2.0
   clock: ^1.1.0
   cupertino_icons: ^1.0.4
@@ -51,3 +52,4 @@ flutter:
     - assets/
     - assets/images/
     - assets/lottie/
+    - assets/sounds/
