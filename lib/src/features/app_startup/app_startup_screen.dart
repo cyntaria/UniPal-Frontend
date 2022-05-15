@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 
 // Providers
 import '../auth/providers/auth_provider.dart';
@@ -10,13 +11,18 @@ import '../profile/providers/interests_provider.dart';
 import '../profile/providers/programs_provider.dart';
 import '../profile/providers/student_statuses_provider.dart';
 
+//Helpers
+import '../../helpers/constants/app_utils.dart';
+import '../../helpers/constants/lottie_assets.dart';
+import '../../helpers/extensions/context_extensions.dart';
+
 // Widgets
-import '../shared/widgets/custom_circular_loader.dart';
 import '../shared/widgets/error_response_handler.dart';
 import 'auth_widget_builder.dart';
 
 final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
   (ref) async {
+    await Future<void>.delayed(const Duration(seconds: 3));
     await Future.wait([
       ref.watch(authProvider.notifier).loadUserAuthDataInMemory(),
       ref.watch(interestsProvider).loadInterestsInMemory(),
@@ -54,8 +60,20 @@ class LottieAnimationLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomCircularLoader(color: Colors.purpleAccent),
+    const loaders = [
+      LottieAssets.femaleWalkingLottie,
+      LottieAssets.movingBusLottie,
+      LottieAssets.peopleTalkingLottie,
+    ];
+    final i = AppUtils.randomizer().nextInt(3);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Lottie.asset(
+          loaders[i],
+          width: context.screenWidth,
+        ),
+      ),
     );
   }
 }
