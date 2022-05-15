@@ -87,9 +87,6 @@ class Routes {
   /// The name of the route for my/students' timetables screen.
   static const String TimetablesScreenRoute = '/timetables-screen';
 
-  /// The name of the route for teacher reviews screen.
-  static const String TeacherReviewsScreenRoute = '/teacher-reviews-screen';
-
   /// The name of the route for timetable details screen.
   static const String AddEditTeacherReviewScreenRoute =
       '/add-edit-teacher-review-screen';
@@ -109,7 +106,6 @@ class Routes {
     AddEditActivityScreenRoute: (_) => const SizedBox.shrink(),
     GeneratedTimetablesScreenRoute: (_) => const GeneratedTimetablesScreen(),
     TimetablesScreenRoute: (_) => const SizedBox.shrink(),
-    TeacherReviewsScreenRoute: (_) => const SizedBox.shrink(),
     AddEditTeacherReviewScreenRoute: (_) => const SizedBox.shrink(),
   };
 

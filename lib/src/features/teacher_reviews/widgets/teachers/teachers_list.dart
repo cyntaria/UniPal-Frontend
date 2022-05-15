@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Providers
+import '../../providers/teachers_provider.dart';
+
+// Helpers
+import '../../../../helpers/constants/app_styles.dart';
+
+// Widgets
+import 'teachers_list_item.dart';
+
+class TeachersList extends ConsumerWidget {
+  const TeachersList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final teachers = ref.watch(
+      teachersProvider.select((value) => value.getAllTeachers()),
+    );
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      itemCount: teachers.length,
+      separatorBuilder: (_, __) => Insets.gapH15,
+      itemBuilder: (_, i) => TeachersListItem(
+        teacher: teachers[i],
+      ),
+    );
+  }
+}

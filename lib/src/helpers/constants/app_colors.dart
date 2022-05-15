@@ -55,7 +55,7 @@ class AppColors {
   static const Color redColor = Color(0xFFed0000);
 
   /// The color value for rating stars in the app.
-  static const Color starsColor = Color(0xFFf78040);
+  static const Color starsColor = Color.fromARGB(255, 247, 162, 64);
 
   /// The color value for dark grey skeleton containers in the app.
   static const Color darkSkeletonColor = Color(0xFF656565);

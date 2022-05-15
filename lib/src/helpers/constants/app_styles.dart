@@ -105,6 +105,9 @@ class Corners {
 
   /// [BorderRadius] rounded on all corners by **20**
   static const BorderRadius rounded20 = BorderRadius.all(Radius.circular(20));
+
+  /// [BorderRadius] rounded on all corners by **50**
+  static const BorderRadius rounded50 = BorderRadius.all(Radius.circular(50));
 }
 
 /// A utility class that holds all the shadows used throughout
