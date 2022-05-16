@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// Providers
-
 // Widgets
 import 'student_grid_item.dart';
 

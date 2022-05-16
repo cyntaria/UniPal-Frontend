@@ -22,6 +22,7 @@ class ReceivedHangoutsList extends ConsumerWidget {
     );
     return ListView.separated(
       itemCount: requests.length,
+      physics: const BouncingScrollPhysics(),
       separatorBuilder: (_, __) => Insets.gapH15,
       padding: EdgeInsets.zero,
       itemBuilder: (_, i) => HangoutListItem(

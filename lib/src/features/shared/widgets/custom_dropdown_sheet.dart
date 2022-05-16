@@ -184,6 +184,7 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
               Expanded(
                 child: ListView.builder(
                   controller: scrollController,
+                  physics: const BouncingScrollPhysics(),
                   itemCount: _filteredItemList.length,
                   itemBuilder: (context, index) {
                     final item = _filteredItemList[index];

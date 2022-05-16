@@ -23,6 +23,7 @@ class ReceivedConnectionsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: requests.length,
       padding: EdgeInsets.zero,
+      physics: const BouncingScrollPhysics(),
       separatorBuilder: (_, __) => Insets.gapH15,
       itemBuilder: (_, i) => ConnectionListItem(
         isReceived: true,

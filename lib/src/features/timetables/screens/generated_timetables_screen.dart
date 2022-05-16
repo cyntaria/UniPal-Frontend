@@ -29,6 +29,7 @@ class GeneratedTimetablesScreen extends ConsumerWidget {
       ),
       body: ListView.separated(
         itemCount: generatedTimetables.length,
+        physics: const BouncingScrollPhysics(),
         separatorBuilder: (_, __) => Insets.gapH15,
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
         itemBuilder: (_, i) {
