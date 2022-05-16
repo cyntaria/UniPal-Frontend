@@ -5,19 +5,19 @@ import 'package:flutter/foundation.dart';
 
 import '../../../helpers/typedefs.dart';
 
-part 'request_student_model.codegen.freezed.dart';
-part 'request_student_model.codegen.g.dart';
+part 'sub_student_model.codegen.freezed.dart';
+part 'sub_student_model.codegen.g.dart';
 
 @freezed
-class RequestStudentModel with _$RequestStudentModel {
-  const factory RequestStudentModel({
+class SubStudentModel with _$SubStudentModel {
+  const factory SubStudentModel({
     required String erp,
     required String firstName,
     required String lastName,
     required String profilePictureUrl,
     required int programId,
     required int graduationYear,
-  }) = _RequestStudentModel;
+  }) = _SubStudentModel;
 
-  factory RequestStudentModel.fromJson(JSON json) => _$RequestStudentModelFromJson(json);
+  factory SubStudentModel.fromJson(JSON json) => _$SubStudentModelFromJson(json);
 }

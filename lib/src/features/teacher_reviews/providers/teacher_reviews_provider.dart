@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
-import '../../requests/models/request_student_model.codegen.dart';
+import '../../requests/models/sub_student_model.codegen.dart';
 import '../../timetables/models/subject_model.codegen.dart';
 import '../models/teacher_review_model.codegen.dart';
 
@@ -23,7 +23,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 2,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '17855',
         firstName: 'Rafay',
         lastName: 'Saleem',
@@ -47,7 +47,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 2,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '15030',
         firstName: 'Rafay',
         lastName: 'Siddiqui',
@@ -71,7 +71,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 4,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '17855',
         firstName: 'Rafay',
         lastName: 'Saleem',
@@ -95,7 +95,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 4,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '15030',
         firstName: 'Rafay',
         lastName: 'Siddiqui',
@@ -119,7 +119,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 4,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '17855',
         firstName: 'Rafay',
         lastName: 'Saleem',
@@ -143,7 +143,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 4,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '15030',
         firstName: 'Rafay',
         lastName: 'Siddiqui',
@@ -167,7 +167,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 1,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '17855',
         firstName: 'Rafay',
         lastName: 'Saleem',
@@ -191,7 +191,7 @@ class TeacherReviewsProvider {
         subject: 'Principles Of Marketing',
       ),
       teacherId: 1,
-      reviewedBy: const RequestStudentModel(
+      reviewedBy: const SubStudentModel(
         erp: '15030',
         firstName: 'Rafay',
         lastName: 'Siddiqui',

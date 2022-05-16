@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../enums/connection_status_enum.dart';
 import '../../../helpers/typedefs.dart';
-import 'request_student_model.codegen.dart';
+import 'sub_student_model.codegen.dart';
 
 part 'student_connection_model.codegen.freezed.dart';
 part 'student_connection_model.codegen.g.dart';
@@ -17,8 +17,8 @@ class StudentConnectionModel with _$StudentConnectionModel {
     required ConnectionStatus connectionStatus,
     required DateTime sentAt,
     DateTime? acceptedAt,
-    required RequestStudentModel sender,
-    required RequestStudentModel receiver,
+    required SubStudentModel sender,
+    required SubStudentModel receiver,
   }) = _StudentConnectionModel;
 
   factory StudentConnectionModel.fromJson(JSON json) => _$StudentConnectionModelFromJson(json);
