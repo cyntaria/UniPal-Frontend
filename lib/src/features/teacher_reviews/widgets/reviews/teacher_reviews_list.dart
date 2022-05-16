@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Models
+import '../../../../helpers/constants/app_colors.dart';
 import '../../models/teacher_review_model.codegen.dart';
 
 // Helpers
@@ -19,12 +20,18 @@ class TeacherReviewsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: reviews.length,
-      separatorBuilder: (_, __) => Insets.gapH15,
-      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-      itemBuilder: (_, i) => TeacherReviewListItem(
-        review: reviews[i],
+    return Container(
+      color: AppColors.surfaceColor,
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+      child: ListView.separated(
+        itemCount: reviews.length,
+        physics: const BouncingScrollPhysics(),
+        separatorBuilder: (_, __) => Insets.gapH15,
+        padding: EdgeInsets.zero,
+        itemBuilder: (_, i) => TeacherReviewListItem(
+          review: reviews[i],
+        ),
       ),
     );
   }

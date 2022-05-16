@@ -16,11 +16,10 @@ class AppUtils {
 
   /// A utility method to map an integer to a color code
   /// Useful for color coding class erps
-  static Color getRandomColor([int? seed]) {
+  static Color getRandomColor([int? seed, List<Color>? colors]) {
     final rInt = seed != null ? (seed + DateTime.now().minute) : null;
-    return AppColors.primaries[randomizer(rInt).nextInt(
-      AppColors.primaries.length,
-    )];
+    final _colors = colors ?? AppColors.primaries;
+    return _colors[randomizer(rInt).nextInt(_colors.length)];
   }
 
   /// A utility method to convert 0/1 to false/true

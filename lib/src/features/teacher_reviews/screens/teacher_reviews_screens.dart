@@ -48,7 +48,7 @@ class TeacherReviewsScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          Insets.gapH15,
+          Insets.gapH10,
 
           // Overalls
           TeacherDetailedRatings(

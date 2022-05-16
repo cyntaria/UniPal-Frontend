@@ -19,6 +19,7 @@ class TeachersList extends ConsumerWidget {
       teachersProvider.select((value) => value.getAllTeachers()),
     );
     return ListView.separated(
+      physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
       itemCount: teachers.length,
       separatorBuilder: (_, __) => Insets.gapH15,

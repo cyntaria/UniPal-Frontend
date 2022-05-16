@@ -31,19 +31,20 @@ class TeacherReviewListItem extends StatelessWidget {
           color: AppColors.lightOutlineColor,
         ),
       ),
+      padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Author Row
           SizedBox(
-            height: 40,
+            height: 42,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Author Avatar
                 CircleAvatar(
-                  radius: 20,
+                  radius: 21,
                   backgroundImage: NetworkImage(
                     review.reviewedBy.profilePictureUrl,
                   ),
@@ -78,6 +79,8 @@ class TeacherReviewListItem extends StatelessWidget {
 
                 // Overall Rating
                 Container(
+                  height: 22,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: Corners.rounded50,
                     color: const Color.fromARGB(
@@ -86,10 +89,6 @@ class TeacherReviewListItem extends StatelessWidget {
                       0,
                       255,
                     ).withOpacity(0.3),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 3,
-                    horizontal: 10,
                   ),
                   child: Center(
                     child: Text(
@@ -103,6 +102,8 @@ class TeacherReviewListItem extends StatelessWidget {
                   ),
                 ),
 
+                Insets.gapW10,
+
                 // More Options Icon
                 const Icon(
                   Icons.more_horiz_rounded,
@@ -113,6 +114,23 @@ class TeacherReviewListItem extends StatelessWidget {
           ),
 
           Insets.gapH15,
+
+          // Subject Details
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.5),
+              color: AppColors.textLightGreyColor.withOpacity(0.2),
+            ),
+            child: Text(
+              'Studied ${review.subject.subject}',
+              style: AppTypography.primary.label12.copyWith(
+                color: const Color.fromARGB(255, 158, 167, 172),
+              ),
+            ),
+          ),
+
+          Insets.gapH10,
 
           // Body Text
           Text(
@@ -221,7 +239,7 @@ class TeacherReviewListItem extends StatelessWidget {
             ),
           ),
 
-          Insets.gapH10,
+          Insets.gapH5,
         ],
       ),
     );
