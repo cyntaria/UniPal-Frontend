@@ -40,6 +40,36 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
       text: prefsProv.favCampusActivity,
     );
 
+    Future<bool> _showConfirmDialog() async {
+      final doPop = await showDialog<bool>(
+        context: context,
+        barrierColor: AppColors.barrierColor,
+        builder: (ctx) => const CustomDialog.confirm(
+          title: 'Are you sure?',
+          body: 'Do you want to go back without saving your preferences?',
+          trueButtonText: 'Yes',
+          falseButtonText: 'No',
+        ),
+      );
+      if (doPop == null || !doPop) return Future<bool>.value(false);
+      ref.read(prefsProvider.notifier).clearUnUpdatedPrefs();
+      return Future<bool>.value(true);
+    }
+
+    void _updatePrefs() {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        ref.read(prefsProvider.notifier).updatePreferences(
+              newCampusHangoutSpot: favHangoutSpotController.text.isEmpty
+                  ? null
+                  : favHangoutSpotController.text,
+              newCampusActivity: favActivityController.text.isEmpty
+                  ? null
+                  : favActivityController.text,
+            );
+      }
+    }
+
     ref.listen<FutureState<String>>(
       prefsProvider,
       (_, state) async => state.whenOrNull(
@@ -72,21 +102,7 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(
           key: formKey,
-          onWillPop: () async {
-            final doPop = await showDialog<bool>(
-              context: context,
-              barrierColor: AppColors.barrierColor,
-              builder: (ctx) => const CustomDialog.confirm(
-                title: 'Are you sure?',
-                body: 'Do you want to go back without saving your preferences?',
-                trueButtonText: 'Yes',
-                falseButtonText: 'No',
-              ),
-            );
-            if (doPop == null || !doPop) return Future<bool>.value(false);
-            ref.read(prefsProvider.notifier).clearUnUpdatedPrefs();
-            return Future<bool>.value(true);
-          },
+          onWillPop: _showConfirmDialog,
           child: ScrollableColumn(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             children: [
@@ -137,15 +153,7 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
               // Confirm Details Button
               CustomTextButton.gradient(
                 width: double.infinity,
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
-                    ref.read(prefsProvider.notifier).updatePreferences(
-                          newCampusHangoutSpot: favHangoutSpotController.text,
-                          newCampusActivity: favActivityController.text,
-                        );
-                  }
-                },
+                onPressed: _updatePrefs,
                 gradient: AppColors.buttonGradientPurple,
                 child: Consumer(
                   builder: (context, ref, child) {

@@ -133,7 +133,7 @@ class DioService {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    final response = await _dio.put<JSON>(
+    final response = await _dio.patch<JSON>(
       endpoint,
       data: data,
       options: options,

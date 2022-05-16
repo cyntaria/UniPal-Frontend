@@ -27,12 +27,12 @@ import '../../../shared/widgets/labeled_widget.dart';
 class PreferencesTabView extends HookConsumerWidget {
   const PreferencesTabView({Key? key}) : super(key: key);
 
-  List<InterestModel> getInterestModels(WidgetRef ref, Set<int> ids) {
+  List<InterestModel> getInterestModels(WidgetRef ref, List<int> ids) {
     final interestsProv = ref.watch(interestsProvider);
     return ids.map(interestsProv.getInterestById).toList();
   }
 
-  List<HobbyModel> getHobbyModels(WidgetRef ref, Set<int> ids) {
+  List<HobbyModel> getHobbyModels(WidgetRef ref, List<int> ids) {
     final hobbiesProv = ref.watch(hobbiesProvider);
     return ids.map(hobbiesProv.getHobbyById).toList();
   }

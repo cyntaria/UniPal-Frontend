@@ -70,14 +70,30 @@ class StudentsProvider {
       UnmodifiableMapView(_connectStudent);
 
   Future<String> updateStudentProfile({
-    required Set<int>? interests,
-    required Set<int>? hobbies,
+    required List<int>? interests,
+    required List<int>? hobbies,
     required String? favCampusHangoutSpot,
     required String? favCampusActivity,
   }) async {
+    final _hobbies = <String, int?>{};
+    if (hobbies != null) {
+      _hobbies['hobby_1'] = hobbies.isNotEmpty ? hobbies[0] : null;
+      _hobbies['hobby_2'] = hobbies.length > 1 ? hobbies[1] : null;
+      _hobbies['hobby_3'] = hobbies.length > 2 ? hobbies[2] : null;
+    }
+    final _interests = <String, int?>{};
+    if (interests != null) {
+      _interests['interest_1'] = interests.isNotEmpty ? interests[0] : null;
+      _interests['interest_2'] = interests.length > 1 ? interests[1] : null;
+      _interests['interest_3'] = interests.length > 2 ? interests[2] : null;
+    }
     final data = StudentModel.toUpdateJson(
-      interests: interests,
-      hobbies: hobbies,
+      hobby1: _hobbies['hobby_1'],
+      hobby2: _hobbies['hobby_2'],
+      hobby3: _hobbies['hobby_3'],
+      interest1: _interests['interest_1'],
+      interest2: _interests['interest_2'],
+      interest3: _interests['interest_3'],
       favouriteCampusActivity: favCampusActivity,
       favouriteCampusHangoutSpot: favCampusHangoutSpot,
     );
@@ -86,21 +102,11 @@ class StudentsProvider {
       throw CustomException(message: 'Nothing to update!');
     }
 
-    final currentStudentProv = _read(currentStudentProvider.notifier);
-    final erp = currentStudentProv.state!.erp;
+    final erp = _read(currentStudentProvider)!.erp;
 
     // Make request
     final message = await _studentsRepository.update(erp: erp, data: data);
 
-    // Update profile provider
-    currentStudentProv.update(
-      (currentStudent) => currentStudent!.copyWith(
-        hobbies: hobbies,
-        interests: interests,
-        favouriteCampusHangoutSpot: favCampusHangoutSpot,
-        favouriteCampusActivity: favCampusActivity,
-      ),
-    );
     return message;
   }
 }

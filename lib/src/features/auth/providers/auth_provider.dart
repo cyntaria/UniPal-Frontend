@@ -52,10 +52,12 @@ class AuthProvider extends StateNotifier<FutureState<bool?>> {
     }
   }
 
-  void _cacheAuthProfile(StudentModel student, String password) {
-    _keyValueStorageService
-      ..setAuthUser(student)
-      ..setAuthPassword(password);
+  void cacheAuthProfile(StudentModel student) {
+    _keyValueStorageService.setAuthUser(student);
+  }
+
+  void _cacheAuthPassword(String password) {
+    _keyValueStorageService.setAuthPassword(password);
   }
 
   void _cacheAuthToken(String value) {
@@ -101,7 +103,8 @@ class AuthProvider extends StateNotifier<FutureState<bool?>> {
       _ref.read(currentStudentProvider.notifier).state = student;
 
       // Save authentication details in cache
-      _cacheAuthProfile(student, password);
+      cacheAuthProfile(student);
+      _cacheAuthPassword(password);
 
       return true;
     });
@@ -125,7 +128,8 @@ class AuthProvider extends StateNotifier<FutureState<bool?>> {
       _ref.read(currentStudentProvider.notifier).state = student;
 
       // Save authentication details in cache
-      _cacheAuthProfile(student, password);
+      cacheAuthProfile(student);
+      _cacheAuthPassword(password);
 
       return true;
     });
