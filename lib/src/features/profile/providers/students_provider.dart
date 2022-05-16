@@ -1,17 +1,28 @@
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
 import '../../auth/providers/auth_provider.dart';
 
-final studentsProvider = ChangeNotifierProvider<StudentsProvider>((ref) {
-  // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  return StudentsProvider(ref.read);
+// Networking
+import '../../../core/networking/custom_exception.dart';
+
+// Models
+import '../models/student_model.codegen.dart';
+
+// Repositories
+import '../repositories/students_repository.dart';
+
+final studentsProvider = Provider<StudentsProvider>((ref) {
+  final _studentsRepository = ref.watch(studentsRepositoryProvider);
+  return StudentsProvider(
+    ref.read,
+    studentsRepository: _studentsRepository,
+  );
 });
 
-class StudentsProvider extends ChangeNotifier {
+class StudentsProvider {
   final _connectStudent = <String, Object?>{
     'erp': '15030',
     'first_name': 'Mohammad Rafay',
@@ -47,20 +58,42 @@ class StudentsProvider extends ChangeNotifier {
     }
   };
   final Reader _read;
+  final StudentsRepository _studentsRepository;
 
-  StudentsProvider(this._read);
+  StudentsProvider(
+    this._read, {
+    required StudentsRepository studentsRepository,
+  }) : _studentsRepository = studentsRepository;
 
   // TODO(arafaysaleem): remove after demo
   UnmodifiableMapView<String, Object?> get otherStudent =>
       UnmodifiableMapView(_connectStudent);
 
-  void updateStudent({
-    required Set<int> interests,
-    required Set<int> hobbies,
-    required String favCampusHangoutSpot,
-    required String favCampusActivity,
-  }) {
-    _read(currentStudentProvider.notifier).update(
+  Future<String> updateStudentProfile({
+    required Set<int>? interests,
+    required Set<int>? hobbies,
+    required String? favCampusHangoutSpot,
+    required String? favCampusActivity,
+  }) async {
+    final data = StudentModel.toUpdateJson(
+      interests: interests,
+      hobbies: hobbies,
+      favouriteCampusActivity: favCampusActivity,
+      favouriteCampusHangoutSpot: favCampusHangoutSpot,
+    );
+
+    if (data.isEmpty) {
+      throw CustomException(message: 'Nothing to update!');
+    }
+
+    final currentStudentProv = _read(currentStudentProvider.notifier);
+    final erp = currentStudentProv.state!.erp;
+
+    // Make request
+    final message = await _studentsRepository.update(erp: erp, data: data);
+
+    // Update profile provider
+    currentStudentProv.update(
       (currentStudent) => currentStudent!.copyWith(
         hobbies: hobbies,
         interests: interests,
@@ -68,6 +101,6 @@ class StudentsProvider extends ChangeNotifier {
         favouriteCampusActivity: favCampusActivity,
       ),
     );
-    notifyListeners();
+    return message;
   }
 }

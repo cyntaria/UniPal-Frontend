@@ -5,6 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Providers
 import '../providers/preferences_provider.dart';
 
+// States
+import '../../shared/states/future_state.codegen.dart';
+
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
@@ -19,59 +22,45 @@ import '../../shared/widgets/custom_dialog.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
+import '../../shared/widgets/custom_circular_loader.dart';
 import '../widgets/update_preferences/hobbies_filter_chips.dart';
 import '../widgets/update_preferences/interests_filter_chips.dart';
 
-class UpdatePreferencesScreen extends StatefulHookConsumerWidget {
+class UpdatePreferencesScreen extends HookConsumerWidget {
   const UpdatePreferencesScreen({Key? key}) : super(key: key);
 
   @override
-  _UpdatePreferencesScreenState createState() =>
-      _UpdatePreferencesScreenState();
-}
-
-class _UpdatePreferencesScreenState
-    extends ConsumerState<UpdatePreferencesScreen> {
-  late final formKey = GlobalKey<FormState>();
-
-  Future<bool> _showConfirmDialog() async {
-    final doPop = await showDialog<bool>(
-      context: context,
-      barrierColor: AppColors.barrierColor,
-      builder: (ctx) => const CustomDialog.confirm(
-        title: 'Are you sure?',
-        body: 'Do you want to go back without saving your preferences?',
-        trueButtonText: 'Yes',
-        falseButtonText: 'No',
-      ),
-    );
-    if (doPop == null || !doPop) return Future<bool>.value(false);
-    ref.read(prefsProvider).clearUnUpdatedPrefs();
-    return Future<bool>.value(true);
-  }
-
-  void _onUpdate({
-    required String favCampusSpot,
-    required String favActivity,
-  }) {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      ref.read(prefsProvider).updatePreferences(
-            newCampusHangoutSpot: favCampusSpot,
-            newCampusActivity: favActivity,
-          );
-      AppRouter.pop();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final prefsProv = ref.watch(prefsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = useMemoized(GlobalKey<FormState>.new);
+    final prefsProv = ref.watch(prefsProvider.notifier);
     final favHangoutSpotController = useTextEditingController(
       text: prefsProv.favCampusHangoutSpot,
     );
     final favActivityController = useTextEditingController(
       text: prefsProv.favCampusActivity,
+    );
+
+    ref.listen<FutureState<String>>(
+      prefsProvider,
+      (_, state) async => state.whenOrNull(
+        data: (message) async {
+          favActivityController.clear();
+          favHangoutSpotController.clear();
+          return CustomDialog.showAlertDialog(
+            context: context,
+            dialogTitle: 'Update Preferences Success',
+            reason: message,
+            buttonText: 'Okay',
+            onButtonPressed: AppRouter.pop,
+          );
+        },
+        failed: (reason) async => CustomDialog.showAlertDialog(
+          context: context,
+          dialogTitle: 'Update Preferences Failed',
+          reason: reason,
+          buttonText: 'Okay',
+        ),
+      ),
     );
 
     return Scaffold(
@@ -83,7 +72,21 @@ class _UpdatePreferencesScreenState
         onTap: () => FocusScope.of(context).unfocus(),
         child: Form(
           key: formKey,
-          onWillPop: _showConfirmDialog,
+          onWillPop: () async {
+            final doPop = await showDialog<bool>(
+              context: context,
+              barrierColor: AppColors.barrierColor,
+              builder: (ctx) => const CustomDialog.confirm(
+                title: 'Are you sure?',
+                body: 'Do you want to go back without saving your preferences?',
+                trueButtonText: 'Yes',
+                falseButtonText: 'No',
+              ),
+            );
+            if (doPop == null || !doPop) return Future<bool>.value(false);
+            ref.read(prefsProvider.notifier).clearUnUpdatedPrefs();
+            return Future<bool>.value(true);
+          },
           child: ScrollableColumn(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             children: [
@@ -134,26 +137,23 @@ class _UpdatePreferencesScreenState
               // Confirm Details Button
               CustomTextButton.gradient(
                 width: double.infinity,
-                onPressed: () => _onUpdate(
-                  favCampusSpot: favHangoutSpotController.text,
-                  favActivity: favActivityController.text,
-                ),
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    ref.read(prefsProvider.notifier).updatePreferences(
+                          newCampusHangoutSpot: favHangoutSpotController.text,
+                          newCampusActivity: favActivityController.text,
+                        );
+                  }
+                },
                 gradient: AppColors.buttonGradientPurple,
                 child: Consumer(
                   builder: (context, ref, child) {
-                    return child!;
-                    // final authState = ref.watch(authProvider);
-                    // return authState.maybeWhen(
-                    //   authenticating: () => const Center(
-                    //     child: SpinKitRing(
-                    //       color: Colors.white,
-                    //       size: 30,
-                    //       lineWidth: 4,
-                    //       duration: Duration(milliseconds: 1100),
-                    //     ),
-                    //   ),
-                    //   orElse: () => child!,
-                    // );
+                    final futureState = ref.watch(prefsProvider);
+                    return futureState.maybeWhen(
+                      loading: () => const CustomCircularLoader(),
+                      orElse: () => child!,
+                    );
                   },
                   child: Center(
                     child: Text(

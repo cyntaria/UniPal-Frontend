@@ -51,7 +51,7 @@ class LoginScreen extends HookConsumerWidget {
         failed: (reason) => CustomDialog.showAlertDialog(
           context: context,
           reason: reason,
-          errorDialogTitle: 'Login Failed',
+          dialogTitle: 'Login Failed',
         ),
       ),
     );

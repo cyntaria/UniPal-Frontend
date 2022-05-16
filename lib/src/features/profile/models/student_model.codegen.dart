@@ -37,4 +37,52 @@ class StudentModel with _$StudentModel {
   }) = _StudentModel;
 
   factory StudentModel.fromJson(JSON json) => _$StudentModelFromJson(json);
+
+  const StudentModel._();
+
+  static JSON toUpdateJson({
+    String? erp,
+    String? firstName,
+    String? lastName,
+    Gender? gender,
+    String? contact,
+    String? email,
+    DateTime? birthday,
+    String? profilePictureUrl,
+    int? graduationYear,
+    String? uniEmail,
+    Set<int>? hobbies,
+    Set<int>? interests,
+    int? programId,
+    int? campusId,
+    String? favouriteCampusHangoutSpot,
+    String? favouriteCampusActivity,
+    StudentRole? role,
+    int? currentStatusId,
+    bool? isActive,
+  }) {
+    return <String, Object?>{
+      if (erp != null) 'erp': erp,
+      if (firstName != null) 'first_name': firstName,
+      if (lastName != null) 'last_name': lastName,
+      if (gender != null) 'gender': gender,
+      if (contact != null) 'contact': contact,
+      if (email != null) 'email': email,
+      if (birthday != null) 'birthday': birthday,
+      if (profilePictureUrl != null) 'profile_picture_url': profilePictureUrl,
+      if (graduationYear != null) 'graduation_year': graduationYear,
+      if (uniEmail != null) 'uni_email': uniEmail,
+      if (hobbies != null) 'hobbies': hobbies,
+      if (interests != null) 'interests': interests,
+      if (programId != null) 'program_id': programId,
+      if (campusId != null) 'campus_id': campusId,
+      if (favouriteCampusHangoutSpot != null)
+        'favourite_campus_hangout_spot': favouriteCampusHangoutSpot,
+      if (favouriteCampusActivity != null)
+        'favourite_campus_activity': favouriteCampusActivity,
+      if (role != null) 'role': role,
+      if (currentStatusId != null) 'current_status': currentStatusId,
+      if (isActive != null) 'is_active': isActive,
+    };
+  }
 }

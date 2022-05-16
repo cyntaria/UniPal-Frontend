@@ -21,7 +21,7 @@ class InterestsFilterChips extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final allInterests = ref.watch(interestsProvider).getAllInterests();
-    final selectedInterests = ref.watch(prefsProvider).getSelectedInterests();
+    final selectedInterests = ref.watch(prefsProvider.notifier).getSelectedInterests();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,7 +45,7 @@ class InterestsFilterChips extends ConsumerWidget {
                 label: Text(interest.interest),
                 isSelected: selectedInterests.contains(interest.interestId),
                 onChanged: (isSelected, interest) {
-                  return ref.read(prefsProvider).selectInterest(
+                  return ref.read(prefsProvider.notifier).selectInterest(
                         isSelected: isSelected,
                         interest: interest,
                       );

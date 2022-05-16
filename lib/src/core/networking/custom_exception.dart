@@ -46,7 +46,7 @@ class CustomException implements Exception {
   CustomException({
     String? code,
     required this.message,
-    required this.exceptionType,
+    this.exceptionType = _ExceptionType.ApiException,
   }) : name = code ?? exceptionType.name;
 
   factory CustomException.fromDioException(Exception error) {
@@ -90,10 +90,7 @@ class CustomException implements Exception {
                 message: message,
               );
             }
-            return CustomException(
-              exceptionType: _ExceptionType.ApiException,
-              message: message,
-            );
+            return CustomException(message: message);
         }
       } else {
         return CustomException(

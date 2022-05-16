@@ -10,19 +10,24 @@ import 'students_provider.dart';
 import '../models/interest_model.codegen.dart';
 import '../models/hobby_model.codegen.dart';
 
-final prefsProvider = Provider.autoDispose<PreferencesProvider>((ref) {
-  // final _moviesRepository = ref.watch(_moviesRepositoryProvider);
-  final currentStudent = ref.watch(currentStudentProvider)!;
-  return PreferencesProvider(
-    ref.read,
-    selectedHobbyIds: {...currentStudent.hobbies ?? {}},
-    selectedInterestIds: {...currentStudent.interests ?? {}},
-    favCampusActivity: currentStudent.favouriteCampusActivity ?? '',
-    favCampusHangoutSpot: currentStudent.favouriteCampusHangoutSpot ?? '',
-  );
-});
+// States
+import '../../shared/states/future_state.codegen.dart';
 
-class PreferencesProvider {
+final prefsProvider =
+    StateNotifierProvider.autoDispose<PreferencesProvider, FutureState<String>>(
+  (ref) {
+    final currentStudent = ref.watch(currentStudentProvider)!;
+    return PreferencesProvider(
+      ref.read,
+      selectedHobbyIds: {...currentStudent.hobbies ?? {}},
+      selectedInterestIds: {...currentStudent.interests ?? {}},
+      favCampusActivity: currentStudent.favouriteCampusActivity ?? '',
+      favCampusHangoutSpot: currentStudent.favouriteCampusHangoutSpot ?? '',
+    );
+  },
+);
+
+class PreferencesProvider extends StateNotifier<FutureState<String>> {
   final Reader _read;
   final Set<int> _selectedHobbyIds;
   final Set<int> _selectedInterestIds;
@@ -36,7 +41,8 @@ class PreferencesProvider {
     required this.favCampusActivity,
     required this.favCampusHangoutSpot,
   })  : _selectedHobbyIds = selectedHobbyIds,
-        _selectedInterestIds = selectedInterestIds;
+        _selectedInterestIds = selectedInterestIds,
+        super(const FutureState.idle());
 
   UnmodifiableSetView<int> getSelectedHobbies() {
     return UnmodifiableSetView(_selectedHobbyIds);
@@ -72,16 +78,20 @@ class PreferencesProvider {
     }
   }
 
-  void updatePreferences({
+  Future<void> updatePreferences({
     required String newCampusHangoutSpot,
     required String newCampusActivity,
-  }) {
-    _read(studentsProvider).updateStudent(
-      interests: _selectedInterestIds,
-      hobbies: _selectedHobbyIds,
-      favCampusHangoutSpot: newCampusHangoutSpot,
-      favCampusActivity: newCampusActivity,
-    );
+  }) async {
+    state = const FutureState.loading();
+
+    state = await FutureState.makeGuardedRequest(() {
+      return _read(studentsProvider).updateStudentProfile(
+        interests: _selectedInterestIds,
+        hobbies: _selectedHobbyIds,
+        favCampusHangoutSpot: newCampusHangoutSpot,
+        favCampusActivity: newCampusActivity,
+      );
+    });
   }
 
   void clearUnUpdatedPrefs() {

@@ -42,7 +42,7 @@ class ApiEndpoint {
   /// Specify student [erp] to get the path for a specific student.
   /// 
   /// Specify secondary [extendedResourceId] to get the path for a specific secondary resource.
-  static String students(StudentEndpoint endpoint, {int? erp, int? extendedResourceId}) {
+  static String students(StudentEndpoint endpoint, {String? erp, int? extendedResourceId}) {
     const path = '/students';
     switch(endpoint){
       case StudentEndpoint.BASE: return path;

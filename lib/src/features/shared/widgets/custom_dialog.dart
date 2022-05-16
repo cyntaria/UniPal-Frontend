@@ -25,16 +25,18 @@ class CustomDialog extends StatelessWidget {
   static Future<void> showAlertDialog({
     required BuildContext context,
     required String reason,
-    String? errorDialogTitle,
-    String? errorButtonText,
+    String? dialogTitle,
+    String? buttonText,
+    VoidCallback? onButtonPressed,
   }) async {
     await showDialog<bool>(
       context: context,
       barrierColor: AppColors.barrierColor.withOpacity(0.75),
       builder: (ctx) => CustomDialog.alert(
-        title: errorDialogTitle ?? 'Request Failed',
+        title: dialogTitle ?? 'Request Failed',
         body: reason,
-        buttonText: errorButtonText ?? 'Retry',
+        buttonText: buttonText ?? 'Retry',
+        onButtonPressed: onButtonPressed,
       ),
     );
   }

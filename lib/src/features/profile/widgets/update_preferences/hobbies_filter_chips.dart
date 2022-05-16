@@ -21,7 +21,8 @@ class HobbiesFilterChips extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final allHobbies = ref.watch(hobbiesProvider).getAllHobbies();
-    final selectedHobbies = ref.watch(prefsProvider).getSelectedHobbies();
+    final selectedHobbies =
+        ref.watch(prefsProvider.notifier).getSelectedHobbies();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,7 +46,7 @@ class HobbiesFilterChips extends ConsumerWidget {
                 label: Text(hobby.hobby),
                 isSelected: selectedHobbies.contains(hobby.hobbyId),
                 onChanged: (isSelected, hobby) {
-                  return ref.read(prefsProvider).selectHobby(
+                  return ref.read(prefsProvider.notifier).selectHobby(
                         isSelected: isSelected,
                         hobby: hobby,
                       );

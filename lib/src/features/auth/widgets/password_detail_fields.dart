@@ -63,7 +63,7 @@ class PasswordDetailFields extends HookConsumerWidget {
         failed: (reason) => CustomDialog.showAlertDialog(
           context: context,
           reason: reason,
-          errorDialogTitle: 'Register Failed',
+          dialogTitle: 'Register Failed',
         ),
       ),
     );
