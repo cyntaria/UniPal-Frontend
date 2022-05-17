@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:clock/clock.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Config
+import 'firebase_options.dart';
 import 'src/config/config.dart';
 
 // Services
@@ -37,6 +39,11 @@ class AppBootstrapper {
 
     // For prettyifying console debug messages
     debugPrint = _prettifyDebugPrint;
+
+    // Initialize firebase SDK
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
     // For preparing the error monitoring SDK and loading
     // up the `runApp` method in a guarded zone

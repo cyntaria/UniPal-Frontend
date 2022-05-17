@@ -32,13 +32,15 @@ class NewPostBar extends StatelessWidget {
                 builder: (_, ref, __) {
                   final authorProfilePicture = ref.watch(
                     currentStudentProvider.select(
-                      (value) => value!.profilePictureUrl,
+                      (value) => value?.profilePictureUrl,
                     ),
                   );
-                  return CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(authorProfilePicture),
-                  );
+                  return authorProfilePicture == null
+                      ? const SizedBox.shrink()
+                      : CircleAvatar(
+                          radius: 20,
+                          backgroundImage: NetworkImage(authorProfilePicture),
+                        );
                 },
               ),
 

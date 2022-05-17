@@ -7,6 +7,7 @@ import '../../../helpers/typedefs.dart';
 // Enums
 import '../enums/gender_enum.dart';
 import '../enums/student_role_enum.dart';
+import '../enums/student_type_enum.dart';
 
 part 'student_model.codegen.freezed.dart';
 part 'student_model.codegen.g.dart';
@@ -19,8 +20,10 @@ class StudentModel with _$StudentModel {
     required String lastName,
     required Gender gender,
     required String contact,
-    @JsonKey(includeIfNull: false) String? email,
-    @JsonKey(toJson: AppUtils.dateToJson) required DateTime birthday,
+    @JsonKey(includeIfNull: false)
+        String? email,
+    @JsonKey(toJson: AppUtils.dateToJson)
+        required DateTime birthday,
     required String profilePictureUrl,
     required int graduationYear,
     required String uniEmail,
@@ -30,10 +33,14 @@ class StudentModel with _$StudentModel {
         List<int>? interests,
     required int programId,
     required int campusId,
-    @JsonKey(includeIfNull: false) String? favouriteCampusHangoutSpot,
-    @JsonKey(includeIfNull: false) String? favouriteCampusActivity,
-    @JsonKey(includeIfNull: false) StudentRole? role,
-    @JsonKey(name: 'current_status', includeIfNull: false) int? currentStatusId,
+    @JsonKey(includeIfNull: false)
+        String? favouriteCampusHangoutSpot,
+    @JsonKey(includeIfNull: false)
+        String? favouriteCampusActivity,
+    @JsonKey(includeIfNull: false)
+        StudentRole? role,
+    @JsonKey(name: 'current_status', includeIfNull: false)
+        int? currentStatusId,
     @JsonKey(fromJson: AppUtils.boolFromInt, toJson: AppUtils.boolToInt)
         required bool isActive,
   }) = _StudentModel;
@@ -94,5 +101,13 @@ class StudentModel with _$StudentModel {
       if (currentStatusId != null) 'current_status': currentStatusId,
       if (isActive != null) 'is_active': isActive,
     };
+  }
+
+  StudentType get studentType {
+    final now = DateTime.now();
+    if (now.year > graduationYear) return StudentType.ALUMNI;
+    final diff = 4 - (graduationYear - now.year);
+    final i = now.month < 7 ? diff - 1 : diff;
+    return StudentType.values[i];
   }
 }

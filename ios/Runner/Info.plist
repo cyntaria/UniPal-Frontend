@@ -4,6 +4,12 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To upload images to API</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To capture images for uploading</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To record audio during video recording</string>
 	<key>CFBundleDisplayName</key>
 	<string>Unipal App</string>
 	<key>CFBundleExecutable</key>

@@ -1,3 +1,5 @@
+// ignore_for_file: use_setters_to_change_properties
+
 import 'dart:collection';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,7 +17,7 @@ import '../models/hobby_model.codegen.dart';
 import '../../shared/states/future_state.codegen.dart';
 
 final prefsProvider =
-    StateNotifierProvider<PreferencesProvider, FutureState<String>>(
+    StateNotifierProvider.autoDispose<PreferencesProvider, FutureState<String>>(
   (ref) {
     final currentStudent = ref.watch(currentStudentProvider)!;
     return PreferencesProvider(
@@ -24,6 +26,7 @@ final prefsProvider =
       selectedInterestIds: currentStudent.interests,
       favCampusActivity: currentStudent.favouriteCampusActivity,
       favCampusHangoutSpot: currentStudent.favouriteCampusHangoutSpot,
+      currentStatusId: currentStudent.currentStatusId,
     );
   },
 );
@@ -34,6 +37,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
   final List<int> _selectedInterestIds;
   final String? favCampusActivity;
   final String? favCampusHangoutSpot;
+  int? currentStatusId;
 
   PreferencesProvider(
     this._read, {
@@ -41,6 +45,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
     required List<int>? selectedInterestIds,
     required this.favCampusActivity,
     required this.favCampusHangoutSpot,
+    required this.currentStatusId,
   })  : _selectedHobbyIds =
             selectedHobbyIds != null ? [...selectedHobbyIds] : [],
         _selectedInterestIds =
@@ -82,6 +87,10 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
     }
   }
 
+  void selectStudentStatus(int? newStatusId) {
+    currentStatusId = newStatusId;
+  }
+
   Future<void> updatePreferences({
     String? newCampusHangoutSpot,
     String? newCampusActivity,
@@ -98,6 +107,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
         interests: _interests,
         favCampusHangoutSpot: newCampusHangoutSpot,
         favCampusActivity: newCampusActivity,
+        currentStatusId: currentStatusId,
       );
       state = FutureState.data(data: result);
 
@@ -107,6 +117,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
             interests: _interests,
             favouriteCampusHangoutSpot: newCampusHangoutSpot,
             favouriteCampusActivity: newCampusActivity,
+            currentStatusId: currentStatusId,
           );
 
       _read(authProvider.notifier).cacheAuthProfile(newStudent);

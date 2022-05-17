@@ -1,9 +1,14 @@
 import 'dart:collection';
+import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
 import '../../auth/providers/auth_provider.dart';
+
+// Helpers
+import '../../../helpers/extensions/string_extension.dart';
 
 // Networking
 import '../../../core/networking/custom_exception.dart';
@@ -70,10 +75,12 @@ class StudentsProvider {
       UnmodifiableMapView(_connectStudent);
 
   Future<String> updateStudentProfile({
-    required List<int>? interests,
-    required List<int>? hobbies,
-    required String? favCampusHangoutSpot,
-    required String? favCampusActivity,
+    String? profilePictureUrl,
+    List<int>? interests,
+    List<int>? hobbies,
+    String? favCampusHangoutSpot,
+    String? favCampusActivity,
+    int? currentStatusId,
   }) async {
     final _hobbies = <String, int?>{};
     if (hobbies != null) {
@@ -96,6 +103,8 @@ class StudentsProvider {
       interest3: _interests['interest_3'],
       favouriteCampusActivity: favCampusActivity,
       favouriteCampusHangoutSpot: favCampusHangoutSpot,
+      profilePictureUrl: profilePictureUrl,
+      currentStatusId: currentStatusId,
     );
 
     if (data.isEmpty) {
@@ -108,5 +117,20 @@ class StudentsProvider {
     final message = await _studentsRepository.update(erp: erp, data: data);
 
     return message;
+  }
+
+  Future<void> updateProfilePicture(String filePath) async {
+    final file = File(filePath);
+    final erp = _read(currentStudentProvider)!.erp;
+    const folder = 'users';
+    final storePath = '$erp/profile_image${filePath.ext}';
+
+    final ref = FirebaseStorage.instance.ref(folder).child(storePath);
+
+    final task = await ref.putFile(file);
+    if (task.state == TaskState.success) {
+      final imageURL = await task.ref.getDownloadURL();
+      await updateStudentProfile(profilePictureUrl: imageURL);
+    }
   }
 }

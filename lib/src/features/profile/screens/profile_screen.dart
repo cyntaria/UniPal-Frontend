@@ -9,6 +9,7 @@ import '../../auth/providers/auth_provider.dart';
 import '../providers/students_provider.dart';
 
 // Helpers
+import '../../../helpers/extensions/string_extension.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/typedefs.dart';
@@ -50,7 +51,7 @@ class ProfileScreen extends HookConsumerWidget {
                   extent: isMyProfile ? 270 : 320,
                   avatarUrl: student.profilePictureUrl,
                   title: '${student.firstName} ${student.lastName}',
-                  subtitle: "${student.currentStatusId ?? 'Not Specified'}",
+                  subtitle: student.studentType.name.capitalize,
                   child: isMyProfile
                       ? null
                       : StudentConnectionButtons(

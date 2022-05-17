@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_this
 
+import 'package:path/path.dart' as p;
+
 // Helpers
 import '../constants/app_utils.dart' show Regexes;
 
@@ -40,4 +42,7 @@ extension StringExt on String {
 
   /// An extension for replacing underscores in a String with spaces.
   String get removeUnderScore => this.replaceAll('_', ' ');
+
+  /// An extension for getting file extension
+  String get ext => p.extension(this);
 }

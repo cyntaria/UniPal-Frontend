@@ -14,6 +14,7 @@ class ProfileAppBar extends StatelessWidget {
   final String? subtitle;
   final Widget? child;
   final Widget? trailing;
+  final VoidCallback? onCameraTap;
 
   const ProfileAppBar({
     Key? key,
@@ -22,6 +23,7 @@ class ProfileAppBar extends StatelessWidget {
     this.extent = 250,
     this.trailing,
     this.subtitle,
+    this.onCameraTap,
     this.child,
   })  : assert(extent >= 200, "Extent can't be less than 200"),
         super(key: key);
@@ -46,6 +48,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   final String avatarUrl;
   final String title;
   final String? subtitle;
+  final VoidCallback? onCameraTap;
   final double extent;
 
   final Widget? trailing;
@@ -69,6 +72,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
     this.trailing,
     this.subtitle,
     this.child,
+    this.onCameraTap,
   });
 
   @override
@@ -172,15 +176,48 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
               child: SizedBox(
                 height: avatarSize,
                 width: avatarSize,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 233, 233, 233),
-                  ),
-                  padding: const EdgeInsets.all(3),
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(avatarUrl),
-                  ),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 233, 233, 233),
+                        ),
+                        padding: const EdgeInsets.all(3),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(avatarUrl),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 5,
+                      right: 0,
+                      child: AnimatedSwitcher(
+                        duration: Durations.fastest,
+                        child: !isChildVisible
+                            ? const SizedBox.shrink()
+                            : InkWell(
+                                onTap: onCameraTap,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: AppColors.buttonGradientPurple,
+                                  ),
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.camera_alt_rounded,
+                                      size: 23,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -215,7 +252,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
                           subtitle!,
                           style: const TextStyle(
                             color: AppColors.textLightGreyColor,
-                            fontSize: 16,
+                            fontSize: 18,
                           ),
                         )
                       : const SizedBox.shrink(),

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Models
+import '../models/student_status_model.codegen.dart';
+
 // Providers
 import '../providers/preferences_provider.dart';
 
@@ -19,10 +22,12 @@ import '../../../config/routes/app_router.dart';
 // Widgets
 import '../../shared/widgets/labeled_widget.dart';
 import '../../shared/widgets/custom_dialog.dart';
+import '../../shared/widgets/custom_dropdown_field.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 import '../../shared/widgets/custom_circular_loader.dart';
+import '../providers/student_statuses_provider.dart';
 import '../widgets/update_preferences/hobbies_filter_chips.dart';
 import '../widgets/update_preferences/interests_filter_chips.dart';
 
@@ -38,6 +43,13 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
     );
     final favActivityController = useTextEditingController(
       text: prefsProv.favCampusActivity,
+    );
+    final currentStatusController = useTextEditingController(
+      text: prefsProv.currentStatusId == null
+          ? null
+          : ref
+              .watch(studentStatusByIdProvider(prefsProv.currentStatusId!))
+              .studentStatus,
     );
 
     Future<bool> _showConfirmDialog() async {
@@ -122,6 +134,34 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
                 label: 'Interests',
                 labelStyle: AppTypography.primary.subHeading16,
                 child: const InterestsFilterChips(),
+              ),
+
+              Insets.gapH20,
+
+              // Current Status
+              Consumer(
+                builder: (_, ref, __) {
+                  final statuses = ref
+                      .watch(studentStatusesProvider)
+                      .getAllStudentStatuses();
+                  return LabeledWidget(
+                    label: 'Current Status',
+                    labelStyle: AppTypography.primary.body16,
+                    child: CustomDropdownField<StudentStatusModel>.animated(
+                      controller: currentStatusController,
+                      hintStyle: AppTypography.primary.body16.copyWith(
+                        color: AppColors.textGreyColor,
+                      ),
+                      hintText: 'Select a student status',
+                      items: {for (var e in statuses) e.studentStatus: e},
+                      onSelected: (studentStatus) {
+                        ref.read(prefsProvider.notifier).selectStudentStatus(
+                              studentStatus?.studentStatusId,
+                            );
+                      },
+                    ),
+                  );
+                },
               ),
 
               Insets.gapH20,
