@@ -38,6 +38,7 @@ class ProfileAppBar extends StatelessWidget {
         avatarUrl: avatarUrl,
         extent: extent,
         trailing: trailing,
+        onCameraTap: onCameraTap,
         child: child,
       ),
     );

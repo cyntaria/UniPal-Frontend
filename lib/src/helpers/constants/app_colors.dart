@@ -81,7 +81,7 @@ class AppColors {
 
   /// The orange [LinearGradient] for disabled buttons in the app.
   static const Gradient buttonGradientGrey = LinearGradient(
-    colors: [textGreyColor, scaffoldGreyColor],
+    colors: [lightSkeletonColor, darkSkeletonColor],
   );
 
   /// The white [LinearGradient] for fading movies carousel in the app.

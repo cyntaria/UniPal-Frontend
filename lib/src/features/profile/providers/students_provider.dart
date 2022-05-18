@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
@@ -130,7 +131,16 @@ class StudentsProvider {
     final task = await ref.putFile(file);
     if (task.state == TaskState.success) {
       final imageURL = await task.ref.getDownloadURL();
-      await updateStudentProfile(profilePictureUrl: imageURL);
+      final msg = await updateStudentProfile(profilePictureUrl: imageURL);
+      // Update profile provider
+      final newStudent = _read(currentStudentProvider.state)
+          .state!
+          .copyWith(profilePictureUrl: imageURL);
+
+      _read(authProvider.notifier).cacheAuthProfile(newStudent);
+      _read(currentStudentProvider.state).state = newStudent;
+
+      debugPrint(msg);
     }
   }
 }

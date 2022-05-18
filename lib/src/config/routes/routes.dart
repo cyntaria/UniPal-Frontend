@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Screens
 import '../../features/app_startup/app_startup_screen.dart';
+import '../../features/auth/screens/multi_media_picker_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/qr_scanner_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
@@ -47,6 +48,9 @@ class Routes {
 
   /// The name of the route for register screen.
   static const String RegisterScreenRoute = '/register-screen';
+  
+  /// The name of the route for image picker screen.
+  static const String MultiMediaPickerScreenRoute = '/image-picker-screen';
 
   /// The name of the route for forgot password screen.
   static const String ForgotPasswordScreenRoute = '/forgot-password-screen';
@@ -100,11 +104,12 @@ class Routes {
     QrScannerScreenRoute: (_) => const QrScannerScreen(),
     UpdatePreferencesScreenRoute: (_) => const UpdatePreferencesScreen(),
     AddEditPostScreenRoute: (_) => const AddEditPostScreen(),
+    GeneratedTimetablesScreenRoute: (_) => const GeneratedTimetablesScreen(),
+    MultiMediaPickerScreenRoute: (_) => const MultiMediaPickerScreen(),
     NotFoundScreenRoute: (_) => const SizedBox.shrink(),
     ForgotPasswordScreenRoute: (_) => const SizedBox.shrink(),
     ChangePasswordScreenRoute: (_) => const SizedBox.shrink(),
     AddEditActivityScreenRoute: (_) => const SizedBox.shrink(),
-    GeneratedTimetablesScreenRoute: (_) => const GeneratedTimetablesScreen(),
     TimetablesScreenRoute: (_) => const SizedBox.shrink(),
     AddEditTeacherReviewScreenRoute: (_) => const SizedBox.shrink(),
   };

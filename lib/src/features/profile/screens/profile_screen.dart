@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
+import '../../../config/routes/app_router.dart';
+import '../../../config/routes/routes.dart';
 import '../models/student_model.codegen.dart';
 
 // Providers
@@ -38,6 +40,17 @@ class ProfileScreen extends HookConsumerWidget {
       studentsProvider.select((value) => value.otherStudent),
     );
     final currentStudent = ref.watch(currentStudentProvider);
+
+    Future<void> _openImagePickerScreen() async {
+      final filePath = await AppRouter.pushNamed(
+        Routes.MultiMediaPickerScreenRoute,
+      ) as String?;
+      debugPrint(filePath);
+      if (filePath != null) {
+        await ref.read(studentsProvider).updateProfilePicture(filePath);
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.lightBackgroundColor,
       body: SafeArea(
@@ -52,6 +65,7 @@ class ProfileScreen extends HookConsumerWidget {
                   avatarUrl: student.profilePictureUrl,
                   title: '${student.firstName} ${student.lastName}',
                   subtitle: student.studentType.name.capitalize,
+                  onCameraTap: _openImagePickerScreen,
                   child: isMyProfile
                       ? null
                       : StudentConnectionButtons(
