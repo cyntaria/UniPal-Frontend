@@ -21,26 +21,26 @@ import '../../shared/states/future_state.codegen.dart';
 // Repositories
 import '../repositories/students_repository.dart';
 
-final studentsProvider =
-    StateNotifierProvider<StudentsProvider, FutureState<String>>(
+final profileProvider =
+    StateNotifierProvider<ProfileProvider, FutureState<String>>(
   (ref) {
     final _studentsRepository = ref.watch(studentsRepositoryProvider);
-    return StudentsProvider(
+    return ProfileProvider(
       ref.read,
       studentsRepository: _studentsRepository,
     );
   },
 );
 
-final profileScreenStudentProvider = StateProvider<StudentModel?>((ref) {
-  return null;
+final profileScreenStudentProvider = StateProvider<StudentModel>((ref) {
+  throw UnimplementedError();
 });
 
-class StudentsProvider extends StateNotifier<FutureState<String>> {
+class ProfileProvider extends StateNotifier<FutureState<String>> {
   final Reader _read;
   final StudentsRepository _studentsRepository;
 
-  StudentsProvider(
+  ProfileProvider(
     this._read, {
     required StudentsRepository studentsRepository,
   })  : _studentsRepository = studentsRepository,

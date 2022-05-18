@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../profile/enums/gender_enum.dart';
 
 // Models
+import '../../../profile/enums/student_type_enum.dart';
 import '../../../profile/models/campus_model.codegen.dart';
 import '../../../profile/models/hobby_model.codegen.dart';
 import '../../../profile/models/interest_model.codegen.dart';
@@ -26,6 +27,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../auth/widgets/gender_selection_cards.dart';
 import '../../../shared/widgets/custom_dropdown_field.dart';
 import '../../../shared/widgets/labeled_widget.dart';
+import '../../providers/filter_providers.dart';
 
 class FiltersListView extends HookConsumerWidget {
   final ScrollController scrollController;
@@ -37,13 +39,30 @@ class FiltersListView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final programController = useTextEditingController(text: '');
-    final campusController = useTextEditingController(text: '');
-    final hobbyController = useTextEditingController(text: '');
-    final interestController = useTextEditingController(text: '');
-    final statusController = useTextEditingController(text: '');
-    final batchController = useTextEditingController(text: '');
-    final genderController = useValueNotifier<Gender>(Gender.MALE);
+    final genderController = useValueNotifier<Gender?>(null);
+    final programController = useTextEditingController();
+    final campusController = useTextEditingController();
+    final hobbyController = useTextEditingController();
+    final interestController = useTextEditingController();
+    final statusController = useTextEditingController();
+    final batchController = useTextEditingController();
+    final studentTypeController = useTextEditingController();
+
+    useEffect(() {
+      genderController.value = ref.read(genderFilterProvider);
+      programController.text = ref.read(programFilterProvider)?.program ?? '';
+      campusController.text = ref.read(campusFilterProvider)?.campus ?? '';
+      hobbyController.text = ref.read(hobbyFilterProvider)?.hobby ?? '';
+      programController.text = ref.read(programFilterProvider)?.program ?? '';
+      interestController.text =
+          ref.read(interestFilterProvider)?.interest ?? '';
+      statusController.text =
+          ref.read(studentStatusFilterProvider)?.studentStatus ?? '';
+      batchController.text = (ref.read(batchFilterProvider) ?? '').toString();
+      studentTypeController.text =
+          ref.read(studentTypeFilterProvider)?.name ?? '';
+      return null;
+    });
 
     return ListView(
       controller: scrollController,
@@ -113,6 +132,21 @@ class FiltersListView extends HookConsumerWidget {
 
         Insets.gapH20,
 
+        // Student Types Dropdown Filter
+        LabeledWidget(
+          label: 'Student Type',
+          useDarkerLabel: true,
+          child: CustomDropdownField<StudentType>.animated(
+            controller: studentTypeController,
+            enableSearch: true,
+            hintText: 'Select a student type',
+            items: {for (var e in StudentType.values) e.name: e},
+            onSelected: (studentType) {},
+          ),
+        ),
+
+        Insets.gapH20,
+
         // Hobbies Dropdown Filter
         Consumer(
           builder: (context, ref, child) {
@@ -173,29 +207,6 @@ class FiltersListView extends HookConsumerWidget {
         ),
 
         Insets.gapH20,
-
-        // Age Slider Filter
-        LabeledWidget(
-          label: 'Student Status',
-          useDarkerLabel: true,
-          child: CustomDropdownField<int>.animated(
-            controller: statusController,
-            enableSearch: true,
-            hintText: 'Select a status',
-            items: const {
-              'Looking for friends': 1,
-              'Looking for transport': 2,
-              'Looking for lunch pal': 3,
-              'Looking for relationships': 4,
-              'Looking for jamming': 5,
-              'Looking for basketball': 6,
-              'Looking for futsal': 7,
-              'Looking for cricket': 8,
-              'Looking for cards': 9,
-            },
-            onSelected: (id) {},
-          ),
-        ),
       ],
     );
   }

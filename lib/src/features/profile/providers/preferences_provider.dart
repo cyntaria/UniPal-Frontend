@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Providers
 import '../../../core/networking/custom_exception.dart';
 import '../../auth/providers/auth_provider.dart';
-import 'students_provider.dart';
+import 'profile_provider.dart';
 
 // Models
 import '../models/interest_model.codegen.dart';
@@ -102,7 +102,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
     final _hobbies = _selectedHobbyIds.isNotEmpty ? _selectedHobbyIds : null;
 
     try {
-      final result = await _read(studentsProvider.notifier).updateStudentProfile(
+      final result = await _read(profileProvider.notifier).updateStudentProfile(
         hobbies: _hobbies,
         interests: _interests,
         favCampusHangoutSpot: newCampusHangoutSpot,

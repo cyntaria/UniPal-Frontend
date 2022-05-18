@@ -6,7 +6,7 @@ import '../../../auth/providers/auth_provider.dart';
 import '../../providers/hobbies_provider.dart';
 import '../../providers/interests_provider.dart';
 import '../../providers/student_statuses_provider.dart';
-import '../../providers/students_provider.dart';
+import '../../providers/profile_provider.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
@@ -49,7 +49,7 @@ class PreferencesTabView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(profileScreenStudentProvider)!;
+    final student = ref.watch(profileScreenStudentProvider);
     final currentStudent = ref.watch(currentStudentProvider)!;
     final hobbies = ref.watch(_hobbyModelsProvider(student.hobbies));
     final interests = ref.watch(_interestModelsProvider(student.interests));

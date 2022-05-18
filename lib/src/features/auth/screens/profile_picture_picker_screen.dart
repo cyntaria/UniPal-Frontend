@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 // Providers
-import '../../profile/providers/students_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 
 // Routing
 import '../../../config/routes/app_router.dart';
@@ -56,10 +56,10 @@ class _MultiMediaPickerScreenState
 
   @override
   Widget build(BuildContext context) {
-    final studentsFuture = ref.watch(studentsProvider);
+    final studentsFuture = ref.watch(profileProvider);
 
     ref.listen<FutureState<String>>(
-      studentsProvider,
+      profileProvider,
       (_, state) => state.whenOrNull(
         data: (message) => CustomDialog.showAlertDialog(
           context: context,

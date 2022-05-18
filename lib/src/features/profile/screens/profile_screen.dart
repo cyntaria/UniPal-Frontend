@@ -6,7 +6,7 @@ import '../../../config/routes/app_router.dart';
 
 // Providers
 import '../../auth/providers/auth_provider.dart';
-import '../providers/students_provider.dart';
+import '../providers/profile_provider.dart';
 
 // Helpers
 import '../../../helpers/extensions/string_extension.dart';
@@ -25,7 +25,7 @@ import '../widgets/profile_tabs/about_tab_view.dart';
 import '../widgets/profile_tabs/activities_tab_view.dart';
 import '../widgets/profile_tabs/preferences_tab_view.dart';
 
-class ProfileScreen extends HookConsumerWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({
     Key? key,
   }) : super(key: key);
@@ -33,11 +33,11 @@ class ProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStudent = ref.watch(currentStudentProvider)!;
-    final student = ref.watch(profileScreenStudentProvider)!;
+    final student = ref.watch(profileScreenStudentProvider);
     final isMyProfile = currentStudent.erp == student.erp;
 
     void _saveNewProfilePicture(String filePath) {
-      ref.read(studentsProvider.notifier).updateProfilePicture(filePath);
+      ref.read(profileProvider.notifier).updateProfilePicture(filePath);
     }
 
     void _openImagePickerScreen() {
@@ -70,8 +70,8 @@ class ProfileScreen extends HookConsumerWidget {
                       ? null
                       : StudentConnectionButtons(
                           myErp: currentStudent.erp,
-                          studentConnection: null,
                           studentErp: student.erp,
+                          studentConnection: student.studentConnection,
                         ),
                 ),
 

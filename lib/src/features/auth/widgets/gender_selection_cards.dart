@@ -11,20 +11,20 @@ import '../../profile/enums/gender_enum.dart';
 import '../../shared/widgets/custom_radio_button.dart';
 
 class GenderSelectionCards extends StatelessWidget {
-  final ValueNotifier<Gender> controller;
+  final ValueNotifier<Gender?> controller;
 
   const GenderSelectionCards({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
-  void selectGender(Gender gender) {
-    controller.value = gender;
+  void selectGender(Gender gender, {required bool isSelected}) {
+    controller.value = isSelected ? null : gender;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Gender>(
+    return ValueListenableBuilder<Gender?>(
       valueListenable: controller,
       builder: (_, gender, __) {
         return Row(
@@ -36,7 +36,9 @@ class GenderSelectionCards extends StatelessWidget {
                 isSelected: gender == Gender.MALE,
                 icon: Icons.male_rounded,
                 label: 'Male',
-                onTap: selectGender,
+                onTap: (_gender) {
+                  selectGender(_gender, isSelected: gender == Gender.MALE);
+                },
               ),
             ),
 
@@ -49,7 +51,9 @@ class GenderSelectionCards extends StatelessWidget {
                 isSelected: gender == Gender.FEMALE,
                 icon: Icons.female_rounded,
                 label: 'Female',
-                onTap: selectGender,
+                onTap: (_gender) {
+                  selectGender(_gender, isSelected: gender == Gender.FEMALE);
+                },
               ),
             ),
           ],

@@ -11,6 +11,7 @@ import '../../../../config/routes/app_router.dart';
 // Widgets
 import '../../../shared/widgets/custom_scrollable_bottom_sheet.dart';
 import '../../../shared/widgets/custom_text_button.dart';
+import '../../providers/filter_providers.dart';
 import 'filters_list_view.dart';
 
 class FiltersBottomSheet extends ConsumerStatefulWidget {
@@ -23,11 +24,22 @@ class FiltersBottomSheet extends ConsumerStatefulWidget {
 class _FiltersBottomSheetState extends ConsumerState<FiltersBottomSheet> {
   bool hasFilters = false;
 
-  void _onResetTap() {}
+  void _onResetTap() {
+    ref
+      ..invalidate(genderFilterProvider)
+      ..invalidate(programFilterProvider)
+      ..invalidate(campusFilterProvider)
+      ..invalidate(hobbyFilterProvider)
+      ..invalidate(interestFilterProvider)
+      ..invalidate(batchFilterProvider)
+      ..invalidate(studentTypeFilterProvider)
+      ..invalidate(studentStatusFilterProvider)
+      ..invalidate(searchFilterProvider)
+      ..refresh(searchFilteredStudentsProvider);
+  }
 
   void _onSaveTap() {
-    // TODO(arafaysaleem): add code to save filters
-    // TODO(arafaysaleem): add code to refresh finder provider
+    ref.refresh(searchFilteredStudentsProvider);
     AppRouter.pop();
   }
 

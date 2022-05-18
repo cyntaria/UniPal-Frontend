@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Providers
+import '../../providers/filter_providers.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
@@ -9,12 +12,11 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/custom_textfield.dart';
 import '../filters/filters_bottom_sheet.dart';
 
-class SearchAndFilterBar extends HookWidget {
+class SearchAndFilterBar extends ConsumerWidget {
   const SearchAndFilterBar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final searchController = useTextEditingController(text: '');
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Row(
@@ -30,7 +32,9 @@ class SearchAndFilterBar extends HookWidget {
                 boxShadow: Shadows.elevated,
               ),
               child: CustomTextField(
-                controller: searchController,
+                onChanged: (searchTerm) => ref
+                    .read(searchFilterProvider.notifier)
+                    .update((_) => searchTerm ?? ''),
                 hintText: 'Search by name',
                 hintStyle: const TextStyle(
                   color: AppColors.textLightGreyColor,

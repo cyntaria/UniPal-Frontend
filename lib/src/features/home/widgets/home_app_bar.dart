@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/tab_item_model.dart';
 
 // Providers
-import '../../profile/providers/students_provider.dart';
+import '../../profile/providers/profile_provider.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // Routing

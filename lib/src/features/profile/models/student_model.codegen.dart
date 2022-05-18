@@ -5,6 +5,7 @@ import '../../../helpers/constants/app_utils.dart';
 import '../../../helpers/typedefs.dart';
 
 // Enums
+import '../../requests/enums/connection_status_enum.dart';
 import '../enums/gender_enum.dart';
 import '../enums/student_role_enum.dart';
 import '../enums/student_type_enum.dart';
@@ -20,10 +21,8 @@ class StudentModel with _$StudentModel {
     required String lastName,
     required Gender gender,
     required String contact,
-    @JsonKey(includeIfNull: false)
-        String? email,
-    @JsonKey(toJson: AppUtils.dateToJson)
-        required DateTime birthday,
+    @JsonKey(includeIfNull: false) String? email,
+    @JsonKey(toJson: AppUtils.dateToJson) required DateTime birthday,
     required String profilePictureUrl,
     required int graduationYear,
     required String uniEmail,
@@ -33,16 +32,14 @@ class StudentModel with _$StudentModel {
         List<int>? interests,
     required int programId,
     required int campusId,
-    @JsonKey(includeIfNull: false)
-        String? favouriteCampusHangoutSpot,
-    @JsonKey(includeIfNull: false)
-        String? favouriteCampusActivity,
-    @JsonKey(includeIfNull: false)
-        StudentRole? role,
-    @JsonKey(name: 'current_status', includeIfNull: false)
-        int? currentStatusId,
+    @JsonKey(includeIfNull: false) String? favouriteCampusHangoutSpot,
+    @JsonKey(includeIfNull: false) String? favouriteCampusActivity,
+    @JsonKey(includeIfNull: false) StudentRole? role,
+    @JsonKey(name: 'current_status', includeIfNull: false) int? currentStatusId,
     @JsonKey(fromJson: AppUtils.boolFromInt, toJson: AppUtils.boolToInt)
         required bool isActive,
+    @JsonKey(toJson: AppUtils.toNull, includeIfNull: false)
+        ProfileStudentConnectionModel? studentConnection,
   }) = _StudentModel;
 
   factory StudentModel.fromJson(JSON json) => _$StudentModelFromJson(json);
@@ -78,10 +75,10 @@ class StudentModel with _$StudentModel {
       if (erp != null) 'erp': erp,
       if (firstName != null) 'first_name': firstName,
       if (lastName != null) 'last_name': lastName,
-      if (gender != null) 'gender': gender,
+      if (gender != null) 'gender': gender.toJson,
       if (contact != null) 'contact': contact,
       if (email != null) 'email': email,
-      if (birthday != null) 'birthday': birthday,
+      if (birthday != null) 'birthday': AppUtils.dateToJson(birthday),
       if (profilePictureUrl != null) 'profile_picture_url': profilePictureUrl,
       if (graduationYear != null) 'graduation_year': graduationYear,
       if (uniEmail != null) 'uni_email': uniEmail,
@@ -97,9 +94,9 @@ class StudentModel with _$StudentModel {
         'favourite_campus_hangout_spot': favouriteCampusHangoutSpot,
       if (favouriteCampusActivity != null)
         'favourite_campus_activity': favouriteCampusActivity,
-      if (role != null) 'role': role,
+      if (role != null) 'role': role.toJson,
       if (currentStatusId != null) 'current_status': currentStatusId,
-      if (isActive != null) 'is_active': isActive,
+      if (isActive != null) 'is_active': AppUtils.boolToInt(isActive),
     };
   }
 
@@ -110,4 +107,19 @@ class StudentModel with _$StudentModel {
     final i = now.month < 7 ? diff - 1 : diff;
     return StudentType.values[i];
   }
+}
+
+@freezed
+class ProfileStudentConnectionModel with _$ProfileStudentConnectionModel {
+  const factory ProfileStudentConnectionModel({
+    required int studentConnectionModel,
+    required ConnectionStatus connectionStatus,
+    required DateTime sentAt,
+    DateTime? acceptedAt,
+    required String senderErp,
+    required String receiverErp,
+  }) = _ProfileStudentConnectionModel;
+
+  factory ProfileStudentConnectionModel.fromJson(JSON json) =>
+      _$ProfileStudentConnectionModelFromJson(json);
 }
