@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../../../config/routes/app_router.dart';
 import '../../../config/routes/routes.dart';
-import '../models/student_model.codegen.dart';
 
 // Providers
 import '../../auth/providers/auth_provider.dart';
@@ -14,7 +13,6 @@ import '../providers/students_provider.dart';
 import '../../../helpers/extensions/string_extension.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_colors.dart';
-import '../../../helpers/typedefs.dart';
 
 // Widgets
 import '../widgets/profile_header/profile_app_bar.dart';
@@ -25,27 +23,21 @@ import '../widgets/profile_tabs/activities_tab_view.dart';
 import '../widgets/profile_tabs/preferences_tab_view.dart';
 
 class ProfileScreen extends HookConsumerWidget {
-  final StudentModel student;
-  final bool isMyProfile;
 
   const ProfileScreen({
     Key? key,
-    required this.student,
-    required this.isMyProfile,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final otherStudent = ref.watch(
-      studentsProvider.select((value) => value.otherStudent),
-    );
-    final currentStudent = ref.watch(currentStudentProvider);
+    final currentStudent = ref.watch(currentStudentProvider)!;
+    final student = ref.watch(profileScreenStudentProvider)!;
+    final isMyProfile = currentStudent.erp == student.erp;
 
     Future<void> _openImagePickerScreen() async {
       final filePath = await AppRouter.pushNamed(
         Routes.MultiMediaPickerScreenRoute,
       ) as String?;
-      debugPrint(filePath);
       if (filePath != null) {
         await ref.read(studentsProvider).updateProfilePicture(filePath);
       }
@@ -69,10 +61,9 @@ class ProfileScreen extends HookConsumerWidget {
                   child: isMyProfile
                       ? null
                       : StudentConnectionButtons(
-                          myErp: currentStudent!.erp,
-                          studentConnection:
-                              otherStudent['student_connection'] as JSON?,
-                          studentErp: otherStudent['erp']! as String,
+                          myErp: currentStudent.erp,
+                          studentConnection: null,
+                          studentErp: student.erp,
                         ),
                 ),
 

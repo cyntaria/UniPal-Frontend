@@ -28,6 +28,10 @@ final studentsProvider = Provider<StudentsProvider>((ref) {
   );
 });
 
+final profileScreenStudentProvider = StateProvider<StudentModel?>((ref){
+  return null;
+});
+
 class StudentsProvider {
   final _connectStudent = <String, Object?>{
     'erp': '15030',

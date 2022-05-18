@@ -5,16 +5,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/tab_item_model.dart';
 
 // Providers
+import '../../profile/providers/students_provider.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // Routing
+import '../../../config/routes/routes.dart';
 import '../../../config/routes/app_router.dart';
 
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
-
-// Screens
-import '../../profile/screens/profile_screen.dart';
 
 class HomeAppBar extends ConsumerStatefulWidget {
   final List<TabItemModel> tabs;
@@ -29,6 +28,12 @@ class HomeAppBar extends ConsumerStatefulWidget {
 
 class _HomeAppBarState extends ConsumerState<HomeAppBar> {
   int activeTabIndex = 0;
+
+  void _openProfileScreen() {
+    final profile = ref.read(currentStudentProvider)!;
+    ref.read(profileScreenStudentProvider.state).state = profile;
+    AppRouter.pushNamed(Routes.ProfileScreenRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +56,7 @@ class _HomeAppBarState extends ConsumerState<HomeAppBar> {
       actions: [
         IconButton(
           icon: const Icon(Icons.person_rounded),
-          onPressed: () => AppRouter.push(
-            ProfileScreen(
-              student: ref.watch(currentStudentProvider)!,
-              isMyProfile: true,
-            ),
-          ),
+          onPressed: _openProfileScreen,
         )
       ],
       bottom: PreferredSize(

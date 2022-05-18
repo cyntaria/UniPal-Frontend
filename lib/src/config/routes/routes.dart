@@ -10,6 +10,7 @@ import '../../features/auth/screens/register_screen.dart';
 import '../../features/app_startup/auth_widget_builder.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/posts/screens/add_edit_post_screen.dart';
+import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/update_preferences_screen.dart';
 import '../../features/timetables/screens/generated_timetables_screen.dart';
 
@@ -73,6 +74,9 @@ class Routes {
   /// The name of the route for student finder screen.
   static const String StudentFinderScreenRoute = '/student-finder-screen';
 
+  /// The name of the route for student profile screen.
+  static const String ProfileScreenRoute = '/profile-screen';
+
   /// The name of the route for user preferences screen.
   static const String UpdatePreferencesScreenRoute =
       '/update-preferences-screen';
@@ -100,6 +104,7 @@ class Routes {
     AppStartupScreenRoute: (_) => const AppStartupScreen(),
     HomeScreenRoute: (_) => const HomeScreen(),
     LoginScreenRoute: (_) => const LoginScreen(),
+    ProfileScreenRoute: (_) => const ProfileScreen(),
     RegisterScreenRoute: (_) => const RegisterScreen(),
     QrScannerScreenRoute: (_) => const QrScannerScreen(),
     UpdatePreferencesScreenRoute: (_) => const UpdatePreferencesScreen(),

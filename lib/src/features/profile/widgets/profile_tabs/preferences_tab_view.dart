@@ -6,6 +6,7 @@ import '../../../auth/providers/auth_provider.dart';
 import '../../providers/hobbies_provider.dart';
 import '../../providers/interests_provider.dart';
 import '../../providers/student_statuses_provider.dart';
+import '../../providers/students_provider.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
@@ -25,22 +26,33 @@ import '../../../shared/widgets/custom_filter_chip.dart';
 import '../../../shared/widgets/custom_text_button.dart';
 import '../../../shared/widgets/labeled_widget.dart';
 
-class PreferencesTabView extends HookConsumerWidget {
-  const PreferencesTabView({Key? key}) : super(key: key);
-
-  List<InterestModel> getInterestModels(WidgetRef ref, List<int> ids) {
+final _interestModelsProvider =
+    Provider.family.autoDispose<List<InterestModel>?, List<int>?>(
+  (ref, ids) {
     final interestsProv = ref.watch(interestsProvider);
-    return ids.map(interestsProv.getInterestById).toList();
-  }
+    return ids?.map(interestsProv.getInterestById).toList();
+  },
+);
 
-  List<HobbyModel> getHobbyModels(WidgetRef ref, List<int> ids) {
+final _hobbyModelsProvider =
+    Provider.family.autoDispose<List<HobbyModel>?, List<int>?>(
+  (ref, ids) {
     final hobbiesProv = ref.watch(hobbiesProvider);
-    return ids.map(hobbiesProv.getHobbyById).toList();
-  }
+    return ids?.map(hobbiesProv.getHobbyById).toList();
+  },
+);
+
+class PreferencesTabView extends HookConsumerWidget {
+  const PreferencesTabView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final student = ref.watch(profileScreenStudentProvider)!;
     final currentStudent = ref.watch(currentStudentProvider)!;
+    final hobbies = ref.watch(_hobbyModelsProvider(student.hobbies));
+    final interests = ref.watch(_interestModelsProvider(student.interests));
     return ListView(
       physics: const BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),
@@ -54,27 +66,28 @@ class PreferencesTabView extends HookConsumerWidget {
             LabeledWidget(
               label: 'Favourite Campus Activity',
               child: Text(
-                currentStudent.favouriteCampusActivity ?? 'Not Specified',
+                student.favouriteCampusActivity ?? 'Not Specified',
               ),
             ),
 
             // Edit Preferences
-            CustomTextButton.gradient(
-              width: 60,
-              height: 30,
-              onPressed: () {
-                AppRouter.pushNamed(Routes.UpdatePreferencesScreenRoute);
-              },
-              gradient: AppColors.buttonGradientPurple,
-              child: Center(
-                child: Text(
-                  'Edit',
-                  style: AppTypography.secondary.title18.copyWith(
-                    color: Colors.white,
+            if (currentStudent.erp == student.erp)
+              CustomTextButton.gradient(
+                width: 60,
+                height: 30,
+                onPressed: () {
+                  AppRouter.pushNamed(Routes.UpdatePreferencesScreenRoute);
+                },
+                gradient: AppColors.buttonGradientPurple,
+                child: Center(
+                  child: Text(
+                    'Edit',
+                    style: AppTypography.secondary.title18.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
           ],
         ),
 
@@ -84,7 +97,7 @@ class PreferencesTabView extends HookConsumerWidget {
         LabeledWidget(
           label: 'Favourite Campus Hangout Spot',
           child: Text(
-            currentStudent.favouriteCampusHangoutSpot ?? 'Not Specified',
+            student.favouriteCampusHangoutSpot ?? 'Not Specified',
             style: AppTypography.primary.body14,
           ),
         ),
@@ -94,12 +107,12 @@ class PreferencesTabView extends HookConsumerWidget {
         // Current Status
         Consumer(
           builder: (_, ref, __) {
-            final currentStatus = currentStudent.currentStatusId == null
+            final currentStatus = student.currentStatusId == null
                 ? 'Not Specified'
                 : ref
                     .watch(
                       studentStatusByIdProvider(
-                        currentStudent.currentStatusId!,
+                        student.currentStatusId!,
                       ),
                     )
                     .studentStatus;
@@ -121,16 +134,13 @@ class PreferencesTabView extends HookConsumerWidget {
           child: Wrap(
             spacing: 8,
             children: [
-              if (currentStudent.hobbies == null)
+              if (hobbies == null)
                 Text(
                   'Not Specified',
                   style: AppTypography.primary.body14,
                 )
               else ...[
-                for (var hobby in getHobbyModels(
-                  ref,
-                  currentStudent.hobbies!,
-                ))
+                for (var hobby in hobbies)
                   CustomFilterChip<HobbyModel>(
                     value: hobby,
                     label: Text(hobby.hobby),
@@ -148,16 +158,13 @@ class PreferencesTabView extends HookConsumerWidget {
           child: Wrap(
             spacing: 8,
             children: [
-              if (currentStudent.interests == null)
+              if (interests == null)
                 Text(
                   'Not Specified',
                   style: AppTypography.primary.body14,
                 )
               else ...[
-                for (var interest in getInterestModels(
-                  ref,
-                  currentStudent.interests!,
-                ))
+                for (var interest in interests)
                   CustomFilterChip<InterestModel>(
                     value: interest,
                     label: Text(interest.interest),
