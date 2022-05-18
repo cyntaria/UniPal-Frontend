@@ -1,8 +1,6 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
@@ -17,67 +15,36 @@ import '../../../core/networking/custom_exception.dart';
 // Models
 import '../models/student_model.codegen.dart';
 
+// States
+import '../../shared/states/future_state.codegen.dart';
+
 // Repositories
 import '../repositories/students_repository.dart';
 
-final studentsProvider = Provider<StudentsProvider>((ref) {
-  final _studentsRepository = ref.watch(studentsRepositoryProvider);
-  return StudentsProvider(
-    ref.read,
-    studentsRepository: _studentsRepository,
-  );
-});
+final studentsProvider =
+    StateNotifierProvider<StudentsProvider, FutureState<String>>(
+  (ref) {
+    final _studentsRepository = ref.watch(studentsRepositoryProvider);
+    return StudentsProvider(
+      ref.read,
+      studentsRepository: _studentsRepository,
+    );
+  },
+);
 
-final profileScreenStudentProvider = StateProvider<StudentModel?>((ref){
+final profileScreenStudentProvider = StateProvider<StudentModel?>((ref) {
   return null;
 });
 
-class StudentsProvider {
-  final _connectStudent = <String, Object?>{
-    'erp': '15030',
-    'first_name': 'Mohammad Rafay',
-    'last_name': 'Siddiqui',
-    'gender': 'male',
-    'contact': '+923009999999',
-    'email': 'rafaysiddiqui58@gmail.com',
-    'birthday': '1999-09-18',
-    'profile_picture_url':
-        'https://i.pinimg.com/564x/8d/e3/89/8de389c84e919d3577f47118e2627d95.jpg',
-    'graduation_year': 2022,
-    'uni_email': 'm.rafay.15030@iba.khi.edu.pk',
-    'hobby_1': 1,
-    'hobby_2': 2,
-    'hobby_3': 3,
-    'interest_1': 1,
-    'interest_2': 2,
-    'interest_3': 3,
-    'program_id': 1,
-    'campus_id': 1,
-    'favourite_campus_hangout_spot': 'CED',
-    'favourite_campus_activity': 'Lifting',
-    'current_status': 'Looking for friends',
-    'is_active': 1,
-    'role': 'admin',
-    'student_connection': {
-      'student_connection_id': 5,
-      'sender_erp': '17855',
-      'receiver_erp': '15030',
-      'connection_status': 'request_pending',
-      'sent_at': '2021-10-04 17:24:40',
-      'accepted_at': null
-    }
-  };
+class StudentsProvider extends StateNotifier<FutureState<String>> {
   final Reader _read;
   final StudentsRepository _studentsRepository;
 
   StudentsProvider(
     this._read, {
     required StudentsRepository studentsRepository,
-  }) : _studentsRepository = studentsRepository;
-
-  // TODO(arafaysaleem): remove after demo
-  UnmodifiableMapView<String, Object?> get otherStudent =>
-      UnmodifiableMapView(_connectStudent);
+  })  : _studentsRepository = studentsRepository,
+        super(const FutureState.idle());
 
   Future<String> updateStudentProfile({
     String? profilePictureUrl,
@@ -125,26 +92,35 @@ class StudentsProvider {
   }
 
   Future<void> updateProfilePicture(String filePath) async {
-    final file = File(filePath);
-    final erp = _read(currentStudentProvider)!.erp;
-    const folder = 'users';
-    final storePath = '$erp/profile_image${filePath.ext}';
+    state = const FutureState.loading();
 
-    final ref = FirebaseStorage.instance.ref(folder).child(storePath);
+    try {
+      final file = File(filePath);
+      final erp = _read(currentStudentProvider)!.erp;
+      const folder = 'users';
+      final storePath = '$erp/profile_image${filePath.ext}';
 
-    final task = await ref.putFile(file);
-    if (task.state == TaskState.success) {
-      final imageURL = await task.ref.getDownloadURL();
-      final msg = await updateStudentProfile(profilePictureUrl: imageURL);
-      // Update profile provider
-      final newStudent = _read(currentStudentProvider.state)
-          .state!
-          .copyWith(profilePictureUrl: imageURL);
+      final ref = FirebaseStorage.instance.ref(folder).child(storePath);
 
-      _read(authProvider.notifier).cacheAuthProfile(newStudent);
-      _read(currentStudentProvider.state).state = newStudent;
+      final task = await ref.putFile(file);
+      if (task.state == TaskState.success) {
+        // Update the image url in server
+        final imageURL = await task.ref.getDownloadURL();
+        final msg = await updateStudentProfile(profilePictureUrl: imageURL);
 
-      debugPrint(msg);
+        // Update profile provider
+        final newStudent = _read(currentStudentProvider.state)
+            .state!
+            .copyWith(profilePictureUrl: imageURL);
+        _read(authProvider.notifier).cacheAuthProfile(newStudent);
+        _read(currentStudentProvider.state).state = newStudent;
+
+        state = FutureState.data(data: msg);
+      }
+    } on CustomException catch (ex) {
+      state = FutureState.failed(reason: ex.message);
+    } on FirebaseException catch (ex) {
+      state = FutureState.failed(reason: ex.message ?? 'Image Upload Error');
     }
   }
 }

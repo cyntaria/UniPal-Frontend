@@ -9,7 +9,7 @@ import '../../../../config/routes/app_router.dart';
 
 class ProfileAppBar extends StatelessWidget {
   final String title;
-  final String avatarUrl;
+  final Widget profileAvatar;
   final double extent;
   final String? subtitle;
   final Widget? child;
@@ -19,7 +19,7 @@ class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({
     Key? key,
     required this.title,
-    required this.avatarUrl,
+    required this.profileAvatar,
     this.extent = 250,
     this.trailing,
     this.subtitle,
@@ -35,7 +35,7 @@ class ProfileAppBar extends StatelessWidget {
       delegate: _TransitionAppBarDelegate(
         title: title,
         subtitle: subtitle,
-        avatarUrl: avatarUrl,
+        profileAvatar: profileAvatar,
         extent: extent,
         trailing: trailing,
         onCameraTap: onCameraTap,
@@ -46,7 +46,7 @@ class ProfileAppBar extends StatelessWidget {
 }
 
 class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final String avatarUrl;
+  final Widget profileAvatar;
   final String title;
   final String? subtitle;
   final VoidCallback? onCameraTap;
@@ -67,7 +67,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
   static const _childFadeOffset = 0.1;
 
   _TransitionAppBarDelegate({
-    required this.avatarUrl,
+    required this.profileAvatar,
     required this.title,
     required this.extent,
     this.trailing,
@@ -84,9 +84,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(_TransitionAppBarDelegate oldDelegate) {
-    return avatarUrl != oldDelegate.avatarUrl ||
-        title != oldDelegate.title ||
-        subtitle != oldDelegate.subtitle;
+    return title != oldDelegate.title || subtitle != oldDelegate.subtitle;
   }
 
   static final _avatarMarginTween = EdgeInsetsTween(
@@ -186,9 +184,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
                           color: Color.fromARGB(255, 233, 233, 233),
                         ),
                         padding: const EdgeInsets.all(3),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(avatarUrl),
-                        ),
+                        child: profileAvatar,
                       ),
                     ),
                     Positioned(

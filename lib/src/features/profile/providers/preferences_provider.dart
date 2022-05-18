@@ -102,7 +102,7 @@ class PreferencesProvider extends StateNotifier<FutureState<String>> {
     final _hobbies = _selectedHobbyIds.isNotEmpty ? _selectedHobbyIds : null;
 
     try {
-      final result = await _read(studentsProvider).updateStudentProfile(
+      final result = await _read(studentsProvider.notifier).updateStudentProfile(
         hobbies: _hobbies,
         interests: _interests,
         favCampusHangoutSpot: newCampusHangoutSpot,
