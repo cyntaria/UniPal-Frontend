@@ -9,6 +9,9 @@ class LottieAssets {
   /// The path for lottie walking girl animation
   static const String femaleWalkingLottie = 'assets/lottie/female-walking.json';
 
+  /// The path for lottie empty search animation
+  static const String emptySearchLottie = 'assets/lottie/empty-search.json';
+
   /// The path for lottie moving bus animation
   static const String movingBusLottie = 'assets/lottie/moving-bus.json';
 

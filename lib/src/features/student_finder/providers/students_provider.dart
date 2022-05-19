@@ -26,7 +26,7 @@ class StudentsProvider {
 
   Future<List<StudentModel>> getAllStudents(JSON? queryParams) async {
     debugPrint(queryParams.toString());
-    return [];
+    return Future.delayed(const Duration(seconds: 3), () => []);
     // return _studentsRepository.fetchAll(queryParameters: queryParams);
   }
 }
