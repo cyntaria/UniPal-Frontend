@@ -21,7 +21,7 @@ packages:
       name: animated_custom_dropdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   archive:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.10"
+    version: "2.1.11"
   build_runner_core:
     dependency: transitive
     description:
@@ -119,7 +119,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   cached_network_image_platform_interface:
     dependency: transitive
     description:
@@ -334,14 +334,14 @@ packages:
       name: flutter_hooks
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.3"
+    version: "0.18.4"
   flutter_lints:
     dependency: "direct dev"
     description:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -355,7 +355,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.6"
+    version: "2.0.0-dev.7"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -421,7 +421,7 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.3+1"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -456,7 +456,7 @@ packages:
       name: google_fonts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   graphs:
     dependency: transitive
     description:
@@ -477,7 +477,7 @@ packages:
       name: hooks_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.6"
+    version: "2.0.0-dev.7"
   http:
     dependency: transitive
     description:
@@ -575,7 +575,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0"
   logging:
     dependency: transitive
     description:
@@ -624,14 +624,14 @@ packages:
       name: mobile_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   mockito:
     dependency: "direct main"
     description:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "5.2.0"
   octo_image:
     dependency: transitive
     description:
@@ -799,7 +799,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.6"
+    version: "2.0.0-dev.7"
   rxdart:
     dependency: transitive
     description:
@@ -813,21 +813,21 @@ packages:
       name: sentry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.4.0"
+    version: "6.5.1"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.4.0"
+    version: "6.5.1"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.15"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -1035,7 +1035,7 @@ packages:
       name: very_good_analysis
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "3.0.0"
   watcher:
     dependency: transitive
     description:
@@ -1072,5 +1072,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
-  flutter: ">=2.10.0"
+  dart: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
