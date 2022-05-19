@@ -8,6 +8,7 @@ import '../../../helpers/extensions/datetime_extension.dart';
 import '../../../helpers/typedefs.dart';
 
 // Widgets
+import '../../shared/widgets/custom_network_image.dart';
 import 'reactions/reaction_picker.dart';
 import 'reactions/post_reactions_count.dart';
 
@@ -56,12 +57,12 @@ class PostListItem extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Author Avatar
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: NetworkImage(
-                                    post['author']['profile_picture_url']!
+                                CustomNetworkImage(
+                                  height: 40,
+                                  width: 40,
+                                  shape: BoxShape.circle,
+                                  imageUrl: post['author']['profile_picture_url']!
                                         as String,
-                                  ),
                                 ),
 
                                 Insets.gapW10,

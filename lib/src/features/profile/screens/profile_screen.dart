@@ -33,7 +33,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentStudent = ref.watch(currentStudentProvider)!;
-    final student = ref.watch(profileScreenStudentProvider);
+    final student = ref.watch(profileScreenStudentProvider)!;
     final isMyProfile = currentStudent.erp == student.erp;
 
     void _saveNewProfilePicture(String filePath) {

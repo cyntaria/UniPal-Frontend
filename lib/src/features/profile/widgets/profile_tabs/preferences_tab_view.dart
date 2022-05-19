@@ -49,7 +49,7 @@ class PreferencesTabView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(profileScreenStudentProvider);
+    final student = ref.watch(profileScreenStudentProvider)!;
     final currentStudent = ref.watch(currentStudentProvider)!;
     final hobbies = ref.watch(_hobbyModelsProvider(student.hobbies));
     final interests = ref.watch(_interestModelsProvider(student.interests));

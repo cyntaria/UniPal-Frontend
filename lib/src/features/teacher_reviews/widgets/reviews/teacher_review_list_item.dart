@@ -10,6 +10,7 @@ import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 
 // Widgets
+import '../../../shared/widgets/custom_network_image.dart';
 import '../../../shared/widgets/labeled_widget.dart';
 import '../../../shared/widgets/rating_stars.dart';
 
@@ -43,11 +44,11 @@ class TeacherReviewListItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Author Avatar
-                CircleAvatar(
-                  radius: 21,
-                  backgroundImage: NetworkImage(
-                    review.reviewedBy.profilePictureUrl,
-                  ),
+                CustomNetworkImage(
+                  height: 42,
+                  width: 42,
+                  shape: BoxShape.circle,
+                  imageUrl: review.reviewedBy.profilePictureUrl,
                 ),
 
                 Insets.gapW10,

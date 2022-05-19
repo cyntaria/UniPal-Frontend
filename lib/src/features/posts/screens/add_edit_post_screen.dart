@@ -12,6 +12,7 @@ import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_typography.dart';
 
 // Widgets
+import '../../shared/widgets/custom_network_image.dart';
 import '../../shared/widgets/custom_text_button.dart';
 import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
@@ -69,11 +70,11 @@ class AddEditPostScreen extends HookConsumerWidget {
             Row(
               children: [
                 // Author Avatar
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    currentStudent.profilePictureUrl,
-                  ),
+                CustomNetworkImage(
+                  height: 40,
+                  width: 40,
+                  shape: BoxShape.circle,
+                  imageUrl: currentStudent.profilePictureUrl,
                 ),
 
                 Insets.gapW10,

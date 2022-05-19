@@ -32,9 +32,7 @@ final profileProvider =
   },
 );
 
-final profileScreenStudentProvider = StateProvider<StudentModel>((ref) {
-  throw UnimplementedError();
-});
+final profileScreenStudentProvider = StateProvider<StudentModel?>((ref) => null);
 
 class ProfileProvider extends StateNotifier<FutureState<String>> {
   final Reader _read;

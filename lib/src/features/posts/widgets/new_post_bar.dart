@@ -13,6 +13,7 @@ import '../../../config/routes/app_router.dart';
 import '../../../config/routes/routes.dart';
 
 // Widgets
+import '../../shared/widgets/custom_network_image.dart';
 import '../../shared/widgets/custom_textfield.dart';
 
 class NewPostBar extends StatelessWidget {
@@ -37,9 +38,11 @@ class NewPostBar extends StatelessWidget {
                   );
                   return authorProfilePicture == null
                       ? const SizedBox.shrink()
-                      : CircleAvatar(
-                          radius: 20,
-                          backgroundImage: NetworkImage(authorProfilePicture),
+                      : CustomNetworkImage(
+                          height: 40,
+                          width: 40,
+                          shape: BoxShape.circle,
+                          imageUrl: authorProfilePicture,
                         );
                 },
               ),

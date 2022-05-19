@@ -7,6 +7,9 @@ import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/extensions/string_extension.dart';
 import '../../../../helpers/typedefs.dart';
 
+// Widgets
+import '../../../shared/widgets/custom_network_image.dart';
+
 class StudentGridItem extends StatelessWidget {
   final JSON student;
 
@@ -35,11 +38,11 @@ class StudentGridItem extends StatelessWidget {
                 color: Color.fromARGB(100, 233, 233, 233),
               ),
               padding: const EdgeInsets.all(2),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(
-                  student['profile_picture_url']! as String,
-                ),
+              child: CustomNetworkImage(
+                height: 60,
+                width: 60,
+                shape: BoxShape.circle,
+                imageUrl: student['profile_picture_url']! as String,
               ),
             ),
 
