@@ -14,9 +14,9 @@ class GenderSelectionCards extends StatelessWidget {
   final ValueNotifier<Gender?> controller;
 
   const GenderSelectionCards({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   void selectGender(Gender gender, {required bool isSelected}) {
     controller.value = isSelected ? null : gender;

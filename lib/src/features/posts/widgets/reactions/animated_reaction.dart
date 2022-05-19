@@ -18,7 +18,7 @@ class AnimatedReaction extends StatelessWidget {
   final Animation<double> _iconScaleAnim;
 
   AnimatedReaction({
-    Key? key,
+    super.key,
     required this.boxFloatController,
     required this.iconChosenController,
     required this.iconDragInsideController,
@@ -45,8 +45,7 @@ class AnimatedReaction extends StatelessWidget {
             curve: floatInInterval,
             reverseCurve: floatOutInterval,
           ),
-        ),
-        super(key: key);
+        );
 
   static final _iconMoveUpTween = Tween<double>(begin: 8, end: 0);
   static final _iconScaleTween = Tween<double>(begin: 0, end: 1);

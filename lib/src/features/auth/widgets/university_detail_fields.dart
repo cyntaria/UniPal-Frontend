@@ -22,9 +22,9 @@ class UniversityDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const UniversityDetailFields({
-    Key? key,
+    super.key,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   void saveForm(
     WidgetRef ref, {

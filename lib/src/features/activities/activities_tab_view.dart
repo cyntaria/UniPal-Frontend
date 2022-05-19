@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ActivitiesTabView extends StatelessWidget {
-  const ActivitiesTabView({Key? key}) : super(key: key);
+  const ActivitiesTabView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,7 @@ class ReactButton extends AnimatedWidget {
   final Widget text;
 
   ReactButton({
-    Key? key,
+    super.key,
     required this.btnLongPressAnimController,
     required this.btnShortPressAnimController,
     required this.onPressDown,
@@ -24,7 +24,6 @@ class ReactButton extends AnimatedWidget {
     required this.icon,
     required this.text,
   }) : super(
-          key: key,
           listenable: Listenable.merge(
             [btnLongPressAnimController, btnShortPressAnimController],
           ),

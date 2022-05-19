@@ -15,9 +15,9 @@ class PostListItem extends StatelessWidget {
   final JSON post;
 
   const PostListItem({
-    Key? key,
+    super.key,
     required this.post,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

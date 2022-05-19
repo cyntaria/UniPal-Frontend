@@ -149,14 +149,11 @@ class CustomDialog extends StatelessWidget {
 
 class _CustomDialogWithAlert extends CustomDialog {
   const _CustomDialogWithAlert({
-    required String title,
-    required String body,
-    required String buttonText,
+    required super.title,
+    required super.body,
+    required String super.buttonText,
     VoidCallback? onButtonPressed,
   }) : super._(
-          title: title,
-          body: body,
-          buttonText: buttonText,
           trueButtonPressed: onButtonPressed,
           type: _CustomDialogType.ALERT,
         );
@@ -164,19 +161,13 @@ class _CustomDialogWithAlert extends CustomDialog {
 
 class _CustomDialogWithConfirm extends CustomDialog {
   const _CustomDialogWithConfirm({
-    required String title,
-    required String body,
-    required String falseButtonText,
-    required String trueButtonText,
-    VoidCallback? falseButtonPressed,
-    VoidCallback? trueButtonPressed,
+    required super.title,
+    required super.body,
+    required String super.falseButtonText,
+    required String super.trueButtonText,
+    super.falseButtonPressed,
+    super.trueButtonPressed,
   }) : super._(
-          title: title,
-          body: body,
-          falseButtonText: falseButtonText,
-          trueButtonText: trueButtonText,
-          falseButtonPressed: falseButtonPressed,
-          trueButtonPressed: trueButtonPressed,
           type: _CustomDialogType.CONFIRM,
         );
 }

@@ -5,9 +5,9 @@ class CustomCircularLoader extends StatelessWidget {
   final Color? color;
 
   const CustomCircularLoader({
-    Key? key,
+    super.key,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

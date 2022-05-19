@@ -10,7 +10,7 @@ import 'floating_reaction_model.dart';
 import 'floating_reactions_widget.dart';
 
 class ReactionPicker extends StatelessWidget {
-  const ReactionPicker({Key? key}) : super(key: key);
+  const ReactionPicker({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,9 +12,9 @@ class HangoutActionButtons extends StatelessWidget {
   final bool isReceived;
 
   const HangoutActionButtons({
-    Key? key,
+    super.key,
     required this.isReceived,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -13,11 +13,11 @@ class WeekdayTitle extends ConsumerWidget {
   final double height, width;
 
   const WeekdayTitle({
-    Key? key,
+    super.key,
     required this.weekday,
     required this.height,
     required this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

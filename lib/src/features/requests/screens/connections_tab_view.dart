@@ -10,7 +10,7 @@ import '../widgets/connections/received_connections_list.dart';
 import '../widgets/connections/sent_connections_list.dart';
 
 class ConnectionsTabView extends StatefulWidget {
-  const ConnectionsTabView({Key? key}) : super(key: key);
+  const ConnectionsTabView({super.key});
 
   @override
   _ConnectionsTabView createState() => _ConnectionsTabView();

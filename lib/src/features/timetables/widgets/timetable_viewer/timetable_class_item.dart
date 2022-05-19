@@ -13,12 +13,12 @@ class TimetableClassItem extends StatelessWidget {
   final JSON? classModel;
 
   const TimetableClassItem({
-    Key? key,
+    super.key,
     required this.isBreakSlot,
     required this.height,
     required this.width,
     required this.classModel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +136,9 @@ class TimetableClassItem extends StatelessWidget {
 
 class _ClassHeader extends StatelessWidget {
   const _ClassHeader({
-    Key? key,
     required this.subject,
     required this.classErp,
-  }) : super(key: key);
+  });
 
   final String subject;
   final String classErp;
@@ -192,9 +191,8 @@ class _BreakSlotItem extends StatelessWidget {
   final double width;
 
   const _BreakSlotItem({
-    Key? key,
     required this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

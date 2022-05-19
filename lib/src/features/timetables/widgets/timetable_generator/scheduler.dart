@@ -19,7 +19,7 @@ import 'classes_selector_item.dart';
 import '../../../shared/widgets/custom_text_button.dart';
 
 class Scheduler extends ConsumerWidget {
-  const Scheduler({Key? key}) : super(key: key);
+  const Scheduler({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

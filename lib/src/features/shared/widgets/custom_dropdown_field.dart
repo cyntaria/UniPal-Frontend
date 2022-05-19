@@ -12,7 +12,7 @@ import './custom_dropdown_sheet.dart';
 import './custom_text_button.dart';
 
 abstract class CustomDropdownField<T> extends StatelessWidget {
-  const CustomDropdownField({Key? key}) : super(key: key);
+  const CustomDropdownField({super.key});
 
   factory CustomDropdownField.sheet({
     Key? key,
@@ -71,7 +71,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
   final T? initialValue;
 
   _CustomDropdownFieldSheet({
-    Key? key,
+    super.key,
     ValueNotifier<T?>? controller,
     required this.itemsSheet,
     required this.selectedItemText,
@@ -86,8 +86,7 @@ class _CustomDropdownFieldSheet<T> extends CustomDropdownField<T> {
     this.displayFieldColor = AppColors.fieldFillColor,
     this.hintText = 'Select a value',
     this.initialValue,
-  })  : controller = controller ?? ValueNotifier(initialValue),
-        super(key: key);
+  })  : controller = controller ?? ValueNotifier(initialValue);
 
   Future<void> _pickValue(BuildContext context) async {
     controller.value = await showModalBottomSheet<T?>(
@@ -151,7 +150,7 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
   final Widget fieldSuffixIcon;
 
   const _CustomDropdownFieldAnimated({
-    Key? key,
+    super.key,
     this.hintText,
     this.hintStyle,
     this.listItemStyle,
@@ -169,7 +168,7 @@ class _CustomDropdownFieldAnimated<T> extends CustomDropdownField<T> {
     required this.onSelected,
     required this.controller,
     required this.items,
-  }) : super(key: key);
+  });
 
   void onChanged(String label) {
     onSelected.call(items[label]);

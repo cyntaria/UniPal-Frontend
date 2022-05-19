@@ -28,9 +28,9 @@ class ClassesSelectorItem extends ConsumerWidget {
   final int index;
 
   const ClassesSelectorItem({
-    Key? key,
+    super.key,
     required this.index,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -16,7 +16,7 @@ class LabeledWidget extends StatelessWidget {
   final bool expand;
 
   const LabeledWidget({
-    Key? key,
+    super.key,
     required this.child,
     required this.label,
     this.labelGap = Insets.gapH5,
@@ -28,7 +28,7 @@ class LabeledWidget extends StatelessWidget {
       fontSize: 14,
       color: AppColors.textLightGreyColor,
     ),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

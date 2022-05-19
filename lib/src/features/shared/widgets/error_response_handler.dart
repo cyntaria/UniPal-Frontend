@@ -16,12 +16,12 @@ class ErrorResponseHandler extends StatelessWidget {
   final VoidCallback? retryCallback;
 
   const ErrorResponseHandler({
-    Key? key,
+    super.key,
     this.onError,
     required this.retryCallback,
     required this.error,
     required this.stackTrace,
-  }) : super(key: key);
+  });
 
   const factory ErrorResponseHandler.builder({
     Key? key,
@@ -51,16 +51,12 @@ class _ErrorResponseHandlerWithBuilder extends ErrorResponseHandler {
   final Widget Function(CustomException) builder;
 
   const _ErrorResponseHandlerWithBuilder({
-    Key? key,
-    VoidCallback? onError,
-    required Object error,
-    required StackTrace? stackTrace,
+    super.key,
+    super.onError,
+    required super.error,
+    required super.stackTrace,
     required this.builder,
   }) : super(
-          key: key,
-          error: error,
-          stackTrace: stackTrace,
-          onError: onError,
           retryCallback: null,
         );
 

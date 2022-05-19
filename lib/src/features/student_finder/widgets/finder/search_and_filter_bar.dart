@@ -13,7 +13,7 @@ import '../../../shared/widgets/custom_textfield.dart';
 import '../filters/filters_bottom_sheet.dart';
 
 class SearchAndFilterBar extends ConsumerWidget {
-  const SearchAndFilterBar({Key? key}) : super(key: key);
+  const SearchAndFilterBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

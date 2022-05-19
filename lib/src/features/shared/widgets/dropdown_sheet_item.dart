@@ -9,12 +9,12 @@ class DropdownSheetItem extends StatelessWidget {
   final EdgeInsets padding;
 
   const DropdownSheetItem({
-    Key? key,
+    super.key,
     required this.label,
     this.padding = const EdgeInsets.symmetric(
       vertical: 5,
     ),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

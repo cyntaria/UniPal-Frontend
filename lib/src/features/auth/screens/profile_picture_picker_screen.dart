@@ -25,9 +25,9 @@ class ProfilePicturePickerScreen extends ConsumerStatefulWidget {
   final void Function(String filePath) onSaveCallback;
 
   const ProfilePicturePickerScreen({
-    Key? key,
+    super.key,
     required this.onSaveCallback,
-  }) : super(key: key);
+  });
 
   @override
   _MultiMediaPickerScreenState createState() => _MultiMediaPickerScreenState();

@@ -15,7 +15,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/labeled_widget.dart';
 
 class AboutTabView extends HookConsumerWidget {
-  const AboutTabView({Key? key}) : super(key: key);
+  const AboutTabView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

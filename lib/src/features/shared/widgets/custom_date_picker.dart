@@ -58,7 +58,7 @@ class CustomDatePicker extends StatelessWidget {
   final CustomDatePickerStyle pickerStyle;
 
   const CustomDatePicker({
-    Key? key,
+    super.key,
     this.lastDate,
     this.helpText,
     this.currentDate,
@@ -71,7 +71,7 @@ class CustomDatePicker extends StatelessWidget {
     required this.firstDate,
     required this.dateNotifier,
     required this.dateFormat,
-  }) : super(key: key);
+  });
 
   Future<void> _pickDate(BuildContext context) async {
     final nowDate = DateTime.now();

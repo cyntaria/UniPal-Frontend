@@ -32,9 +32,9 @@ class PersonalDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const PersonalDetailFields({
-    Key? key,
+    super.key,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   void saveForm(
     WidgetRef ref, {

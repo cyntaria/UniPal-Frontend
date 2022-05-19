@@ -11,7 +11,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import 'connection_list_item.dart';
 
 class SentConnectionsList extends ConsumerWidget {
-  const SentConnectionsList({Key? key}) : super(key: key);
+  const SentConnectionsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

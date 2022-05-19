@@ -55,14 +55,14 @@ class CupertinoDatePickerDialog extends StatefulWidget {
   final String? helpText;
 
   const CupertinoDatePickerDialog({
-    Key? key,
+    super.key,
     this.helpText,
     this.backgroundColor,
     this.mode = CupertinoDatePickerMode.date,
     required this.initialDateTime,
     required this.minimumDate,
     required this.maximumDate,
-  }) : super(key: key);
+  });
 
   @override
   _CupertinoDatePickerDialogState createState() =>

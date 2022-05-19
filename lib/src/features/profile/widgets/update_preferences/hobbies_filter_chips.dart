@@ -16,7 +16,7 @@ import '../../../../helpers/constants/app_typography.dart';
 import '../../../shared/widgets/custom_filter_chip.dart';
 
 class HobbiesFilterChips extends ConsumerWidget {
-  const HobbiesFilterChips({Key? key}) : super(key: key);
+  const HobbiesFilterChips({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

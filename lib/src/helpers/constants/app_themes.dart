@@ -24,7 +24,7 @@ class AppThemes {
   /// * iconTheme: [Colors.white] for default icon
   ///
   /// * textButtonTheme: [TextButtonTheme] without the default padding,
-  static late final mainTheme = ThemeData(
+  static final mainTheme = ThemeData(
     primaryColor: AppColors.primaryColor,
     colorScheme: const ColorScheme.light().copyWith(
       primary: AppColors.primaryColor,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../helpers/constants/app_colors.dart';
 
 class RequestTypeTabBar extends StatelessWidget {
-  const RequestTypeTabBar({Key? key}) : super(key: key);
+  const RequestTypeTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {

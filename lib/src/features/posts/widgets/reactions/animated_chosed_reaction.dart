@@ -6,7 +6,7 @@ class AnimatedChosedReaction extends AnimatedWidget {
   final Animation<double> _animation;
 
   AnimatedChosedReaction({
-    Key? key,
+    super.key,
     required AnimationController controller,
     required this.leftMargin,
     required this.child,
@@ -14,7 +14,7 @@ class AnimatedChosedReaction extends AnimatedWidget {
           parent: controller,
           curve: Curves.decelerate,
         ),
-        super(key: key, listenable: controller);
+        super(listenable: controller);
 
   // Make the Tweens static because they don't change.
   static final _iconZoomTween = Tween<double>(begin: 1.8, end: 0);

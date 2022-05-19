@@ -14,7 +14,7 @@ import 'src/helpers/constants/app_colors.dart';
 import 'src/helpers/constants/app_themes.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

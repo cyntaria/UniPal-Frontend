@@ -17,7 +17,7 @@ class ProfileAppBar extends StatelessWidget {
   final VoidCallback? onCameraTap;
 
   const ProfileAppBar({
-    Key? key,
+    super.key,
     required this.title,
     required this.profileAvatar,
     this.extent = 250,
@@ -25,8 +25,7 @@ class ProfileAppBar extends StatelessWidget {
     this.subtitle,
     this.onCameraTap,
     this.child,
-  })  : assert(extent >= 200, "Extent can't be less than 200"),
-        super(key: key);
+  })  : assert(extent >= 200, "Extent can't be less than 200");
 
   @override
   Widget build(BuildContext context) {

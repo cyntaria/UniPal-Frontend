@@ -18,14 +18,14 @@ class TeacherDetailedRatings extends StatelessWidget {
   final double difficulty;
 
   const TeacherDetailedRatings({
-    Key? key,
+    super.key,
     required this.averageRating,
     required this.totalReviews,
     required this.learning,
     required this.grading,
     required this.attendance,
     required this.difficulty,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

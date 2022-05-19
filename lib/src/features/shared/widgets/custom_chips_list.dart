@@ -15,7 +15,7 @@ class CustomChipsList extends StatelessWidget {
   final Color borderColor, backgroundColor, contentColor;
 
   const CustomChipsList({
-    Key? key,
+    super.key,
     this.fontWeight,
     this.chipWidth,
     this.chipGap = 0.0,
@@ -27,7 +27,7 @@ class CustomChipsList extends StatelessWidget {
     this.contentColor = AppColors.textGreyColor,
     required this.chipContents,
     required this.chipHeight,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

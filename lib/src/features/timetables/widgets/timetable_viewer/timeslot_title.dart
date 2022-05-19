@@ -12,11 +12,11 @@ class TimeslotTitle extends StatelessWidget {
   final double height, width;
 
   const TimeslotTitle({
-    Key? key,
+    super.key,
     required this.slotNumber,
     required this.height,
     required this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

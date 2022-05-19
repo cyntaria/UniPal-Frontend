@@ -29,7 +29,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
   final List<double> snapSizes;
 
   const CustomScrollableBottomSheet({
-    Key? key,
+    super.key,
     required this.builder,
     this.titleText,
     this.leading,
@@ -44,8 +44,7 @@ class CustomScrollableBottomSheet extends StatelessWidget {
   })  : assert(
           titleText == null || title == null,
           'Cannot specify both sheetTitle and title widget',
-        ),
-        super(key: key);
+        );
 
   @override
   Widget build(BuildContext context) {

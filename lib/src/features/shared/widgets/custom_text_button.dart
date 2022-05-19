@@ -17,7 +17,7 @@ class CustomTextButton extends StatelessWidget {
   final Widget child;
 
   const CustomTextButton({
-    Key? key,
+    super.key,
     double? height,
     double? borderRadius,
     this.width,
@@ -30,8 +30,7 @@ class CustomTextButton extends StatelessWidget {
     required this.onPressed,
   })  : borderRadius = borderRadius ?? 7,
         height = height ?? 55,
-        disabled = disabled ?? false,
-        super(key: key);
+        disabled = disabled ?? false;
 
   const factory CustomTextButton.gradient({
     Key? key,
@@ -86,48 +85,32 @@ class CustomTextButton extends StatelessWidget {
 
 class _CustomTextButtonWithGradient extends CustomTextButton {
   const _CustomTextButtonWithGradient({
-    Key? key,
-    double? height,
-    double? width,
+    super.key,
+    super.height,
+    super.width,
     bool? disabled,
-    double? borderRadius,
-    EdgeInsetsGeometry? padding,
-    required Widget child,
-    required VoidCallback onPressed,
-    required Gradient gradient,
+    super.borderRadius,
+    super.padding,
+    required super.child,
+    required super.onPressed,
+    required Gradient super.gradient,
   }) : super(
-          key: key,
-          height: height,
-          width: width,
-          padding: padding,
-          borderRadius: borderRadius,
-          child: child,
           disabled: disabled ?? false,
-          onPressed: onPressed,
-          gradient: gradient,
         );
 }
 
 class _CustomTextButtonOutlined extends CustomTextButton {
   const _CustomTextButtonOutlined({
-    Key? key,
-    double? height,
-    double? width,
+    super.key,
+    super.height,
+    super.width,
     bool? disabled,
-    double? borderRadius,
-    EdgeInsetsGeometry? padding,
-    required Border border,
-    required Widget child,
-    required VoidCallback onPressed,
+    super.borderRadius,
+    super.padding,
+    required Border super.border,
+    required super.child,
+    required super.onPressed,
   }) : super(
-          key: key,
-          height: height,
-          width: width,
-          padding: padding,
-          borderRadius: borderRadius,
-          border: border,
           disabled: disabled ?? false,
-          child: child,
-          onPressed: onPressed,
         );
 }

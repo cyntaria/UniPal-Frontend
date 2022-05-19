@@ -33,9 +33,9 @@ class FiltersListView extends HookConsumerWidget {
   final ScrollController scrollController;
 
   const FiltersListView({
-    Key? key,
+    super.key,
     required this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

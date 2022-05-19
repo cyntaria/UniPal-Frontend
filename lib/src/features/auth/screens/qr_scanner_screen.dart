@@ -7,7 +7,7 @@ import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 
 class QrScannerScreen extends StatefulWidget {
-  const QrScannerScreen({Key? key}) : super(key: key);
+  const QrScannerScreen({super.key});
 
   @override
   State<QrScannerScreen> createState() => _QrScannerScreenState();

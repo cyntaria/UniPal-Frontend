@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// Widgets
+// Providers
+import '../../providers/filter_providers.dart';
+
+// Helpers
 import '../../../../helpers/constants/app_colors.dart';
+
+// Widgets
 import '../../../shared/widgets/custom_circular_loader.dart';
 import '../../../shared/widgets/error_response_handler.dart';
-import '../../providers/filter_providers.dart';
 import 'student_grid_item.dart';
 
 class StudentsGridList extends ConsumerWidget {
-  const StudentsGridList({Key? key}) : super(key: key);
+  const StudentsGridList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

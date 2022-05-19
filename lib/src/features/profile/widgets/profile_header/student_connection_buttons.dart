@@ -17,11 +17,11 @@ class StudentConnectionButtons extends StatelessWidget {
   final String myErp, studentErp;
 
   const StudentConnectionButtons({
-    Key? key,
+    super.key,
     this.studentConnection,
     required this.myErp,
     required this.studentErp,
-  }) : super(key: key);
+  });
 
   bool get isReceiver => myErp == studentConnection?.receiverErp;
   bool get isRequestPending =>

@@ -21,9 +21,9 @@ class TeachersListItem extends StatelessWidget {
   final TeacherModel teacher;
 
   const TeachersListItem({
-    Key? key,
+    super.key,
     required this.teacher,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -22,11 +22,11 @@ class TimetableView extends HookConsumerWidget {
   final ClassModelGetter classModelGetter;
 
   const TimetableView({
-    Key? key,
+    super.key,
     required this.timetable,
     required this.title,
     required this.classModelGetter,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

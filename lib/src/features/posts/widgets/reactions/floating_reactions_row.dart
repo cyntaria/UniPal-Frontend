@@ -17,7 +17,7 @@ class FloatingReactionsRow extends StatelessWidget {
   final Widget Function(String assetPath) assetBuilder;
 
   FloatingReactionsRow({
-    Key? key,
+    super.key,
     required this.isDragging,
     required this.isDraggingInside,
     required this.isDraggingOutside,
@@ -38,8 +38,7 @@ class FloatingReactionsRow extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
             ),
           ),
-        ),
-        super(key: key);
+        );
 
   // Make the Tweens static because they don't change.
   static final _boxMoveRightTween = Tween<double>(begin: 0, end: 6);

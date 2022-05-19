@@ -25,13 +25,13 @@ class FloatingReactionsWidget extends StatefulWidget {
   final void Function(FloatingReactionModel? lastSelected)? onUnSelect;
 
   const FloatingReactionsWidget({
-    Key? key,
+    super.key,
     required this.reactions,
     required this.defaultReaction,
     required this.shortTapSelectIndex,
     this.onSelected,
     this.onUnSelect,
-  }) : super(key: key);
+  });
 
   @override
   _FloatingReactionsWidgetState createState() =>

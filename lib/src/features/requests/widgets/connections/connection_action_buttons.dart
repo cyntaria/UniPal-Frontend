@@ -11,9 +11,9 @@ class ConnectionActionButtons extends StatelessWidget {
   final bool isReceived;
 
   const ConnectionActionButtons({
-    Key? key,
+    super.key,
     required this.isReceived,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

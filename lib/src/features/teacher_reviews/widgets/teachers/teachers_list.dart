@@ -11,7 +11,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import 'teachers_list_item.dart';
 
 class TeachersList extends ConsumerWidget {
-  const TeachersList({Key? key}) : super(key: key);
+  const TeachersList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

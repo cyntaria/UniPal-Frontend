@@ -6,7 +6,7 @@ import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 
 class PostReactionsCount extends StatelessWidget {
-  const PostReactionsCount({Key? key}) : super(key: key);
+  const PostReactionsCount({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -15,11 +15,11 @@ class TimetableListItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const TimetableListItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.timetable,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

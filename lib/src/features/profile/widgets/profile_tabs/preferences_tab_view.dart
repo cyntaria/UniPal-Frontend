@@ -44,8 +44,8 @@ final _hobbyModelsProvider =
 
 class PreferencesTabView extends HookConsumerWidget {
   const PreferencesTabView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

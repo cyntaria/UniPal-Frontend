@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../helpers/constants/app_colors.dart';
 
 class ProfileTabBar extends StatelessWidget {
-  const ProfileTabBar({Key? key}) : super(key: key);
+  const ProfileTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {

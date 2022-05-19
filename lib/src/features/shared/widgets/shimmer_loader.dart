@@ -5,9 +5,9 @@ class ShimmerLoader extends HookWidget {
   final Widget child;
 
   const ShimmerLoader({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

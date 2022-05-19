@@ -21,7 +21,7 @@ class HangoutListItem extends StatelessWidget {
   final bool isReceived;
 
   const HangoutListItem({
-    Key? key,
+    super.key,
     required this.authorImageUrl,
     required this.authorName,
     required this.authorErp,
@@ -29,7 +29,7 @@ class HangoutListItem extends StatelessWidget {
     required this.meetupAt,
     required this.meetupSpotId,
     required this.isReceived,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

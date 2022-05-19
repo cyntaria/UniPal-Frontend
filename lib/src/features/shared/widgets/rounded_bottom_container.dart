@@ -12,11 +12,11 @@ class RoundedBottomContainer extends StatelessWidget {
   final EdgeInsets? padding;
 
   const RoundedBottomContainer({
-    Key? key,
+    super.key,
     required this.children,
     this.onBackTap,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

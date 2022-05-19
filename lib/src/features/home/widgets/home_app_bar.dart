@@ -18,9 +18,9 @@ import '../../../helpers/constants/app_colors.dart';
 class HomeAppBar extends ConsumerStatefulWidget {
   final List<TabItemModel> tabs;
   const HomeAppBar({
-    Key? key,
+    super.key,
     required this.tabs,
-  }) : super(key: key);
+  });
 
   @override
   _HomeAppBarState createState() => _HomeAppBarState();

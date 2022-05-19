@@ -30,9 +30,9 @@ class PasswordDetailFields extends HookConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const PasswordDetailFields({
-    Key? key,
+    super.key,
     required this.formKey,
-  }) : super(key: key);
+  });
 
   void saveForm(WidgetRef ref, {required String password}) {
     if (formKey.currentState!.validate()) {

@@ -11,7 +11,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import 'hangout_list_item.dart';
 
 class ReceivedHangoutsList extends ConsumerWidget {
-  const ReceivedHangoutsList({Key? key}) : super(key: key);
+  const ReceivedHangoutsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

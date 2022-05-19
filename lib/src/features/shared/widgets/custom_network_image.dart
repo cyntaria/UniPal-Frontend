@@ -17,7 +17,7 @@ class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     double? width,
     double? radius,
-    Key? key,
+    super.key,
     this.margin,
     this.shape = BoxShape.rectangle,
     this.fit,
@@ -28,8 +28,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.errorWidget,
     required this.imageUrl,
   })  : width = width ?? double.infinity,
-        radius = radius ?? 20,
-        super(key: key);
+        radius = radius ?? 20;
 
   @override
   Widget build(BuildContext context) {

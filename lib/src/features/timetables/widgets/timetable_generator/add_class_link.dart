@@ -12,7 +12,7 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/custom_text_button.dart';
 
 class AddClassLink extends ConsumerWidget {
-  const AddClassLink({Key? key}) : super(key: key);
+  const AddClassLink({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

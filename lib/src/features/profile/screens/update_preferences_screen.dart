@@ -32,7 +32,7 @@ import '../widgets/update_preferences/hobbies_filter_chips.dart';
 import '../widgets/update_preferences/interests_filter_chips.dart';
 
 class UpdatePreferencesScreen extends HookConsumerWidget {
-  const UpdatePreferencesScreen({Key? key}) : super(key: key);
+  const UpdatePreferencesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

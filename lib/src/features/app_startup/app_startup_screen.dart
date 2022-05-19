@@ -36,7 +36,7 @@ final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
 );
 
 class AppStartupScreen extends ConsumerWidget {
-  const AppStartupScreen({Key? key}) : super(key: key);
+  const AppStartupScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,7 +56,7 @@ class AppStartupScreen extends ConsumerWidget {
 }
 
 class LottieAnimationLoader extends StatelessWidget {
-  const LottieAnimationLoader({Key? key}) : super(key: key);
+  const LottieAnimationLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

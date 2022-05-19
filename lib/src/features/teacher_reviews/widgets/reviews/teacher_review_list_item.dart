@@ -17,9 +17,9 @@ class TeacherReviewListItem extends StatelessWidget {
   final TeacherReviewModel review;
 
   const TeacherReviewListItem({
-    Key? key,
+    super.key,
     required this.review,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

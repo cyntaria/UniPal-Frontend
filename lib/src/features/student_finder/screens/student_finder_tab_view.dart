@@ -5,7 +5,7 @@ import '../widgets/finder/search_and_filter_bar.dart';
 import '../widgets/finder/students_grid_list.dart';
 
 class StudentFinderTabView extends StatelessWidget {
-  const StudentFinderTabView({Key? key}) : super(key: key);
+  const StudentFinderTabView({super.key});
 
   @override
   Widget build(BuildContext context) {

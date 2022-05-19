@@ -16,7 +16,7 @@ import '../widgets/timetable_viewer/timetable_view.dart';
 import '../widgets/timetables_list/timetable_list_item.dart';
 
 class GeneratedTimetablesScreen extends ConsumerWidget {
-  const GeneratedTimetablesScreen({Key? key}) : super(key: key);
+  const GeneratedTimetablesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

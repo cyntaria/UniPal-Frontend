@@ -15,7 +15,7 @@ class CustomFilterChip<T> extends StatefulWidget {
   final Color selectedColor;
 
   const CustomFilterChip({
-    Key? key,
+    super.key,
     this.labelColor = AppColors.textBlackColor,
     this.selectedLabelColor = AppColors.textWhite80Color,
     this.backgroundColor = AppColors.fieldFillColor,
@@ -24,7 +24,7 @@ class CustomFilterChip<T> extends StatefulWidget {
     this.onChanged,
     required this.label,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomFilterChip> createState() => _CustomFilterChipState<T>();

@@ -5,7 +5,7 @@ import '../widgets/new_post_bar.dart';
 import '../widgets/posts_list.dart';
 
 class PostsTabView extends StatelessWidget {
-  const PostsTabView({Key? key}) : super(key: key);
+  const PostsTabView({super.key});
 
   @override
   Widget build(BuildContext context) {

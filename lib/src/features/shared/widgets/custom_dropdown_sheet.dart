@@ -59,7 +59,7 @@ class CustomDropdownSheet<T> extends StatefulWidget {
   final EdgeInsets contentPadding;
 
   const CustomDropdownSheet({
-    Key? key,
+    super.key,
     required this.items,
     required this.itemBuilder,
     this.searchFilterCondition,
@@ -79,8 +79,7 @@ class CustomDropdownSheet<T> extends StatefulWidget {
         ),
         this.submitButtonColor = submitButtonColor ?? AppColors.secondaryColor,
         this.submitButtonText = submitButtonText ?? 'DONE',
-        this.enableMultipleSelection = enableMultipleSelection ?? false,
-        super(key: key);
+        this.enableMultipleSelection = enableMultipleSelection ?? false;
 
   const factory CustomDropdownSheet.multiple({
     Key? key,
@@ -246,31 +245,19 @@ class _CustomDropdownSheetState<T> extends State<CustomDropdownSheet<T>> {
 
 class _CustomDropdownSheetWithMultiSelect<T> extends CustomDropdownSheet<T> {
   const _CustomDropdownSheetWithMultiSelect({
-    Key? key,
-    required List<T> items,
-    required WidgetBuilder<T> itemBuilder,
-    SearchFilter<T>? searchFilterCondition,
-    String? bottomSheetTitle,
-    String? submitButtonText,
-    Color? submitButtonColor,
-    bool showSearch = false,
-    String? searchHintText,
-    Color? searchBackgroundColor,
-    void Function(List<T>)? onMultipleSelect,
-    void Function(T)? onItemSelect,
+    super.key,
+    required super.items,
+    required super.itemBuilder,
+    super.searchFilterCondition,
+    super.bottomSheetTitle,
+    super.submitButtonText,
+    super.submitButtonColor,
+    super.showSearch,
+    super.searchHintText,
+    super.searchBackgroundColor,
+    super.onMultipleSelect,
+    super.onItemSelect,
   }) : super(
-          key: key,
-          items: items,
           enableMultipleSelection: true,
-          itemBuilder: itemBuilder,
-          searchFilterCondition: searchFilterCondition,
-          bottomSheetTitle: bottomSheetTitle,
-          submitButtonText: submitButtonText,
-          submitButtonColor: submitButtonColor,
-          showSearch: showSearch,
-          searchHintText: searchHintText,
-          searchBackgroundColor: searchBackgroundColor,
-          onMultipleSelect: onMultipleSelect,
-          onItemSelect: onItemSelect,
         );
 }

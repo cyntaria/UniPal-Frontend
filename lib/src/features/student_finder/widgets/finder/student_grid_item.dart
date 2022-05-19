@@ -11,9 +11,9 @@ class StudentGridItem extends StatelessWidget {
   final JSON student;
 
   const StudentGridItem({
-    Key? key,
+    super.key,
     required this.student,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

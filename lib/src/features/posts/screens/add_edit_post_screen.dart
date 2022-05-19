@@ -17,7 +17,7 @@ import '../../shared/widgets/custom_textfield.dart';
 import '../../shared/widgets/scrollable_column.dart';
 
 class AddEditPostScreen extends HookConsumerWidget {
-  const AddEditPostScreen({Key? key}) : super(key: key);
+  const AddEditPostScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

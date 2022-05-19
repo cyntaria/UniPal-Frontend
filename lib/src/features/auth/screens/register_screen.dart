@@ -17,7 +17,7 @@ import '../widgets/personal_detail_fields.dart';
 import '../widgets/university_detail_fields.dart';
 
 class RegisterScreen extends StatefulHookConsumerWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();

@@ -91,26 +91,22 @@ class CustomErrorWidget extends StatelessWidget {
 
 class _CustomErrorWidgetDark extends CustomErrorWidget {
   const _CustomErrorWidgetDark({
-    required CustomException error,
-    required VoidCallback retryCallback,
+    required super.error,
+    required super.retryCallback,
     double? height,
   }) : super._(
-          error: error,
           backgroundColor: AppColors.scaffoldGreyColor,
-          retryCallback: retryCallback,
           height: height ?? double.infinity,
         );
 }
 
 class _CustomErrorWidgetLight extends CustomErrorWidget {
   const _CustomErrorWidgetLight({
-    required CustomException error,
-    required VoidCallback retryCallback,
+    required super.error,
+    required super.retryCallback,
     double? height,
   }) : super._(
-          error: error,
           backgroundColor: AppColors.surfaceColor,
-          retryCallback: retryCallback,
           height: height ?? double.infinity,
         );
 }

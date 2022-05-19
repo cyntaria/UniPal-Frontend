@@ -10,7 +10,7 @@ import '../widgets/hangouts/received_hangouts_list.dart';
 import '../widgets/hangouts/sent_hangouts_list.dart';
 
 class HangoutsTabView extends StatefulWidget {
-  const HangoutsTabView({Key? key}) : super(key: key);
+  const HangoutsTabView({super.key});
 
   @override
   _ConnectionsTabView createState() => _ConnectionsTabView();

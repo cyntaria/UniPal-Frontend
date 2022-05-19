@@ -18,13 +18,13 @@ class ConnectionListItem extends StatelessWidget {
   final bool isReceived;
 
   const ConnectionListItem({
-    Key? key,
+    super.key,
     required this.authorImageUrl,
     required this.authorName,
     required this.authorErp,
     required this.requestSentAt,
     required this.isReceived,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

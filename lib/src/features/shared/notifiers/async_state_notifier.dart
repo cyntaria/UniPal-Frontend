@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/networking/custom_exception.dart';
 
 abstract class AsyncStateNotifier<T> extends StateNotifier<AsyncValue<T>> {
-  AsyncStateNotifier(AsyncValue<T> state) : super(state);
+  AsyncStateNotifier(super.state);
 
   @protected
   Future<AsyncValue<T>> makeGuardedRequest(

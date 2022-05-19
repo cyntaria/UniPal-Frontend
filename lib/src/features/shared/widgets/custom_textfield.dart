@@ -34,7 +34,7 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String? value)? validator;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.width,
     this.maxLength,
@@ -76,7 +76,7 @@ class CustomTextField extends StatefulWidget {
       color: AppColors.textGreyColor,
     ),
     this.contentPadding = const EdgeInsets.fromLTRB(12, 13, 1, 13),
-  }) : super(key: key);
+  });
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();

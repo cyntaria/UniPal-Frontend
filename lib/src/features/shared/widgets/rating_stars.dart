@@ -12,14 +12,14 @@ class RatingStars extends StatelessWidget {
   final int maxStars;
 
   const RatingStars({
-    Key? key,
+    super.key,
     required this.rating,
     this.starSize,
     this.maxStars = 5,
     this.activeStarColor = const Color.fromARGB(255, 248, 160, 59),
     this.inActiveStarColor = const Color.fromARGB(255, 224, 224, 224),
     this.showRatingNumber = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -27,8 +27,8 @@ import '../widgets/profile_tabs/preferences_tab_view.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

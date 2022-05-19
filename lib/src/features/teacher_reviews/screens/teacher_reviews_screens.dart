@@ -18,9 +18,9 @@ class TeacherReviewsScreen extends ConsumerWidget {
   final TeacherModel teacher;
 
   const TeacherReviewsScreen({
-    Key? key,
+    super.key,
     required this.teacher,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

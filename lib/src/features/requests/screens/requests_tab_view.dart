@@ -6,7 +6,7 @@ import 'connections_tab_view.dart';
 import 'hangouts_tab_view.dart';
 
 class RequestsTabView extends StatelessWidget {
-  const RequestsTabView({Key? key}) : super(key: key);
+  const RequestsTabView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -14,9 +14,9 @@ class TeacherReviewsList extends StatelessWidget {
   final List<TeacherReviewModel> reviews;
 
   const TeacherReviewsList({
-    Key? key,
+    super.key,
     required this.reviews,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

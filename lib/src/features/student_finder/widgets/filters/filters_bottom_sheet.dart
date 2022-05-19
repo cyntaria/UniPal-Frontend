@@ -15,7 +15,7 @@ import '../../providers/filter_providers.dart';
 import 'filters_list_view.dart';
 
 class FiltersBottomSheet extends ConsumerStatefulWidget {
-  const FiltersBottomSheet({Key? key}) : super(key: key);
+  const FiltersBottomSheet({super.key});
 
   @override
   _FiltersBottomSheetState createState() => _FiltersBottomSheetState();

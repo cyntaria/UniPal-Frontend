@@ -7,15 +7,14 @@ class FloatingWhiteBox extends StatelessWidget {
   final Animation<double> _fadeAnim;
 
   FloatingWhiteBox({
-    Key? key,
+    super.key,
     required this.controller,
   })  : _fadeAnim = _opacityTween.animate(
           CurvedAnimation(
             parent: controller,
             curve: const Interval(0.5, 0.9),
           ),
-        ),
-        super(key: key);
+        );
 
   static final _opacityTween = Tween<double>(begin: 0, end: 1);
 

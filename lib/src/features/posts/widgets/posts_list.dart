@@ -8,7 +8,7 @@ import '../providers/posts_provider.dart';
 import 'post_list_item.dart';
 
 class PostsList extends ConsumerWidget {
-  const PostsList({Key? key}) : super(key: key);
+  const PostsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

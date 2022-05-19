@@ -16,7 +16,7 @@ import '../../../config/routes/routes.dart';
 import '../../shared/widgets/custom_textfield.dart';
 
 class NewPostBar extends StatelessWidget {
-  const NewPostBar({Key? key}) : super(key: key);
+  const NewPostBar({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import '../widgets/teachers/search_bar.dart';
 import '../widgets/teachers/teachers_list.dart';
 
 class TeachersTabView extends StatelessWidget {
-  const TeachersTabView({Key? key}) : super(key: key);
+  const TeachersTabView({super.key});
 
   @override
   Widget build(BuildContext context) {

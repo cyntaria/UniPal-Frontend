@@ -9,7 +9,7 @@ import '../../../../helpers/constants/app_colors.dart';
 import '../../../shared/widgets/custom_textfield.dart';
 
 class SearchBar extends HookWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  const SearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
