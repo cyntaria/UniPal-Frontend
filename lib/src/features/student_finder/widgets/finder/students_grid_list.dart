@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../providers/filter_providers.dart';
 
 // Widgets
+import '../../../shared/widgets/empty_state_widget.dart';
 import '../../../shared/widgets/custom_circular_loader.dart';
 import '../../../shared/widgets/error_response_handler.dart';
 import 'student_grid_item.dart';
@@ -24,16 +25,12 @@ class StudentsGridList extends ConsumerWidget {
           stackTrace: st,
         ),
         data: (students) => students.isEmpty
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'No students found! Try changing the filters or search term',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
+            ? const EmptyStateWidget(
+                height: 395,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 20),
+                title: 'No students found',
+                subtitle: 'Try changing the filters or search term.',
               )
             : GridView.builder(
                 itemCount: 20,
