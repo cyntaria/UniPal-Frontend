@@ -80,7 +80,6 @@ class ClassesSelectorItem extends ConsumerWidget {
                   itemsSheet: CustomDropdownSheet(
                     showSearch: true,
                     bottomSheetTitle: 'Subjects',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     items: const [
                       'Data Mining',
                       'Data Warehousing',
@@ -116,7 +115,6 @@ class ClassesSelectorItem extends ConsumerWidget {
                   selectedItemText: (item) => item,
                   itemsSheet: CustomDropdownSheet(
                     bottomSheetTitle: 'Teachers',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     items: const [
                       'Shakeel Khoja',
                       'Maria Rahim',
@@ -144,7 +142,6 @@ class ClassesSelectorItem extends ConsumerWidget {
                   selectedItemText: (item) => item,
                   itemsSheet: CustomDropdownSheet(
                     bottomSheetTitle: 'Timeslots',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     items: const [
                       '08:30',
                       '10:00',
