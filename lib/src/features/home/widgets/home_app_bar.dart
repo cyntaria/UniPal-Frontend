@@ -15,6 +15,9 @@ import '../../../config/routes/app_router.dart';
 // Helpers
 import '../../../helpers/constants/app_colors.dart';
 
+// Widgets
+import '../../shared/widgets/custom_network_image.dart';
+
 class HomeAppBar extends ConsumerStatefulWidget {
   final List<TabItemModel> tabs;
   const HomeAppBar({
@@ -54,9 +57,37 @@ class _HomeAppBarState extends ConsumerState<HomeAppBar> {
         ),
       ),
       actions: [
+        // Author Avatar
         IconButton(
-          icon: const Icon(Icons.person_rounded),
+          padding: const EdgeInsets.only(right: 10),
           onPressed: _openProfileScreen,
+          icon: Consumer(
+            builder: (_, ref, __) {
+              final authorProfilePicture = ref.watch(
+                currentStudentProvider.select(
+                  (value) => value?.profilePictureUrl,
+                ),
+              );
+              return authorProfilePicture == null
+                  ? const SizedBox.shrink()
+                  : Container(
+                      height: 34,
+                      width: 34,
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.primaryColor,
+                          width: 2,
+                        ),
+                      ),
+                      child: CustomNetworkImage(
+                        shape: BoxShape.circle,
+                        imageUrl: authorProfilePicture,
+                      ),
+                    );
+            },
+          ),
         )
       ],
       bottom: PreferredSize(
