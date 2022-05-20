@@ -27,7 +27,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   golden_toolkit: ^0.13.0
   google_fonts: ^2.3.3
-  hooks_riverpod: 2.0.0-dev.7
+  hooks_riverpod: ^2.0.0-dev.7
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   json_annotation: ^4.5.0

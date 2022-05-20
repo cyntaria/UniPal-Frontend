@@ -12,27 +12,24 @@ class PostsTabView extends StatelessWidget {
     return SafeArea(
       top: false,
       bottom: false,
-      child: RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(seconds: 3)),
-        edgeOffset: 150,
-        displacement: 5,
-        child: CustomScrollView(
-          key: const PageStorageKey<String>('Posts'),
-          slivers: <Widget>[
-            SliverOverlapInjector(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+      child: CustomScrollView(
+        key: const PageStorageKey<String>('Posts'),
+        slivers: <Widget>[
+          SliverOverlapInjector(
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+          ),
+
+          // New Post Button
+          const NewPostBar(),
+
+          // Posts List
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            sliver: SliverFillRemaining(
+              child: PostsList(),
             ),
-      
-            // New Post Button
-            const NewPostBar(),
-      
-            // Posts List
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              sliver: PostsList(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

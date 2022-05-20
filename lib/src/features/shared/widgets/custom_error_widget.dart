@@ -46,7 +46,6 @@ class CustomErrorWidget extends StatelessWidget {
           borderRadius: Corners.rounded15,
         ),
         height: height,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
         padding: const EdgeInsets.fromLTRB(30, 25, 30, 35),
         child: Center(
           child: Column(

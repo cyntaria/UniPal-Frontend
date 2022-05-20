@@ -50,27 +50,23 @@ final filteredStudentsProvider = FutureProvider<List<StudentModel>>(
       // isActive: true,
     );
 
-    final students = ref.watch(studentsProvider).getAllStudents(queryParams);
-
-    return students;
+    return ref.watch(studentsProvider).getAllStudents(queryParams);
   },
 );
 
 final searchFilterProvider = StateProvider<String>((ref) => '');
 
-final searchFilteredStudentsProvider = FutureProvider<List<StudentModel>>(
-  (ref) async {
-    final filteredStudents = await ref.watch(filteredStudentsProvider.future);
+final searchedStudentsProvider =
+    Provider.family<List<StudentModel>, List<StudentModel>>(
+  (ref, filteredStudents) {
     final _searchTerm = ref.watch(searchFilterProvider);
     if (_searchTerm.isEmpty) {
       return filteredStudents;
     }
-    return filteredStudents
-        .where(
-          (student) =>
-              student.firstName.contains(_searchTerm) ||
-              student.lastName.contains(_searchTerm),
-        )
-        .toList();
+    return filteredStudents.where((student) {
+      final inFirstName = student.firstName.contains(_searchTerm);
+      final inLastName = student.lastName.contains(_searchTerm);
+      return inFirstName || inLastName;
+    }).toList();
   },
 );

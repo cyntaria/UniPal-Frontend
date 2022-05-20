@@ -31,9 +31,9 @@ class Scheduler extends ConsumerWidget {
     return Scaffold(
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 15),
-        physics: noOfSelectedClasses > 1
-            ? const BouncingScrollPhysics()
-            : const NeverScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         itemCount: noOfSelectedClasses,
         separatorBuilder: (_, i) => Insets.gapH15,
         itemBuilder: (_, i) {

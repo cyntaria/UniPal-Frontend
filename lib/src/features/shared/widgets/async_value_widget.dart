@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/networking/custom_exception.dart';
+
 class AsyncValueWidget<T> extends StatelessWidget {
   final AsyncValue<T> value;
   final Widget Function() loading;
@@ -8,11 +10,13 @@ class AsyncValueWidget<T> extends StatelessWidget {
   final Widget Function()? onFirstLoad;
   final Widget Function(Object, StackTrace?) error;
   final Widget Function(T) data;
+  final bool showEmptyOnNotFoundError;
 
   const AsyncValueWidget({
     super.key,
     this.onFirstLoad,
     this.emptyOrNull,
+    this.showEmptyOnNotFoundError = false,
     required this.value,
     required this.loading,
     required this.error,
@@ -24,7 +28,14 @@ class AsyncValueWidget<T> extends StatelessWidget {
     if (value.isRefreshing) return loading();
     return value.when(
       loading: onFirstLoad ?? loading,
-      error: error,
+      error: (ex, st) {
+        if (showEmptyOnNotFoundError && emptyOrNull != null) {
+          if (ex is CustomException && ex.code == 'NotFoundException') {
+            return emptyOrNull!.call();
+          }
+        }
+        return error(ex, st);
+      },
       data: (d) {
         if (emptyOrNull != null) {
           if (d == null || (d is List && d.isEmpty)) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
 import '../../../profile/models/student_model.codegen.dart';
@@ -10,6 +11,8 @@ import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/extensions/string_extension.dart';
 
 // Widgets
+import '../../../profile/providers/programs_provider.dart';
+import '../../../profile/providers/student_statuses_provider.dart';
 import '../../../shared/widgets/custom_network_image.dart';
 
 class StudentGridItem extends StatelessWidget {
@@ -30,7 +33,7 @@ class StudentGridItem extends StatelessWidget {
           color: Colors.white,
           boxShadow: Shadows.elevated,
         ),
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 13),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             // Circle Avatar
@@ -41,51 +44,73 @@ class StudentGridItem extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(2),
               child: CustomNetworkImage(
-                height: 60,
-                width: 60,
+                height: 58,
+                width: 58,
                 shape: BoxShape.circle,
                 imageUrl: student.profilePictureUrl,
               ),
             ),
 
-            Insets.gapH5,
+            Insets.gapH10,
 
             // Full Name
             Text(
               '${student.firstName} ${student.lastName}',
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.fade,
+              style: AppTypography.primary.body14.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            Insets.gapH5,
+
+            // Program
+            Consumer(
+              builder: (_, ref, __) {
+                final program = ref.watch(
+                  programByIdProvider(student.programId),
+                );
+                return Text(
+                  '${program.program} (${student.graduationYear})',
+                  textAlign: TextAlign.center,
+                  style: AppTypography.primary.body14.copyWith(
+                    color: AppColors.textLightGreyColor,
+                  ),
+                );
+              },
+            ),
+
+            Insets.gapH5,
+
+            // Student Type
+            Text(
+              student.studentType.name.capitalize,
               textAlign: TextAlign.center,
               style: AppTypography.primary.body14,
             ),
 
             Insets.expand,
 
-            // Program
-            Text(
-              "${student.programId}'${'${student.graduationYear}'.substring(2)}",
-              textAlign: TextAlign.center,
-              style: AppTypography.primary.subtitle13.copyWith(
-                color: AppColors.textLightGreyColor,
-              ),
-            ),
-
-            Insets.gapH3,
-
-            // Batch Type
-            Text(
-              '${student.studentType}'.capitalize,
-              textAlign: TextAlign.center,
-              style: AppTypography.primary.subtitle13,
-            ),
-
-            Insets.gapH3,
-
             // Current Status
-            Text(
-              '${student.currentStatusId}',
-              textAlign: TextAlign.center,
-              style: AppTypography.primary.subtitle13.copyWith(
-                color: AppColors.textLightGreyColor,
-              ),
+            Consumer(
+              builder: (_, ref, __) {
+                final status = student.currentStatusId != null
+                    ? ref.watch(
+                        studentStatusByIdProvider(student.currentStatusId!),
+                      )
+                    : null;
+                return Text(
+                  status?.studentStatus ?? 'Not looking for anything particular',
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.primary.body14.copyWith(
+                    color: AppColors.textLightGreyColor,
+                  ),
+                );
+              },
             ),
           ],
         ),

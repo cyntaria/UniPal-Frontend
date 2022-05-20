@@ -27,7 +27,9 @@ class StudentFinderTabView extends StatelessWidget {
           // Posts List
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: StudentsGridList(),
+            sliver: SliverFillRemaining(
+              child: StudentsGridList(),
+            ),
           ),
         ],
       ),

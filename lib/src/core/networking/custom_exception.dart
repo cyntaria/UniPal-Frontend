@@ -41,13 +41,17 @@ enum _ExceptionType {
 
 class CustomException implements Exception {
   final String name, message;
+  final String? code;
+  final int? statusCode;
   final _ExceptionType exceptionType;
 
   CustomException({
-    String? code,
+    this.code,
+    int? statusCode,
     required this.message,
     this.exceptionType = _ExceptionType.ApiException,
-  }) : name = code ?? exceptionType.name;
+  })  : statusCode = statusCode ?? 500,
+        name = exceptionType.name;
 
   factory CustomException.fromDioException(Exception error) {
     try {
@@ -56,21 +60,25 @@ class CustomException implements Exception {
           case DioErrorType.cancel:
             return CustomException(
               exceptionType: _ExceptionType.CancelException,
+              statusCode: error.response?.statusCode,
               message: 'Request cancelled prematurely',
             );
           case DioErrorType.connectTimeout:
             return CustomException(
               exceptionType: _ExceptionType.ConnectTimeoutException,
+              statusCode: error.response?.statusCode,
               message: 'Connection not established',
             );
           case DioErrorType.sendTimeout:
             return CustomException(
               exceptionType: _ExceptionType.SendTimeoutException,
+              statusCode: error.response?.statusCode,
               message: 'Failed to send',
             );
           case DioErrorType.receiveTimeout:
             return CustomException(
               exceptionType: _ExceptionType.ReceiveTimeoutException,
+              statusCode: error.response?.statusCode,
               message: 'Failed to receive',
             );
           case DioErrorType.response:
@@ -78,6 +86,7 @@ class CustomException implements Exception {
             if (error.message.contains(_ExceptionType.SocketException.name)) {
               return CustomException(
                 exceptionType: _ExceptionType.FetchDataException,
+                statusCode: error.response?.statusCode,
                 message: 'No internet connectivity',
               );
             }
@@ -87,10 +96,16 @@ class CustomException implements Exception {
             if (name == _ExceptionType.TokenExpiredException.name) {
               return CustomException(
                 exceptionType: _ExceptionType.TokenExpiredException,
+                code: name,
+                statusCode: error.response?.statusCode,
                 message: message,
               );
             }
-            return CustomException(message: message);
+            return CustomException(
+              message: message,
+              code: name,
+              statusCode: error.response?.statusCode,
+            );
         }
       } else {
         return CustomException(
