@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../helpers/constants/app_assets.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // Helpers
@@ -13,6 +14,7 @@ import '../../../config/routes/app_router.dart';
 import '../../../config/routes/routes.dart';
 
 // Widgets
+import '../../profile/enums/gender_enum.dart';
 import '../../shared/widgets/custom_network_image.dart';
 import '../../shared/widgets/custom_textfield.dart';
 
@@ -26,43 +28,53 @@ class NewPostBar extends StatelessWidget {
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Author Avatar
+              // Author
               Consumer(
                 builder: (_, ref, __) {
-                  final authorProfilePicture = ref.watch(
-                    currentStudentProvider.select(
-                      (value) => value?.profilePictureUrl,
-                    ),
+                  final currentStudent = ref.watch(currentStudentProvider)!;
+                  return Row(
+                    children: [
+                      // Name
+                      Text(
+                        'Hi, ${currentStudent.firstName}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      Insets.gapW5,
+
+                      // Icon
+                      Image.asset(
+                        currentStudent.gender == Gender.MALE
+                            ? AppAssets.maleStudent
+                            : AppAssets.femaleStudent,
+                            width: 20,
+                            height: 20,
+                      ),
+                    ],
                   );
-                  return authorProfilePicture == null
-                      ? const SizedBox.shrink()
-                      : CustomNetworkImage(
-                          height: 40,
-                          width: 40,
-                          shape: BoxShape.circle,
-                          imageUrl: authorProfilePicture,
-                        );
                 },
               ),
 
-              Insets.gapW15,
+              Insets.gapH10,
 
               // New Post Button
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    AppRouter.pushNamed(Routes.AddEditPostScreenRoute);
-                  },
-                  child: const CustomTextField(
-                    height: 40,
-                    enabled: false,
-                    hintText: "What's on your mind?",
-                    hintStyle: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.textGreyColor,
-                    ),
+              InkWell(
+                onTap: () {
+                  AppRouter.pushNamed(Routes.AddEditPostScreenRoute);
+                },
+                child: const CustomTextField(
+                  height: 43,
+                  enabled: false,
+                  hintText: "What's on your mind?",
+                  hintStyle: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textGreyColor,
                   ),
                 ),
               ),

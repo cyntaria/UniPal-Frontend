@@ -9,6 +9,12 @@ class AppAssets {
   /// The path for face id image asset
   static const String faceId = 'assets/images/face_id.png';
 
+  /// The path for male student avatar
+  static const String maleStudent = 'assets/images/male-student.png';
+
+  /// The path for demale student avatar
+  static const String femaleStudent = 'assets/images/female-student.png';
+
   /// The path for Pakistani flag image asset
   static const String pkFlag = 'assets/images/pk_flag.png';
 

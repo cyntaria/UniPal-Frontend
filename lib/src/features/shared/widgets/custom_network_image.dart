@@ -7,6 +7,7 @@ class CustomNetworkImage extends StatelessWidget {
   final double width;
   final double radius;
   final BorderRadiusGeometry? borderRadius;
+  final Border? border;
   final BoxFit? fit;
   final BoxShape shape;
   final EdgeInsetsGeometry? margin;
@@ -19,6 +20,7 @@ class CustomNetworkImage extends StatelessWidget {
     double? radius,
     super.key,
     this.margin,
+    this.border,
     this.shape = BoxShape.rectangle,
     this.fit,
     this.height,
@@ -47,14 +49,15 @@ class CustomNetworkImage extends StatelessWidget {
       imageBuilder: (ctx, imageProvider) => GestureDetector(
         onTap: onTap,
         child: Container(
+          margin: margin,
           decoration: BoxDecoration(
             image: DecorationImage(image: imageProvider, fit: fit),
             shape: shape,
+            border: border,
             borderRadius: shape == BoxShape.circle
                 ? null
                 : borderRadius ?? BorderRadius.circular(radius),
           ),
-          margin: margin,
         ),
       ),
     );
