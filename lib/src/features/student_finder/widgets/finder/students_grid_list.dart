@@ -24,7 +24,7 @@ class StudentsGridList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomRefreshIndicator(
-      onRefresh: () async => ref.refresh(filteredStudentsProvider),
+      onRefresh: () async => ref.refresh(filtersProvider),
       displacement: 25,
       child: AsyncValueWidget<List<StudentModel>>(
         value: ref.watch(filteredStudentsProvider),
@@ -36,7 +36,7 @@ class StudentsGridList extends ConsumerWidget {
         ),
         error: (error, st) => ErrorResponseHandler(
           error: error,
-          retryCallback: () {},
+          retryCallback: () => ref.refresh(filtersProvider),
           stackTrace: st,
         ),
         showEmptyOnNotFoundError: true,

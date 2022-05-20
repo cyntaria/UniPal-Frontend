@@ -74,6 +74,9 @@ class FiltersListView extends HookConsumerWidget {
           useDarkerLabel: true,
           child: GenderSelectionCards(
             controller: genderController,
+            onSelect: (gender) {
+              ref.read(genderFilterProvider.notifier).state = gender;
+            },
           ),
         ),
 

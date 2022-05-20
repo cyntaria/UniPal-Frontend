@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../../helpers/typedefs.dart';
 import 'students_provider.dart';
 
 // Models
@@ -25,7 +26,7 @@ final studentTypeFilterProvider = StateProvider<StudentType?>((ref) => null);
 final studentStatusFilterProvider =
     StateProvider<StudentStatusModel?>((ref) => null);
 
-final filteredStudentsProvider = FutureProvider<List<StudentModel>>(
+final filtersProvider = Provider<JSON>(
   (ref) {
     final _genderFilter = ref.watch(genderFilterProvider.notifier).state;
     final _programFilter = ref.watch(programFilterProvider.notifier).state;
@@ -38,7 +39,7 @@ final filteredStudentsProvider = FutureProvider<List<StudentModel>>(
     final _studentStatusFilter =
         ref.watch(studentStatusFilterProvider.notifier).state;
 
-    final queryParams = StudentModel.toUpdateJson(
+    final filters = StudentModel.toUpdateJson(
       gender: _genderFilter,
       programId: _programFilter?.programId,
       campusId: _campusFilter?.campusId,
@@ -46,13 +47,17 @@ final filteredStudentsProvider = FutureProvider<List<StudentModel>>(
       hobby1: _hobbyFilter?.hobbyId,
       interest1: _interestFilter?.interestId,
       graduationYear: _studentTypeFilter?.graduationYear ?? _batchFilter,
-      // TODO(arafaysaleem): .trim() in the api is failing the validator
-      // isActive: true,
+      isActive: true,
     );
 
-    return ref.watch(studentsProvider).getAllStudents(queryParams);
+    return filters;
   },
 );
+
+final filteredStudentsProvider = FutureProvider<List<StudentModel>>((ref) {
+  final queryParams = ref.watch(filtersProvider);
+  return ref.watch(studentsProvider).getAllStudents(queryParams);
+});
 
 final searchFilterProvider = StateProvider<String>((ref) => '');
 

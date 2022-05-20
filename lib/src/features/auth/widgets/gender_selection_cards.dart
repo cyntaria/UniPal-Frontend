@@ -12,14 +12,17 @@ import '../../shared/widgets/custom_radio_button.dart';
 
 class GenderSelectionCards extends StatelessWidget {
   final ValueNotifier<Gender?> controller;
+  final void Function(Gender?)? onSelect;
 
   const GenderSelectionCards({
     super.key,
     required this.controller,
+    this.onSelect,
   });
 
-  void selectGender(Gender gender, {required bool isSelected}) {
-    controller.value = isSelected ? null : gender;
+  void selectGender(Gender gender) {
+    controller.value = controller.value == gender ? null : gender;
+    onSelect?.call(controller.value);
   }
 
   @override
@@ -36,9 +39,7 @@ class GenderSelectionCards extends StatelessWidget {
                 isSelected: gender == Gender.MALE,
                 icon: Icons.male_rounded,
                 label: 'Male',
-                onTap: (_gender) {
-                  selectGender(_gender, isSelected: gender == Gender.MALE);
-                },
+                onTap: selectGender,
               ),
             ),
 
@@ -51,9 +52,7 @@ class GenderSelectionCards extends StatelessWidget {
                 isSelected: gender == Gender.FEMALE,
                 icon: Icons.female_rounded,
                 label: 'Female',
-                onTap: (_gender) {
-                  selectGender(_gender, isSelected: gender == Gender.FEMALE);
-                },
+                onTap: selectGender,
               ),
             ),
           ],

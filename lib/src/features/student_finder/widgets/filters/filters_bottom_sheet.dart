@@ -37,11 +37,12 @@ class _FiltersBottomSheetState extends ConsumerState<FiltersBottomSheet> {
       ..invalidate(studentTypeFilterProvider)
       ..invalidate(studentStatusFilterProvider)
       ..invalidate(searchFilterProvider)
-      ..refresh(filteredStudentsProvider);
+      ..refresh(filtersProvider);
+    AppRouter.pop();
   }
 
   void _onSaveTap() {
-    ref.refresh(filteredStudentsProvider);
+    ref.refresh(filtersProvider);
     AppRouter.pop();
   }
 
@@ -50,20 +51,27 @@ class _FiltersBottomSheetState extends ConsumerState<FiltersBottomSheet> {
     return SafeArea(
       child: CustomScrollableBottomSheet(
         titleText: 'Filters',
-        leading: !hasFilters
-            ? null
-            : GestureDetector(
-                onTap: _onResetTap,
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Text(
-                    'Reset',
-                    style: AppTypography.primary.body14.copyWith(
-                      color: AppColors.textGreyColor,
-                    ),
-                  ),
+        leading: Consumer(
+          builder: (_, ref, child) {
+            final hasFilters = ref.watch(
+              // length 2 because is_active is always present + any additional filters
+              filtersProvider.select((value) => value.length >= 2),
+            );
+            return hasFilters ? child! : const SizedBox.shrink();
+          },
+          child: GestureDetector(
+            onTap: _onResetTap,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                'Reset',
+                style: AppTypography.primary.body16.copyWith(
+                  color: AppColors.textGreyColor,
                 ),
               ),
+            ),
+          ),
+        ),
         trailing: CustomTextButton.gradient(
           width: 60,
           height: 30,

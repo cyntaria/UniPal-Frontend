@@ -4,18 +4,25 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../../../profile/models/student_model.codegen.dart';
 
+// Providers
+import '../../../profile/providers/profile_provider.dart';
+import '../../../profile/providers/programs_provider.dart';
+import '../../../profile/providers/student_statuses_provider.dart';
+
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/extensions/string_extension.dart';
 
+// Routing
+import '../../../../config/routes/app_router.dart';
+import '../../../../config/routes/routes.dart';
+
 // Widgets
-import '../../../profile/providers/programs_provider.dart';
-import '../../../profile/providers/student_statuses_provider.dart';
 import '../../../shared/widgets/custom_network_image.dart';
 
-class StudentGridItem extends StatelessWidget {
+class StudentGridItem extends ConsumerWidget {
   final StudentModel student;
 
   const StudentGridItem({
@@ -24,9 +31,12 @@ class StudentGridItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        ref.read(profileScreenStudentProvider.state).state = student;
+        AppRouter.pushNamed(Routes.ProfileScreenRoute);
+      },
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: Corners.rounded9,
@@ -102,7 +112,8 @@ class StudentGridItem extends StatelessWidget {
                       )
                     : null;
                 return Text(
-                  status?.studentStatus ?? 'Not looking for anything particular',
+                  status?.studentStatus ??
+                      'Not looking for anything particular',
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
