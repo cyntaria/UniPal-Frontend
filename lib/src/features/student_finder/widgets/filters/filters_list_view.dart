@@ -90,7 +90,9 @@ class FiltersListView extends HookConsumerWidget {
                 controller: programController,
                 hintText: 'Select a program',
                 items: {for (var e in programs) e.program: e},
-                onSelected: (program) {},
+                onSelected: (program) {
+                  ref.read(programFilterProvider.notifier).state = program;
+                },
               ),
             );
           },
@@ -109,7 +111,9 @@ class FiltersListView extends HookConsumerWidget {
                 controller: campusController,
                 hintText: 'Select a campus',
                 items: {for (var e in campuses) e.campus: e},
-                onSelected: (campus) {},
+                onSelected: (campus) {
+                  ref.read(campusFilterProvider.notifier).state = campus;
+                },
               ),
             );
           },
@@ -126,7 +130,9 @@ class FiltersListView extends HookConsumerWidget {
             enableSearch: true,
             hintText: 'Select a batch',
             items: {for (var i = 2050; i >= 1950; i--) '$i': i},
-            onSelected: (year) {},
+            onSelected: (year) {
+              ref.read(batchFilterProvider.notifier).state = year;
+            },
           ),
         ),
 
@@ -141,7 +147,9 @@ class FiltersListView extends HookConsumerWidget {
             enableSearch: true,
             hintText: 'Select a student type',
             items: {for (var e in StudentType.values) e.name: e},
-            onSelected: (studentType) {},
+            onSelected: (studentType) {
+              ref.read(studentTypeFilterProvider.notifier).state = studentType;
+            },
           ),
         ),
 
@@ -159,7 +167,9 @@ class FiltersListView extends HookConsumerWidget {
                 enableSearch: true,
                 hintText: 'Select a hobby',
                 items: {for (var e in hobbies) e.hobby: e},
-                onSelected: (hobby) {},
+                onSelected: (hobby) {
+                  ref.read(hobbyFilterProvider.notifier).state = hobby;
+                },
               ),
             );
           },
@@ -179,7 +189,9 @@ class FiltersListView extends HookConsumerWidget {
                 enableSearch: true,
                 hintText: 'Select an interest',
                 items: {for (var e in interests) e.interest: e},
-                onSelected: (interest) {},
+                onSelected: (interest) {
+                  ref.read(interestFilterProvider.notifier).state = interest;
+                },
               ),
             );
           },
@@ -200,7 +212,10 @@ class FiltersListView extends HookConsumerWidget {
                 enableSearch: true,
                 hintText: 'Select a status',
                 items: {for (var e in studentStatuses) e.studentStatus: e},
-                onSelected: (studentStatus) {},
+                onSelected: (studentStatus) {
+                  ref.read(studentStatusFilterProvider.notifier).state =
+                      studentStatus;
+                },
               ),
             );
           },

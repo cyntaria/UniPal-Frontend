@@ -25,7 +25,7 @@ final studentTypeFilterProvider = StateProvider<StudentType?>((ref) => null);
 final studentStatusFilterProvider =
     StateProvider<StudentStatusModel?>((ref) => null);
 
-final _filteredStudentsProvider = FutureProvider<List<StudentModel>>(
+final filteredStudentsProvider = FutureProvider<List<StudentModel>>(
   (ref) {
     final _genderFilter = ref.watch(genderFilterProvider.notifier).state;
     final _programFilter = ref.watch(programFilterProvider.notifier).state;
@@ -46,12 +46,11 @@ final _filteredStudentsProvider = FutureProvider<List<StudentModel>>(
       hobby1: _hobbyFilter?.hobbyId,
       interest1: _interestFilter?.interestId,
       graduationYear: _studentTypeFilter?.graduationYear ?? _batchFilter,
-      isActive: true,
+      // TODO(arafaysaleem): .trim() in the api is failing the validator
+      // isActive: true,
     );
 
-    final students = ref
-        .watch(studentsProvider)
-        .getAllStudents(queryParams.isEmpty ? null : queryParams);
+    final students = ref.watch(studentsProvider).getAllStudents(queryParams);
 
     return students;
   },
@@ -61,8 +60,8 @@ final searchFilterProvider = StateProvider<String>((ref) => '');
 
 final searchFilteredStudentsProvider = FutureProvider<List<StudentModel>>(
   (ref) async {
+    final filteredStudents = await ref.watch(filteredStudentsProvider.future);
     final _searchTerm = ref.watch(searchFilterProvider);
-    final filteredStudents = await ref.watch(_filteredStudentsProvider.future);
     if (_searchTerm.isEmpty) {
       return filteredStudents;
     }

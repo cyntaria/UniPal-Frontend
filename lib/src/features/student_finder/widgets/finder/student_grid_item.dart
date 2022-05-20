@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
+// Models
+import '../../../profile/models/student_model.codegen.dart';
+
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 import '../../../../helpers/constants/app_typography.dart';
 import '../../../../helpers/extensions/string_extension.dart';
-import '../../../../helpers/typedefs.dart';
 
 // Widgets
 import '../../../shared/widgets/custom_network_image.dart';
 
 class StudentGridItem extends StatelessWidget {
-  final JSON student;
+  final StudentModel student;
 
   const StudentGridItem({
     super.key,
@@ -42,7 +44,7 @@ class StudentGridItem extends StatelessWidget {
                 height: 60,
                 width: 60,
                 shape: BoxShape.circle,
-                imageUrl: student['profile_picture_url']! as String,
+                imageUrl: student.profilePictureUrl,
               ),
             ),
 
@@ -50,7 +52,7 @@ class StudentGridItem extends StatelessWidget {
 
             // Full Name
             Text(
-              '${student['first_name']} ${student['last_name']}',
+              '${student.firstName} ${student.lastName}',
               textAlign: TextAlign.center,
               style: AppTypography.primary.body14,
             ),
@@ -59,7 +61,7 @@ class StudentGridItem extends StatelessWidget {
 
             // Program
             Text(
-              "${student['program']}'${'${student['graduation_year']}'.substring(2)}",
+              "${student.programId}'${'${student.graduationYear}'.substring(2)}",
               textAlign: TextAlign.center,
               style: AppTypography.primary.subtitle13.copyWith(
                 color: AppColors.textLightGreyColor,
@@ -70,7 +72,7 @@ class StudentGridItem extends StatelessWidget {
 
             // Batch Type
             Text(
-              '${student['batch_type']}'.capitalize,
+              '${student.studentType}'.capitalize,
               textAlign: TextAlign.center,
               style: AppTypography.primary.subtitle13,
             ),
@@ -79,7 +81,7 @@ class StudentGridItem extends StatelessWidget {
 
             // Current Status
             Text(
-              '${student['current_status']}',
+              '${student.currentStatusId}',
               textAlign: TextAlign.center,
               style: AppTypography.primary.subtitle13.copyWith(
                 color: AppColors.textLightGreyColor,

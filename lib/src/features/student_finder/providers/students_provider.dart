@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
+import '../../../core/networking/custom_exception.dart';
 import '../../../helpers/typedefs.dart';
 
 // Models
@@ -25,8 +25,11 @@ class StudentsProvider {
   }) : _studentsRepository = studentsRepository;
 
   Future<List<StudentModel>> getAllStudents(JSON? queryParams) async {
-    debugPrint(queryParams.toString());
-    return Future.delayed(const Duration(seconds: 3), () => []);
-    // return _studentsRepository.fetchAll(queryParameters: queryParams);
+    try { // TODO(arafaysaleem): handle empty case exceptin
+      return _studentsRepository.fetchAll(queryParameters: queryParams);
+    } on CustomException catch (ex) {
+      if (ex.name == 'NotFoundException') return []; // TODO(arafaysaleem): add status code to CustomException
+      rethrow;
+    }
   }
 }

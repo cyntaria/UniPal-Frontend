@@ -112,7 +112,7 @@ class StudentModel with _$StudentModel {
 @freezed
 class ProfileStudentConnectionModel with _$ProfileStudentConnectionModel {
   const factory ProfileStudentConnectionModel({
-    required int studentConnectionModel,
+    required int studentConnectionId,
     required ConnectionStatus connectionStatus,
     required DateTime sentAt,
     DateTime? acceptedAt,

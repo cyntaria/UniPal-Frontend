@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Providers
+import '../../providers/filter_providers.dart';
+
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_typography.dart';
@@ -11,7 +14,6 @@ import '../../../../config/routes/app_router.dart';
 // Widgets
 import '../../../shared/widgets/custom_scrollable_bottom_sheet.dart';
 import '../../../shared/widgets/custom_text_button.dart';
-import '../../providers/filter_providers.dart';
 import 'filters_list_view.dart';
 
 class FiltersBottomSheet extends ConsumerStatefulWidget {
@@ -35,11 +37,11 @@ class _FiltersBottomSheetState extends ConsumerState<FiltersBottomSheet> {
       ..invalidate(studentTypeFilterProvider)
       ..invalidate(studentStatusFilterProvider)
       ..invalidate(searchFilterProvider)
-      ..refresh(searchFilteredStudentsProvider);
+      ..refresh(filteredStudentsProvider);
   }
 
   void _onSaveTap() {
-    ref.refresh(searchFilteredStudentsProvider);
+    ref.refresh(filteredStudentsProvider);
     AppRouter.pop();
   }
 
