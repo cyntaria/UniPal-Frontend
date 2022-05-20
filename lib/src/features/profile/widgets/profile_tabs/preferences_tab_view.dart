@@ -42,15 +42,15 @@ final _hobbyModelsProvider =
   },
 );
 
-class PreferencesTabView extends HookConsumerWidget {
-  const PreferencesTabView({
-    super.key,
-  });
+class PreferencesTabView extends ConsumerWidget {
+  const PreferencesTabView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final student = ref.watch(profileScreenStudentProvider)!;
-    final currentStudent = ref.watch(currentStudentProvider)!;
+    final isMyProfile = ref.watch(
+      currentStudentProvider.select((value) => value!.erp == student.erp),
+    );
     final hobbies = ref.watch(_hobbyModelsProvider(student.hobbies));
     final interests = ref.watch(_interestModelsProvider(student.interests));
     return ListView(
@@ -71,7 +71,7 @@ class PreferencesTabView extends HookConsumerWidget {
             ),
 
             // Edit Preferences
-            if (currentStudent.erp == student.erp)
+            if (isMyProfile)
               CustomTextButton.gradient(
                 width: 60,
                 height: 30,

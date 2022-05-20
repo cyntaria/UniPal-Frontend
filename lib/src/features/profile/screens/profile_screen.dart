@@ -61,7 +61,7 @@ class ProfileScreen extends ConsumerWidget {
                   extent: isMyProfile ? 270 : 320,
                   title: '${student.firstName} ${student.lastName}',
                   subtitle: student.studentType.name.capitalize,
-                  onCameraTap: _openImagePickerScreen,
+                  onCameraTap: isMyProfile ? _openImagePickerScreen : null,
                   profileAvatar: CustomNetworkImage(
                     imageUrl: student.profilePictureUrl,
                     shape: BoxShape.circle,

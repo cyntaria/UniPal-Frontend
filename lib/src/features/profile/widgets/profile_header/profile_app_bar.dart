@@ -25,7 +25,7 @@ class ProfileAppBar extends StatelessWidget {
     this.subtitle,
     this.onCameraTap,
     this.child,
-  })  : assert(extent >= 200, "Extent can't be less than 200");
+  }) : assert(extent >= 200, "Extent can't be less than 200");
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +176,7 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
                 width: avatarSize,
                 child: Stack(
                   children: [
+                    // Image
                     Positioned.fill(
                       child: Container(
                         decoration: const BoxDecoration(
@@ -186,33 +187,36 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
                         child: profileAvatar,
                       ),
                     ),
-                    Positioned(
-                      bottom: 5,
-                      right: 0,
-                      child: AnimatedSwitcher(
-                        duration: Durations.fastest,
-                        child: !isChildVisible
-                            ? const SizedBox.shrink()
-                            : InkWell(
-                                onTap: onCameraTap,
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: AppColors.buttonGradientPurple,
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.camera_alt_rounded,
-                                      size: 23,
-                                      color: Colors.white,
+
+                    // Update picture icon
+                    if (onCameraTap != null)
+                      Positioned(
+                        bottom: 5,
+                        right: 0,
+                        child: AnimatedSwitcher(
+                          duration: Durations.fastest,
+                          child: !isChildVisible
+                              ? const SizedBox.shrink()
+                              : InkWell(
+                                  onTap: onCameraTap,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: AppColors.buttonGradientPurple,
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.camera_alt_rounded,
+                                        size: 23,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
