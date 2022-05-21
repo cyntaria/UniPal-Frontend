@@ -32,8 +32,6 @@ final profileProvider =
   },
 );
 
-final profileScreenStudentProvider = StateProvider<StudentModel?>((ref) => null);
-
 class ProfileProvider extends StateNotifier<FutureState<String>> {
   final Reader _read;
   final StudentsRepository _studentsRepository;

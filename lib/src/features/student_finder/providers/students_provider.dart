@@ -16,6 +16,10 @@ final studentsProvider = Provider<StudentsProvider>((ref) {
   );
 });
 
+final othersProfileFutureProvider = FutureProvider.family<StudentModel, String>(
+  (ref, erp) async => ref.watch(studentsProvider).getStudent(erp),
+);
+
 class StudentsProvider {
   final StudentsRepository _studentsRepository;
 
@@ -25,5 +29,9 @@ class StudentsProvider {
 
   Future<List<StudentModel>> getAllStudents(JSON? queryParams) async {
     return _studentsRepository.fetchAll(queryParameters: queryParams);
+  }
+
+  Future<StudentModel> getStudent(String erp) async {
+    return _studentsRepository.fetchOne(erp: erp);
   }
 }

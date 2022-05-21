@@ -6,13 +6,13 @@ import '../../../auth/providers/auth_provider.dart';
 import '../../providers/hobbies_provider.dart';
 import '../../providers/interests_provider.dart';
 import '../../providers/student_statuses_provider.dart';
-import '../../providers/profile_provider.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
 import '../../../../config/routes/routes.dart';
 
 // Models
+import '../../models/student_model.codegen.dart';
 import '../../models/hobby_model.codegen.dart';
 import '../../models/interest_model.codegen.dart';
 
@@ -43,11 +43,15 @@ final _hobbyModelsProvider =
 );
 
 class PreferencesTabView extends ConsumerWidget {
-  const PreferencesTabView({super.key});
+  final StudentModel student;
+
+  const PreferencesTabView({
+    super.key,
+    required this.student,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(profileScreenStudentProvider)!;
     final isMyProfile = ref.watch(
       currentStudentProvider.select((value) => value!.erp == student.erp),
     );

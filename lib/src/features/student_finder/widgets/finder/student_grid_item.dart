@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../profile/models/student_model.codegen.dart';
 
 // Providers
-import '../../../profile/providers/profile_provider.dart';
 import '../../../profile/providers/programs_provider.dart';
 import '../../../profile/providers/student_statuses_provider.dart';
 
@@ -17,7 +16,9 @@ import '../../../../helpers/extensions/string_extension.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
-import '../../../../config/routes/routes.dart';
+
+// Screens
+import '../../screens/others_profile_screen.dart';
 
 // Widgets
 import '../../../shared/widgets/custom_network_image.dart';
@@ -33,10 +34,7 @@ class StudentGridItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {
-        ref.read(profileScreenStudentProvider.state).state = student;
-        AppRouter.pushNamed(Routes.ProfileScreenRoute);
-      },
+      onTap: () => AppRouter.push(OthersProfileScreen(erp: student.erp)),
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: Corners.rounded9,

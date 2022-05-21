@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Models
+import '../../models/student_model.codegen.dart';
+
 // Providers
 import '../../providers/campuses_provider.dart';
-import '../../providers/profile_provider.dart';
 import '../../providers/programs_provider.dart';
 
 // Helpers
@@ -15,11 +17,15 @@ import '../../../../helpers/constants/app_styles.dart';
 import '../../../shared/widgets/labeled_widget.dart';
 
 class AboutTabView extends ConsumerWidget {
-  const AboutTabView({super.key});
+  final StudentModel student;
+
+  const AboutTabView({
+    super.key,
+    required this.student,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final student = ref.watch(profileScreenStudentProvider)!;
     return ListView(
       physics: const BouncingScrollPhysics(
         parent: AlwaysScrollableScrollPhysics(),

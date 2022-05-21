@@ -11,12 +11,14 @@ class AsyncValueWidget<T> extends StatelessWidget {
   final Widget Function(Object, StackTrace?) error;
   final Widget Function(T) data;
   final bool showEmptyOnNotFoundError;
+  final bool showLoadingOnRefresh;
 
   const AsyncValueWidget({
     super.key,
     this.onFirstLoad,
     this.emptyOrNull,
     this.showEmptyOnNotFoundError = false,
+    this.showLoadingOnRefresh = true,
     required this.value,
     required this.loading,
     required this.error,
@@ -25,7 +27,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (value.isRefreshing) return loading();
+    if (showLoadingOnRefresh && value.isRefreshing) return loading();
     return value.when(
       loading: onFirstLoad ?? loading,
       error: (ex, st) {

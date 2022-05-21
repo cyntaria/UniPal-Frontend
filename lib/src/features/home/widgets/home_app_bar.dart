@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/tab_item_model.dart';
 
 // Providers
-import '../../profile/providers/profile_provider.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // Routing
@@ -33,8 +32,6 @@ class _HomeAppBarState extends ConsumerState<HomeAppBar> {
   int activeTabIndex = 0;
 
   void _openProfileScreen() {
-    final profile = ref.read(currentStudentProvider)!;
-    ref.read(profileScreenStudentProvider.state).state = profile;
     AppRouter.pushNamed(Routes.ProfileScreenRoute);
   }
 

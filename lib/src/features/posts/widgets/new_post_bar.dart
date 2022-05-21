@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../../helpers/constants/app_assets.dart';
 import '../../auth/providers/auth_provider.dart';
 
 // Helpers
+import '../../../helpers/constants/app_assets.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 
@@ -13,9 +13,10 @@ import '../../../helpers/constants/app_styles.dart';
 import '../../../config/routes/app_router.dart';
 import '../../../config/routes/routes.dart';
 
-// Widgets
+// Enums
 import '../../profile/enums/gender_enum.dart';
-import '../../shared/widgets/custom_network_image.dart';
+
+// Widgets
 import '../../shared/widgets/custom_textfield.dart';
 
 class NewPostBar extends StatelessWidget {
@@ -53,8 +54,8 @@ class NewPostBar extends StatelessWidget {
                         currentStudent.gender == Gender.MALE
                             ? AppAssets.maleStudent
                             : AppAssets.femaleStudent,
-                            width: 20,
-                            height: 20,
+                        width: 20,
+                        height: 20,
                       ),
                     ],
                   );

@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
 // Helpers
 import '../extensions/datetime_extension.dart';
 import 'app_colors.dart';
+import 'app_styles.dart';
 
 /// A utility class that holds commonly used functions
 /// This class has no constructor and all variables are `static`.
@@ -12,6 +14,7 @@ import 'app_colors.dart';
 class AppUtils {
   const AppUtils._();
 
+  /// A random value generator
   static Random randomizer([int? seed]) => Random(seed);
 
   /// A utility method to map an integer to a color code
@@ -41,6 +44,34 @@ class AppUtils {
   /// A utility method to remove nulls from int list
   static List<int>? removeNulls(List? list) {
     return list?.whereType<int>().toList();
+  }
+
+  /// Helper method to show toast message
+  static void showFlushBar({
+    required BuildContext context,
+    required String message,
+    required IconData icon,
+  }) {
+    Flushbar<void>(
+      messageText: Text(
+        message,
+        style: const TextStyle(
+          fontSize: 15,
+          color: Colors.white,
+        ),
+      ),
+      borderRadius: Corners.rounded7,
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+      icon: Icon(
+        icon,
+        size: 28,
+        color: AppColors.primaryColor,
+      ),
+      shouldIconPulse: false,
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      duration: const Duration(seconds: 3),
+    ).show(context);
   }
 }
 
