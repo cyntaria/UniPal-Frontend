@@ -119,9 +119,7 @@ class _ConnectionButtonsState extends ConsumerState<ConnectionButtons> {
     );
     final profileConnectionState = ref.watch(profileConnectionProvider);
     return profileConnectionState.maybeWhen(
-      loading: () => const CustomCircularLoader(
-        color: AppColors.primaryColor,
-      ),
+      loading: () => const CustomCircularLoader(),
       orElse: () => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -8,7 +8,6 @@ import '../../providers/student_connections_provider.dart';
 import '../../models/student_connection_model.codegen.dart';
 
 // Helpers
-import '../../../../helpers/constants/app_colors.dart';
 
 // Widgets
 import '../../../shared/widgets/error_response_handler.dart';
@@ -24,9 +23,7 @@ class ReceivedConnectionsList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AsyncValueWidget<List<StudentConnectionModel>>(
       value: ref.watch(receivedConnectionsProvider),
-      loading: () => const CustomCircularLoader(
-        color: AppColors.primaryColor,
-      ),
+      loading: () => const CustomCircularLoader(),
       error: (error, st) => ErrorResponseHandler(
         error: error,
         retryCallback: () => ref.refresh(receivedConnectionsProvider),

@@ -199,7 +199,9 @@ class UpdatePreferencesScreen extends HookConsumerWidget {
                   builder: (context, ref, child) {
                     final futureState = ref.watch(prefsProvider);
                     return futureState.maybeWhen(
-                      loading: () => const CustomCircularLoader(),
+                      loading: () => const CustomCircularLoader(
+                        color: Colors.white,
+                      ),
                       orElse: () => child!,
                     );
                   },

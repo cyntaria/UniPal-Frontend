@@ -167,7 +167,9 @@ class _MultiMediaPickerScreenState
                           widget.onSaveCallback(_pickedImage!.path),
                       gradient: AppColors.buttonGradientPurple,
                       child: studentsFuture.maybeWhen(
-                        loading: () => const CustomCircularLoader(),
+                        loading: () => const CustomCircularLoader(
+                          color: Colors.white,
+                        ),
                         orElse: () => Center(
                           child: Text(
                             'Save',

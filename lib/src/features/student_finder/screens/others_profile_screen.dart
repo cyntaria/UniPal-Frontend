@@ -40,9 +40,7 @@ class OthersProfileScreen extends ConsumerWidget {
       body: SafeArea(
         child: AsyncValueWidget<StudentModel>(
           value: ref.watch(othersProfileFutureProvider(erp)),
-          loading: () => const CustomCircularLoader(
-            color: AppColors.primaryColor,
-          ),
+          loading: () => const CustomCircularLoader(),
           error: (error, st) => ErrorResponseHandler(
             error: error,
             stackTrace: st,

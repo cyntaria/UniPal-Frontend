@@ -68,7 +68,9 @@ class Scheduler extends ConsumerWidget {
               return child!;
               // final authState = ref.watch(authProvider);
               // return authState.maybeWhen(
-              //   authenticating: () => const CustomCircularLoader(),
+              // authenticating: () => const CustomCircularLoader(
+              //     color: Colors.white,
+              // ),
               //   orElse: () => child!,
               // );
             },

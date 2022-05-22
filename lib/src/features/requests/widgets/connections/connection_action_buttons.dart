@@ -58,9 +58,7 @@ class ConnectionActionButtons extends ConsumerWidget {
       connectionRequestProvider(studentConnectionId),
     );
     return requestState.maybeWhen(
-      loading: () => const CustomCircularLoader(
-        color: AppColors.primaryColor,
-      ),
+      loading: () => const CustomCircularLoader(),
       orElse: () => Column(
         mainAxisAlignment: isReceived
             ? MainAxisAlignment.spaceBetween

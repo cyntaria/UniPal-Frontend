@@ -112,7 +112,9 @@ class PasswordDetailFields extends HookConsumerWidget {
             builder: (context, ref, child) {
               final authState = ref.watch(authProvider);
               return authState.maybeWhen(
-                loading: () => const CustomCircularLoader(),
+                loading: () => const CustomCircularLoader(
+                  color: Colors.white,
+                ),
                 orElse: () => child!,
               );
             },

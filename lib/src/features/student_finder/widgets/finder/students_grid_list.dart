@@ -4,9 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../../../profile/models/student_model.codegen.dart';
 
-// Helpers
-import '../../../../helpers/constants/app_colors.dart';
-
 // Providers
 import '../../providers/filter_providers.dart';
 
@@ -30,9 +27,7 @@ class StudentsGridList extends ConsumerWidget {
         value: ref.watch(filteredStudentsProvider),
         loading: () => const Padding(
           padding: EdgeInsets.only(top: 100),
-          child: CustomCircularLoader(
-            color: AppColors.primaryColor,
-          ),
+          child: CustomCircularLoader(),
         ),
         error: (error, st) => ErrorResponseHandler(
           error: error,
