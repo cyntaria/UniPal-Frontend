@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
@@ -7,16 +8,18 @@ import '../../../../helpers/constants/app_typography.dart';
 // Widgets
 import '../../../shared/widgets/custom_text_button.dart';
 
-class ConnectionActionButtons extends StatelessWidget {
+class ConnectionActionButtons extends ConsumerWidget {
   final bool isReceived;
+  final int studentConnectionId;
 
   const ConnectionActionButtons({
     super.key,
+    required this.studentConnectionId,
     required this.isReceived,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: isReceived
           ? MainAxisAlignment.spaceBetween

@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../providers/requests_provider.dart';
+import '../../providers/student_connections_provider.dart';
+
+// Models
+import '../../models/student_connection_model.codegen.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_styles.dart';
+import '../../../../helpers/constants/app_colors.dart';
 
 // Widgets
+import '../../../shared/widgets/error_response_handler.dart';
+import '../../../shared/widgets/async_value_widget.dart';
+import '../../../shared/widgets/custom_circular_loader.dart';
 import 'connection_list_item.dart';
 
 class SentConnectionsList extends ConsumerWidget {
@@ -15,24 +22,24 @@ class SentConnectionsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requests = ref.watch(
-      requestsProvider.select(
-        (value) => value.getAllSentConnectionRequests(),
+    return AsyncValueWidget<List<StudentConnectionModel>>(
+      value: ref.watch(sentConnectionsProvider),
+      loading: () => const CustomCircularLoader(
+        color: AppColors.primaryColor,
       ),
-    );
-    return ListView.separated(
-      itemCount: requests.length,
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.zero,
-      separatorBuilder: (_, __) => Insets.gapH15,
-      itemBuilder: (_, i) => ConnectionListItem(
-        isReceived: false,
-        authorImageUrl:
-            requests[i]['receiver']['profile_picture_url']! as String,
-        authorErp: requests[i]['receiver']['erp']! as String,
-        authorName:
-            '${requests[i]['receiver']['first_name']} ${requests[i]['receiver']['last_name']}',
-        requestSentAt: DateTime.parse(requests[i]['sent_at']! as String),
+      error: (error, st) => ErrorResponseHandler(
+        error: error,
+        retryCallback: () => ref.refresh(sentConnectionsProvider),
+        stackTrace: st,
+      ),
+      data: (requests) => ListView.separated(
+        itemCount: requests.length,
+        padding: EdgeInsets.zero,
+        physics: const BouncingScrollPhysics(),
+        separatorBuilder: (_, __) => Insets.gapH15,
+        itemBuilder: (_, i) => ConnectionListItem(
+          studentConnection: requests[i],
+        ),
       ),
     );
   }

@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Models
+import '../../models/student_connection_model.codegen.dart';
+
+// Providers
+import '../../../auth/providers/auth_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
@@ -10,24 +17,23 @@ import '../../../../helpers/extensions/datetime_extension.dart';
 import '../../../shared/widgets/custom_network_image.dart';
 import 'connection_action_buttons.dart';
 
-class ConnectionListItem extends StatelessWidget {
-  final String authorName;
-  final String authorErp;
-  final String authorImageUrl;
-  final DateTime requestSentAt;
-  final bool isReceived;
+class ConnectionListItem extends ConsumerWidget {
+  final StudentConnectionModel studentConnection;
 
   const ConnectionListItem({
     super.key,
-    required this.authorImageUrl,
-    required this.authorName,
-    required this.authorErp,
-    required this.requestSentAt,
-    required this.isReceived,
+    required this.studentConnection,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isReceived = ref.watch(
+      currentStudentProvider.select(
+        (value) => value!.erp == studentConnection.receiver.erp,
+      ),
+    );
+    final author =
+        isReceived ? studentConnection.receiver : studentConnection.sender;
     return Container(
       height: 100,
       padding: const EdgeInsets.all(10),
@@ -50,7 +56,7 @@ class ConnectionListItem extends StatelessWidget {
             height: 74,
             borderRadius: Corners.rounded4,
             fit: BoxFit.cover,
-            imageUrl: authorImageUrl,
+            imageUrl: author.profilePictureUrl,
           ),
 
           Insets.gapW10,
@@ -62,20 +68,20 @@ class ConnectionListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  authorName,
+                  '${author.firstName} ${author.lastName}',
                   style: AppTypography.primary.body14.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
 
                 Text(
-                  authorErp,
+                  author.erp,
                   style: AppTypography.primary.subtitle13,
                 ),
 
                 // Request Sent Datetime
                 Text(
-                  requestSentAt.toTimeAgoLabel(),
+                  studentConnection.sentAt.toTimeAgoLabel(),
                   style: AppTypography.primary.subtitle13.copyWith(
                     color: AppColors.textLightGreyColor,
                   ),
@@ -87,6 +93,7 @@ class ConnectionListItem extends StatelessWidget {
           // Action Buttons
           ConnectionActionButtons(
             isReceived: isReceived,
+            studentConnectionId: studentConnection.studentConnectionId,
           ),
         ],
       ),

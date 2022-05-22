@@ -25,6 +25,18 @@ final studentConnectionsProvider = Provider<StudentConnectionsProvider>((ref) {
   );
 });
 
+final receivedConnectionsProvider = FutureProvider((ref) {
+  final myErp = ref.watch(currentStudentProvider)!.erp;
+  final query = StudentConnectionModel.toUpdateJson(receiverErp: myErp);
+  return ref.watch(studentConnectionsProvider).getAllFriendRequests(query);
+});
+
+final sentConnectionsProvider = FutureProvider((ref) {
+  final myErp = ref.watch(currentStudentProvider)!.erp;
+  final query = StudentConnectionModel.toUpdateJson(senderErp: myErp);
+  return ref.watch(studentConnectionsProvider).getAllFriendRequests(query);
+});
+
 class StudentConnectionsProvider {
   final StudentConnectionsRepository _studentConnectionsRepository;
   final Reader _read;
@@ -34,15 +46,17 @@ class StudentConnectionsProvider {
     required StudentConnectionsRepository studentConnectionsRepository,
   }) : _studentConnectionsRepository = studentConnectionsRepository;
 
-  Future<List<StudentConnectionModel>> getAllFriends(JSON? queryParams) async {
+  Future<List<StudentConnectionModel>> getAllFriends([
+    JSON? queryParams,
+  ]) async {
     return _studentConnectionsRepository.fetchAllConnections(
       queryParameters: queryParams,
     );
   }
 
-  Future<List<StudentConnectionModel>> getAllFriendRequests(
+  Future<List<StudentConnectionModel>> getAllFriendRequests([
     JSON? queryParams,
-  ) async {
+  ]) async {
     return _studentConnectionsRepository.fetchAllRequests(
       queryParameters: queryParams,
     );
