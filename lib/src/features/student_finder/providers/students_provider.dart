@@ -16,7 +16,7 @@ final studentsProvider = Provider<StudentsProvider>((ref) {
   );
 });
 
-final othersProfileFutureProvider = FutureProvider.family<StudentModel, String>(
+final othersProfileFutureProvider = FutureProvider.family.autoDispose<StudentModel, String>(
   (ref, erp) async => ref.watch(studentsProvider).getStudent(erp),
 );
 

@@ -23,7 +23,7 @@ import '../../shared/widgets/custom_network_image.dart';
 import '../../shared/widgets/async_value_widget.dart';
 import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/error_response_handler.dart';
-import '../widgets/finder/student_connection_buttons.dart';
+import '../widgets/finder/connection_buttons.dart';
 
 class OthersProfileScreen extends ConsumerWidget {
   final String erp;
@@ -40,7 +40,9 @@ class OthersProfileScreen extends ConsumerWidget {
       body: SafeArea(
         child: AsyncValueWidget<StudentModel>(
           value: ref.watch(othersProfileFutureProvider(erp)),
-          loading: () => const CustomCircularLoader(),
+          loading: () => const CustomCircularLoader(
+            color: AppColors.primaryColor,
+          ),
           error: (error, st) => ErrorResponseHandler(
             error: error,
             stackTrace: st,
@@ -65,7 +67,7 @@ class OthersProfileScreen extends ConsumerWidget {
                         final myErp = ref.watch(
                           currentStudentProvider.select((value) => value!.erp),
                         );
-                        return StudentConnectionButtons(
+                        return ConnectionButtons(
                           myErp: myErp,
                           studentErp: student.erp,
                           studentConnection: student.studentConnection,

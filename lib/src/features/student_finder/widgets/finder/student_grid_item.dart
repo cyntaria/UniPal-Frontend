@@ -72,7 +72,7 @@ class StudentGridItem extends ConsumerWidget {
               ),
             ),
 
-            Insets.gapH5,
+            Insets.gapH3,
 
             // Program
             Consumer(
@@ -90,7 +90,7 @@ class StudentGridItem extends ConsumerWidget {
               },
             ),
 
-            Insets.gapH5,
+            Insets.gapH3,
 
             // Student Type
             Text(
@@ -115,7 +115,7 @@ class StudentGridItem extends ConsumerWidget {
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.primary.body14.copyWith(
+                  style: AppTypography.primary.subtitle13.copyWith(
                     color: AppColors.textLightGreyColor,
                   ),
                 );

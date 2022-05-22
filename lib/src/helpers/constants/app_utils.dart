@@ -50,23 +50,23 @@ class AppUtils {
   static void showFlushBar({
     required BuildContext context,
     required String message,
-    required IconData icon,
+    IconData? icon = Icons.error_rounded,
+    double? iconSize = 28,
+    Color? iconColor = Colors.redAccent,
   }) {
     Flushbar<void>(
-      messageText: Text(
-        message,
-        style: const TextStyle(
-          fontSize: 15,
-          color: Colors.white,
-        ),
-      ),
-      borderRadius: Corners.rounded7,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      message: message,
+      messageSize: 15,
+      messageColor: AppColors.textWhite80Color,
+      borderRadius: Corners.rounded9,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+      backgroundColor: const Color.fromARGB(218, 48, 48, 48),
+      boxShadows: Shadows.universal,
       icon: Icon(
         icon,
-        size: 28,
-        color: AppColors.primaryColor,
+        size: iconSize,
+        color: iconColor,
       ),
       shouldIconPulse: false,
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,

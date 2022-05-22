@@ -16,13 +16,14 @@ class FutureState<T> with _$FutureState<T> {
   const factory FutureState.failed({required String reason}) = FAILED;
 
   static Future<FutureState<T>> makeGuardedRequest<T>(
-    Future<T> Function() callback,
-  ) async {
+    Future<T> Function() callback, {
+    String? errorMessage,
+  }) async {
     try {
       final result = await callback.call();
       return FutureState.data(data: result);
     } on CustomException catch (ex) {
-      return FutureState.failed(reason: ex.message);
+      return FutureState.failed(reason: errorMessage ?? ex.message);
     }
   }
 }

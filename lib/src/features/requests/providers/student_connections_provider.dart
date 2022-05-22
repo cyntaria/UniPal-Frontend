@@ -48,20 +48,26 @@ class StudentConnectionsProvider {
     );
   }
 
-  Future<void> addFriend(String receiverErp) async {
+  Future<int> addFriend({
+    required String receiverErp,
+    required DateTime sentAt,
+  }) async {
     final data = StudentConnectionModel.toUpdateJson(
       senderErp: _read(currentStudentProvider)!.erp,
       receiverErp: receiverErp,
-      sentAt: DateTime.now(),
+      sentAt: sentAt,
     );
 
-    await _studentConnectionsRepository.create(data: data);
+    return _studentConnectionsRepository.create(data: data);
   }
 
-  Future<void> acceptFriendRequest(int studentConnectionId) async {
+  Future<void> acceptFriendRequest({
+    required int studentConnectionId,
+    required DateTime acceptedAt,
+  }) async {
     final data = StudentConnectionModel.toUpdateJson(
       connectionStatus: ConnectionStatus.FRIENDS,
-      acceptedAt: DateTime.now(),
+      acceptedAt: acceptedAt,
     );
 
     await _studentConnectionsRepository.update(

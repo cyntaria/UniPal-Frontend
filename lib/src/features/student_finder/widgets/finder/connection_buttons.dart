@@ -9,7 +9,6 @@ import '../../../shared/states/future_state.codegen.dart';
 
 // Providers
 import '../../providers/profile_connection_provider.dart';
-import '../../providers/students_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_utils.dart';
@@ -24,22 +23,32 @@ import '../../../requests/enums/connection_status_enum.dart';
 import '../../../shared/widgets/custom_circular_loader.dart';
 import '../../../shared/widgets/custom_text_button.dart';
 
-class StudentConnectionButtons extends ConsumerWidget {
+class ConnectionButtons extends ConsumerStatefulWidget {
   final ProfileStudentConnectionModel? studentConnection;
   final String myErp, studentErp;
 
-  const StudentConnectionButtons({
+  const ConnectionButtons({
     super.key,
     this.studentConnection,
     required this.myErp,
     required this.studentErp,
   });
 
-  bool get isReceiver => myErp == studentConnection?.receiverErp;
+  @override
+  _ConnectionButtonsState createState() => _ConnectionButtonsState();
+}
+
+class _ConnectionButtonsState extends ConsumerState<ConnectionButtons> {
+  ProfileStudentConnectionModel? studentConnection;
+
+  bool get isReceiver => widget.myErp == studentConnection?.receiverErp;
+
   bool get isRequestPending =>
       studentConnection?.connectionStatus == ConnectionStatus.REQUEST_PENDING;
+
   bool get isFriends =>
       studentConnection?.connectionStatus == ConnectionStatus.FRIENDS;
+
   bool get isNotConnected => studentConnection == null;
 
   Widget _buildPrimaryButton(String text, {required VoidCallback onPressed}) {
@@ -80,7 +89,19 @@ class StudentConnectionButtons extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    studentConnection = widget.studentConnection;
+  }
+
+  void updateConnectionState(ProfileStudentConnectionModel? connection) {
+    setState(() {
+      studentConnection = connection;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     ref.listen<FutureState<String>>(
       profileConnectionProvider,
       (_, next) => next.whenOrNull(
@@ -88,11 +109,11 @@ class StudentConnectionButtons extends ConsumerWidget {
           context: context,
           message: message,
           icon: Icons.check_circle_rounded,
+          iconColor: Colors.green,
         ),
         failed: (reason) => AppUtils.showFlushBar(
           context: context,
           message: reason,
-          icon: Icons.remove_circle_rounded,
         ),
       ),
     );
@@ -107,48 +128,44 @@ class StudentConnectionButtons extends ConsumerWidget {
           if (isNotConnected)
             _buildPrimaryButton(
               'Add Friend',
-              onPressed: () {
-                ref
+              onPressed: () async {
+                final connection = await ref
                     .read(profileConnectionProvider.notifier)
-                    .addFriend(studentErp);
-                ref.refresh(othersProfileFutureProvider(studentErp));
+                    .addFriend(widget.studentErp);
+                updateConnectionState(connection);
               },
             )
           else if (isRequestPending && !isReceiver)
             _buildSecondaryButton(
               'Cancel Request',
-              onPressed: () {
-                ref
+              onPressed: () async {
+                final success = await ref
                     .read(profileConnectionProvider.notifier)
-                    .deleteFriendRequest(
+                    .cancelSentRequest(
                       studentConnection!.studentConnectionId,
                     );
-                ref.refresh(othersProfileFutureProvider(studentErp));
+                if (success) updateConnectionState(null);
               },
             )
           else if (isFriends)
             _buildSecondaryButton(
               'Unfriend',
-              onPressed: () {
-                ref
+              onPressed: () async {
+                final success = await ref
                     .read(profileConnectionProvider.notifier)
-                    .deleteFriendRequest(
-                      studentConnection!.studentConnectionId,
-                    );
-                ref.refresh(othersProfileFutureProvider(studentErp));
+                    .unFriend(studentConnection!.studentConnectionId);
+                if (success) updateConnectionState(null);
               },
             )
           else if (isRequestPending && isReceiver) ...[
             // Accept Button
             _buildPrimaryButton(
               'Accept',
-              onPressed: () {
-                ref
+              onPressed: () async {
+                final connection = await ref
                     .read(profileConnectionProvider.notifier)
-                    .acceptFriendRequest(
-                      studentConnection!.studentConnectionId,
-                    );
-                ref.refresh(othersProfileFutureProvider(studentErp));
+                    .acceptFriendRequest(studentConnection!);
+                updateConnectionState(connection);
               },
             ),
 
@@ -157,13 +174,13 @@ class StudentConnectionButtons extends ConsumerWidget {
             // Reject Button
             _buildSecondaryButton(
               'Reject',
-              onPressed: () {
-                ref
+              onPressed: () async {
+                final success = await ref
                     .read(profileConnectionProvider.notifier)
-                    .deleteFriendRequest(
+                    .rejectFriendRequest(
                       studentConnection!.studentConnectionId,
                     );
-                ref.refresh(othersProfileFutureProvider(studentErp));
+                if (success) updateConnectionState(null);
               },
             ),
           ],
