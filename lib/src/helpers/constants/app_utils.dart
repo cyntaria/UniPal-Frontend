@@ -8,6 +8,9 @@ import '../extensions/datetime_extension.dart';
 import 'app_colors.dart';
 import 'app_styles.dart';
 
+// Enums
+import '../../features/profile/enums/student_type_enum.dart';
+
 /// A utility class that holds commonly used functions
 /// This class has no constructor and all variables are `static`.
 @immutable
@@ -72,6 +75,15 @@ class AppUtils {
       dismissDirection: FlushbarDismissDirection.HORIZONTAL,
       duration: const Duration(seconds: 3),
     ).show(context);
+  }
+
+  /// A utility method to convert [int] batch year to [StudentType]
+  static StudentType gradYearToStudentType(int graduationYear) {
+    final now = DateTime.now();
+    if (now.year > graduationYear) return StudentType.ALUMNI;
+    final diff = 4 - (graduationYear - now.year);
+    final i = now.month < 7 ? diff - 1 : diff;
+    return StudentType.values[i];
   }
 }
 

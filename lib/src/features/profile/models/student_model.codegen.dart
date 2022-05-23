@@ -101,11 +101,7 @@ class StudentModel with _$StudentModel {
   }
 
   StudentType get studentType {
-    final now = DateTime.now();
-    if (now.year > graduationYear) return StudentType.ALUMNI;
-    final diff = 4 - (graduationYear - now.year);
-    final i = now.month < 7 ? diff - 1 : diff;
-    return StudentType.values[i];
+    return AppUtils.gradYearToStudentType(graduationYear);
   }
 }
 

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
 import '../../models/hangout_request_model.codegen.dart';
 
+// Providers
+import '../../../activities/providers/campus_spots_provider.dart';
+import '../../../profile/providers/campuses_provider.dart';
+import '../../../profile/providers/programs_provider.dart';
+
 // Helpers
+import '../../../../helpers/constants/app_utils.dart';
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 import '../../../../helpers/constants/app_typography.dart';
+import '../../../../helpers/extensions/string_extension.dart';
 import '../../../../helpers/extensions/datetime_extension.dart';
 
 // Widgets
@@ -79,18 +87,40 @@ class HangoutListItem extends StatelessWidget {
                     children: [
                       // Author Name
                       Text(
-                        '${author.firstName} ${author.lastName}',
+                        '${author.firstName} ${author.lastName} ',
                         style: AppTypography.primary.body14,
                       ),
 
                       Insets.gapH5,
 
-                      // ERP
-                      Text(
-                        ' (${author.erp})',
-                        style: AppTypography.primary.subtitle13.copyWith(
-                          color: AppColors.textLightGreyColor,
-                        ),
+                      // Meta Details
+                      Row(
+                        children: [
+                          // Program and Year
+                          Consumer(
+                            builder: (_, ref, __) {
+                              final program = ref.watch(
+                                programByIdProvider(author.programId),
+                              );
+                              return Text(
+                                '${program.program} ${author.graduationYear}',
+                                style: AppTypography.primary.subtitle13,
+                              );
+                            },
+                          ),
+
+                          Insets.gapW5,
+
+                          // Type
+                          Text(
+                            AppUtils.gradYearToStudentType(author.graduationYear)
+                                .name
+                                .capitalize,
+                            style: AppTypography.primary.subtitle13.copyWith(
+                              color: AppColors.textLightGreyColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -123,11 +153,21 @@ class HangoutListItem extends StatelessWidget {
                     label: 'Meetup Spot',
                     labelGap: Insets.gapH3,
                     labelStyle: AppTypography.primary.body14,
-                    child: Text(
-                      '${hangoutRequest.meetupSpotId}',
-                      style: AppTypography.primary.subtitle13.copyWith(
-                        color: AppColors.textLightGreyColor,
-                      ),
+                    child: Consumer(
+                      builder: (_, ref, __) {
+                        final meetupSpot = ref.watch(
+                          campusSpotByIdProvider(hangoutRequest.meetupSpotId),
+                        );
+                        final campus = ref.watch(
+                          campusByIdProvider(meetupSpot.campusId),
+                        );
+                        return Text(
+                          '${meetupSpot.campusSpot}, ${campus.campus.capitalize} Campus',
+                          style: AppTypography.primary.subtitle13.copyWith(
+                            color: AppColors.textLightGreyColor,
+                          ),
+                        );
+                      },
                     ),
                   ),
 
