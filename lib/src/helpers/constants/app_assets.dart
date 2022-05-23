@@ -44,4 +44,7 @@ class AppAssets {
   
   /// The path for the outlined like icon
   static const String likeOutlinedIcon = 'assets/images/like-outlined.png';
+  
+  /// The path for the hangout icon
+  static const String hangoutIcon = 'assets/images/hangout.png';
 }

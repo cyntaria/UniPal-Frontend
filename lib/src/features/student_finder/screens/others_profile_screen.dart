@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,21 +10,27 @@ import '../../auth/providers/auth_provider.dart';
 import '../providers/students_provider.dart';
 
 // Helpers
+import '../../../helpers/constants/app_utils.dart';
 import '../../../helpers/extensions/string_extension.dart';
 import '../../../helpers/constants/app_styles.dart';
 import '../../../helpers/constants/app_colors.dart';
 
-// Widgets
+// Other Feature Widgets
 import '../../profile/widgets/profile_header/profile_app_bar.dart';
 import '../../profile/widgets/profile_header/profile_tab_bar.dart';
 import '../../profile/widgets/profile_tabs/about_tab_view.dart';
 import '../../profile/widgets/profile_tabs/activities_tab_view.dart';
 import '../../profile/widgets/profile_tabs/preferences_tab_view.dart';
+
+// Shared Widgets
 import '../../shared/widgets/custom_network_image.dart';
 import '../../shared/widgets/async_value_widget.dart';
 import '../../shared/widgets/custom_circular_loader.dart';
 import '../../shared/widgets/error_response_handler.dart';
-import '../widgets/finder/connection_buttons.dart';
+
+// This Feature Widgets
+import '../widgets/profile/connection_buttons.dart';
+import '../widgets/profile/send_hangout_fab.dart';
 
 class OthersProfileScreen extends ConsumerWidget {
   final String erp;
@@ -97,6 +104,22 @@ class OthersProfileScreen extends ConsumerWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: OpenContainer(
+        openElevation: 0,
+        closedElevation: 0,
+        openColor: Colors.transparent,
+        closedColor: Colors.transparent,
+        tappable: false,
+        transitionType: ContainerTransitionType.fadeThrough,
+        transitionDuration: Durations.slow,
+        closedBuilder: (ctx, openFunction) => Padding(
+          padding: const EdgeInsets.only(bottom: 10, right: 5),
+          child: SendHangoutFAB(
+            onPressed: openFunction,
+          ),
+        ),
+        openBuilder: (ctx, _) => const SizedBox.shrink(),
       ),
     );
   }
