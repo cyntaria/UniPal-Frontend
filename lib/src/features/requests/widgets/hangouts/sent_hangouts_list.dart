@@ -43,34 +43,37 @@ class SentHangoutsList extends ConsumerWidget {
             title: 'No hangout requests sent!',
           ),
         ),
-        data: (requests) => AnimatedList(
-          initialItemCount: requests.length,
-          padding: EdgeInsets.zero,
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          itemBuilder: (ctx, i, animation) => HangoutListItem(
-            hangoutRequest: requests[i],
-            animation: animation,
-            isReceived: false,
-            actions: HangoutActionButtons(
-              isReceived: false,
-              hangoutRequestId: requests[i].hangoutRequestId,
-              onActionSuccess: () async {
-                final removed = requests.removeAt(i);
-                AnimatedList.of(ctx).removeItem(
-                  i,
-                  (context, animation) => HangoutListItem(
-                    hangoutRequest: removed,
-                    animation: animation,
-                    isReceived: false,
-                  ),
-                );
-                if (requests.isEmpty) ref.refresh(sentHangoutsProvider);
-              },
+        data: (data) {
+          final requests = ref.watch(hangoutStatusFilteredList(data));
+          return AnimatedList(
+            initialItemCount: requests.length,
+            padding: EdgeInsets.zero,
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
             ),
-          ),
-        ),
+            itemBuilder: (ctx, i, animation) => HangoutListItem(
+              hangoutRequest: requests[i],
+              animation: animation,
+              isReceived: false,
+              actions: HangoutActionButtons(
+                isReceived: false,
+                hangoutRequestId: requests[i].hangoutRequestId,
+                onActionSuccess: () async {
+                  final removed = requests.removeAt(i);
+                  AnimatedList.of(ctx).removeItem(
+                    i,
+                    (context, animation) => HangoutListItem(
+                      hangoutRequest: removed,
+                      animation: animation,
+                      isReceived: false,
+                    ),
+                  );
+                  if (requests.isEmpty) ref.refresh(sentHangoutsProvider);
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

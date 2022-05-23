@@ -13,6 +13,8 @@ class LabeledWidget extends StatelessWidget {
   final TextStyle labelStyle;
   final bool useDarkerLabel;
   final Axis labelDirection;
+  final CrossAxisAlignment? crossAxisAlignment;
+  final MainAxisAlignment? mainAxisAlignment;
   final bool expand;
 
   const LabeledWidget({
@@ -22,6 +24,8 @@ class LabeledWidget extends StatelessWidget {
     this.labelGap = Insets.gapH5,
     this.expand = false,
     this.horizontalLabelGap = Insets.gapW10,
+    this.crossAxisAlignment,
+    this.mainAxisAlignment,
     this.labelDirection = Axis.vertical,
     this.useDarkerLabel = false,
     this.labelStyle = const TextStyle(
@@ -46,9 +50,14 @@ class LabeledWidget extends StatelessWidget {
     ];
     return labelDirection == Axis.vertical
         ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+            mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
             children: children,
           )
-        : Row(children: children);
+        : Row(
+            mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+            crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+            children: children,
+          );
   }
 }

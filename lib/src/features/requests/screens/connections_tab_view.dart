@@ -31,7 +31,7 @@ class _ConnectionsTabView extends State<ConnectionsTabView> {
             0: Padding(
               padding: const EdgeInsets.all(5),
               child: Text(
-                'Sent',
+                'Received',
                 style: TextStyle(
                   fontSize: 13,
                   color: _selectedSegmentValue == 0
@@ -43,7 +43,7 @@ class _ConnectionsTabView extends State<ConnectionsTabView> {
             1: Padding(
               padding: const EdgeInsets.all(5),
               child: Text(
-                'Received',
+                'Sent',
                 style: TextStyle(
                   fontSize: 13,
                   color: _selectedSegmentValue == 1
@@ -74,8 +74,8 @@ class _ConnectionsTabView extends State<ConnectionsTabView> {
             duration: const Duration(milliseconds: 500),
             switchInCurve: Curves.easeIn,
             child: _selectedSegmentValue == 0
-                ? const SentConnectionsList()
-                : const ReceivedConnectionsList(),
+                ? const ReceivedConnectionsList()
+                : const SentConnectionsList(),
           ),
         ),
       ],

@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
 import '../providers/hangout_request_provider.dart';
 
 // Helpers
+import '../../../helpers/constants/app_typography.dart';
+import '../../../helpers/extensions/string_extension.dart';
 import '../../../helpers/constants/app_colors.dart';
 import '../../../helpers/constants/app_styles.dart';
 
-// Enums
-import '../enums/hangout_request_status_enum.dart';
-
 // Widgets
-import '../../shared/widgets/custom_dropdown_field.dart';
 import '../../shared/widgets/labeled_widget.dart';
+import '../widgets/hangouts/hangout_request_status_popup_menu.dart';
 import '../widgets/hangouts/received_hangouts_list.dart';
 import '../widgets/hangouts/sent_hangouts_list.dart';
 
@@ -36,73 +34,75 @@ class _ConnectionsTabView extends State<HangoutsTabView> {
         Insets.gapH15,
 
         // Filters
-        Row(
-          children: [
-            // Sent/Receive Picker
-            CupertinoSlidingSegmentedControl(
-              children: {
-                0: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    'Sent',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: _selectedSegmentValue == 0
-                          ? AppColors.textWhite80Color
-                          : AppColors.primaryColor,
-                    ),
-                  ),
-                ),
-                1: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    'Received',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: _selectedSegmentValue == 1
-                          ? AppColors.textWhite80Color
-                          : AppColors.primaryColor,
-                    ),
-                  ),
-                ),
-              },
+        CupertinoSlidingSegmentedControl(
+          children: {
+            0: Padding(
               padding: const EdgeInsets.all(5),
-              thumbColor: AppColors.primaryColor,
-              backgroundColor: Colors.white,
-              groupValue: _selectedSegmentValue,
-              onValueChanged: (int? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    _selectedSegmentValue = newValue;
-                  });
-                }
-              },
+              child: Text(
+                'Received',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: _selectedSegmentValue == 0
+                      ? AppColors.textWhite80Color
+                      : AppColors.primaryColor,
+                ),
+              ),
             ),
+            1: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Text(
+                'Sent',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: _selectedSegmentValue == 1
+                      ? AppColors.textWhite80Color
+                      : AppColors.primaryColor,
+                ),
+              ),
+            ),
+          },
+          padding: const EdgeInsets.all(5),
+          thumbColor: AppColors.primaryColor,
+          backgroundColor: Colors.white,
+          groupValue: _selectedSegmentValue,
+          onValueChanged: (int? newValue) {
+            if (newValue != null) {
+              setState(() {
+                _selectedSegmentValue = newValue;
+              });
+            }
+          },
+        ),
 
-            // Request Status Filters
-            HookConsumer(
-              builder: (_, ref, __) {
-                final controller = useTextEditingController(
-                  text: ref.watch(hangoutsFilterProvider)?.name ?? '',
-                );
-                return LabeledWidget(
-                  label: 'Request Status',
-                  useDarkerLabel: true,
-                  child: CustomDropdownField<HangoutRequestStatus>.animated(
-                    controller: controller,
-                    enableSearch: true,
-                    hintText: 'All',
-                    items: {
-                      for (var e in HangoutRequestStatus.values) e.name: e
-                    },
-                    onSelected: (studentType) => ref
-                        .read(hangoutsFilterProvider.notifier)
-                        .state = studentType,
-                  ),
-                );
-              },
-            ),
-          ],
+        Insets.gapH15,
+
+        // Request Status Filters
+        Consumer(
+          builder: (_, ref, __) {
+            final filter = ref.watch(hangoutsFilterProvider);
+            return LabeledWidget(
+              labelDirection: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              label: (filter?.name.removeUnderScore) ?? 'All',
+              labelStyle: AppTypography.primary.body14.copyWith(
+                color: AppColors.textLightGreyColor,
+              ),
+              child: HangoutRequestStatusPopupMenu(
+                initialValue: filter,
+                onCanceled: () {
+                  ref.read(hangoutsFilterProvider.notifier).state = null;
+                },
+                onSelected: (status) {
+                  final _selectedStatusProv = ref.read(
+                    hangoutsFilterProvider.notifier,
+                  );
+                  if (_selectedStatusProv.state != status) {
+                    _selectedStatusProv.state = status;
+                  }
+                },
+              ),
+            );
+          },
         ),
 
         Insets.gapH15,
@@ -113,8 +113,8 @@ class _ConnectionsTabView extends State<HangoutsTabView> {
             duration: const Duration(milliseconds: 500),
             switchInCurve: Curves.easeIn,
             child: _selectedSegmentValue == 0
-                ? const SentHangoutsList()
-                : const ReceivedHangoutsList(),
+                ? const ReceivedHangoutsList()
+                : const SentHangoutsList(),
           ),
         ),
       ],

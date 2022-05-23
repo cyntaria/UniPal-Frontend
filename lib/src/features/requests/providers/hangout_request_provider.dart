@@ -33,11 +33,7 @@ final hangoutsFilterProvider =
 
 final receivedHangoutsProvider = FutureProvider((ref) {
   final myErp = ref.watch(currentStudentProvider)!.erp;
-  final requestStatus = ref.watch(hangoutsFilterProvider);
-  final query = HangoutRequestModel.toUpdateJson(
-    receiverErp: myErp,
-    requestStatus: requestStatus,
-  );
+  final query = HangoutRequestModel.toUpdateJson(receiverErp: myErp);
   final hangoutRequestsRepository = ref.watch(
     hangoutRequestsRepositoryProvider,
   );
@@ -48,11 +44,7 @@ final receivedHangoutsProvider = FutureProvider((ref) {
 
 final sentHangoutsProvider = FutureProvider((ref) {
   final myErp = ref.watch(currentStudentProvider)!.erp;
-  final requestStatus = ref.watch(hangoutsFilterProvider);
-  final query = HangoutRequestModel.toUpdateJson(
-    senderErp: myErp,
-    requestStatus: requestStatus,
-  );
+  final query = HangoutRequestModel.toUpdateJson(senderErp: myErp);
   final hangoutRequestsRepository = ref.watch(
     hangoutRequestsRepositoryProvider,
   );
@@ -60,6 +52,14 @@ final sentHangoutsProvider = FutureProvider((ref) {
     queryParameters: query,
   );
 });
+
+final hangoutStatusFilteredList =
+    Provider.family<List<HangoutRequestModel>, List<HangoutRequestModel>>(
+  (ref, list) {
+    final filter = ref.watch(hangoutsFilterProvider);
+    return list.where((status) => status.requestStatus == filter).toList();
+  },
+);
 
 class HangoutRequestProvider extends StateNotifier<FutureState<String>> {
   final HangoutRequestsRepository _hangoutRequestsRepository;

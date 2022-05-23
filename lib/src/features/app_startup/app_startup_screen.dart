@@ -23,7 +23,6 @@ import 'auth_widget_builder.dart';
 
 final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
   (ref) async {
-    await Future<void>.delayed(const Duration(seconds: 3));
     await Future.wait([
       ref.watch(authProvider.notifier).loadUserAuthDataInMemory(),
       ref.watch(interestsProvider).loadInterestsInMemory(),
