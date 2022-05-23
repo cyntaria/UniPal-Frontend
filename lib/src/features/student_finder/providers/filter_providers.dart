@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../../helpers/typedefs.dart';
 import 'students_provider.dart';
 
 // Models
@@ -15,6 +14,9 @@ import '../../profile/models/student_status_model.codegen.dart';
 import '../../profile/enums/gender_enum.dart';
 import '../../profile/enums/student_type_enum.dart';
 import '../../profile/models/campus_model.codegen.dart';
+
+// Helpers
+import '../../../helpers/typedefs.dart';
 
 final genderFilterProvider = StateProvider<Gender?>((ref) => null);
 final programFilterProvider = StateProvider<ProgramModel?>((ref) => null);
@@ -59,10 +61,10 @@ final filteredStudentsProvider = FutureProvider<List<StudentModel>>((ref) {
   return ref.watch(studentsProvider).getAllStudents(queryParams);
 });
 
-final searchFilterProvider = StateProvider<String>((ref) => '');
+final searchFilterProvider = StateProvider.autoDispose<String>((ref) => '');
 
 final searchedStudentsProvider =
-    Provider.family<List<StudentModel>, List<StudentModel>>(
+    Provider.autoDispose.family<List<StudentModel>, List<StudentModel>>(
   (ref, filteredStudents) {
     final _searchTerm = ref.watch(searchFilterProvider);
     if (_searchTerm.isEmpty) {

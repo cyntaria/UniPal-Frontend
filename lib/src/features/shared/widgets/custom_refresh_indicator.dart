@@ -10,7 +10,7 @@ class CustomRefreshIndicator extends StatelessWidget {
     super.key,
     required this.child,
     required this.onRefresh,
-    this.displacement = 40.0,
+    this.displacement = 25.0,
     this.edgeOffset = 0.0,
     this.color = Colors.white,
     this.backgroundColor = const Color.fromARGB(255, 135, 0, 224),

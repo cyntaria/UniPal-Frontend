@@ -20,7 +20,7 @@ class EmptyStateWidget extends StatelessWidget {
     this.subtitle,
     this.title,
     this.margin = EdgeInsets.zero,
-    this.padding = const EdgeInsets.all(20),
+    this.padding = const EdgeInsets.symmetric(horizontal: 20),
     required this.height,
     required this.width,
   });

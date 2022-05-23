@@ -30,77 +30,82 @@ class ConnectionListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final author =
-        isReceived ? studentConnection.receiver : studentConnection.sender;
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(-1, 0),
-        end: Offset.zero,
-      ).animate(
-        CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeInCirc,
-          reverseCurve: Curves.easeOutCirc,
+        isReceived ? studentConnection.sender : studentConnection.receiver;
+    return SizeTransition(
+      sizeFactor: CurveTween(
+        curve: const Interval(0, 0.5, curve: Curves.easeOut),
+      ).animate(animation),
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(-1, 0),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInCirc,
+            reverseCurve: Curves.easeOutCirc,
+          ),
         ),
-      ),
-      child: Container(
-        height: 100,
-        padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceColor,
-          borderRadius: Corners.rounded7,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFE0E0E0),
-              blurRadius: 5,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Other Author Image
-            CustomNetworkImage(
-              width: 69,
-              height: 74,
-              borderRadius: Corners.rounded4,
-              fit: BoxFit.cover,
-              imageUrl: author.profilePictureUrl,
-            ),
-
-            Insets.gapW10,
-
-            // Author Details
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    '${author.firstName} ${author.lastName}',
-                    style: AppTypography.primary.body14.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  Text(
-                    author.erp,
-                    style: AppTypography.primary.subtitle13,
-                  ),
-
-                  // Request Sent Datetime
-                  Text(
-                    studentConnection.sentAt.toTimeAgoLabel(),
-                    style: AppTypography.primary.subtitle13.copyWith(
-                      color: AppColors.textLightGreyColor,
-                    ),
-                  ),
-                ],
+        child: Container(
+          height: 100,
+          padding: const EdgeInsets.all(10),
+          decoration: const BoxDecoration(
+            color: AppColors.surfaceColor,
+            borderRadius: Corners.rounded7,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xFFE0E0E0),
+                blurRadius: 5,
+                offset: Offset(0, 3),
               ),
-            ),
+            ],
+          ),
+          child: Row(
+            children: [
+              // Other Author Image
+              CustomNetworkImage(
+                width: 69,
+                height: 74,
+                borderRadius: Corners.rounded4,
+                fit: BoxFit.cover,
+                imageUrl: author.profilePictureUrl,
+              ),
 
-            // Action Buttons
-            if (actions != null) actions!,
-          ],
+              Insets.gapW10,
+
+              // Author Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      '${author.firstName} ${author.lastName}',
+                      style: AppTypography.primary.body14.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    Text(
+                      author.erp,
+                      style: AppTypography.primary.subtitle13,
+                    ),
+
+                    // Request Sent Datetime
+                    Text(
+                      studentConnection.sentAt.toTimeAgoLabel(),
+                      style: AppTypography.primary.subtitle13.copyWith(
+                        color: AppColors.textLightGreyColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Action Buttons
+              if (actions != null) actions!,
+            ],
+          ),
         ),
       ),
     );

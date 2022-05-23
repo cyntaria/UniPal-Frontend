@@ -22,11 +22,10 @@ class StudentsGridList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomRefreshIndicator(
       onRefresh: () async => ref.refresh(filtersProvider),
-      displacement: 25,
       child: AsyncValueWidget<List<StudentModel>>(
         value: ref.watch(filteredStudentsProvider),
         loading: () => const Padding(
-          padding: EdgeInsets.only(top: 100),
+          padding: EdgeInsets.only(top: 70),
           child: CustomCircularLoader(),
         ),
         error: (error, st) => ErrorResponseHandler(
@@ -34,7 +33,6 @@ class StudentsGridList extends ConsumerWidget {
           retryCallback: () => ref.refresh(filtersProvider),
           stackTrace: st,
         ),
-        showEmptyOnNotFoundError: true,
         emptyOrNull: () => const EmptyStateWidget(
           height: 395,
           width: double.infinity,

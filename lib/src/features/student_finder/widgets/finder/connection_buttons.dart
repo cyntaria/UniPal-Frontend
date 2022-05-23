@@ -8,6 +8,7 @@ import '../../../profile/models/student_model.codegen.dart';
 import '../../../shared/states/future_state.codegen.dart';
 
 // Providers
+import '../../../requests/providers/student_connections_provider.dart';
 import '../../providers/profile_connection_provider.dart';
 
 // Helpers
@@ -164,6 +165,7 @@ class _ConnectionButtonsState extends ConsumerState<ConnectionButtons> {
                     .read(profileConnectionProvider.notifier)
                     .acceptFriendRequest(studentConnection!);
                 updateConnectionState(connection);
+                ref.invalidate(receivedConnectionsProvider); // refresh the requests list
               },
             ),
 
