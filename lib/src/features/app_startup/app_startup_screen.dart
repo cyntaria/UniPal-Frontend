@@ -10,6 +10,7 @@ import '../profile/providers/hobbies_provider.dart';
 import '../profile/providers/interests_provider.dart';
 import '../profile/providers/programs_provider.dart';
 import '../profile/providers/student_statuses_provider.dart';
+import '../activities/providers/campus_spots_provider.dart';
 
 //Helpers
 import '../../helpers/constants/app_utils.dart';
@@ -31,6 +32,7 @@ final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
       ref.watch(programsProvider).loadProgramsInMemory(),
       ref.watch(studentStatusesProvider).loadStudentStatusesInMemory(),
       ref.watch(reactionTypesProvider).loadReactionTypesInMemory(),
+      ref.watch(campusSpotsProvider).loadCampusSpotsInMemory(),
     ]);
   },
 );
