@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../providers/requests_provider.dart';
+import '../../providers/hangout_request_provider.dart';
 
-// Helpers
-import '../../../../helpers/constants/app_styles.dart';
+// Models
+import '../../models/hangout_request_model.codegen.dart';
 
 // Widgets
+import '../../../shared/widgets/async_value_widget.dart';
+import '../../../shared/widgets/custom_circular_loader.dart';
+import '../../../shared/widgets/custom_refresh_indicator.dart';
+import '../../../shared/widgets/empty_state_widget.dart';
+import '../../../shared/widgets/error_response_handler.dart';
+import 'hangout_action_buttons.dart';
 import 'hangout_list_item.dart';
 
 class SentHangoutsList extends ConsumerWidget {
@@ -15,26 +21,56 @@ class SentHangoutsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requests = ref.watch(
-      requestsProvider.select(
-        (value) => value.getAllSentHangoutRequests(),
-      ),
-    );
-    return ListView.separated(
-      itemCount: requests.length,
-      physics: const BouncingScrollPhysics(),
-      separatorBuilder: (_, __) => Insets.gapH15,
-      padding: EdgeInsets.zero,
-      itemBuilder: (_, i) => HangoutListItem(
-        isReceived: false,
-        authorImageUrl:
-            requests[i]['receiver']['profile_picture_url']! as String,
-        authorErp: requests[i]['receiver']['erp']! as String,
-        purpose: requests[i]['purpose']! as String,
-        authorName:
-            '${requests[i]['receiver']['first_name']} ${requests[i]['receiver']['last_name']}',
-        meetupAt: DateTime.parse(requests[i]['meetup_at']! as String),
-        meetupSpotId: requests[i]['meetup_spot_id']! as int,
+    return CustomRefreshIndicator(
+      onRefresh: () async => ref.refresh(sentHangoutsProvider),
+      displacement: 21,
+      child: AsyncValueWidget<List<HangoutRequestModel>>(
+        value: ref.watch(sentHangoutsProvider),
+        loading: () => const CustomCircularLoader(),
+        error: (error, st) => ErrorResponseHandler(
+          error: error,
+          retryCallback: () => ref.refresh(sentHangoutsProvider),
+          stackTrace: st,
+        ),
+        emptyOrNull: () => const SingleChildScrollView(
+          physics: BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          child: EmptyStateWidget(
+            height: 395,
+            width: double.infinity,
+            margin: EdgeInsets.only(top: 20),
+            title: 'No hangout requests sent!',
+          ),
+        ),
+        data: (requests) => AnimatedList(
+          initialItemCount: requests.length,
+          padding: EdgeInsets.zero,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemBuilder: (ctx, i, animation) => HangoutListItem(
+            hangoutRequest: requests[i],
+            animation: animation,
+            isReceived: false,
+            actions: HangoutActionButtons(
+              isReceived: false,
+              hangoutRequestId: requests[i].hangoutRequestId,
+              onActionSuccess: () async {
+                final removed = requests.removeAt(i);
+                AnimatedList.of(ctx).removeItem(
+                  i,
+                  (context, animation) => HangoutListItem(
+                    hangoutRequest: removed,
+                    animation: animation,
+                    isReceived: false,
+                  ),
+                );
+                if (requests.isEmpty) ref.refresh(sentHangoutsProvider);
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

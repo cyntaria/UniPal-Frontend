@@ -27,19 +27,23 @@ class ConnectionListItem extends ConsumerWidget {
     this.actions,
   });
 
+  static final slideTween = Tween<Offset>(
+    begin: const Offset(-1, 0),
+    end: Offset.zero,
+  );
+
+  static final sizeTween = CurveTween(
+    curve: const Interval(0, 0.5, curve: Curves.easeOut),
+  );
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final author =
         isReceived ? studentConnection.sender : studentConnection.receiver;
     return SizeTransition(
-      sizeFactor: CurveTween(
-        curve: const Interval(0, 0.5, curve: Curves.easeOut),
-      ).animate(animation),
+      sizeFactor: sizeTween.animate(animation),
       child: SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(-1, 0),
-          end: Offset.zero,
-        ).animate(
+        position: slideTween.animate(
           CurvedAnimation(
             parent: animation,
             curve: Curves.easeInCirc,
