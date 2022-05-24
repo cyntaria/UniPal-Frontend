@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../providers/connection_request_provider.dart';
 import '../../providers/hangout_request_provider.dart';
 
 // Helpers
@@ -37,7 +36,7 @@ class HangoutActionButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<FutureState<String>>(
-      connectionRequestProvider(hangoutRequestId),
+      hangoutRequestProvider(hangoutRequestId),
       (_, next) => next.whenOrNull(
         data: (message) {
           AppUtils.showFlushBar(
@@ -55,7 +54,7 @@ class HangoutActionButtons extends ConsumerWidget {
       ),
     );
     final requestState = ref.watch(
-      connectionRequestProvider(hangoutRequestId),
+      hangoutRequestProvider(hangoutRequestId),
     );
     return requestState.maybeWhen(
       loading: () => const Padding(

@@ -29,7 +29,7 @@ class RequestsTabView extends StatelessWidget {
 
             // Requests View
             const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               sliver: SliverFillRemaining(
                 child: TabBarView(
                   children: [

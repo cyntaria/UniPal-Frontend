@@ -43,15 +43,15 @@ class SentHangoutsList extends ConsumerWidget {
             title: 'No hangout requests sent!',
           ),
         ),
-        data: (data) {
-          final requests = ref.watch(hangoutStatusFilteredList(data));
-          return AnimatedList(
-            initialItemCount: requests.length,
-            padding: EdgeInsets.zero,
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            itemBuilder: (ctx, i, animation) => HangoutListItem(
+        data: (requests) => AnimatedList(
+          initialItemCount: requests.length,
+          padding: EdgeInsets.zero,
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          itemBuilder: (ctx, i, animation) => Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: HangoutListItem(
               hangoutRequest: requests[i],
               animation: animation,
               isReceived: false,
@@ -72,8 +72,8 @@ class SentHangoutsList extends ConsumerWidget {
                 },
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

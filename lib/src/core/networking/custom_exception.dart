@@ -90,6 +90,13 @@ class CustomException implements Exception {
                 message: 'No internet connectivity',
               );
             }
+            if (error.response?.data['headers']['code'] == null) {
+              return CustomException(
+                exceptionType: _ExceptionType.UnrecognizedException,
+                statusCode: error.response?.statusCode,
+                message: error.response?.statusMessage ?? 'Unknown',
+              );
+            }
             final name = error.response?.data['headers']['code'] as String;
             final message =
                 error.response?.data['headers']['message'] as String;

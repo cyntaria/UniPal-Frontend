@@ -13,8 +13,8 @@ import '../../requests/enums/connection_status_enum.dart';
 // States
 import '../../shared/states/future_state.codegen.dart';
 
-final profileConnectionProvider =
-    StateNotifierProvider<ProfileConnectionProvider, FutureState<String>>(
+final profileConnectionProvider = StateNotifierProvider.autoDispose<
+    ProfileConnectionProvider, FutureState<String>>(
   (ref) => ProfileConnectionProvider(ref.read),
 );
 

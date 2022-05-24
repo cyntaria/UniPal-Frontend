@@ -42,6 +42,7 @@ class HangoutRequestModel with _$HangoutRequestModel {
       if (receiverErp != null) 'receiver_erp': receiverErp,
       if (purpose != null) 'purpose': purpose,
       if (meetupAt != null) 'meetup_at': AppUtils.dateToJson(meetupAt),
+      if (meetupSpotId != null) 'meetup_spot_id': meetupSpotId,
       if (acceptedAt != null) 'accepted_at': AppUtils.dateToJson(acceptedAt),
       if (requestStatus != null) 'request_status': requestStatus.toJson,
     };

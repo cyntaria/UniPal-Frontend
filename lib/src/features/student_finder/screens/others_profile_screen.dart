@@ -31,6 +31,7 @@ import '../../shared/widgets/error_response_handler.dart';
 // This Feature Widgets
 import '../widgets/profile/connection_buttons.dart';
 import '../widgets/profile/send_hangout_fab.dart';
+import '../widgets/profile/send_hangout_request_modal.dart';
 
 class OthersProfileScreen extends ConsumerWidget {
   final String erp;
@@ -107,19 +108,22 @@ class OthersProfileScreen extends ConsumerWidget {
       ),
       floatingActionButton: OpenContainer(
         openElevation: 0,
-        closedElevation: 0,
-        openColor: Colors.transparent,
-        closedColor: Colors.transparent,
-        tappable: false,
+        closedElevation: 5,
         transitionType: ContainerTransitionType.fadeThrough,
-        transitionDuration: Durations.slow,
-        closedBuilder: (ctx, openFunction) => Padding(
-          padding: const EdgeInsets.only(bottom: 10, right: 5),
-          child: SendHangoutFAB(
-            onPressed: openFunction,
-          ),
+        closedColor: AppColors.primaryColor,
+        middleColor: AppColors.lightPrimaryColor,
+        closedShape: const RoundedRectangleBorder(
+          borderRadius: Corners.rounded50,
         ),
-        openBuilder: (ctx, _) => const SizedBox.shrink(),
+        tappable: false,
+        transitionDuration: Durations.medium,
+        closedBuilder: (ctx, openFunction) => SendHangoutFAB(
+          onPressed: openFunction,
+        ),
+        openBuilder: (ctx, closeFunction) => SendHangoutRequestModal(
+          studentErp: erp,
+          closeFunction: closeFunction,
+        ),
       ),
     );
   }

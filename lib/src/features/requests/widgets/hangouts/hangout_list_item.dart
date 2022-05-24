@@ -4,6 +4,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Models
 import '../../models/hangout_request_model.codegen.dart';
 
+// Enums
+import '../../enums/hangout_request_status_enum.dart';
+
 // Providers
 import '../../../activities/providers/campus_spots_provider.dart';
 import '../../../profile/providers/campuses_provider.dart';
@@ -36,6 +39,13 @@ class HangoutListItem extends StatelessWidget {
     this.actions,
   });
 
+  bool get isAccepted =>
+      hangoutRequest.requestStatus == HangoutRequestStatus.ACCEPTED;
+  bool get isRejected =>
+      hangoutRequest.requestStatus == HangoutRequestStatus.REJECTED;
+
+  bool get isPending => !isAccepted && !isRejected;
+
   @override
   Widget build(BuildContext context) {
     final author = isReceived ? hangoutRequest.sender : hangoutRequest.receiver;
@@ -50,7 +60,6 @@ class HangoutListItem extends StatelessWidget {
           ),
         ),
         child: Container(
-          height: 235,
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
             color: AppColors.surfaceColor,
@@ -88,7 +97,10 @@ class HangoutListItem extends StatelessWidget {
                       // Author Name
                       Text(
                         '${author.firstName} ${author.lastName} ',
-                        style: AppTypography.primary.body14,
+                        style: AppTypography.primary.body14.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
 
                       Insets.gapH5,
@@ -113,9 +125,9 @@ class HangoutListItem extends StatelessWidget {
 
                           // Type
                           Text(
-                            AppUtils.gradYearToStudentType(author.graduationYear)
-                                .name
-                                .capitalize,
+                            '(${AppUtils.gradYearToStudentType(
+                              author.graduationYear,
+                            ).name.capitalize})',
                             style: AppTypography.primary.subtitle13.copyWith(
                               color: AppColors.textLightGreyColor,
                             ),
@@ -145,51 +157,61 @@ class HangoutListItem extends StatelessWidget {
               Insets.gapH15,
 
               // Meetup Details
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Meeting Spot
-                  LabeledWidget(
-                    label: 'Meetup Spot',
-                    labelGap: Insets.gapH3,
-                    labelStyle: AppTypography.primary.body14,
-                    child: Consumer(
-                      builder: (_, ref, __) {
-                        final meetupSpot = ref.watch(
-                          campusSpotByIdProvider(hangoutRequest.meetupSpotId),
-                        );
-                        final campus = ref.watch(
-                          campusByIdProvider(meetupSpot.campusId),
-                        );
-                        return Text(
-                          '${meetupSpot.campusSpot}, ${campus.campus.capitalize} Campus',
-                          style: AppTypography.primary.subtitle13.copyWith(
-                            color: AppColors.textLightGreyColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-
-                  // Meetup Datetime
-                  LabeledWidget(
-                    label: 'Meetup At',
-                    labelGap: Insets.gapH3,
-                    labelStyle: AppTypography.primary.body14,
-                    child: Text(
-                      hangoutRequest.meetupAt.toDateString(),
+              LabeledWidget(
+                label: 'Meetup Spot',
+                labelGap: Insets.gapH3,
+                labelStyle: AppTypography.primary.body14,
+                child: Consumer(
+                  builder: (_, ref, __) {
+                    final meetupSpot = ref.watch(
+                      campusSpotByIdProvider(hangoutRequest.meetupSpotId),
+                    );
+                    final campus = ref.watch(
+                      campusByIdProvider(meetupSpot.campusId),
+                    );
+                    return Text(
+                      '${meetupSpot.campusSpot}, ${campus.campus.capitalize} Campus',
                       style: AppTypography.primary.subtitle13.copyWith(
                         color: AppColors.textLightGreyColor,
                       ),
-                    ),
+                    );
+                  },
+                ),
+              ),
+
+              Insets.gapH15,
+
+              // Meetup Datetime
+              LabeledWidget(
+                label: 'Meetup At',
+                labelGap: Insets.gapH3,
+                labelStyle: AppTypography.primary.body14,
+                child: Text(
+                  hangoutRequest.meetupAt.toDateString(),
+                  style: AppTypography.primary.subtitle13.copyWith(
+                    color: AppColors.textLightGreyColor,
                   ),
-                ],
+                ),
               ),
 
               Insets.gapH20,
 
+              // Rejected Datetime
+              if (!isPending)
+                LabeledWidget(
+                  label: isRejected ? 'Rejected At' : 'Accepted At',
+                  labelGap: Insets.gapH3,
+                  labelStyle: AppTypography.primary.body14,
+                  child: Text(
+                    hangoutRequest.acceptedAt!.toDateString(),
+                    style: AppTypography.primary.subtitle13.copyWith(
+                      color: AppColors.textLightGreyColor,
+                    ),
+                  ),
+                ),
+
               // Action Buttons
-              if (actions != null) actions!,
+              if (actions != null && isPending) actions!,
             ],
           ),
         ),

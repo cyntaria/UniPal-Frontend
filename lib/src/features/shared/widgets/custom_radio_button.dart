@@ -37,7 +37,7 @@ class CustomRadioButton<T> extends StatelessWidget {
         height: height,
         child: AnimatedContainer(
           curve: Curves.ease,
-          duration: Durations.medium,
+          duration: Durations.normal,
           decoration: BoxDecoration(
             borderRadius: borderRadius,
             gradient: isSelected ? AppColors.buttonGradientPurple : null,

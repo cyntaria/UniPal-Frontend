@@ -31,35 +31,34 @@ final hangoutRequestProvider = StateNotifierProvider.family<
 final hangoutsFilterProvider =
     StateProvider<HangoutRequestStatus?>((ref) => null);
 
-final receivedHangoutsProvider = FutureProvider((ref) {
+final receivedHangoutsProvider = FutureProvider((ref) async {
   final myErp = ref.watch(currentStudentProvider)!.erp;
   final query = HangoutRequestModel.toUpdateJson(receiverErp: myErp);
   final hangoutRequestsRepository = ref.watch(
     hangoutRequestsRepositoryProvider,
   );
-  return hangoutRequestsRepository.fetchAllHangoutRequests(
+  final list = await hangoutRequestsRepository.fetchAllHangoutRequests(
     queryParameters: query,
   );
+  final filter = ref.watch(hangoutsFilterProvider);
+  if (filter == null) return list;
+  return list.where((status) => status.requestStatus == filter).toList();
 });
 
-final sentHangoutsProvider = FutureProvider((ref) {
+final sentHangoutsProvider = FutureProvider((ref) async {
   final myErp = ref.watch(currentStudentProvider)!.erp;
   final query = HangoutRequestModel.toUpdateJson(senderErp: myErp);
   final hangoutRequestsRepository = ref.watch(
     hangoutRequestsRepositoryProvider,
   );
-  return hangoutRequestsRepository.fetchAllHangoutRequests(
+  final list = await hangoutRequestsRepository.fetchAllHangoutRequests(
     queryParameters: query,
   );
+  // TODO(arafaysaleem): make 2 seperate filtered providers for sent and received
+  final filter = ref.watch(hangoutsFilterProvider);
+  if (filter == null) return list;
+  return list.where((status) => status.requestStatus == filter).toList();
 });
-
-final hangoutStatusFilteredList =
-    Provider.family<List<HangoutRequestModel>, List<HangoutRequestModel>>(
-  (ref, list) {
-    final filter = ref.watch(hangoutsFilterProvider);
-    return list.where((status) => status.requestStatus == filter).toList();
-  },
-);
 
 class HangoutRequestProvider extends StateNotifier<FutureState<String>> {
   final HangoutRequestsRepository _hangoutRequestsRepository;
@@ -93,23 +92,6 @@ class HangoutRequestProvider extends StateNotifier<FutureState<String>> {
   }
 
   Future<void> cancelSentRequest() async {
-    await _deleteHangoutRequest(
-      successMessage: 'Hangout Request Cancelled',
-      errorMessage: 'Cancel Hangout Request Failed',
-    );
-  }
-
-  Future<void> rejectHangoutRequest() async {
-    await _deleteHangoutRequest(
-      successMessage: 'Hangout Request Rejected',
-      errorMessage: 'Reject Hangout Request Failed',
-    );
-  }
-
-  Future<void> _deleteHangoutRequest({
-    required String successMessage,
-    String? errorMessage,
-  }) async {
     state = const FutureState.loading();
 
     state = await FutureState.makeGuardedRequest(
@@ -117,9 +99,29 @@ class HangoutRequestProvider extends StateNotifier<FutureState<String>> {
         await _hangoutRequestsRepository.delete(
           hangoutRequestId: hangoutRequestId,
         );
-        return successMessage;
+        return 'Hangout Request Cancelled';
       },
-      errorMessage: errorMessage,
+      errorMessage: 'Cancel Hangout Request Failed',
+    );
+  }
+
+  Future<void> rejectHangoutRequest() async {
+    state = const FutureState.loading();
+
+    state = await FutureState.makeGuardedRequest(
+      () async {
+        final data = HangoutRequestModel.toUpdateJson(
+          requestStatus: HangoutRequestStatus.REJECTED,
+          acceptedAt: DateTime.now(),
+        );
+
+        await _hangoutRequestsRepository.update(
+          hangoutRequestId: hangoutRequestId,
+          data: data,
+        );
+        return 'Hangout Request Rejected';
+      },
+      errorMessage: 'Reject Hangout Request Failed',
     );
   }
 }

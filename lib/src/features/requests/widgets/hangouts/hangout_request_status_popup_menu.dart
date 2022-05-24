@@ -59,7 +59,7 @@ class HangoutRequestStatusPopupMenu extends ConsumerWidget {
       onCanceled: onCanceled,
       child: const Icon(
         Icons.filter_list_rounded,
-        color: AppColors.textLightGreyColor,
+        color: Colors.black,
         size: 22,
       ),
     );
