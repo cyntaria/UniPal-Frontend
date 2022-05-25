@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // Helpers
 import '../extensions/datetime_extension.dart';
@@ -45,6 +46,13 @@ class AppUtils {
   /// accepted datetime JSON format
   static String dateTimeToJson(DateTime date) {
     return date.toDateString('yyyy-MM-dd HH:mm:ss');
+  }
+
+  /// A utility method to convert JSON 24hr time string
+  /// to a [TimeOfDay] object
+  static TimeOfDay timeFromJson(String time) {
+    final dateTime = DateFormat.Hms().parse(time);
+    return TimeOfDay.fromDateTime(dateTime);
   }
 
   /// A utility method to convert any instance to null
