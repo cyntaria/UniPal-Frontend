@@ -3,6 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 
+// Models
+import '../../models/class_model.codegen.dart';
+
 // Providers
 import '../../providers/timeslots_provider.dart';
 
@@ -14,7 +17,7 @@ import 'timeslot_title.dart';
 import 'timetable_class_item.dart';
 import 'weekday_title.dart';
 
-typedef ClassModelGetter = JSON? Function(int, int);
+typedef ClassModelGetter = ClassModel? Function(int, int);
 
 class TimetableView extends HookConsumerWidget {
   final JSON timetable;

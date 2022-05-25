@@ -36,10 +36,27 @@ class TimetableModel with _$TimetableModel {
       toJson: AppUtils.toNull,
       includeIfNull: false,
     )
-        required bool isActive,
+        bool? isActive,
     @JsonKey(toJson: _classesToErps)
         required List<ClassModel> classes,
   }) = _TimetableModel;
 
   factory TimetableModel.fromJson(JSON json) => _$TimetableModelFromJson(json);
+
+  static JSON toUpdateJson({
+    bool? isActive,
+    List<ClassModel>? added,
+    List<ClassModel>? removed,
+  }) {
+    if (isActive != null) {
+      return <String, Object?>{
+        'is_active': AppUtils.boolToInt(isActive),
+      };
+    } else {
+      return <String, Object?>{
+        if (added != null) 'added': _classesToErps(added),
+        if (removed != null) 'removed': _classesToErps(removed),
+      };
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../models/generated_timetable_model.codegen.dart';
 import '../../providers/classes_selector_provider.dart';
 
 // Helpers
@@ -11,7 +12,9 @@ import '../../../../helpers/constants/app_styles.dart';
 
 // Routing
 import '../../../../config/routes/app_router.dart';
-import '../../../../config/routes/routes.dart';
+
+// Screens
+import '../../screens/generated_timetables_screen.dart';
 
 // Widgets
 import 'add_class_link.dart';
@@ -61,25 +64,20 @@ class Scheduler extends ConsumerWidget {
           width: double.infinity,
           gradient: AppColors.buttonGradientPurple,
           onPressed: () {
-            AppRouter.pushNamed(Routes.GeneratedTimetablesScreenRoute);
-          },
-          child: Consumer(
-            builder: (context, ref, child) {
-              return child!;
-              // final authState = ref.watch(authProvider);
-              // return authState.maybeWhen(
-              // authenticating: () => const CustomCircularLoader(
-              //     color: Colors.white,
-              // ),
-              //   orElse: () => child!,
-              // );
-            },
-            child: Center(
-              child: Text(
-                'GENERATE',
-                style: AppTypography.secondary.body16.copyWith(
-                  color: Colors.white,
+            AppRouter.push(
+              const GeneratedTimetablesScreen(
+                generatedTimetableModel: GeneratedTimetableModel(
+                  noOfSubjects: 0,
+                  classes: [],
                 ),
+              ),
+            );
+          },
+          child: Center(
+            child: Text(
+              'GENERATE',
+              style: AppTypography.secondary.body16.copyWith(
+                color: Colors.white,
               ),
             ),
           ),

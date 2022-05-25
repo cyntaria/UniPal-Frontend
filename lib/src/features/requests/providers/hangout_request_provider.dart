@@ -55,6 +55,7 @@ final sentHangoutsProvider = FutureProvider((ref) async {
     queryParameters: query,
   );
   // TODO(arafaysaleem): make 2 seperate filtered providers for sent and received
+  // For this we need to setup request_status as a queryParam in API
   final filter = ref.watch(hangoutsFilterProvider);
   if (filter == null) return list;
   return list.where((status) => status.requestStatus == filter).toList();

@@ -5,12 +5,12 @@ import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 import '../../../../helpers/constants/app_utils.dart';
 import '../../../../helpers/extensions/string_extension.dart';
-import '../../../../helpers/typedefs.dart';
+import '../../models/class_model.codegen.dart';
 
 class TimetableClassItem extends StatelessWidget {
   final double height, width;
   final bool isBreakSlot;
-  final JSON? classModel;
+  final ClassModel? classModel;
 
   const TimetableClassItem({
     super.key,
@@ -40,97 +40,98 @@ class TimetableClassItem extends StatelessWidget {
           ),
         ),
       );
-    }
-    final classErp = classModel!['class_erp'] as String;
-    final semester = classModel!['semester'] as String;
-    final subject = classModel!['subject']['subject'] as String;
-    final teacherName = classModel!['teacher']['full_name'] as String;
-    final teacherRating = classModel!['teacher']['average_rating'] as String;
-    final classroom = classModel!['classroom']['classroom'] as String;
-    final campus = classModel!['classroom']['campus']['campus'] as String;
-    return Container(
-      height: height,
-      width: width,
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-      decoration: const BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: AppColors.lightOutlineColor,
-            width: 1.1,
+    } else {
+      final classErp = classModel!.classErp;
+      final semester = classModel!.semester;
+      final subject = classModel!.subject.subject;
+      final teacherName = classModel!.teacher.fullName;
+      final teacherRating = classModel!.teacher.averageRating;
+      final classroom = classModel!.classroom.classroom;
+      final campus = classModel!.classroom.campus.campus;
+      return Container(
+        height: height,
+        width: width,
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+        decoration: const BoxDecoration(
+          border: Border(
+            right: BorderSide(
+              color: AppColors.lightOutlineColor,
+              width: 1.1,
+            ),
           ),
         ),
-      ),
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceColor,
-          borderRadius: Corners.rounded20,
-          boxShadow: Shadows.small,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Class name
-            _ClassHeader(
-              subject: subject,
-              classErp: classErp,
-            ),
-
-            // Class details
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 11, 15, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Teacher Name and Rating
-                  Text(
-                    'By $teacherName (${teacherRating.substring(0, 3)})',
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-
-                  Insets.gapH3,
-
-                  // Semester
-                  Text(
-                    'Semester: $semester',
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textLightGreyColor,
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Classroom and Campus
-                  Row(
-                    children: [
-                      // Icon
-                      const Icon(
-                        Icons.location_pin,
-                        size: 16,
-                        color: AppColors.greyOutlineColor,
-                      ),
-
-                      Insets.gapW5,
-
-                      // Room
-                      Text(
-                        '$classroom, ${campus.capitalize} Campus',
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: AppColors.textLightGreyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+        child: DecoratedBox(
+          decoration: const BoxDecoration(
+            color: AppColors.surfaceColor,
+            borderRadius: Corners.rounded20,
+            boxShadow: Shadows.small,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Class name
+              _ClassHeader(
+                classErp: classErp,
+                subject: subject,
               ),
-            ),
-          ],
+
+              // Class details
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 11, 15, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Teacher Name and Rating
+                    Text(
+                      'By $teacherName ($teacherRating)',
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+
+                    Insets.gapH3,
+
+                    // Semester
+                    Text(
+                      'Semester: $semester',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textLightGreyColor,
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Classroom and Campus
+                    Row(
+                      children: [
+                        // Icon
+                        const Icon(
+                          Icons.location_pin,
+                          size: 16,
+                          color: AppColors.greyOutlineColor,
+                        ),
+
+                        Insets.gapW5,
+
+                        // Room
+                        Text(
+                          '$classroom, ${campus.capitalize} Campus',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.textLightGreyColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 

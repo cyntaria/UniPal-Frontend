@@ -11,7 +11,6 @@ import '../../features/home/screens/home_screen.dart';
 import '../../features/posts/screens/add_edit_post_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/update_preferences_screen.dart';
-import '../../features/timetables/screens/generated_timetables_screen.dart';
 
 // Helpers
 import '../../helpers/typedefs.dart';
@@ -84,10 +83,6 @@ class Routes {
   /// The name of the route for timetable schedule generator screen.
   static const String SchedulerScreenRoute = '/scheduler-screen';
 
-  /// The name of the route for generated timetables screen.
-  static const String GeneratedTimetablesScreenRoute =
-      '/generated-timetables-screen';
-
   /// The name of the route for my/students' timetables screen.
   static const String TimetablesScreenRoute = '/timetables-screen';
 
@@ -105,7 +100,6 @@ class Routes {
     QrScannerScreenRoute: (_) => const QrScannerScreen(),
     UpdatePreferencesScreenRoute: (_) => const UpdatePreferencesScreen(),
     AddEditPostScreenRoute: (_) => const AddEditPostScreen(),
-    GeneratedTimetablesScreenRoute: (_) => const GeneratedTimetablesScreen(),
     NotFoundScreenRoute: (_) => const SizedBox.shrink(),
     ForgotPasswordScreenRoute: (_) => const SizedBox.shrink(),
     ChangePasswordScreenRoute: (_) => const SizedBox.shrink(),

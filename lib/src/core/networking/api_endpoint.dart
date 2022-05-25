@@ -279,7 +279,7 @@ class ApiEndpoint {
   /// Returns the path for a class [endpoint].
   ///
   /// Specify term [termId] and class [classErp] to get the path for a specific class.
-  static String classes(ClassEndpoint endpoint, {int? termId, int? classErp}) {
+  static String classes(ClassEndpoint endpoint, {int? termId, String? classErp}) {
     const path = '/classes';
     switch(endpoint){
       case ClassEndpoint.BASE: return path;

@@ -195,6 +195,60 @@ class ApiService implements ApiInterface {
     }
   }
 
+  /// An implementation of the base method for sending some data to the
+  /// [endpoint] and receiving some data in return.
+  /// The response body must be a [List], else the [converter] fails.
+  ///
+  /// The [converter] callback is used to **deserialize** the response body
+  /// into a [List] of objects of type [T].
+  /// The callback is executed on each member of the response `body` List.
+  /// [T] is usually set to a `Model`.
+  ///
+  /// [queryParams] holds any query parameters for the request.
+  ///
+  /// [cancelToken] is used to cancel the request pre-maturely. If null,
+  /// the **default** [cancelToken] inside [DioService] is used.
+  ///
+  /// [requiresAuthToken] is used to decide if a token will be inserted
+  /// in the **headers** of the request using an [ApiInterceptor].
+  /// The default value is `true`.
+  @override
+  Future<List<T>> setAndGetCollectionData<T>({
+    required String endpoint,
+    required JSON data,
+    CancelToken? cancelToken,
+    bool requiresAuthToken = true,
+    required T Function(JSON response) converter,
+  }) async {
+    List<Object?> body;
+
+    try {
+      // Entire map of response
+      final response = await _dioService.post<List<JSON>>(
+        endpoint: endpoint,
+        data: data,
+        options: Options(
+          extra: <String, Object?>{
+            'requiresAuthToken': requiresAuthToken,
+          },
+        ),
+        cancelToken: cancelToken,
+      );
+
+      // Items of table as json
+      body = response.body;
+    } on Exception catch (ex) {
+      throw CustomException.fromDioException(ex);
+    }
+
+    try {
+      // Returning the deserialized objects
+      return body.map((dataMap) => converter(dataMap! as JSON)).toList();
+    } on Exception catch (ex) {
+      throw CustomException.fromParsingException(ex);
+    }
+  }
+
   /// An implementation of the base method for updating [data]
   /// at the [endpoint].
   /// The response body must be a [Map], else the [converter] fails.
