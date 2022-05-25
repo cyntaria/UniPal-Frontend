@@ -6,7 +6,6 @@ import '../models/tab_item_model.dart';
 // Widgets
 import '../widgets/home_app_bar.dart';
 import '../../teacher_reviews/screens/teachers_tab_view.dart';
-import '../../profile/widgets/profile_tabs/activities_tab_view.dart';
 import '../../student_finder/screens/student_finder_tab_view.dart';
 import '../../timetables/screens/scheduler_tab_view.dart';
 import '../../requests/screens/requests_tab_view.dart';
@@ -20,7 +19,6 @@ class HomeScreen extends StatelessWidget {
     const _tabs = <TabItemModel>[
       TabItemModel('Posts', Icons.forum_rounded),
       TabItemModel('Requests', Icons.group),
-      TabItemModel('Activities', Icons.festival_rounded),
       TabItemModel('Student Finder', Icons.person_search_rounded),
       TabItemModel('Scheduler', Icons.event),
       TabItemModel('Review Finder', Icons.star_half_outlined),
@@ -44,7 +42,6 @@ class HomeScreen extends StatelessWidget {
             children: [
               PostsTabView(),
               RequestsTabView(),
-              ActivitiesTabView(),
               StudentFinderTabView(),
               SchedulerTabView(),
               TeachersTabView(),

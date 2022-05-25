@@ -4,34 +4,29 @@ import 'package:flutter/material.dart';
 import '../../../../helpers/constants/app_colors.dart';
 
 class ProfileTabBar extends StatelessWidget {
-  const ProfileTabBar({super.key});
+  final List<String> tabNames;
+
+  const ProfileTabBar({
+    super.key,
+    required this.tabNames,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
       delegate: _SliverTabBarDelegate(
-        const TabBar(
+        TabBar(
           isScrollable: true,
           labelColor: Colors.black87,
-          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
           indicatorWeight: 3,
           indicatorColor: AppColors.primaryColor,
-          labelPadding: EdgeInsets.symmetric(horizontal: 25),
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          labelPadding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           unselectedLabelColor: AppColors.textLightGreyColor,
-          unselectedLabelStyle: TextStyle(),
-          tabs: [
-            Tab(
-              child: Text('PREFERENCES'),
-            ),
-            Tab(
-              child: Text('ABOUT'),
-            ),
-            Tab(
-              child: Text('ACTIVITIES'),
-            ),
-          ],
+          unselectedLabelStyle: const TextStyle(),
+          tabs: tabNames.map((e) => Tab(child: Text(e))).toList(),
         ),
       ),
     );

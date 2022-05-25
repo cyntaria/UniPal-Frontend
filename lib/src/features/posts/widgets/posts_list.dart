@@ -26,7 +26,7 @@ class PostsList extends ConsumerWidget {
       child: AsyncValueWidget<List<PostModel>>(
         value: ref.watch(postsFeedFutureProvider),
         loading: () => const Padding(
-          padding: EdgeInsets.only(top: 60),
+          padding: EdgeInsets.only(top: 30),
           child: CustomCircularLoader(),
         ),
         error: (error, st) => ErrorResponseHandler(

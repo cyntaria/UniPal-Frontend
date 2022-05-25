@@ -21,7 +21,7 @@ import '../../shared/widgets/custom_network_image.dart';
 import '../widgets/profile_header/profile_app_bar.dart';
 import '../widgets/profile_header/profile_tab_bar.dart';
 import '../widgets/profile_tabs/about_tab_view.dart';
-import '../widgets/profile_tabs/activities_tab_view.dart';
+import '../widgets/profile_tabs/friends_tab_view.dart';
 import '../widgets/profile_tabs/preferences_tab_view.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -67,7 +67,9 @@ class ProfileScreen extends ConsumerWidget {
                 ),
 
                 // Tabs
-                const ProfileTabBar(),
+                const ProfileTabBar(
+                  tabNames: ['PREFERENCES', 'ABOUT', 'FRIENDS'],
+                ),
 
                 const SliverToBoxAdapter(
                   child: Insets.gapH25,
@@ -83,7 +85,7 @@ class ProfileScreen extends ConsumerWidget {
                 AboutTabView(student: currentStudent),
 
                 // Activities
-                const ActivitiesTabView(),
+                const FriendsTabView(),
               ],
             ),
           ),
