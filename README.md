@@ -4,13 +4,15 @@ UniPal mobile app made with Flutter SDK
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. These series of steps need to be followed for the app to run:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    1. Make sure you are on Flutter v3.0.0 and Dart SDK 2.17
+    2. If not, run `flutter uprade`.
+    3. Open project dir and run this command in root directory
+        ```
+        flutter pub get
+        ```
+    4. Since the project uses code generation, alot of the files are missing initially. To generate them run this in root dir
+        ```
+        flutter pub run build_runner build --delete-conflicting-outputs --enable-experiment=super-parameters
+        ```
