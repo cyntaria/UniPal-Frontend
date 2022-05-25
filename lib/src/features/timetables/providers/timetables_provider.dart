@@ -9,18 +9,6 @@ final timetablesProvider = Provider((ref) {
   return TimetablesProvider();
 });
 
-final weekDaysProvider = Provider.family<String, int>((ref, weekDayIndex) {
-  final weekDayTitles = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ];
-  return weekDayTitles[weekDayIndex];
-});
-
 class TimetablesProvider {
   final _generatedTimetables = [
     {

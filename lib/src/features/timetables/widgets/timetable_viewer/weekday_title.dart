@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// Providers
-import '../../providers/timetables_provider.dart';
+// Enums
+import '../../enums/day_enum.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_colors.dart';
@@ -21,7 +21,7 @@ class WeekdayTitle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final weekdayTitle = ref.watch(weekDaysProvider(weekday));
+    final weekdayTitle = Day.values[weekday].name;
     return Container(
       height: height,
       width: width,

@@ -40,6 +40,7 @@ class TimetableView extends HookConsumerWidget {
     const weekdayRowHeight = 35.0;
     const breakRowHeight = 65.0;
     const breakSlot = 3;
+    final timeslots = ref.watch(timeslotsProvider).getAllTimeslots();
     return Scaffold(
       appBar: AppBar(
         title: Text(title),

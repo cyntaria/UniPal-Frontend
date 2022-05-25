@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
 import '../../providers/timeslots_provider.dart';
@@ -7,7 +8,7 @@ import '../../providers/timeslots_provider.dart';
 import '../../../../helpers/constants/app_colors.dart';
 import '../../../../helpers/constants/app_styles.dart';
 
-class TimeslotTitle extends StatelessWidget {
+class TimeslotTitle extends ConsumerWidget {
   final int slotNumber;
   final double height, width;
 
@@ -19,10 +20,8 @@ class TimeslotTitle extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final timeslot = timeslots.firstWhere(
-      (t) => t['slot_number']! == slotNumber,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final timeslot = ref.watch(timeslotBySlotProvider(slotNumber));
     return Container(
       height: height,
       width: width,
@@ -40,7 +39,7 @@ class TimeslotTitle extends StatelessWidget {
         children: [
           // Start Time
           Text(
-            (timeslot['start_time']! as String).substring(0, 5),
+            timeslot.startTime.format(context),
             textAlign: TextAlign.right,
             style: const TextStyle(
               fontSize: 14,
@@ -52,7 +51,7 @@ class TimeslotTitle extends StatelessWidget {
 
           // End Time
           Text(
-            (timeslot['end_time']! as String).substring(0, 5),
+            timeslot.endTime.format(context),
             textAlign: TextAlign.right,
             style: const TextStyle(
               fontSize: 12,

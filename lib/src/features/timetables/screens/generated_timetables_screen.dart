@@ -11,6 +11,9 @@ import '../../../helpers/typedefs.dart';
 // Routing
 import '../../../config/routes/app_router.dart';
 
+// Enums
+import '../enums/day_enum.dart';
+
 // Widgets
 import '../widgets/timetable_viewer/timetable_view.dart';
 import '../widgets/timetables_list/timetable_list_item.dart';
@@ -44,7 +47,7 @@ class GeneratedTimetablesScreen extends ConsumerWidget {
                   timetable: timetable,
                   title: title,
                   classModelGetter: (weekDayIndex, timeslotIndex) {
-                    final weekDay = ref.watch(weekDaysProvider(weekDayIndex));
+                    final weekDay = Day.values[weekDayIndex].toJson;
                     if (timetable.containsKey(weekDay)) {
                       final weekDayMap = timetable[weekDay]! as JSON;
                       final timeslot = '${timeslotIndex + 1}';
