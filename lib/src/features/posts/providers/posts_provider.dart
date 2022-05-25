@@ -1,76 +1,106 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// Models
+import '../models/post_model.codegen.dart';
+import '../models/post_resource_model.codegen.dart';
+
+// States
+import '../../shared/states/future_state.codegen.dart';
+
+// Providers
+import '../../auth/providers/auth_provider.dart';
+
+// Repositories
+import '../repositories/posts_repository.dart';
+
 // Helpers
 import '../../../helpers/typedefs.dart';
 
-final postsProvider = Provider((_) => PostsProvider());
+// Enums
+import '../enums/post_privacy_enum.dart';
 
-class PostsProvider {
-  final _posts = [
-    <String, Object?>{
-      'post_id': 3,
-      'body': 'Some post content body',
-      'privacy': 'public',
-      'author': {
-        'erp': '17855',
-        'profile_picture_url': 'https://yourwikis.com/wp-content/uploads/2020/01/mark-zuck-img.jpg',
-        'first_name': 'Mark',
-        'last_name': 'Zuckerberg',
-      },
-      'posted_at': '2021-09-17 17:53:40',
-      'top_3_reactions': [
-        {'reaction_type_id': 2, 'reaction_count': 2}
-      ],
-      'resources': [
-        {
-          'resource_id': 5,
-          'resource_url': 'www.google.com/images',
-          'resource_type': 'image'
-        },
-        {
-          'resource_id': 6,
-          'resource_url': 'www.youtube.com',
-          'resource_type': 'video'
-        }
-      ]
-    },
-    <String, Object?>{
-      'post_id': 2,
-      'body':
-          'my habit of going in-depth on every topic, not just to get things done but to do them in the best way possible',
-      'privacy': 'public',
-      'author': {
-        'erp': '17855',
-        'profile_picture_url': 'https://the360report.com/wp-content/uploads/2020/10/jeff.jpg',
-        'first_name': 'Jeff',
-        'last_name': 'Bezos',
-      },
-      'posted_at': '2021-09-17 16:53:40',
-      'top_3_reactions': [
-        {'reaction_type_id': 4, 'reaction_count': 2},
-        {'reaction_type_id': 2, 'reaction_count': 1}
-      ],
-      'resources': null
-    },
-    <String, Object?>{
-      'post_id': 1,
-      'body': "Facebook 'lacks willpower' to tackle misinformation in Africa",
-      'privacy': 'public',
-      'author': {
-        'erp': '17855',
-        'profile_picture_url': 'https://the360report.com/wp-content/uploads/2020/10/jeff.jpg',
-        'first_name': 'Abdur Rafay',
-        'last_name': 'Saleem',
-      },
-      'posted_at': '2021-09-17 15:53:40',
-      'top_3_reactions': [
-        {'reaction_type_id': 2, 'reaction_count': 3}
-      ],
-      'resources': null
-    }
-  ];
+final postsProvider = StateNotifierProvider<PostsProvider, FutureState<String>>(
+  (ref) {
+    final _postsRepository = ref.watch(
+      postsRepositoryProvider,
+    );
+    return PostsProvider(
+      ref.read,
+      postsRepository: _postsRepository,
+    );
+  },
+);
 
-  List<JSON> getAllPosts() {
-    return [..._posts, ..._posts, ..._posts];
+final postsFeedFutureProvider = FutureProvider((ref) async {
+  return ref.watch(postsProvider.notifier).getAllPosts();
+});
+
+class PostsProvider extends StateNotifier<FutureState<String>> {
+  final PostsRepository _postsRepository;
+  final Reader _read;
+
+  PostsProvider(
+    this._read, {
+    required PostsRepository postsRepository,
+  })  : _postsRepository = postsRepository,
+        super(const FutureState.idle());
+
+  Future<List<PostModel>> getAllPosts([JSON? queryParams]) async {
+    return _postsRepository.fetchAllPosts(queryParameters: queryParams);
+  }
+
+  Future<void> addPost({
+    required String body,
+    PostPrivacy privacy = PostPrivacy.PUBLIC,
+    List<PostResourceModel>? resources,
+  }) async {
+    state = const FutureState.loading();
+
+    final data = PostModel.toUpdateJson(
+      body: body,
+      authorErp: _read(currentStudentProvider)!.erp,
+      privacy: privacy,
+      postedAt: DateTime.now(),
+      resources: resources ?? [],
+    );
+
+    state = await FutureState.makeGuardedRequest(
+      () async {
+        await _postsRepository.create(data: data);
+        return 'Post created successfully!';
+      },
+      errorMessage: 'Failed to create post.',
+    );
+  }
+
+  Future<void> updatePost({
+    required int postId,
+    PostPrivacy? privacy,
+    String? body,
+  }) async {
+    state = const FutureState.loading();
+
+    final data = PostModel.toUpdateJson(
+      privacy: privacy,
+      body: body,
+    );
+
+    state = await FutureState.makeGuardedRequest(
+      () async {
+        return _postsRepository.update(postId: postId, data: data);
+      },
+      errorMessage: 'Failed to edit post.',
+    );
+  }
+
+  Future<void> deletePostRequest(int postId) async {
+    state = const FutureState.loading();
+
+    state = await FutureState.makeGuardedRequest(
+      () async {
+        return _postsRepository.delete(postId: postId);
+      },
+      errorMessage: 'Failed to delete post.',
+    );
   }
 }

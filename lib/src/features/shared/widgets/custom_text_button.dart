@@ -60,23 +60,24 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final textButtonTheme = theme.textButtonTheme;
-    return TextButton(
-      style: textButtonTheme.style!.copyWith(
-        overlayColor: MaterialStateProperty.all(
-          disabled ? AppColors.darkSkeletonColor : AppColors.primaryColor,
-        ),
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(borderRadius),
+        border: border,
+        gradient: disabled ? AppColors.buttonGradientGrey : gradient,
+        color: color,
       ),
-      onPressed: disabled ? () {} : onPressed,
-      child: Container(
-        height: height,
-        width: width,
-        padding: padding,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          border: border,
-          gradient: disabled ? AppColors.buttonGradientGrey : gradient,
-          color: color,
+      clipBehavior: Clip.hardEdge,
+      child: TextButton(
+        style: textButtonTheme.style!.copyWith(
+          padding: MaterialStateProperty.all(padding),
+          overlayColor: MaterialStateProperty.all(
+            disabled ? AppColors.darkSkeletonColor : AppColors.primaryColor,
+          ),
         ),
+        onPressed: disabled ? () {} : onPressed,
         child: child,
       ),
     );

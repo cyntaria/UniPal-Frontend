@@ -36,9 +36,15 @@ class AppUtils {
   static int boolToInt(bool b) => b ? 1 : 0;
 
   /// A utility method to convert DateTime to API
-  /// accepted JSON format
+  /// accepted date JSON format
   static String dateToJson(DateTime date) {
     return date.toDateString('yyyy-MM-dd');
+  }
+
+  /// A utility method to convert DateTime to API
+  /// accepted datetime JSON format
+  static String dateTimeToJson(DateTime date) {
+    return date.toDateString('yyyy-MM-dd HH:mm:ss');
   }
 
   /// A utility method to convert any instance to null

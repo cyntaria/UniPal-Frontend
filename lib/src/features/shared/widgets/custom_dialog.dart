@@ -123,6 +123,8 @@ class CustomDialog extends StatelessWidget {
                 ),
               ),
 
+              Insets.gapW10,
+
               // No
               CustomTextButton.gradient(
                 gradient: AppColors.buttonGradientPurple,

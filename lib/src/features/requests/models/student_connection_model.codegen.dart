@@ -35,8 +35,8 @@ class StudentConnectionModel with _$StudentConnectionModel {
     final params = <String, Object?>{
       if (senderErp != null) 'sender_erp': senderErp,
       if (receiverErp != null) 'receiver_erp': receiverErp,
-      if (sentAt != null) 'sent_at': AppUtils.dateToJson(sentAt),
-      if (acceptedAt != null) 'accepted_at': AppUtils.dateToJson(acceptedAt),
+      if (sentAt != null) 'sent_at': AppUtils.dateTimeToJson(sentAt),
+      if (acceptedAt != null) 'accepted_at': AppUtils.dateTimeToJson(acceptedAt),
       if (connectionStatus != null)
         'connection_status': connectionStatus.toJson,
     };
