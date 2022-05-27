@@ -85,7 +85,7 @@ class AuthProvider extends StateNotifier<FutureState<bool?>> {
           ? '+92${personalData.contact.substring(1)}'
           : personalData.contact,
       birthday: personalData.birthday,
-      profilePictureUrl: 'https://avatars.githubusercontent.com/u/62943972?v=4',
+      profilePictureUrl: 'https://firebasestorage.googleapis.com/v0/b/unipal-frontend.appspot.com/o/default-avatar.png?alt=media&token=0d2f3f8d-b179-4803-a21f-e745b3568120',
       graduationYear: uniData.gradYear,
       programId: uniData.programId,
       campusId: uniData.campusId,
