@@ -20,9 +20,9 @@ class TeachersTabView extends StatelessWidget {
           ),
 
           // Search bar
-          // const SliverToBoxAdapter(
-          //   child: SearchBar(),
-          // ),
+          const SliverToBoxAdapter(
+            child: SearchBar(),
+          ),
 
           // Posts List
           const SliverPadding(
