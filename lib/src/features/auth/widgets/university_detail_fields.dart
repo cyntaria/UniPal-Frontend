@@ -3,6 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
+import '../../profile/models/campus_model.codegen.dart';
+import '../../profile/models/program_model.codegen.dart';
+import '../../profile/providers/campuses_provider.dart';
+import '../../profile/providers/programs_provider.dart';
 import '../providers/register_form_provider.dart';
 
 // Helpers
@@ -29,8 +33,8 @@ class UniversityDetailFields extends HookConsumerWidget {
   void saveForm(
     WidgetRef ref, {
     required int gradYear,
-    required int programId,
-    required int campusId,
+    required ProgramModel programId,
+    required CampusModel campusId,
   }) {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -51,11 +55,11 @@ class UniversityDetailFields extends HookConsumerWidget {
     final gradYearController = useValueNotifier<int?>(
       savedFormData?.gradYear,
     );
-    final programIdController = useValueNotifier<int?>(
-      savedFormData?.programId,
+    final programIdController = useValueNotifier<ProgramModel?>(
+      savedFormData?.program,
     );
-    final campusIdController = useValueNotifier<int?>(
-      savedFormData?.campusId,
+    final campusIdController = useValueNotifier<CampusModel?>(
+      savedFormData?.campus,
     );
 
     return ScrollableColumn(
@@ -91,15 +95,15 @@ class UniversityDetailFields extends HookConsumerWidget {
         LabeledWidget(
           label: 'Programs',
           useDarkerLabel: true,
-          child: CustomDropdownField<int>.sheet(
+          child: CustomDropdownField<ProgramModel>.sheet(
             controller: programIdController,
-            selectedItemText: (item) => '$item',
+            selectedItemText: (item) => item.program,
             hintText: 'Select a degree',
             itemsSheet: CustomDropdownSheet(
-              items: const [1, 2, 3],
+              items: ref.watch(programsProvider).getAllPrograms(),
               bottomSheetTitle: 'Programs',
               itemBuilder: (_, item) => DropdownSheetItem(
-                label: '$item',
+                label: item.program,
               ),
             ),
           ),
@@ -111,14 +115,14 @@ class UniversityDetailFields extends HookConsumerWidget {
         LabeledWidget(
           label: 'Campuses',
           useDarkerLabel: true,
-          child: CustomDropdownField<int>.sheet(
+          child: CustomDropdownField<CampusModel>.sheet(
             controller: campusIdController,
-            selectedItemText: (item) => '$item',
+            selectedItemText: (item) => item.campus,
             itemsSheet: CustomDropdownSheet(
-              items: const [1, 2, 3],
+              items: ref.watch(campusesProvider).getAllCampuses(),
               bottomSheetTitle: 'Campuses',
               itemBuilder: (_, item) => DropdownSheetItem(
-                label: '$item',
+                label: item.campus,
               ),
             ),
           ),
@@ -145,7 +149,7 @@ class UniversityDetailFields extends HookConsumerWidget {
             ),
           ),
         ),
-        
+
         Insets.bottomInsetsLow,
       ],
     );
