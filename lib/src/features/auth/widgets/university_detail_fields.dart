@@ -81,7 +81,7 @@ class UniversityDetailFields extends HookConsumerWidget {
               searchFilterCondition: (searchTerm, item) {
                 return '$item'.startsWith(searchTerm);
               },
-              items: [for (var i = 2050; i >= 1950; i--) i],
+              items: [for (var i = 2026; i >= 1950; i--) i],
               itemBuilder: (_, item) => DropdownSheetItem(
                 label: '$item',
               ),
