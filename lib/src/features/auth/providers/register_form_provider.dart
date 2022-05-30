@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
+import '../../profile/models/campus_model.codegen.dart';
+import '../../profile/models/program_model.codegen.dart';
 import '../models/personal_details_data.dart';
 import '../models/university_details_data.dart';
 
@@ -58,14 +60,14 @@ class RegisterFormProvider extends StateNotifier<RegistrationState> {
 
   void saveUniversityDetails({
     required int gradYear,
-    required int programId,
-    required int campusId,
+    required ProgramModel programId,
+    required CampusModel campusId,
   }) {
     // Save details
     _universityDetailsData = UniversityDetailsData(
       gradYear: gradYear,
-      programId: programId,
-      campusId: campusId,
+      program: programId,
+      campus: campusId,
     );
 
     // Move to password form

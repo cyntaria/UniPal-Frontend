@@ -19,6 +19,7 @@ import '../../helpers/extensions/context_extensions.dart';
 
 // Widgets
 import '../shared/widgets/error_response_handler.dart';
+import '../timetables/providers/timeslots_provider.dart';
 import 'auth_widget_builder.dart';
 
 final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
@@ -26,6 +27,7 @@ final _cacheLoaderFutureProvider = FutureProvider.autoDispose<void>(
     await Future.wait([
       ref.watch(authProvider.notifier).loadUserAuthDataInMemory(),
       ref.watch(interestsProvider).loadInterestsInMemory(),
+      ref.watch(timeslotsProvider).loadTimeslotsInMemory(),
       ref.watch(hobbiesProvider).loadHobbiesInMemory(),
       ref.watch(campusesProvider).loadCampusesInMemory(),
       ref.watch(programsProvider).loadProgramsInMemory(),

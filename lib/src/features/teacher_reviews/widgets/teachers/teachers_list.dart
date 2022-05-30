@@ -18,13 +18,14 @@ class TeachersList extends ConsumerWidget {
     final teachers = ref.watch(
       teachersProvider.select((value) => value.getAllTeachers()),
     );
+    final filteredTeachers = ref.watch(searchedTeachersProvider(teachers));
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: teachers.length,
+      itemCount: filteredTeachers.length,
       separatorBuilder: (_, __) => Insets.gapH15,
       itemBuilder: (_, i) => TeachersListItem(
-        teacher: teachers[i],
+        teacher: filteredTeachers[i],
       ),
     );
   }
