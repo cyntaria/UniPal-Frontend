@@ -85,7 +85,7 @@ class ProfileScreen extends ConsumerWidget {
                 AboutTabView(student: currentStudent),
 
                 // Activities
-                const FriendsTabView(),
+                FriendsTabView(erp: currentStudent.erp),
               ],
             ),
           ),

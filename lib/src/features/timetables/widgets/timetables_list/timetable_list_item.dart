@@ -85,19 +85,19 @@ class TimetableListItem extends StatelessWidget {
             Insets.expand,
 
             // Set Active Button
-            // CustomTextButton.gradient(
-            //   height: 35,
-            //   onPressed: () {},
-            //   gradient: AppColors.buttonGradientPurple,
-            //   child: Center(
-            //     child: Text(
-            //       'Set Active',
-            //       style: AppTypography.secondary.subtitle13.copyWith(
-            //         color: Colors.white,
-            //       ),
-            //     ),
-            //   ),
-            // )
+            CustomTextButton.gradient(
+              height: 35,
+              onPressed: () {},
+              gradient: AppColors.buttonGradientPurple,
+              child: Center(
+                child: Text(
+                  'Set Active',
+                  style: AppTypography.secondary.subtitle13.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

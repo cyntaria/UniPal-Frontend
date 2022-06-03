@@ -10,6 +10,7 @@ import '../../student_finder/screens/student_finder_tab_view.dart';
 import '../../timetables/screens/scheduler_tab_view.dart';
 import '../../requests/screens/requests_tab_view.dart';
 import '../../posts/screens/posts_tab_view.dart';
+import '../../activities/activities_tab_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     const _tabs = <TabItemModel>[
       TabItemModel('Posts', Icons.forum_rounded),
       TabItemModel('Requests', Icons.group),
+      TabItemModel('Activities', Icons.festival_outlined),
       TabItemModel('Student Finder', Icons.person_search_rounded),
       TabItemModel('Scheduler', Icons.event),
       TabItemModel('Review Finder', Icons.star_half_outlined),
@@ -42,6 +44,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               PostsTabView(),
               RequestsTabView(),
+              ActivitiesTabView(),
               StudentFinderTabView(),
               SchedulerTabView(),
               TeachersTabView(),

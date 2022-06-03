@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
-import '../../activities/activities_tab_view.dart';
 import '../../profile/models/student_model.codegen.dart';
 
 // Providers
@@ -21,6 +20,7 @@ import '../../profile/widgets/profile_header/profile_app_bar.dart';
 import '../../profile/widgets/profile_header/profile_tab_bar.dart';
 import '../../profile/widgets/profile_tabs/about_tab_view.dart';
 import '../../profile/widgets/profile_tabs/preferences_tab_view.dart';
+import '../../profile/widgets/profile_tabs/friends_tab_view.dart';
 
 // Shared Widgets
 import '../../shared/widgets/custom_network_image.dart';
@@ -55,7 +55,7 @@ class OthersProfileScreen extends ConsumerWidget {
             retryCallback: () => ref.refresh(othersProfileFutureProvider(erp)),
           ),
           data: (student) => DefaultTabController(
-            length: 2,
+            length: 3,
             child: NestedScrollView(
               headerSliverBuilder: (BuildContext context, _) {
                 return <Widget>[
@@ -84,7 +84,7 @@ class OthersProfileScreen extends ConsumerWidget {
 
                   // Tabs
                   const ProfileTabBar(
-                    tabNames: ['PREFERENCES', 'ABOUT'],
+                    tabNames: ['PREFERENCES', 'ABOUT', 'FRIENDS'],
                   ),
 
                   const SliverToBoxAdapter(
@@ -100,7 +100,8 @@ class OthersProfileScreen extends ConsumerWidget {
                   // University
                   AboutTabView(student: student),
 
-                  // const ActivitiesTabView()
+                  // Friends
+                  FriendsTabView(erp: erp),
                 ],
               ),
             ),

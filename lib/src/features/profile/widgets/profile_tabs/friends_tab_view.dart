@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Providers
-import '../../../auth/providers/auth_provider.dart';
 import '../../../requests/providers/student_connections_provider.dart';
 
 // Models
@@ -33,20 +32,24 @@ final _friendsFutureProvider =
 );
 
 class FriendsTabView extends ConsumerWidget {
-  const FriendsTabView({super.key});
+  final String erp;
+
+  const FriendsTabView({
+    super.key,
+    required this.erp,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final myErp = ref.watch(currentStudentProvider)!.erp;
     return CustomRefreshIndicator(
-      onRefresh: () async => ref.refresh(_friendsFutureProvider(myErp)),
+      onRefresh: () async => ref.refresh(_friendsFutureProvider(erp)),
       displacement: 21,
       child: AsyncValueWidget<List<StudentConnectionModel>>(
-        value: ref.watch(_friendsFutureProvider(myErp)),
+        value: ref.watch(_friendsFutureProvider(erp)),
         loading: () => const CustomCircularLoader(),
         error: (error, st) => ErrorResponseHandler(
           error: error,
-          retryCallback: () => ref.refresh(_friendsFutureProvider(myErp)),
+          retryCallback: () => ref.refresh(_friendsFutureProvider(erp)),
           stackTrace: st,
         ),
         emptyOrNull: () => const SingleChildScrollView(
@@ -68,7 +71,7 @@ class FriendsTabView extends ConsumerWidget {
           ),
           separatorBuilder: (_, __) => Insets.gapH15,
           itemBuilder: (ctx, i) => _FriendsListItem(
-            friend: connections[i].sender.erp == myErp
+            friend: connections[i].sender.erp == erp
                 ? connections[i].receiver
                 : connections[i].sender,
             acceptedAt: connections[i].acceptedAt!,
