@@ -34,8 +34,8 @@ class TimetableView extends HookConsumerWidget {
     final scrollController2 = useScrollController();
     final scrollController3 = useScrollController();
     final scrollController4 = useScrollController();
-    const cellHeight = 145.0;
-    const cellWidth = 213.0;
+    const cellHeight = 148.0;
+    const cellWidth = 216.0;
     const timeColWidth = 56.0;
     const weekdayRowHeight = 35.0;
     const breakRowHeight = 65.0;

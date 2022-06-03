@@ -132,7 +132,7 @@ class FiltersListView extends HookConsumerWidget {
             controller: batchController,
             enableSearch: true,
             hintText: 'Select a batch',
-            items: {for (var i = 2050; i >= 1950; i--) '$i': i},
+            items: {for (var i = 2026; i >= 1950; i--) '$i': i},
             onSelected: (year) {
               ref.read(batchFilterProvider.notifier).state = year;
             },

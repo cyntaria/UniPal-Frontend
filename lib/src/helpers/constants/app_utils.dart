@@ -97,7 +97,8 @@ class AppUtils {
     if (now.year > graduationYear) return StudentType.ALUMNI;
     final diff = 4 - (graduationYear - now.year);
     final i = now.month < 7 ? diff - 1 : diff;
-    return StudentType.values[i];
+    final k = (i < 0 || i > 4) ? 4 : i;
+    return StudentType.values[k];
   }
 }
 
