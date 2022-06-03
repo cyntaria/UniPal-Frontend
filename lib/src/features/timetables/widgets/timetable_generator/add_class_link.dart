@@ -18,7 +18,7 @@ class AddClassLink extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomTextButton(
       height: 35,
-      width: 60,
+      width: 65,
       onPressed: ref.read(classesSelectorProvider.notifier).addClass,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

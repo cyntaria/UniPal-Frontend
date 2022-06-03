@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 // Models
+import '../../../config/routes/app_router.dart';
+import '../../student_finder/screens/others_profile_screen.dart';
 import '../models/post_model.codegen.dart';
 
 // Helpers
@@ -53,55 +55,61 @@ class PostListItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Author Row
-                        SizedBox(
-                          height: 40,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Author Avatar
-                              CustomNetworkImage(
-                                height: 40,
-                                width: 40,
-                                shape: BoxShape.circle,
-                                imageUrl: post.author.profilePictureUrl,
-                              ),
-
-                              Insets.gapW10,
-
-                              // Author & Post Detals
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    // Author Name
-                                    Text(
-                                      '${post.author.firstName} ${post.author.lastName}',
-                                      style:
-                                          AppTypography.primary.body14.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-
-                                    // Post Datetime
-                                    Text(
-                                      post.postedAt.toTimeAgoLabel(),
-                                      style: AppTypography.primary.subtitle13
-                                          .copyWith(
-                                        color: AppColors.textLightGreyColor,
-                                      ),
-                                    ),
-                                  ],
+                        GestureDetector(
+                          onTap: () => AppRouter.push(
+                            OthersProfileScreen(erp: post.author.erp),
+                          ),
+                          child: SizedBox(
+                            height: 40,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Author Avatar
+                                CustomNetworkImage(
+                                  height: 40,
+                                  width: 40,
+                                  shape: BoxShape.circle,
+                                  imageUrl: post.author.profilePictureUrl,
                                 ),
-                              ),
 
-                              // More Options Icon
-                              const Icon(
-                                Icons.more_horiz_rounded,
-                                color: AppColors.greyOutlineColor,
-                              ),
-                            ],
+                                Insets.gapW10,
+
+                                // Author & Post Detals
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      // Author Name
+                                      Text(
+                                        '${post.author.firstName} ${post.author.lastName}',
+                                        style: AppTypography.primary.body14
+                                            .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                      // Post Datetime
+                                      Text(
+                                        post.postedAt.toTimeAgoLabel(),
+                                        style: AppTypography.primary.subtitle13
+                                            .copyWith(
+                                          color: AppColors.textLightGreyColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                // More Options Icon
+                                const Icon(
+                                  Icons.more_horiz_rounded,
+                                  color: AppColors.greyOutlineColor,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 

@@ -1,6 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Models
+import '../../profile/models/student_model.codegen.dart';
+import '../../requests/providers/student_connections_provider.dart';
 import '../models/post_model.codegen.dart';
 import '../models/post_resource_model.codegen.dart';
 
@@ -32,7 +34,25 @@ final postsProvider = StateNotifierProvider<PostsProvider, FutureState<String>>(
 );
 
 final postsFeedFutureProvider = FutureProvider((ref) async {
-  return ref.watch(postsProvider.notifier).getAllPosts();
+  final posts = await ref.watch(postsProvider.notifier).getAllPosts();
+  final myErp = ref.watch(currentStudentProvider)!.erp;
+  final query = StudentModel.toUpdateJson(erp: myErp);
+  final friends =
+      await ref.watch(studentConnectionsProvider).getAllFriends(query);
+  final friendErps = friends.map((e) {
+    if (e.sender.erp == myErp) {
+      return e.receiver.erp;
+    } else {
+      return e.sender.erp;
+    }
+  });
+  return posts
+      .where(
+        (element) =>
+            friendErps.contains(element.author.erp) ||
+            myErp == element.author.erp,
+      )
+      .toList();
 });
 
 class PostsProvider extends StateNotifier<FutureState<String>> {

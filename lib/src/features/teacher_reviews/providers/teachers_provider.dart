@@ -5,25 +5,40 @@ import '../models/teacher_model.codegen.dart';
 
 final teachersProvider = Provider((_) => TeachersProvider());
 
+final searchFilterProvider = StateProvider.autoDispose<String>((ref) => '');
+
+final searchedTeachersProvider =
+    Provider.autoDispose.family<List<TeacherModel>, List<TeacherModel>>(
+  (ref, filteredTeachers) {
+    final _searchTerm = ref.watch(searchFilterProvider);
+    if (_searchTerm.isEmpty) {
+      return filteredTeachers;
+    }
+    return filteredTeachers.where((teacher) {
+      return teacher.fullName.toLowerCase().contains(_searchTerm);
+    }).toList();
+  },
+);
+
 class TeachersProvider {
   final _teachers = [
     const TeacherModel(
       teacherId: 1,
       fullName: 'Waseem Arain',
       averageRating: 4.5,
-      totalReviews: 15,
+      totalReviews: 2,
     ),
     const TeacherModel(
       teacherId: 2,
       fullName: 'Faisal Iradat',
       averageRating: 3.6,
-      totalReviews: 24,
+      totalReviews: 2,
     ),
     const TeacherModel(
       teacherId: 3,
       fullName: 'Maria Rahim',
       averageRating: 5,
-      totalReviews: 119,
+      totalReviews: 2,
     ),
     const TeacherModel(
       teacherId: 4,

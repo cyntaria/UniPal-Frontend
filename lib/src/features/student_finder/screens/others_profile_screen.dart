@@ -55,7 +55,7 @@ class OthersProfileScreen extends ConsumerWidget {
             retryCallback: () => ref.refresh(othersProfileFutureProvider(erp)),
           ),
           data: (student) => DefaultTabController(
-            length: 3,
+            length: 2,
             child: NestedScrollView(
               headerSliverBuilder: (BuildContext context, _) {
                 return <Widget>[
@@ -84,7 +84,7 @@ class OthersProfileScreen extends ConsumerWidget {
 
                   // Tabs
                   const ProfileTabBar(
-                    tabNames: ['PREFERENCES', 'ABOUT', 'ACTIVITIES'],
+                    tabNames: ['PREFERENCES', 'ABOUT'],
                   ),
 
                   const SliverToBoxAdapter(
@@ -100,7 +100,7 @@ class OthersProfileScreen extends ConsumerWidget {
                   // University
                   AboutTabView(student: student),
 
-                  const ActivitiesTabView()
+                  // const ActivitiesTabView()
                 ],
               ),
             ),

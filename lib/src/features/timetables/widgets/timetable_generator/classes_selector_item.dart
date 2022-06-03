@@ -81,15 +81,10 @@ class ClassesSelectorItem extends ConsumerWidget {
                     showSearch: true,
                     bottomSheetTitle: 'Subjects',
                     items: const [
-                      'Data Mining',
+                      'Data Structures',
                       'Data Warehousing',
-                      'Business Intelligence',
-                      'Introduction to Economics',
-                      'Discrete Mathematics',
-                      'Financial Accounting',
-                      'Organizational Behaviour',
-                      'History Of Ideas',
-                      'Academic Writing',
+                      'Network Communications',
+                      'Speech Communication',
                     ],
                     onItemSelect: (subject) {
                       ref
@@ -116,9 +111,11 @@ class ClassesSelectorItem extends ConsumerWidget {
                   itemsSheet: CustomDropdownSheet(
                     bottomSheetTitle: 'Teachers',
                     items: const [
-                      'Shakeel Khoja',
-                      'Maria Rahim',
-                      'Sami Ul Ahbab',
+                      'Imran Khan',
+                      'Waseem Arain',
+                      'Faisal Iradat',
+                      'Anwar-Ul-Haq',
+                      'Faisal Iradat',
                     ],
                     onItemSelect: (teacher) {
                       ref

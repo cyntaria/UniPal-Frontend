@@ -148,31 +148,31 @@ class LoginScreen extends HookConsumerWidget {
 
               Insets.gapH10,
 
-              // Forgot Password Link
-              Align(
-                child: GestureDetector(
-                  onTap: () {
-                    AppRouter.pushNamed(Routes.ForgotPasswordScreenRoute);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text.rich(
-                      TextSpan(
-                        text: 'Forgot your password? ',
-                        children: [
-                          TextSpan(
-                            text: 'Reset Now',
-                            style: AppTypography.primary.body16.copyWith(
-                              color: AppColors.lightPrimaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      style: AppTypography.primary.body16,
-                    ),
-                  ),
-                ),
-              ),
+              // // Forgot Password Link
+              // Align(
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       AppRouter.pushNamed(Routes.ForgotPasswordScreenRoute);
+              //     },
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(10),
+              //       child: Text.rich(
+              //         TextSpan(
+              //           text: 'Forgot your password? ',
+              //           children: [
+              //             TextSpan(
+              //               text: 'Reset Now',
+              //               style: AppTypography.primary.body16.copyWith(
+              //                 color: AppColors.lightPrimaryColor,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         style: AppTypography.primary.body16,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
