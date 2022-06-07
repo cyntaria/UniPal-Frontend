@@ -19,26 +19,12 @@ import '../../../shared/widgets/custom_dropdown_sheet.dart';
 import '../../../shared/widgets/labeled_widget.dart';
 import '../../../shared/widgets/dropdown_sheet_item.dart';
 
-final _selectedSubjectProvider = StateProvider.family<SubjectModel?, int>(
-  (_, index) => null,
+final selectorClassesProvider =
+    StateProvider.autoDispose.family<List<ClassModel>, int>(
+  (_, __) => [],
 );
 
-final _selectedTeacherProvider = StateProvider.family<TeacherModel?, int>(
-  (_, index) => null,
-);
-
-final _selectedTimeslotProvider = StateProvider.family<TimeslotModel?, int>(
-  (_, index) => null,
-);
-
-final _subjectClassesProvider = Provider.family<List<ClassModel>, int>(
-  (ref, index) {
-    final subjectCode = ref.watch(_selectedSubjectProvider(index))?.subjectCode;
-    return ref.watch(schedulerProvider).getClassesBySubject(subjectCode ?? '');
-  },
-);
-
-class ClassesSelectorItem extends ConsumerWidget {
+class ClassesSelectorItem extends ConsumerStatefulWidget {
   final int index;
 
   const ClassesSelectorItem({
@@ -47,19 +33,77 @@ class ClassesSelectorItem extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ClassesSelectorItem> createState() =>
+      _ClassesSelectorItemState();
+}
+
+class _ClassesSelectorItemState extends ConsumerState<ClassesSelectorItem> {
+  late final List<SubjectModel> subjects;
+  SubjectModel? _selectedSubject;
+  TeacherModel? _selectedTeacher;
+  TimeslotModel? _selectedTimeslot;
+  List<ClassModel> subjectClasses = [];
+  List<ClassModel> teacherClasses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    subjects = ref.watch(schedulerProvider).getScheduleSubjects();
+  }
+
+  void _selectTimeslot(TimeslotModel? timeslot) {
+    setState(() => _selectedTimeslot = timeslot);
+    final timeslotClasses = teacherClasses.where((e) {
+      return e.timeslot1 == timeslot;
+    }).toList();
+    ref
+        .read(selectorClassesProvider(widget.index).notifier)
+        .update((_) => timeslotClasses);
+  }
+
+  void _selectTeacher(TeacherModel? teacher) {
+    _selectedTeacher = teacher;
+    _selectedTimeslot = null;
+    teacherClasses = subjectClasses.where((e) {
+      return e.teacher == teacher;
+    }).toList();
+    setState(() {});
+    ref
+        .read(selectorClassesProvider(widget.index).notifier)
+        .update((_) => teacherClasses);
+  }
+
+  void _selectSubject(SubjectModel? subject) {
+    _selectedSubject = subject;
+    _selectedTeacher = null;
+    _selectedTimeslot = null;
+    subjectClasses = ref
+        .watch(schedulerProvider)
+        .getClassesBySubject(subject?.subjectCode ?? '');
+    setState(() {});
+    ref
+        .read(selectorClassesProvider(widget.index).notifier)
+        .update((_) => subjectClasses);
+  }
+
+  void _updateSelectorCount() {
+    ref.read(selectorsCountProvider.notifier).update((state) {
+      return state - 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final teachers = subjectClasses.map((e) => e.teacher).toList();
+    final timeslots = teacherClasses.map((e) => e.timeslot1).toList();
     return Column(
       children: [
         // Remove Button
-        if (index != 0)
+        if (widget.index != 0)
           Align(
             alignment: Alignment.topRight,
             child: InkWell(
-              onTap: () {
-                ref
-                    .read(classSelectorCountProvider.notifier)
-                    .update((state) => state - 1);
-              },
+              onTap: _updateSelectorCount,
               child: const Padding(
                 padding: EdgeInsets.all(5),
                 child: Icon(
@@ -84,107 +128,67 @@ class ClassesSelectorItem extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Subject Dropdown
-              Consumer(
-                builder: (_, ref, __) {
-                  final subjects =
-                      ref.watch(schedulerProvider).getScheduleSubjects();
-                  return LabeledWidget(
-                    label: 'Subject',
-                    labelDirection: Axis.horizontal,
-                    useDarkerLabel: true,
-                    expand: true,
-                    child: CustomDropdownField<SubjectModel?>.sheet(
-                      initialValue: ref.watch(_selectedSubjectProvider(index)),
-                      selectedItemText: (item) => item?.subject ?? '',
-                      itemsSheet: CustomDropdownSheet(
-                        showSearch: true,
-                        bottomSheetTitle: 'Subjects',
-                        items: subjects,
-                        onItemSelect: (subject) {
-                          ref
-                              .read(_selectedSubjectProvider(index).notifier)
-                              .update((_) => subject);
-                        },
-                        searchFilterCondition: (searchTerm, item) {
-                          return item!.subject
-                              .toLowerCase()
-                              .contains(searchTerm);
-                        },
-                        itemBuilder: (_, item) => DropdownSheetItem(
-                          label: item?.subject ?? '',
-                        ),
-                      ),
+              LabeledWidget(
+                label: 'Subject',
+                labelDirection: Axis.horizontal,
+                useDarkerLabel: true,
+                expand: true,
+                child: CustomDropdownField<SubjectModel?>.sheet(
+                  initialValue: _selectedSubject,
+                  selectedItemText: (item) => item?.subject ?? '',
+                  itemsSheet: CustomDropdownSheet(
+                    showSearch: true,
+                    bottomSheetTitle: 'Subjects',
+                    items: subjects,
+                    onItemSelect: _selectSubject,
+                    searchFilterCondition: (searchTerm, item) {
+                      return item!.subject.toLowerCase().contains(searchTerm);
+                    },
+                    itemBuilder: (_, item) => DropdownSheetItem(
+                      label: item?.subject ?? '',
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
 
               // Teacher Dropdown
-              Consumer(
-                builder: (_, ref, __) {
-                  final subjectClasses =
-                      ref.watch(_subjectClassesProvider(index));
-                  final teachers =
-                      subjectClasses.map((e) => e.teacher).toList();
-                  return LabeledWidget(
-                    label: 'Teacher',
-                    labelDirection: Axis.horizontal,
-                    useDarkerLabel: true,
-                    expand: true,
-                    child: CustomDropdownField<TeacherModel?>.sheet(
-                      initialValue: ref.watch(_selectedTeacherProvider(index)),
-                      selectedItemText: (item) => item?.fullName ?? '',
-                      itemsSheet: CustomDropdownSheet(
-                        bottomSheetTitle: 'Teachers',
-                        items: teachers,
-                        onItemSelect: (teacher) {
-                          ref
-                              .read(_selectedTeacherProvider(index).notifier)
-                              .update((_) => teacher);
-                        },
-                        itemBuilder: (_, item) => DropdownSheetItem(
-                          label: item?.fullName ?? '',
-                        ),
-                      ),
+              LabeledWidget(
+                label: 'Teacher',
+                labelDirection: Axis.horizontal,
+                useDarkerLabel: true,
+                expand: true,
+                child: CustomDropdownField<TeacherModel?>.sheet(
+                  initialValue: _selectedTeacher,
+                  selectedItemText: (item) => item?.fullName ?? '',
+                  itemsSheet: CustomDropdownSheet(
+                    bottomSheetTitle: 'Teachers',
+                    items: teachers,
+                    onItemSelect: _selectTeacher,
+                    itemBuilder: (_, item) => DropdownSheetItem(
+                      label: item?.fullName ?? '',
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
 
               // Timeslot Dropdown
-              Consumer(
-                builder: (_, ref, __) {
-                  final subjectClasses =
-                      ref.watch(_subjectClassesProvider(index));
-                  final teacher = ref.watch(_selectedTeacherProvider(index));
-                  final teacherClasses = subjectClasses
-                      .where((e) => e.teacher == teacher)
-                      .toList();
-                  final timeslots =
-                      teacherClasses.map((e) => e.timeslot1).toList();
-                  return LabeledWidget(
-                    label: 'Timeslot',
-                    labelDirection: Axis.horizontal,
-                    useDarkerLabel: true,
-                    expand: true,
-                    child: CustomDropdownField<TimeslotModel?>.sheet(
-                      initialValue: ref.watch(_selectedTimeslotProvider(index)),
-                      selectedItemText: (item) => item?.toString() ?? '',
-                      itemsSheet: CustomDropdownSheet(
-                        bottomSheetTitle: 'Timeslots',
-                        items: timeslots,
-                        onItemSelect: (timeslot) {
-                          ref
-                              .read(_selectedTimeslotProvider(index).notifier)
-                              .update((_) => timeslot);
-                        },
-                        itemBuilder: (_, item) => DropdownSheetItem(
-                          label: item?.toString() ?? '',
-                        ),
-                      ),
+              LabeledWidget(
+                label: 'Timeslot',
+                labelDirection: Axis.horizontal,
+                useDarkerLabel: true,
+                expand: true,
+                child: CustomDropdownField<TimeslotModel?>.sheet(
+                  initialValue: _selectedTimeslot,
+                  selectedItemText: (item) => item?.toString() ?? '',
+                  itemsSheet: CustomDropdownSheet(
+                    bottomSheetTitle: 'Timeslots',
+                    items: timeslots,
+                    onItemSelect: _selectTimeslot,
+                    itemBuilder: (_, item) => DropdownSheetItem(
+                      label: item?.toString() ?? '',
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
             ],
           ),

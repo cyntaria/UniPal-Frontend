@@ -9,9 +9,19 @@ import '../models/subject_model.codegen.dart';
 // Providers
 import 'classes_provider.dart';
 
-final classSelectorCountProvider = StateProvider((ref) => 0);
+// Widgets
+import '../widgets/timetable_generator/classes_selector_item.dart'
+    show selectorClassesProvider;
 
-final selectedClassesProvider = StateProvider((ref) {
+final selectorsCountProvider = StateProvider((ref) => 0);
+
+final selectedClassesProvider = Provider.autoDispose((ref) {
+  final classes = <ClassModel>[];
+  final selectorsCount = ref.watch(selectorsCountProvider);
+  for (var i = 0; i < selectorsCount; i++) {
+    final _selectorClasses = ref.watch(selectorClassesProvider(i));
+    classes.addAll(_selectorClasses);
+  }
   return <ClassModel>[];
 });
 

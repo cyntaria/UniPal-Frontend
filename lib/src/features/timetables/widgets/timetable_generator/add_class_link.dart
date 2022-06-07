@@ -22,7 +22,7 @@ class AddClassLink extends ConsumerWidget {
       width: 65,
       onPressed: () {
         ref
-            .read(classSelectorCountProvider.notifier)
+            .read(selectorsCountProvider.notifier)
             .update((state) => state + 1);
       },
       child: Row(
