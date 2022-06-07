@@ -17,7 +17,7 @@ import '../repositories/timetables_repository.dart';
 // States
 import '../../shared/states/future_state.codegen.dart';
 
-final timetablesProvider = Provider((ref) {
+final timetablesProvider = StateNotifierProvider<TimetablesProvider, FutureState<String>>((ref) {
   return TimetablesProvider(
     ref.read,
     timetablesRepository: ref.watch(timetablesRepositoryProvider),
@@ -28,7 +28,7 @@ final generatedTimetablesProvider = FutureProvider.family<
     List<GeneratedTimetableJSON>, GeneratedTimetableModel>(
   (ref, data) async {
     return ref
-        .watch(timetablesProvider)
+        .watch(timetablesProvider.notifier)
         .generateTimetables(generateModel: data);
   },
 );

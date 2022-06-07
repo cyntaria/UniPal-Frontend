@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// Providers
+// Models
 import '../../models/generated_timetable_model.codegen.dart';
-import '../../providers/classes_selector_provider.dart';
+
+// Providers
+import '../../providers/scheduler_provider.dart';
 
 // Helpers
 import '../../../../helpers/constants/app_typography.dart';
@@ -26,21 +28,17 @@ class Scheduler extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final noOfSelectedClasses = ref.watch(
-      classesSelectorProvider.select(
-        (value) => value.selectedClasses.length,
-      ),
-    );
+    final selectedClasses = ref.watch(selectedClassesProvider);
     return Scaffold(
       body: ListView.separated(
         padding: const EdgeInsets.only(top: 15),
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
-        itemCount: noOfSelectedClasses,
+        itemCount: selectedClasses.length,
         separatorBuilder: (_, i) => Insets.gapH15,
         itemBuilder: (_, i) {
-          if (i != (noOfSelectedClasses - 1)) {
+          if (i != (selectedClasses.length - 1)) {
             return ClassesSelectorItem(index: i);
           }
           return Column(
@@ -65,10 +63,10 @@ class Scheduler extends ConsumerWidget {
           gradient: AppColors.buttonGradientPurple,
           onPressed: () {
             AppRouter.push(
-              const GeneratedTimetablesScreen(
+              GeneratedTimetablesScreen(
                 generatedTimetableModel: GeneratedTimetableModel(
-                  noOfSubjects: 0,
-                  classes: [],
+                  noOfSubjects: selectedClasses.length,
+                  classes: selectedClasses,
                 ),
               ),
             );

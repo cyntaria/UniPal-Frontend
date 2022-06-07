@@ -21,4 +21,9 @@ class TimeslotModel with _$TimeslotModel {
   }) = _TimeslotModel;
 
   factory TimeslotModel.fromJson(JSON json) => _$TimeslotModelFromJson(json);
+  
+  @override
+  String toString() {
+    return '$startTime - $endTime';
+  }
 }

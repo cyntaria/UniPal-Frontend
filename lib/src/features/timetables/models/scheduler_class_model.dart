@@ -1,5 +1,7 @@
+import 'subject_model.codegen.dart';
+
 class SchedulerClassModel {
-  final String? subject;
+  final SubjectModel? subject;
   final String? teacher;
   final String? timeslot;
 
@@ -15,7 +17,7 @@ class SchedulerClassModel {
         timeslot = null;
 
   SchedulerClassModel copyWith({
-    String? subject,
+    SubjectModel? subject,
     String? teacher,
     String? timeslot,
   }) {
