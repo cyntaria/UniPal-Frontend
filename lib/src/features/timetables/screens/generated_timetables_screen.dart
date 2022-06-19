@@ -45,8 +45,9 @@ class GeneratedTimetablesScreen extends ConsumerWidget {
         ),
         error: (error, st) => ErrorResponseHandler(
           error: error,
-          retryCallback: () =>
-              ref.refresh(generatedTimetablesProvider(generatedTimetableModel)),
+          retryCallback: () => ref.refresh(
+            generatedTimetablesProvider(generatedTimetableModel),
+          ),
           stackTrace: st,
         ),
         showEmptyOnNotFoundError: true,

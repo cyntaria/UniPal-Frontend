@@ -22,7 +22,7 @@ final selectedClassesProvider = Provider.autoDispose((ref) {
     final _selectorClasses = ref.watch(selectorClassesProvider(i));
     classes.addAll(_selectorClasses);
   }
-  return <ClassModel>[];
+  return classes;
 });
 
 final schedulerProvider = Provider<SchedulerProvider>((ref) {
