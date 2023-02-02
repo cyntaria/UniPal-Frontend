@@ -9,7 +9,7 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--dart-define=BASE_URL=https://unipal-backend.azurewebsites.net/api/v1",
+                "--dart-define=BASE_URL=https://unipal-backend.herokuapp.com//api/v1",
                 "--dart-define=SENTRY_DSN=https://1312efcf907745b39254f319bf478547@o1009394.ingest.sentry.io/6219669",
             ]
         },
@@ -19,7 +19,7 @@
             "type": "dart",
             "flutterMode": "profile",
             "args": [
-                "--dart-define=BASE_URL=https://unipal-backend.azurewebsites.net/api/v1",
+                "--dart-define=BASE_URL=https://unipal-backend.herokuapp.com//api/v1",
                 "--dart-define=SENTRY_DSN=https://1312efcf907745b39254f319bf478547@o1009394.ingest.sentry.io/6219669",
             ]
         },
@@ -29,7 +29,7 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--dart-define=BASE_URL=https://unipal-backend.azurewebsites.net/api/v1",
+                "--dart-define=BASE_URL=https://unipal-backend.herokuapp.com//api/v1",
                 "--dart-define=SENTRY_DSN=https://1312efcf907745b39254f319bf478547@o1009394.ingest.sentry.io/6219669",
             ]
         }
