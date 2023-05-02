@@ -64,7 +64,7 @@ flutter run --dart-define=BASE_URL="your-url-here"
 
 Splash Screen | Home Screen | Login Screen |
 :------------:|:-----------:|:--------------:|
-![](./resources/screens/Lottie Loader.jpg) | ![](./resources/screens/Home Screen.jpg) | ![](./resources/screens/Login Screen.jpg)
+![](./resources/screens/Lottie Loader.jpg) | ![](./resources/screens/home_screen.jpg) | ![](./resources/screens/Login Screen.jpg)
 Register Screen | Posts Screen | Create Post Screen |
 ![](./resources/screens/Register Personal Details.jpg) | ![](./resources/screens/Posts Tab.jpg) | ![](./resources/screens/Create Post Screen.jpg)
 Connections Screen | Hangouts Received Screen | Hangouts Sent Screen |
