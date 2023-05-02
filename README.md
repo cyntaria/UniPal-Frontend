@@ -64,19 +64,19 @@ flutter run --dart-define=BASE_URL="your-url-here"
 
 Splash Screen | Home Screen | Login Screen |
 :------------:|:-----------:|:--------------:|
-![](./resources/screens/Lottie Loader.jpg) | ![](./resources/screens/home_screen.jpg) | ![](./resources/screens/Login Screen.jpg)
+![](./resources/screens/Lottie_Loader.jpg) | ![](./resources/screens/home_screen.jpg) | ![](./resources/screens/Login_Screen.jpg)
 Register Screen | Posts Screen | Create Post Screen |
-![](./resources/screens/Register Personal Details.jpg) | ![](./resources/screens/Posts Tab.jpg) | ![](./resources/screens/Create Post Screen.jpg)
+![](./resources/screens/Register_Personal_Details.jpg) | ![](./resources/screens/Posts_Tab.jpg) | ![](./resources/screens/Create_Post_Screen.jpg)
 Connections Screen | Hangouts Received Screen | Hangouts Sent Screen |
-![](./resources/screens/Connection Requests Tab.jpg) | ![](./resources/screens/Hangout Requests Recv.jpg) | ![](./resources/screens/Hangout Requests Sent.jpg)
+![](./resources/screens/Connection_Requests_Tab.jpg) | ![](./resources/screens/Hangout_Requests_Recv.jpg) | ![](./resources/screens/Hangout_Requests_Sent.jpg)
 Student Finder Screen | Scheduler Screen | Student Finder Tab 2 |
-![](./resources/screens/Student Finder Tab.jpg) | ![](./resources/screens/Class Scheduler Screen.jpg) | ![](./resources/screens/Student Finder Tab 2.jpg)
+![](./resources/screens/Student_Finder_Tab.jpg) | ![](./resources/screens/Class_Scheduler_Screen.jpg) | ![](./resources/screens/Student_Finder_Tab_2.jpg)
 Generated Timetables | Timetable Viewer | Timetable Viewer 2 |
-![](./resources/screens/Generated Timetables Screen.jpg) | ![](./resources/screens/TimeTable Viewer.jpg) | ![](./resources/screens/Timetable Viewer 2.jpg)
+![](./resources/screens/Generated_Timetables_Screen.jpg) | ![](./resources/screens/TimeTable_Viewer.jpg) | ![](./resources/screens/Timetable_Viewer_2.jpg)
 Teacher Forum Tab | Teacher Reviews Screen | My Profile About Screen |
-![](./resources/screens/Teachers Tab.jpg) | ![](./resources/screens/Teacher Reviews Screen.jpg) | ![](./resources/screens/My Profile About.jpg)
+![](./resources/screens/Teachers_Tab.jpg) | ![](./resources/screens/Teacher_Reviews_Screen.jpg) | ![](./resources/screens/My_Profile_About.jpg)
 My Profile Preferences | Student Profile Preferences | Student Profile About |
-![](./resources/screens/My Profile Preferences.jpg) | ![](./resources/screens/Student Profile Preferences.jpg) | ![](./resources/screens/Student Profile About.jpg)
+![](./resources/screens/My_Profile_Preferences.jpg) | ![](./resources/screens/Student_Profile_Preferences.jpg) | ![](./resources/screens/Student_Profile_About.jpg)
 
 ## ⭐ Installing
 
