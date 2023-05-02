@@ -17,7 +17,7 @@ dependencies:
   carousel_slider: ^4.1.1
   clock: ^1.1.0
   cupertino_icons: ^1.0.4
-  dio: ^4.0.6
+  dio: ^5.0.3
   dio_cache_interceptor: ^3.2.7
   dio_cache_interceptor_hive_store: ^3.1.1
   firebase_core: ^1.17.0
